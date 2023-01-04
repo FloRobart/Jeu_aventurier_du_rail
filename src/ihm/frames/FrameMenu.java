@@ -1,4 +1,4 @@
-package frames;
+package ihm.frames;
 
 import controleur.Controleur;
 

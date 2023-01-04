@@ -1,6 +1,7 @@
-package frames;
+package ihm.frames;
 
 import controleur.Controleur;
+
 
 public class Ihm 
 {
