@@ -1,9 +1,12 @@
 package controleur;
 
+import frames.Ihm;
+import metier.Metier;
+
 public class Controleur 
 {
     private Metier metier;
-    private FrameJeu ihm;
+    private Ihm ihm;
 
     public Controleur()
     {

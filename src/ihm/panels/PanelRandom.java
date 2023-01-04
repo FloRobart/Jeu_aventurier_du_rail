@@ -1,4 +1,4 @@
-package ihm.panels;
+package panels;
 
 import controleur.Controleur;
 
