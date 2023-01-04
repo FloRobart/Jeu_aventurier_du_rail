@@ -2,6 +2,7 @@ package frames;
 
 import controleur.Controleur;
 
+
 public class FrameMenu 
 {
     private Controleur ctrl;

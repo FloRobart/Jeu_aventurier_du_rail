@@ -1,13 +1,241 @@
 package metier;
 
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.imageio.ImageIO;
+
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.input.SAXBuilder;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+
 import controleur.Controleur;
 
 public class Metier
 {
-    private Controleur ctrl;
+    private Controleur          ctrl;
+
+    private List<Joueur>        lstJoueurs;
+    private List<CarteWagon>    lstCartesWagon;
+    private List<CarteObjectif> lstCartesObjectif;
+    private List<Arete>         lstAretes;
+    private List<Noeud>         lstNoeuds;
+    
+    private int[]         taillePlateau;
+	private BufferedImage imagePlateau;
+	private Color         couleurPlateau;
+	private Font          policePlateau;
+
+    private int nbJoueursMin;
+	private int nbJoueursMax;
+	private int nbCarteCoul;
+	private int nbCarteLocomotive;
+	private int nbJetonJoueur;
+	private int nbJetonFin;
+
+    private List<Color>         lstCouleurs;
+	private BufferedImage       imageVersoCouleur;
+	private BufferedImage       imageRectoLocomotive;
+	private List<BufferedImage> lstImagesRectoCouleur;
+	private List<Integer>       lstPoints;
+
+	private BufferedImage       imageVersoObjectif;
+	
+
 
     public Metier(Controleur ctrl)
     {
         this.ctrl = ctrl;
+        this.lireFichier(null);
     }
+
+    public void ajouterJoueur(Joueur joueur)
+    {
+        if(this.lstJoueurs.size() < this.nbJoueursMax)
+            this.lstJoueurs.add(joueur);
+    }
+
+    /*Lecture du fichier XML afin de récupérer les infos du plateau */
+    private void lireFichier(File fichier)
+	{
+		SAXBuilder sxb = new SAXBuilder();
+
+		try
+		{
+			Document document = sxb.build(fichier);
+
+			/* <jeu> */
+			Element racine = document.getRootElement();
+
+			/* <information> */
+			Element information = racine.getChild("information");
+
+			Element dimension = information.getChild("dimension");
+			this.taillePlateau[0] = Integer.parseInt(dimension.getAttributeValue("x"));
+			this.taillePlateau[1] = Integer.parseInt(dimension.getAttributeValue("y"));
+			this.imagePlateau     = this.base64ToImage(information.getChild("image-fond").getText()); 
+			this.couleurPlateau   = hexaToColor(information.getChild("couleur-fond").getText());   
+			this.policePlateau    = new Font (information.getChild("police").getText(), Font.PLAIN, 12);
+			
+			Element nbJoueurs = information.getChild("nombre-joueurs");
+			this.nbJoueursMin = Integer.parseInt(nbJoueurs.getAttributeValue("min"));
+			this.nbJoueursMax = Integer.parseInt(nbJoueurs.getAttributeValue("max"));
+
+			Element nbCarte = information.getChild("nombre-carte");
+			this.nbCarteCoul       = Integer.parseInt(nbCarte.getAttributeValue("couleur"));
+			this.nbCarteLocomotive = Integer.parseInt(nbCarte.getAttributeValue("multicouleur"));
+
+			Element nbJeton = information.getChild("nombre-jeton");
+			this.nbJetonJoueur = Integer.parseInt(nbJeton.getAttributeValue("joueur"));
+			this.nbJetonFin    = Integer.parseInt(nbJeton.getAttributeValue("fin"));
+			
+			Element plateau = racine.getChild("plateau");
+			
+			/* <liste-lstCouleurs> */
+			this.lstCouleurs = new ArrayList<Color>();
+			List<Element> listlstCouleurs = plateau.getChild("liste-lstCouleurs").getChildren("couleur");
+			Iterator<Element> itlstCouleurs = listlstCouleurs.iterator();
+			
+			while(itlstCouleurs.hasNext())
+			{
+				Element couleur = (Element)itlstCouleurs.next();
+				this.lstCouleurs.add(Color.decode(couleur.getText()));
+			}
+
+			/* <liste-image_cartes> */
+			this.imageVersoCouleur = this.base64ToImage(plateau.getChild("liste-image-cartes")
+										.getChild("image-verso").getText());
+
+			this.lstImagesRectoCouleur = new ArrayList<BufferedImage>();
+			List<Element> listImagesCartes = plateau.getChild("liste-image-cartes").getChildren("image-recto");
+			Iterator<Element> itImagesCartes = listImagesCartes.iterator();
+
+			this.imageRectoLocomotive = this.base64ToImage(itImagesCartes.next().getText());
+			while(itImagesCartes.hasNext())
+			{
+				Element imageCarte = (Element)itImagesCartes.next();
+				BufferedImage image = this.base64ToImage(imageCarte.getText());
+				this.lstImagesRectoCouleur.add(image);
+			}
+			
+			/* <tableau-lstPoints */
+			this.lstPoints = new ArrayList<Integer>();
+			List<Element> listlstPoints = plateau.getChild("tableau-lstPoints").getChildren("distance");
+			Iterator<Element> itlstPoints = listlstPoints.iterator();
+
+			while(itlstPoints.hasNext())
+			{
+				Element point = (Element)itlstPoints.next();
+				this.lstPoints.add(Integer.parseInt(point.getText()));
+			}
+
+			/* <liste-lstNoeuds> */
+			Noeud.reinitialiserId();
+			List<Element> listlstNoeuds = plateau.getChild("liste-lstNoeuds").getChildren("noeud");
+			Iterator<Element> itlstNoeuds = listlstNoeuds.iterator();
+
+			while(itlstNoeuds.hasNext())
+			{
+				Element noeud = (Element)itlstNoeuds.next();
+
+				Element position = noeud.getChild("position");
+				int x = Integer.parseInt(position.getAttributeValue("x"));
+				int y = Integer.parseInt(position.getAttributeValue("y"));
+
+				String nom = noeud.getChild("nom").getText();
+
+				Element positionNom = noeud.getChild("position-nom");
+				int xNom = Integer.parseInt(positionNom.getAttributeValue("x"));
+				int yNom = Integer.parseInt(positionNom.getAttributeValue("y"));
+
+				Color couleur = Color.decode(noeud.getChild("couleur").getText());
+
+				this.lstNoeuds.add(new Noeud(nom, x, y, xNom, yNom, couleur));
+			}
+
+			/* <liste-lstAretes> */
+			List<Element> listlstAretes = plateau.getChild("liste-lstAretes").getChildren("arete");
+			Iterator<Element> itlstAretes = listlstAretes.iterator();
+
+			while(itlstAretes.hasNext())
+			{
+				Element arete = (Element)itlstAretes.next();
+
+				Element noeud = arete.getChild("noeud");
+				Noeud n1 = this.lstNoeuds.get(Integer.parseInt(noeud.getAttributeValue("n1"))-1);
+				Noeud n2 = this.lstNoeuds.get(Integer.parseInt(noeud.getAttributeValue("n2"))-1);
+
+				Color couleur1 = Color.decode(arete.getChild("couleur1").getText());
+
+				Color couleur2;
+				if(arete.getChild("couleur2").getText().equals("NULL"))
+					couleur2 = null;
+				else
+					couleur2 = Color.decode(arete.getChild("couleur2").getText());
+
+				int distance = Integer.parseInt(arete.getChild("distance").getText());
+
+				this.lstAretes.add(new Arete(n1, n2, distance, couleur1, couleur2));
+			}
+
+			/* <liste-objectifs> */
+			this.imageVersoObjectif = this.base64ToImage(racine.getChild("liste-objectifs")
+										.getChild("image-verso").getText());
+
+			List<Element> listObjectifs = racine.getChild("liste-objectifs").getChildren("objectif");
+			Iterator<Element> itObjectifs = listObjectifs.iterator();
+
+			while(itObjectifs.hasNext())
+			{
+				Element objectif = (Element)itObjectifs.next();
+
+				Element noeud = objectif.getChild("noeud");
+				Noeud n1 = this.lstNoeuds.get(Integer.parseInt(noeud.getAttributeValue("n1"))-1);
+				Noeud n2 = this.lstNoeuds.get(Integer.parseInt(noeud.getAttributeValue("n2"))-1);
+
+				int lstPoints = Integer.parseInt(objectif.getChild("lstPoints").getText());
+
+				BufferedImage imageRecto = this.base64ToImage(objectif.getChild("image-recto").getText());
+
+				this.lstCartesObjectif.add(new CarteObjectif(n1, n2, lstPoints, imageRecto));
+			}
+		} catch (Exception e){ e.printStackTrace(); }
+	}
+
+    private BufferedImage base64ToImage(String base64) throws IOException 
+	{
+		if (base64.equals("NULL_IMAGE"))
+		{
+			BufferedImage imageIO = new BufferedImage(10, 50, BufferedImage.TYPE_INT_ARGB);
+			Graphics2D g2d = imageIO.createGraphics();
+			g2d.setColor(Color.WHITE);
+			g2d.fillRect(0, 0, 10, 50);
+			g2d.drawString("Image invalide", 0, 10);
+			g2d.dispose();
+			return imageIO;
+		}
+		byte[] bytes = Base64.getDecoder().decode(base64);
+		return ImageIO.read(new ByteArrayInputStream(bytes));
+	}
+    
+    private Color hexaToColor(String hexa)
+	{
+		if (hexa.charAt(0) != '#') return null;
+
+		return new Color( Integer.parseInt(hexa.substring(1, 3), 16),
+		                  Integer.parseInt(hexa.substring(3, 5), 16),
+		                  Integer.parseInt(hexa.substring(5, 7), 16) );
+	}
+    
 }
+
