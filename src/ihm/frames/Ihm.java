@@ -1,4 +1,4 @@
-package ihm;
+package frames;
 
 import controleur.Controleur;
 

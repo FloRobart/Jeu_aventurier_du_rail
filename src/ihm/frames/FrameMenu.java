@@ -1,4 +1,4 @@
-package ihm;
+package frames;
 
 import controleur.Controleur;
 
@@ -6,7 +6,7 @@ public class FrameMenu
 {
     private Controleur ctrl;
 
-    public FrameJeu(Controleur ctrl)
+    public FrameMenu(Controleur ctrl)
     {
         this.ctrl = ctrl;
     }
