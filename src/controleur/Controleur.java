@@ -3,6 +3,7 @@ package controleur;
 import frames.Ihm;
 import metier.Metier;
 
+
 public class Controleur 
 {
     private Metier metier;
