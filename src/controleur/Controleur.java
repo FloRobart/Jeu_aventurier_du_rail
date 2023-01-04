@@ -10,4 +10,9 @@ public class Controleur
         this.metier = new Metier(this);
         this.ihm = new Ihm(this);
     }
+
+    public static void main(String[] args)
+    {
+        new Controleur();
+    }
 }
