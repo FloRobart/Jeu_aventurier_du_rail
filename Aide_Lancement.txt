@@ -1,3 +1,5 @@
-Pour COMPILER ET LANCER le programme éxecuter le fichier run.bat ou run.sh (en fonction de votre OS)
-Pour COMPILER seulement le programme éxecuter le fichier compilation.bat ou compilation.sh (en fonction de votre OS)
-Pour LANCER   seulement le programme éxecuter le fichier lancement.bat ou lancement.sh (en fonction de votre OS)
+run.bat et run.sh compile toujours l'application avant de la lancer
+
+
+lanceur.bat et lanceur.sh compile l'application seulement si elle n'est pas déjà compilée puis lance l'application
+Si l'application est déjà compilée, lanceur.bat et lanceur.sh ne la recompile pas.

@@ -1,4 +1,16 @@
 #!/bin/bash
 
-echo Lancement de l\'interface graphique...
-java -cp "./bin:$CLASSPATH" controleur.Controleur  && Fin de l\'execution. || echo Veulliez compiler le projet java avant de la lancer.
+compilation()
+{
+    ls ./bin/         >> /dev/null 2>&1 || mkdir "./bin/"
+    ls ./bin/donnees/ >> /dev/null 2>&1 || mkdir "./bin/donnees/"
+
+    cp -r ./donnees/ ./bin/
+
+    echo Compilation...
+    javac -encoding utf8 @compile.list && (java -cp "./bin:$CLASSPATH" controleur.Controleur && echo Fin de l\'execution. || echo -e "\nErreur d'execution") || echo -e "\nErreur de compilation."
+}
+
+
+echo Lancement de l\'application
+java -cp "./bin:$CLASSPATH" controleur.Controleur && echo Fin de l\'execution. || compilation

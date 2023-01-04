@@ -1,12 +1,14 @@
 @echo off
 
-:: Création des dossiers bin et donnees s'ils n'existent pas
-IF NOT EXIST "./bin/"         ( mkdir "./bin" )
-IF NOT EXIST "./bin/donnees/" ( mkdir "./bin/donnees/" )
+echo Lancement de l'application
+call java -cp ./bin;./bin/donnees;"%CLASSPATH%" controleur.Controleur && ( echo Fin de l'execution. & goto :eof ) || ( call compilation & goto :eof )
 
-XCOPY "./donnees" "./bin/donnees" /E /Y >NUL
+:compilation
+    IF NOT EXIST "./bin/"         ( mkdir "./bin" )
+    IF NOT EXIST "./bin/donnees/" ( mkdir "./bin/donnees/" )
 
-echo Lancement du programme...
-call java -cp ./bin;./bin/donnees;"%CLASSPATH%" controleur.Controleur && Fin de l'execution. || echo. & echo Veulliez compiler le projet java avant de la lancer.
+    XCOPY "./donnees" "./bin/donnees" /E /Y >NUL
 
+    echo Compilation...
+    call javac -encoding utf8 "@compile.list" && ( call java -cp ./bin;./bin/donnees;"%CLASSPATH%" controleur.Controleur && echo Fin de l'execution. || echo. & echo Erreur d'execution ) || echo. & echo Erreur de compilation.
 goto :eof

@@ -1,16 +1,10 @@
 #!/bin/bash
 
 # Création des dossiers bin et donnees s'ils n'existent pas #
-#if ![ -d "./bin/"];         then mkdir "./bin/" fi
-#if ![ -d "./bin/donnees/"]; then mkdir "./bin/donnees/" fi
+ls ./bin/         >> /dev/null 2>&1 || mkdir "./bin/"
+ls ./bin/donnees/ >> /dev/null 2>&1 || mkdir "./bin/donnees/"
 
 cp -r ./donnees/ ./bin/
 
 echo Ca compile...
-javac -encoding utf8 @compile.list
-
-#echo Lancement du programme...
-#echo Lancement des tests XML
-#java -cp ./bin:$CLASSPATH metier.Metier
-echo Lancement de l\'interface graphique...
-java -cp "./bin:$CLASSPATH" controleur.Controleur && echo Fin de l\'execution. || echo Erreur de l\'execution
+javac -encoding utf8 @compile.list && (echo Lancement de l\'interface graphique... ; java -cp "./bin:$CLASSPATH" controleur.Controleur && echo Fin de l\'execution. || echo -e "\nErreur de L\'EXECUTION") || echo -e "\nErreur de COMPILATION"
