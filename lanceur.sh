@@ -8,9 +8,9 @@ compilation()
     cp -r ./donnees/ ./bin/
 
     echo Compilation...
-    javac -encoding utf8 @compile.list && (java -cp "./bin:$CLASSPATH" controleur.Controleur && echo Fin de l\'execution. || echo -e "\nErreur d'execution") || echo -e "\nErreur de compilation."
+    javac -encoding utf8 @compile.list && (java -cp "./bin:$CLASSPATH" controleur.Controleur && echo Fin de l\'execution. || echo -e "\nErreur d'EXECUTION.") || echo -e "\nErreur de COMPILATION."
 }
 
 
-echo Lancement de l\'application
+echo Lancement de l\'application...
 java -cp "./bin:$CLASSPATH" controleur.Controleur && echo Fin de l\'execution. || compilation
