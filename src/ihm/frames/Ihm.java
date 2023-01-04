@@ -13,6 +13,6 @@ public class Ihm
     {
         this.ctrl = ctrl;
         this.frameJeu = new FrameJeu(this.ctrl);
-        this.frameMenu = new FrameMenu(this.ctrl);
+        //this.frameMenu = new FrameMenu(this.ctrl);
     }
 }
