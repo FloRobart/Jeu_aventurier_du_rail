@@ -1,0 +1,3 @@
+Pour COMPILER ET LANCER le programme éxecuter le fichier run.bat ou run.sh (en fonction de votre OS)
+Pour COMPILER seulement le programme éxecuter le fichier compilation.bat ou compilation.sh (en fonction de votre OS)
+Pour LANCER   seulement le programme éxecuter le fichier lancement.bat ou lancement.sh (en fonction de votre OS)
