@@ -12,8 +12,7 @@ public class Ihm
     public Ihm(Controleur ctrl)
     {
         this.ctrl = ctrl;
-
-        this.frameJeu  = new FrameJeu (this.ctrl);
-        this.frameMenu = new FrameMenu(this.ctrl);
+        this.frameJeu = new FrameJeu(this.ctrl);
+        //this.frameMenu = new FrameMenu(this.ctrl);
     }
 }
