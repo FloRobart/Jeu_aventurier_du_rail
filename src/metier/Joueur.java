@@ -20,7 +20,9 @@ public class Joueur
     public String getNom() { return this.nom; }
     public int getScore() { return this.score; }
     public List<CarteObjectif> getAlCartesObjectif() { return this.alCartesObjectif; }
+    public int getNbCartesObjectif() { return this.alCartesObjectif.size(); }
     public List<CarteWagon> getAlCartesWagon() { return this.alCartesWagon; }
+    public int getNbCartesWagon() { return this.alCartesWagon.size(); }
     public int getNbJetonsPosés() { return this.nbJetonsPosés; }
 
     public void setNom(String nom) { this.nom = nom; }
