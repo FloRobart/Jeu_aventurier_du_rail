@@ -59,6 +59,13 @@ public class Metier
         this.lireFichier(null);
     }
 
+    public void ajouterJoueur(Joueur joueur)
+    {
+        if(this.lstJoueurs.size() < this.nbJoueursMax)
+            this.lstJoueurs.add(joueur);
+    }
+
+    /*Lecture du fichier XML afin de récupérer les infos du plateau */
     private void lireFichier(File fichier)
 	{
 		SAXBuilder sxb = new SAXBuilder();
