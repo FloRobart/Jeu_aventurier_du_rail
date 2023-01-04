@@ -1,10 +1,22 @@
 ./src/controleur/Controleur.java
 
-./src/ihm/Ihm.java
-./src/ihm/FrameJeu.java
-./src/ihm/FrameMenu.java
+./src/ihm/frames/FrameJeu.java
+./src/ihm/frames/FrameMenu.java
+./src/ihm/frames/Ihm.java
+
+./src/ihm/panels/PanelRandom.java
+
+./src/metier/reseau/Client.java
+./src/metier/reseau/Packet.java
+./src/metier/reseau/Server.java
+./src/metier/reseau/ServerClientHandler.java
 
 ./src/metier/Arete.java
+./src/metier/CarteObjectif.java
+./src/metier/CarteWagon.java
+./src/metier/Joueur.java
+./src/metier/Metier.java
+./src/metier/Noeud.java
 
 
 -d bin
