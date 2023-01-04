@@ -1,17 +1,8 @@
 ./src/controleur/Controleur.java
 
-./src/ihm/customComponent/TextFieldWithHint.java
-
-
-./src/ihm/frames/FrameCouleur.java
-
-
-
-./src/ihm/panels/PanelAjoutObjectif.java
-
-
-./src/ihm/panels/panelGenerateur/PGPanelAjouterElements.java
-
+./src/ihm/Ihm.java
+./src/ihm/FrameJeu.java
+./src/ihm/FrameMenu.java
 
 ./src/metier/Arete.java
 
