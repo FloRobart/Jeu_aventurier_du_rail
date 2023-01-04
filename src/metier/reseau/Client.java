@@ -1,10 +1,11 @@
-package metier.Reseau;
+package metier.reseau;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.net.Socket;
+
 
 public class Client 
 {

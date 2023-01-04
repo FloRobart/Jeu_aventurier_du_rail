@@ -1,4 +1,4 @@
-package metier.Reseau;
+package metier.reseau;
 
 
 import java.io.IOException;
@@ -6,6 +6,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import controleur.Controleur;
+
 
 public class Server 
 {
