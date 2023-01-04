@@ -1,0 +1,19 @@
+./src/controleur/Controleur.java
+
+./src/ihm/customComponent/TextFieldWithHint.java
+
+
+./src/ihm/frames/FrameCouleur.java
+
+
+
+./src/ihm/panels/PanelAjoutObjectif.java
+
+
+./src/ihm/panels/panelGenerateur/PGPanelAjouterElements.java
+
+
+./src/metier/Arete.java
+
+
+-d bin
