@@ -10,9 +10,9 @@ echo Ca compile...
 call javac -encoding utf8 "@compile.list"
 
 echo Lancement du programme...
-call java -cp ./bin;./bin/donnees;"%CLASSPATH%" controleur.Controleur
+call java -cp ./bin;./bin/donnees;"%CLASSPATH%" controleur.Controleur && echo Fin de l'execution || echo. & echo Erreur de l'execution
 
-echo Fin de l'execution.
+
 IF EXIST ".\bin\ihm"        rmdir /q /s ".\bin\ihm"       >NUL
 IF EXIST ".\bin\controleur" rmdir /q /s ".\bin\controleur">NUL
 IF EXIST ".\bin\metier"     rmdir /q /s ".\bin\metier"    >NUL
