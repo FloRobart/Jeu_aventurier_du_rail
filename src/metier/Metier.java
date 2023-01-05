@@ -11,6 +11,8 @@ import javax.imageio.ImageIO;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -19,10 +21,15 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.io.Reader;
 
 import controleur.Controleur;
+import metier.reseau.Server;
 
 public class Metier
 {
@@ -57,6 +64,7 @@ public class Metier
 	private HashMap<String, List<Color>> hmColorThemes;
 
 	private String nomPartie;
+	private Server server;
 
 
 
@@ -64,10 +72,8 @@ public class Metier
     {
         this.ctrl = ctrl;
 
+		
 		//this.lireFichier(new File("./bin/donnees/France.xml"));
-
-
-
 		this.hmColorThemes = new HashMap<String, List<Color>>();
 		this.chargerThemes(getThemeUsed());
     }
@@ -114,15 +120,15 @@ public class Metier
 	public BufferedImage       getImageVersoObjectif  () { return this.imageVersoObjectif;   }
 	
 	public String 			   getNomPartie           () { return this.nomPartie;            }
+	public Server 			   getServer              () { return this.server;               }
 
-    /*Lecture du fichier XML afin de récupérer les infos du plateau */
-    private boolean lireFichier(File fichier)
+    public boolean chargerXML(Reader cs)
 	{
 		SAXBuilder sxb = new SAXBuilder();
 
 		try
 		{
-			Document document = sxb.build(fichier);
+			Document document = sxb.build(cs);
 
 			/* <jeu> */
 			Element racine = document.getRootElement();
@@ -268,6 +274,217 @@ public class Metier
 		} 
 		catch (Exception e)
 		{ 
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public String getXml()
+	{
+		try {
+			Document document = new Document();
+			
+			/* <jeu> */
+			Element racine = new Element("jeu");
+			document.setRootElement(racine);
+			
+			/* <information> */
+			Element information = new Element("information");
+			racine.addContent(information);
+
+			Element dimension = new Element("dimension");
+			information.addContent(dimension);
+			dimension.setAttribute("x", Integer.toString(this.taillePlateau[0]));
+			dimension.setAttribute("y", Integer.toString(this.taillePlateau[1]));
+
+			Element imageFond = new Element("image-fond");
+			information.addContent(imageFond);
+			imageFond.setText(this.imageToBase64(this.imagePlateau));
+
+			Element couleurFond = new Element("couleur-fond");
+			information.addContent(couleurFond);
+			couleurFond.setText(this.colorToHexa(this.couleurPlateau));
+
+			Element police = new Element("police");
+			information.addContent(police);
+			police.setText(this.policePlateau.getFontName());
+
+			Element nbJoueurs = new Element("nombre-joueurs");
+			information.addContent(nbJoueurs);
+			nbJoueurs.setAttribute("min", Integer.toString(this.nbJoueursMin));
+			nbJoueurs.setAttribute("max", Integer.toString(this.nbJoueursMax));
+
+			Element nbCarte = new Element("nombre-carte");
+			information.addContent(nbCarte);
+			nbCarte.setAttribute("couleur", Integer.toString(this.nbCarteCoul));
+			nbCarte.setAttribute("multicouleur", Integer.toString(this.nbCarteLocomotive));
+
+			Element nbJeton = new Element("nombre-jeton");
+			information.addContent(nbJeton);
+			nbJeton.setAttribute("joueur", Integer.toString(this.nbJetonJoueur));
+			nbJeton.setAttribute("fin", Integer.toString(this.nbJetonFin));
+	
+			Element plateau = new Element("plateau");
+			racine.addContent(plateau);
+
+			/* <liste-lstCouleurs> */
+			Element lstCouleurs = new Element("liste-lstCouleurs");
+			plateau.addContent(lstCouleurs);
+
+			for (int i = 0; i < this.lstCouleurs.size(); i++)
+			{
+				Element couleur = new Element("couleur");
+				lstCouleurs.addContent(couleur);
+				couleur.setAttribute("id", Integer.toString(i+1));
+				couleur.setText(this.colorToHexa(this.lstCouleurs.get(i)));
+			}
+
+			/* <liste-image-cartes> */
+			Element imagesCartes = new Element("liste-image-cartes");
+			plateau.addContent(imagesCartes);
+
+			Element imageVersoCoul = new Element("image-verso");
+			imagesCartes.addContent(imageVersoCoul);
+			imageVersoCoul.setText(imageToBase64(this.imageVersoCouleur));
+
+			Element imageRectoLoco = new Element("image-recto");
+			imagesCartes.addContent(imageRectoLoco);
+			imageRectoLoco.setAttribute("id", "locomotive");
+			imageRectoLoco.setText(imageToBase64(this.imageRectoLocomotive));
+
+			for (int i = 0; i < this.lstImagesRectoCouleur.size(); i++)
+			{
+				Element imageRecto = new Element("image-recto");
+				imagesCartes.addContent(imageRecto);
+				imageRecto.setAttribute("id", Integer.toString(i+1));
+				imageRecto.setText(this.imageToBase64(this.lstImagesRectoCouleur.get(i)));
+			}
+			
+			/* <tableau-lstPoints> */
+			Element tablstPoints = new Element("tableau-lstPoints");
+			plateau.addContent(tablstPoints);
+
+			for (int i = 0; i < this.lstPoints.size(); i++)
+			{
+				Element distance = new Element("distance");
+				tablstPoints.addContent(distance);
+				distance.setAttribute("id", Integer.toString(i+1));
+				distance.setText(Integer.toString(this.lstPoints.get(i)));
+			}
+
+			/* <liste-lstNoeuds> */
+			Element lstNoeuds = new Element("liste-lstNoeuds");
+			plateau.addContent(lstNoeuds);
+
+			for (int i = 0; i < this.lstNoeuds.size(); i++)
+			{
+				Element noeud = new Element("noeud");
+				lstNoeuds.addContent(noeud);
+				noeud.setAttribute("id", Integer.toString(i+1));
+				
+				Element position = new Element("position");
+				noeud.addContent(position);
+				position.setAttribute("x", Integer.toString(this.lstNoeuds.get(i).getX()));
+				position.setAttribute("y", Integer.toString(this.lstNoeuds.get(i).getY()));
+
+				Element nom = new Element("nom");
+				noeud.addContent(nom);
+				nom.setText(this.lstNoeuds.get(i).getNom());
+
+				Element position_nom = new Element("position-nom");
+				noeud.addContent(position_nom);
+				position_nom.setAttribute("x", Integer.toString(this.lstNoeuds.get(i).getXNom()));
+				position_nom.setAttribute("y", Integer.toString(this.lstNoeuds.get(i).getYNom()));
+
+				Element couleur = new Element("couleur");
+				noeud.addContent(couleur);
+				couleur.setText(this.colorToHexa(this.lstNoeuds.get(i).getCouleur()));
+			}
+
+			/* <liste-lstAretes> */
+			Element arrets = new Element("liste-lstAretes");
+			plateau.addContent(arrets);
+
+			for (int i = 0; i < this.lstAretes.size(); i++)
+			{
+				Element arret = new Element("arete");
+				arrets.addContent(arret);
+
+				Element noeud = new Element("noeud");
+				arret.addContent(noeud);
+				noeud.setAttribute("n1", Integer.toString(this.lstAretes.get(i).getNoeud1().getId()));
+				noeud.setAttribute("n2", Integer.toString(this.lstAretes.get(i).getNoeud2().getId()));
+
+				Element couleur1 = new Element("couleur1");
+				arret.addContent(couleur1);
+				couleur1.setText(this.colorToHexa(this.lstAretes.get(i).getCouleur1()));
+
+				Element couleur2 = new Element("couleur2");
+				arret.addContent(couleur2);
+				if (this.lstAretes.get(i).getCouleur2() == null)
+					couleur2.setText("NULL");
+				else
+					couleur2.setText(this.colorToHexa(this.lstAretes.get(i).getCouleur2()));
+
+				Element distance = new Element("distance");
+				arret.addContent(distance);
+				distance.setText(Integer.toString(this.lstAretes.get(i).getDistance()));
+			}
+
+			/* <liste-objectifs> */
+			Element objectifs = new Element("liste-objectifs");
+			racine.addContent(objectifs);
+
+			Element versoObjectif = new Element("image-verso");
+			objectifs.addContent(versoObjectif);
+			versoObjectif.setText(imageToBase64(this.imageVersoObjectif));
+
+			/*
+			for (int i = 0; i < this.carteObjectif.size(); i++)
+			{
+				Element objectif = new Element("objectif");
+				objectifs.addContent(objectif);
+
+				Element noeud = new Element("noeud");
+				objectif.addContent(noeud);
+				noeud.setAttribute("n1", Integer.toString(this.carteObjectif.get(i).getNoeud1().getId()));
+				noeud.setAttribute("n2", Integer.toString(this.carteObjectif.get(i).getNoeud2().getId()));
+
+				Element lstPoints = new Element("lstPoints");
+				objectif.addContent(lstPoints);
+				lstPoints.setText(Integer.toString(this.carteObjectif.get(i).getPoints()));
+
+				Element rectoObjectif = new Element("image-recto");
+				objectif.addContent(rectoObjectif);
+				rectoObjectif.setText(imageToBase64(this.carteObjectif.get(i).getImageRecto()));
+			}
+			*/
+
+			XMLOutputter sortie = new XMLOutputter(Format.getCompactFormat());
+			String xml = sortie.outputString(document);
+			return xml;
+			
+		} catch (Exception e){
+			e.printStackTrace();
+			return "ERREUR";
+		}
+
+	}
+	
+	private String colorToHexa(Color color)
+	{
+		if (color == null) return "#0F0F0F";
+		return "#" + Integer.toHexString(color.getRGB()).substring(2);
+	}
+
+	/*Lecture du fichier XML afin de récupérer les infos du plateau */
+    public boolean lireFichier(File fichier)
+	{
+		// read file into a reader
+		try {
+			this.chargerXML(new FileReader(fichier));
+			return true;
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return false;
 		}

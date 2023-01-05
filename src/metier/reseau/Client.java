@@ -13,7 +13,6 @@ public class Client
     // Socket 
     private String ip;
     private int port;
-    private String nom;
     private Socket socket;
     private boolean connecte;
 
@@ -24,7 +23,6 @@ public class Client
         this.metier = metier;
         this.ip = ip;
         this.port = 5000;
-        this.nom = "nom_de_la_partie";
         this.connecte = false;
     }
 

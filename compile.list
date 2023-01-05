@@ -11,14 +11,14 @@
 ./src/ihm/accueil/MenuBarre.java
 
 ./src/ihm/jeu/FrameJeu.java
+./src/ihm/jeu/PanelInfosJoueur.java
 ./src/ihm/jeu/PanelJoueurs.java
 ./src/ihm/jeu/PanelMainJoueur.java
 ./src/ihm/jeu/PanelPioche.java
 ./src/ihm/jeu/PanelPlateau.java
 
-
 ./src/metier/reseau/Client.java
-./src/metier/reseau/Packet.java
+./src/metier/reseau/ClientServerHandler.java
 ./src/metier/reseau/Server.java
 ./src/metier/reseau/ServerClientHandler.java
 

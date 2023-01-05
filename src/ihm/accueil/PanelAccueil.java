@@ -3,13 +3,17 @@ package ihm.accueil;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.awt.event.ActionEvent;
 
 import java.awt.GridLayout;
@@ -131,7 +135,20 @@ public class PanelAccueil extends JPanel implements ActionListener
 
             if (btn == this.btnImporterMappe)
             {
-                //this.ctrl.importerMappe();
+                JFileChooser chooser = new JFileChooser(".");
+				chooser.setFileFilter(new FileNameExtensionFilter("Fichier XML", "xml"));
+
+				int res = chooser.showOpenDialog(this);
+				if (res == JFileChooser.APPROVE_OPTION && chooser.getSelectedFile().getPath() != null)
+				{
+					File fichier = chooser.getSelectedFile();
+					String extention = fichier.getName().substring(fichier.getName().lastIndexOf('.') + 1);
+
+					if (extention.equals("xml"))
+						this.ctrl.ouvrir(fichier);
+					else
+						JOptionPane.showMessageDialog(this, "Le fichier choisi doit-être au format XML", "Erreur", JOptionPane.ERROR_MESSAGE);
+				}
             }
             else if (btn == this.btnCreerPartie)
             {
