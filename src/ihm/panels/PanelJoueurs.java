@@ -1,5 +1,8 @@
 package ihm.panels;
 
+import java.awt.Color;
+
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controleur.Controleur;
@@ -13,5 +16,10 @@ public class PanelJoueurs extends JPanel
     public PanelJoueurs(Controleur ctrl)
     {
         this.ctrl = ctrl;
+
+		this.setBackground(Color.YELLOW);
+		this.add(new JLabel("PanelJoueurs"));
+
+		this.setVisible(true);
     }
 }

@@ -14,9 +14,8 @@ public class Ihm
     {
         this.ctrl = ctrl;
 
+		//this.frameMenu = new FrameMenu(this.ctrl);
         this.frameJeu = new FrameJeu(this.ctrl);
-        //this.frameMenu = new FrameMenu(this.ctrl);
-
 
         this.appliquerTheme();
     }
@@ -26,7 +25,7 @@ public class Ihm
      */
     public void appliquerTheme()
     {
-        this.frameJeu.appliquerTheme();
+        //this.frameJeu.appliquerTheme();
         //this.frameMenu.appliquerTheme();
     }
 }
