@@ -65,8 +65,9 @@ public class Metier
         this.ctrl = ctrl;
 
 		//this.lireFichier(new File("./bin/donnees/France.xml"));
-
-
+		this.lstJoueurs = new ArrayList<Joueur>();
+	
+		// construction de la HashMap a partir de l'ArrayList
 
 		this.hmColorThemes = new HashMap<String, List<Color>>();
 		this.chargerThemes(getThemeUsed());
@@ -82,6 +83,32 @@ public class Metier
 
 		return false;
     }
+	
+	public void piocherDeck (char typeCarte, String nomJoueur)
+	{
+		switch(typeCarte)
+		{
+			case 'O':
+			int cptJoueur = 0;
+			for ( Joueur joueur : this.lstJoueurs )
+			{
+				if ( nomJoueur == joueur.getNom()  )
+					this.lstJoueurs.get(cptJoueur).ajouterCarteObjectif(this.lstCartesObjectif.);
+					cptJoueur++;
+			}
+				break;
+			
+			case 'W': 
+				int cptWagon = 0;
+				for ( Joueur joueur : this.lstJoueurs )
+				{
+					if ( nomJoueur == joueur.getNom()  )
+						this.lstJoueurs.get(cptWagon).ajouterCarteWagon(this.lstCartesWagon.);
+					cptWagon++;
+				}
+				break;
+		}
+	}
 
 
 	/* --------------------------- */
@@ -408,4 +435,3 @@ public class Metier
 		}
 	}
 }
-

@@ -18,7 +18,7 @@
 
 
 ./src/metier/reseau/Client.java
-./src/metier/reseau/Packet.java
+./src/metier/reseau/ClientServerHandler.java
 ./src/metier/reseau/Server.java
 ./src/metier/reseau/ServerClientHandler.java
 
