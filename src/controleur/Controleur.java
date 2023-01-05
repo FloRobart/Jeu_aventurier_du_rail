@@ -37,6 +37,17 @@ public class Controleur
         return this.metier.getTheme();
     }
 
+    /**
+     * Change le thème à utilisé dans le fichier de sauvegarde.
+     * Charge en mémoire le nouveau thème.
+     * Met à jour l'ihm.
+     * @param theme : Nom du thème à utiliser
+     */
+    public void changerTheme(String theme)
+	{
+		this.metier.setThemeUsed(theme);
+	}
+
     public static void main(String[] args)
     {
         new Controleur();

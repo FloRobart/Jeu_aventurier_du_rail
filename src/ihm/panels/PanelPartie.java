@@ -1,6 +1,7 @@
 package ihm.panels;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -28,19 +29,19 @@ public class PanelPartie extends JPanel implements ActionListener
 {
     private Controleur ctrl;
 
-    /**
-     * Panel qui permet de créer une partie avec tout les élements qu'il contient.
-     */
+    /* Titre et pseudo */
+    private JLabel            lblTitre;
+    private JLabel            lblPseudo;
+    private TextFieldWithHint txtPseudo;
+
+    /* Panel qui permet de créer une partie avec tout les élements qu'il contient */
     private JPanel               panelCreerPartie;
     private JLabel               lblCreerPartie;
     private JButton              btnImporterMappe;
     private TextFieldOnlyInteger txtMdpCreerPartie;
     private JButton              btnCreerPartie;
 
-
-    /**
-     * Panel qui permet de rejoindre une partie avec tout les élements qu'il contient.
-     */
+    /* Panel qui permet de rejoindre une partie avec tout les élements qu'il contient */
     private JPanel               panelRejoindrePartie;
     private JLabel               lblRejoindrePartie;
     private TextFieldWithHint    txtIpRejoindrePartie;
@@ -57,15 +58,22 @@ public class PanelPartie extends JPanel implements ActionListener
         /*=========================*/
         /* Création des composants */
         /*=========================*/
+
+        /* Titre et pseudo */
+        this.lblTitre  = new JLabel(new ImageIcon("Raptor.PNG"));
+        this.lblPseudo = new JLabel("Comment vous appelez-vous ? ");
+        this.txtPseudo = new TextFieldWithHint("sans nom", this.ctrl);
+
+
         /* panel pour creer une partie */
-        this.panelCreerPartie  = new JPanel              (new GridLayout(1, 4, 30, 50));
+        this.panelCreerPartie  = new JPanel              (new GridLayout(4, 1, 30, 50));
         this.lblCreerPartie    = new JLabel              ("Créer une partie"          );
         this.btnImporterMappe  = new JButton             ("Importer une mappe"        );
         this.txtMdpCreerPartie = new TextFieldOnlyInteger("0000", this.ctrl           );
         this.btnCreerPartie    = new JButton             ("Créer la partie"           );
 
         /* panel pour rejoindre une partie */
-        this.panelRejoindrePartie  = new JPanel              (new GridLayout(1, 4, 30, 50));
+        this.panelRejoindrePartie  = new JPanel              (new GridLayout(4, 1, 30, 50));
         this.lblRejoindrePartie    = new JLabel              ("Rejoindre une partie"      );
         this.txtIpRejoindrePartie  = new TextFieldWithHint   ("IP"  , this.ctrl           );
         this.txtMdpRejoindrePartie = new TextFieldOnlyInteger("0000", this.ctrl           );
@@ -76,6 +84,11 @@ public class PanelPartie extends JPanel implements ActionListener
         /*======================*/
         /* Ajout des composants */
         /*======================*/
+        /* Titre et pseudo */
+        this.add(this.lblTitre );
+        this.add(this.lblPseudo);
+        this.add(this.txtPseudo);
+
         /* panel pour creer une partie */
         this.panelCreerPartie.add(this.lblCreerPartie   );
         this.panelCreerPartie.add(this.btnImporterMappe );
@@ -110,9 +123,25 @@ public class PanelPartie extends JPanel implements ActionListener
 
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-        
+    public void actionPerformed(ActionEvent e)
+    {
+        if (e.getSource() instanceof JButton)
+        {
+            JButton btn = (JButton) e.getSource();
+
+            if (btn == this.btnImporterMappe)
+            {
+                //this.ctrl.importerMappe();
+            }
+            else if (btn == this.btnCreerPartie)
+            {
+                //this.ctrl.creerPartie(this.txtMdpCreerPartie.getText());
+            }
+            else if (btn == this.btnRejoindrePartie)
+            {
+                //this.ctrl.rejoindrePartie(this.txtIpRejoindrePartie.getText(), this.txtMdpRejoindrePartie.getText());
+            }
+        }
     }
 
 
@@ -125,7 +154,6 @@ public class PanelPartie extends JPanel implements ActionListener
 
 		Color background       = theme.get("background").get(0);
         Color titleForeColor   = theme.get("titles"    ).get(0);
-        Color labelBackColor   = theme.get("labels"    ).get(1);
         Color saisiForeColor   = theme.get("saisies"   ).get(0);
 		Color saisiBackColor   = theme.get("saisies"   ).get(1);
         Color placeholderColor = theme.get("saisies"   ).get(2);
@@ -135,6 +163,33 @@ public class PanelPartie extends JPanel implements ActionListener
 
         this.setForeground(saisiForeColor);
         this.setBackground(background    );
+
+
+        /*-----------------*/
+        /* Titre et pseudo */
+        /*-----------------*/
+        /* Foreground */
+        this.lblPseudo.setForeground(saisiForeColor);
+        this.txtPseudo.setForeground(placeholderColor);
+
+        /* Placeholder */
+        this.txtPseudo.setForegroundColor (saisiForeColor  );
+        this.txtPseudo.setPlaceholderColor(placeholderColor);
+
+        /* Background */
+        this.lblPseudo.setOpaque(false);
+        this.txtPseudo.setBackground(saisiBackColor);
+
+        /* Border */
+        this.lblPseudo.setBorder(null);
+        this.txtPseudo.setBorder(null);
+
+        /* Alignement */
+        this.lblTitre .setHorizontalAlignment(JLabel    .CENTER);
+        this.lblPseudo.setHorizontalAlignment(JLabel    .CENTER);
+        this.txtPseudo.setHorizontalAlignment(JTextField.CENTER);
+
+
 
         /*-----------------------*/
         /* Création d'une partie */
@@ -147,12 +202,12 @@ public class PanelPartie extends JPanel implements ActionListener
         this.btnCreerPartie   .setForeground(btnForeColor    );
 
         /* Placeholder */
-        this.txtMdpCreerPartie.setForegroundColor(saisiForeColor);
+        this.txtMdpCreerPartie.setForegroundColor (saisiForeColor  );
         this.txtMdpCreerPartie.setPlaceholderColor(placeholderColor);
 
         /* Background */
         this.panelCreerPartie .setBackground(background.brighter());
-        this.lblCreerPartie   .setBackground(labelBackColor       );
+        this.lblCreerPartie   .setOpaque(false);
         this.btnImporterMappe .setBackground(btnBackColor         );
         this.txtMdpCreerPartie.setBackground(saisiBackColor       );
         this.btnCreerPartie   .setBackground(btnBackColor         );
@@ -190,7 +245,7 @@ public class PanelPartie extends JPanel implements ActionListener
 
         /* Background */
         this.panelRejoindrePartie .setBackground(background.brighter());
-        this.lblRejoindrePartie   .setBackground(labelBackColor       );
+        this.lblRejoindrePartie   .setOpaque(false);
         this.txtIpRejoindrePartie .setBackground(saisiBackColor       );
         this.txtMdpRejoindrePartie.setBackground(saisiBackColor       );
         this.btnRejoindrePartie   .setBackground(btnBackColor         );

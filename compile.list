@@ -1,10 +1,19 @@
 ./src/controleur/Controleur.java
 
+./src/ihm/customComponent/TextFieldOnlyInteger.java
+./src/ihm/customComponent/TextFieldWithHint.java
+
 ./src/ihm/frames/FrameJeu.java
 ./src/ihm/frames/FrameMenu.java
 ./src/ihm/frames/Ihm.java
 
-./src/ihm/panels/PanelRandom.java
+./src/ihm/menuBarre/MenuBarre.java
+
+./src/ihm/panels/PanelJoueurs.java
+./src/ihm/panels/PanelMainJoueur.java
+./src/ihm/panels/PanelPartie.java
+./src/ihm/panels/PanelPioche.java
+./src/ihm/panels/PanelPlateau.java
 
 ./src/metier/reseau/Client.java
 ./src/metier/reseau/Packet.java

@@ -60,7 +60,13 @@ public class Metier
     public Metier(Controleur ctrl)
     {
         this.ctrl = ctrl;
-        this.lireFichier(null);
+
+		//this.lireFichier(new File("./bin/donnees/France.xml"));
+
+
+
+		this.hmColorThemes = new HashMap<String, List<Color>>();
+		this.chargerThemes(getThemeUsed());
     }
 
     public void ajouterJoueur(Joueur joueur)
@@ -292,7 +298,7 @@ public class Metier
 	 * @param theme : thème à charger
 	 * @return HashMap contenant les couleurs du thème
 	 */
-	public HashMap<String, List<Color>> chargerThemes(String theme)
+	public void chargerThemes(String theme)
 	{
 		SAXBuilder sxb = new SAXBuilder();
 
@@ -339,8 +345,6 @@ public class Metier
 			e.printStackTrace();
 			System.out.println("Erreur lors de la lecture du fichier XML des informations du theme");
 		}
-
-		return this.hmColorThemes;
 	}
 }
 

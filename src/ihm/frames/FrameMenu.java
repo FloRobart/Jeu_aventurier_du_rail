@@ -1,9 +1,11 @@
 package ihm.frames;
 
+import javax.swing.JFrame;
+
 import controleur.Controleur;
 
 
-public class FrameMenu 
+public class FrameMenu extends JFrame
 {
     private Controleur ctrl;
 
