@@ -6,6 +6,7 @@ import java.util.List;
 import java.awt.Color;
 
 import ihm.frames.Ihm;
+import metier.Joueur;
 import metier.Metier;
 
 
@@ -51,5 +52,9 @@ public class Controleur
     public static void main(String[] args)
     {
         new Controleur();
+    }
+
+    public Joueur getJoueurSelect() {
+        return null;
     }
 }

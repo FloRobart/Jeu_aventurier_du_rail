@@ -1,6 +1,7 @@
 package metier;
 
 import java.util.List;
+import java.awt.Color;
 
 public class Joueur
 {
@@ -9,6 +10,7 @@ public class Joueur
     private List<CarteObjectif> alCartesObjectif;
     private List<CarteWagon> alCartesWagon;
     private int nbJetonsPosés;
+    private Color  couleur;
 
     public Joueur(String nom)
     {
@@ -24,12 +26,14 @@ public class Joueur
     public List<CarteWagon> getAlCartesWagon() { return this.alCartesWagon; }
     public int getNbCartesWagon() { return this.alCartesWagon.size(); }
     public int getNbJetonsPosés() { return this.nbJetonsPosés; }
+    public Color getCouleur() { return this.couleur; }
 
     public void setNom(String nom) { this.nom = nom; }
     public void setScore(int score) { this.score = score; }
     public void setAlCartesObjectif(List<CarteObjectif> alCartesObjectif) { this.alCartesObjectif = alCartesObjectif; }
     public void setAlCartesWagon(List<CarteWagon> alCartesWagon) { this.alCartesWagon = alCartesWagon; }
     public void setNbJetonsPosés(int nbJetonsPosés) { this.nbJetonsPosés = nbJetonsPosés; }
+    public void setCouleur(Color couleur) { this.couleur = couleur; }
 
     public void ajouterCarteObjectif(CarteObjectif carteObjectif)
     {
