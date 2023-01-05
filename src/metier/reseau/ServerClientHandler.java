@@ -3,6 +3,7 @@ package metier.reseau;
 import java.awt.Color;
 
 /*
+ * Fichier qui gère la communication de serveur vers le client
  * Commands réseau
  * Format :
  * La command est suivie d'un espace, puis des arguments séparés par des espaces, puis d'un espace suivit d'un retour à la ligne
@@ -10,8 +11,13 @@ import java.awt.Color;
  * 
  * Liste des commands :
  * BONJOUR : Envoi un message de bienvenue au serveur, le server répond avec des packets OPTION
- * OPTION [nom] [valeur] : Envoi d'un paramètre au client
+ * PARTIE [nom] [valeur] : Envoi d'un paramètre de la partie au client
  * ERREUR [message] : Envoi d'un message d'erreur au client
+ * NOUVEAU_JOUEUR : Un joueur a rejoint la partie
+ * COMMENCER_PARTIE : La partie commence
+ * 
+ * Possibilité :
+ * CHARGER_XML [taille] [xml] : Envoi d'un fichier xml au client
  */
 
 
@@ -33,7 +39,7 @@ public class ServerClientHandler implements Runnable
     private BufferedOutputStream out;
     private Metier metier;
 
-    private void sendCommand(String cmd)
+    public void sendCommand(String cmd)
     {
         try
         {
@@ -91,43 +97,15 @@ public class ServerClientHandler implements Runnable
             
             if (command.equals("BONJOUR"))
             {
-                sendCommand("OPTION nom " + this.metier.getNomPartie() + "\n");
-                sendCommand("OPTION couleur_plateau" + this.metier.getCouleurPlateau().getRGB() + "\n");
+                String joueur_nom = this.readUntil("\n");
 
-                String couleurs = "";
-                for (Color c : this.metier.getCouleurs())
-                {
-                    couleurs += c.getRGB() + ",";
-                }
-                sendCommand("OPTION couleurs " + couleurs + "\n");
-
-                try {
-                    sendCommand("OPTION image_plateau " + this.metier.imageToBase64(this.metier.getImagePlateau()) + "\n");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    sendCommand("ERREUR Impossible d'envoyer l'image du plateau");
-                }
-
-                try {
-                    sendCommand("OPTION image_recto_locomotive " + this.metier.imageToBase64(this.metier.getImageRectoLocomotive()) + "\n");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    sendCommand("ERREUR Impossible d'envoyer l'image du recto de la locomotive");
-                }
-
-                try {
-                    sendCommand("OPTION image_verso_locomotive " + this.metier.imageToBase64(this.metier.getImageVersoCouleur()) + "\n");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    sendCommand("ERREUR Impossible d'envoyer l'image du verso de la locomotive");
-                }
-
-                try {
-                    sendCommand("OPTION image_verso_objectif " + this.metier.imageToBase64(this.metier.getImageVersoObjectif()) + "\n");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    sendCommand("ERREUR Impossible d'envoyer l'image du verso de l'objectif");
-                }
+                this.metier.getServer().sendCommand("NOUVEAU_JOUEUR " + joueur_nom + "\n");
+                this.metier.getServer().sendCommand("PARTIE nombre_joueurs " + this.metier.getServer().getNbJoeurs() + "\n");
+                
+                sendCommand("PARTIE nom " + this.metier.getNomPartie() + "\n");
+                String xml = this.metier.getXml();
+                sendCommand("CHARGER_XML " + xml.length() + " " + xml + "\n");
+                
             }
                     
             
