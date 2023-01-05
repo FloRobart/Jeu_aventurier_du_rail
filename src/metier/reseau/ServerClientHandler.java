@@ -97,12 +97,12 @@ public class ServerClientHandler implements Runnable
             
             if (command.equals("BONJOUR"))
             {
+                String joueur_nom = this.readUntil("\n");
 
-                this.metier.getServer().sendCommand("NOUVEAU_JOUEUR");
+                this.metier.getServer().sendCommand("NOUVEAU_JOUEUR " + joueur_nom + "\n");
                 this.metier.getServer().sendCommand("PARTIE nombre_joueurs " + this.metier.getServer().getNbJoeurs() + "\n");
-                sendCommand("PARTIE nom " + this.metier.getNomPartie() + "\n");
-
                 
+                sendCommand("PARTIE nom " + this.metier.getNomPartie() + "\n");
                 String xml = this.metier.getXml();
                 sendCommand("CHARGER_XML " + xml.length() + " " + xml + "\n");
                 
