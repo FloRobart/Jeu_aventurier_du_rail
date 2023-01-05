@@ -1,4 +1,4 @@
-package ihm.jeu;
+package jeu;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
