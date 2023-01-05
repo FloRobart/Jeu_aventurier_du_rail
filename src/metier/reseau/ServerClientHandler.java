@@ -14,7 +14,6 @@ import java.awt.Color;
  * PARTIE [nom] [valeur] : Envoi d'un paramètre de la partie au client
  * ERREUR [message] : Envoi d'un message d'erreur au client
  * NOUVEAU_JOUEUR : Un joueur a rejoint la partie
- * MOT_DE_PASSE_REQUIS : Le serveur demande un mot de passe pour rejoindre la partie
  * MOT_DE_PASSE [mot_de_passe] : Envoi du mot de passe au serveur
  * 
  * 
@@ -119,10 +118,6 @@ public class ServerClientHandler implements Runnable
                     if (this.metier.getMotDePasse().isBlank())
                     {
                         initialLoading();
-                    }
-                    else
-                    {
-                        sendCommand("MOT_DE_PASSE_REQUIS\n");
                     }
                 }
 
