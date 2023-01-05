@@ -72,6 +72,7 @@ public class Metier
 	private HashMap<String, List<Color>> hmColorThemes;
 
 	private String nomPartie;
+	private String motDePassePartie;
 	private Server server;
 
 
@@ -100,6 +101,7 @@ public class Metier
 	public void initCartes()
 	{
 		//Creation des cartes wagon
+
 		this.lstCartesWagon = new ArrayList<CarteWagon>();
 
 		while ( this.nbCarteLocomotive-- > 0 )
@@ -234,7 +236,9 @@ public class Metier
 	public BufferedImage       getImageVersoObjectif  () { return this.imageVersoObjectif;   }
 	
 	public String 			   getNomPartie           () { return this.nomPartie;            }
+	public String              getMotDePasse		  () { return this.motDePassePartie;     }
 	public Server 			   getServer              () { return this.server;               }
+
 
     public boolean chargerXML(Reader cs)
 	{
