@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.Graphics2D;
 
 import controleur.Controleur;
 import metier.Joueur;
@@ -134,16 +133,5 @@ public class PanelInfosJoueur extends JPanel
         this.add(panelIcon, BorderLayout.CENTER);
         this.add(panelInfos, BorderLayout.EAST);
     }
-
-    /*public static void main(String[] args) 
-    {
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300,200);
-        frame.add(new PanelInfosJoueur());
-        frame.pack();
-        frame.setVisible(true);
-    }*/
-   
     
 }
