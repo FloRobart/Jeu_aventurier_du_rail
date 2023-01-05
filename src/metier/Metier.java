@@ -98,8 +98,8 @@ public class Metier
 			for ( Joueur joueur : this.lstJoueurs )
 			{
 				if ( nomJoueur == joueur.getNom()  )
-					this.lstJoueurs.get(cptJoueur).ajouterCarteObjectif(this.lstCartesObjectif.);
-					cptJoueur++;
+					this.lstJoueurs.get(cptJoueur).ajouterCarteObjectif(this.lstCartesObjectif.get((int)Math.random()*(this.lstCartesObjectif.size())));
+				cptJoueur++;
 			}
 				break;
 			
@@ -108,7 +108,7 @@ public class Metier
 				for ( Joueur joueur : this.lstJoueurs )
 				{
 					if ( nomJoueur == joueur.getNom()  )
-						this.lstJoueurs.get(cptWagon).ajouterCarteWagon(this.lstCartesWagon.);
+						this.lstJoueurs.get(cptWagon).ajouterCarteWagon(this.lstCartesWagon.get((int)Math.random()*(this.lstCartesWagon.size())));
 					cptWagon++;
 				}
 				break;
