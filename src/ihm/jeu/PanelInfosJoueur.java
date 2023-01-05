@@ -32,10 +32,12 @@ public class PanelInfosJoueur extends JPanel
     private int nbWagons;
     private int nbCartesObjectif;
     private int nbCartesWagon;
+    private int numJoueur;
 
-    public PanelInfosJoueur()
+    public PanelInfosJoueur(Controleur ctrl, int numJoueur)
     {
-        //this.ctrl = ctrl;
+        this.ctrl = ctrl;
+        this.numJoueur = numJoueur;
 
         initComponents();
     }
@@ -46,7 +48,7 @@ public class PanelInfosJoueur extends JPanel
         this.setLayout(new BorderLayout());
         this.setBackground(new Color(40, 42, 54));
 
-        this.lblNom              = new JLabel("nom");
+        this.lblNom              = new JLabel("nom" + numJoueur);
         this.lblNom.setForeground(Color.WHITE);
         this.lblNbJeton          = new JLabel("jetons");
         this.lblNbJeton.setForeground(Color.WHITE);
