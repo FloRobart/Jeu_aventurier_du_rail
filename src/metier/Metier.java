@@ -70,10 +70,8 @@ public class Metier
     {
         this.ctrl = ctrl;
 
+		
 		//this.lireFichier(new File("./bin/donnees/France.xml"));
-
-
-
 		this.hmColorThemes = new HashMap<String, List<Color>>();
 		this.chargerThemes(getThemeUsed());
     }
