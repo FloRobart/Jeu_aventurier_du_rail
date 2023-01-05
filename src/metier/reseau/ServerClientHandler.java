@@ -3,6 +3,7 @@ package metier.reseau;
 import java.awt.Color;
 
 /*
+ * Fichier qui gère la communication de serveur vers le client
  * Commands réseau
  * Format :
  * La command est suivie d'un espace, puis des arguments séparés par des espaces, puis d'un espace suivit d'un retour à la ligne
@@ -11,7 +12,13 @@ import java.awt.Color;
  * Liste des commands :
  * BONJOUR : Envoi un message de bienvenue au serveur, le server répond avec des packets OPTION
  * OPTION [nom] [valeur] : Envoi d'un paramètre au client
+ * PARTIE [nom] [valeur] : Envoi d'un paramètre de la partie au client
  * ERREUR [message] : Envoi d'un message d'erreur au client
+ * NOUVEAU_JOUEUR : Un joueur a rejoint la partie
+ * COMMENCER_PARTIE : La partie commence
+ * 
+ * Possibilité :
+ * CHARGER_XML [taille] [xml] : Envoi d'un fichier xml au client
  */
 
 
@@ -33,7 +40,7 @@ public class ServerClientHandler implements Runnable
     private BufferedOutputStream out;
     private Metier metier;
 
-    private void sendCommand(String cmd)
+    public void sendCommand(String cmd)
     {
         try
         {
@@ -91,7 +98,13 @@ public class ServerClientHandler implements Runnable
             
             if (command.equals("BONJOUR"))
             {
-                sendCommand("OPTION nom " + this.metier.getNomPartie() + "\n");
+
+                this.metier.getServer().sendCommand("NOUVEAU_JOUEUR");
+                this.metier.getServer().sendCommand("PARTIE nombre_joueurs " + this.metier.getServer().getNbJoeurs() + "\n");
+                sendCommand("PARTIE nom " + this.metier.getNomPartie() + "\n");
+
+                
+                //TODO: Envoyer tout le XML ? (dans se cas il faut une fonction dnas metier qui renvoie le XML)
                 sendCommand("OPTION couleur_plateau" + this.metier.getCouleurPlateau().getRGB() + "\n");
 
                 String couleurs = "";

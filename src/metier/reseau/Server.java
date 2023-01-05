@@ -4,6 +4,7 @@ package metier.reseau;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import controleur.Controleur;
 import metier.Metier;
@@ -13,9 +14,23 @@ public class Server
 {
     private Metier metier;
     private ServerSocket socket;
+    private ArrayList<ServerClientHandler> clients;
     public Server(Metier metier)
     {
         this.metier = metier;
+    }
+
+    public void sendCommand(String cmd)
+    {
+        for (ServerClientHandler sch : clients)
+        {
+            sch.sendCommand(cmd);
+        }
+    }
+
+    public int getNbJoeurs()
+    {
+        return clients.size();
     }
 
     public void Stop()
@@ -30,7 +45,8 @@ public class Server
 
     public void Start()
     {
-        Thread t = new Thread(new Runnable() {
+        
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -42,7 +58,9 @@ public class Server
                 {
                     try {
                         Socket client = socket.accept();
-                        new Thread(new ServerClientHandler(metier, client)).start();
+                        ServerClientHandler sch = new ServerClientHandler(metier, client);
+                        clients.add(sch);
+                        new Thread(sch).start();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -50,4 +68,6 @@ public class Server
             }
         });
     }
+
+
 }

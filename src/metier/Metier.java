@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import controleur.Controleur;
+import metier.reseau.Server;
 
 public class Metier
 {
@@ -57,6 +58,7 @@ public class Metier
 	private HashMap<String, List<Color>> hmColorThemes;
 
 	private String nomPartie;
+	private Server server;
 
 
 
@@ -114,6 +116,7 @@ public class Metier
 	public BufferedImage       getImageVersoObjectif  () { return this.imageVersoObjectif;   }
 	
 	public String 			   getNomPartie           () { return this.nomPartie;            }
+	public Server 			   getServer              () { return this.server;               }
 
     /*Lecture du fichier XML afin de récupérer les infos du plateau */
     private boolean lireFichier(File fichier)

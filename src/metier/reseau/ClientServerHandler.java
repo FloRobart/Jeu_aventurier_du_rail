@@ -1,6 +1,9 @@
 package metier.reseau;
 
-
+/*
+ * Fichier qui gère la communication du client vers le serveur
+ * Voire ServerClientHandler pour la liste des commands
+ */
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -18,7 +21,7 @@ public class ClientServerHandler implements Runnable
     private BufferedOutputStream out;
     private Metier metier;
 
-    private void sendCommand(String cmd)
+    public void sendCommand(String cmd)
     {
         try
         {
