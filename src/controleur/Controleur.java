@@ -10,6 +10,8 @@ import java.io.File;
 
 import ihm.Ihm;
 import metier.*;
+import metier.reseau.Client;
+import metier.reseau.Server;
 
 
 public class Controleur 
@@ -88,7 +90,19 @@ public class Controleur
 	{
 		this.metier.setThemeUsed(theme);
 	}
-
+	/*
+	 * 
+	 */
+	public void hostGame()
+	{
+		new ServerControleur(metier);
+	}
+	public void joinGame(String ip)
+	{		
+		ClientControleur clientCtrl = new ClientControleur(ip);
+		this.metier = clientCtrl.getMetier();
+		this.ihm.demarrerJeu();
+	}
     public static void main(String[] args)
     {
         new Controleur();
