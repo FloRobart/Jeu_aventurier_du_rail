@@ -92,4 +92,8 @@ public class Controleur
     {
         new Controleur();
     }
+
+    public Joueur getJoueurSelect() {
+        return null;
+    }
 }
