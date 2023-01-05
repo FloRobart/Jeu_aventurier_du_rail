@@ -1,4 +1,4 @@
-package ihm.menuBarre;
+package ihm.accueil;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

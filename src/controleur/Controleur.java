@@ -5,7 +5,7 @@ import java.util.List;
 
 import java.awt.Color;
 
-import ihm.frames.Ihm;
+import ihm.Ihm;
 import metier.Metier;
 
 

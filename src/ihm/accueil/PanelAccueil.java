@@ -1,4 +1,4 @@
-package ihm.panels;
+package ihm.accueil;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -25,7 +25,7 @@ import ihm.customComponent.TextFieldWithHint;
  * C'est le premier panel qui s'affiche quand on lance le jeu.
  * Ce panel permet de créer ou de rejoindre une partie.
  */
-public class PanelPartie extends JPanel implements ActionListener
+public class PanelAccueil extends JPanel implements ActionListener
 {
     private Controleur ctrl;
 
@@ -50,7 +50,7 @@ public class PanelPartie extends JPanel implements ActionListener
 
 
 
-    public PanelPartie(Controleur ctrl)
+    public PanelAccueil(Controleur ctrl)
     {
         this.ctrl = ctrl;
 
