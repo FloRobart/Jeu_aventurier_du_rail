@@ -1,4 +1,4 @@
-package ihm.panels;
+package ihm.jeu;
 
 import java.awt.Color;
 
@@ -8,17 +8,16 @@ import javax.swing.JPanel;
 import controleur.Controleur;
 
 
-public class PanelJoueurs extends JPanel
+public class PanelPioche extends JPanel
 {
     private Controleur ctrl;
 
-
-    public PanelJoueurs(Controleur ctrl)
+    public PanelPioche(Controleur ctrl)
     {
         this.ctrl = ctrl;
 
-		this.setBackground(Color.YELLOW);
-		this.add(new JLabel("PanelJoueurs"));
+		this.setBackground(Color.RED);
+		this.add(new JLabel("PanelPioche"));
 
 		this.setVisible(true);
     }

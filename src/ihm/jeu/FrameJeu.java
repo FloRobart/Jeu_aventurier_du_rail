@@ -1,4 +1,4 @@
-package ihm.frames;
+package ihm.jeu;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -7,13 +7,6 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 
 import controleur.Controleur;
-import ihm.menuBarre.MenuBarre;
-import ihm.panels.PanelJoueurs;
-import ihm.panels.PanelMainJoueur;
-import ihm.panels.PanelPartie;
-import ihm.panels.PanelPioche;
-import ihm.panels.PanelPlateau;
-
 
 public class FrameJeu extends JFrame
 {
