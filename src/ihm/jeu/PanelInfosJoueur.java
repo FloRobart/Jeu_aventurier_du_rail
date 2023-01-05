@@ -98,9 +98,9 @@ public class PanelInfosJoueur extends JPanel
 
            /*for (int x=0; x < imgJoueur.getWidth(); x++)
                 for (int y=0; y < imgJoueur.getHeight(); y++)
-                    if (imgJoueur.getRGB(x, y) == Color.BLACK.getRGB())
-                        this.imgJoueur.setRGB(x, y, Color.WHITE.getRGB());*/
-                  
+                    if (imgJoueur.getRGB(x, y) == (new Color(237, 237, 237).getRGB()))
+                        this.imgJoueur.setRGB(x, y, Color.BLACK.getRGB());*/
+            
             this.lblIcon.setIcon(new ImageIcon(this.imgJoueur));
         } catch (IOException e) {
             // TODO Auto-generated catch block
