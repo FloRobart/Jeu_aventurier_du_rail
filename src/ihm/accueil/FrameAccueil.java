@@ -25,7 +25,7 @@ public class FrameAccueil extends JFrame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		this.menuBarre   = new MenuBarre   (this.ctrl);
-        this.panelPartie = new PanelAccueil(this.ctrl);
+        this.panelPartie = new PanelAccueil(this.ctrl, this.getSize());
 
 		this.setJMenuBar(this.menuBarre);
 		this.add(this.panelPartie);

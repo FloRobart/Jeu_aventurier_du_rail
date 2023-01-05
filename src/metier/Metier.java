@@ -102,7 +102,7 @@ public class Metier
 	//initialise les decks
 	public void initCartes()
 	{
-		this.lstCartesObjectif = new ArrayList<CarteObjectif>();
+		/*this.lstCartesObjectif = new ArrayList<CarteObjectif>();
 		Collections.shuffle(this.lstCartesObjectif);
 
 		this.lstCartesWagon = new ArrayList<CarteWagon>();
@@ -114,7 +114,7 @@ public class Metier
 		this.tabCarteObjectif = new CarteObjectif[TAILLE_TAB_OBJECTIF];
 
 		for (int cpt = 0; cpt < this.tabCarteWagon.length; cpt++)
-			this.tabCarteWagon[cpt] = this.lstCartesWagon.remove(0);
+			this.tabCarteWagon[cpt] = this.lstCartesWagon.remove(0);*/
 	}
 	
 	//Permet de choisir parmi les trois cartes objectifs
