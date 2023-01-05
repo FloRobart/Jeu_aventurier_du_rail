@@ -35,10 +35,12 @@ public class PanelJoueurs extends JPanel implements ActionListener
 		this.setBackground(Color.YELLOW);
         this.setSize(500, 200);
 
+        /*panel joueurs */
         this.panelJoueurs = new JPanel();
         this.panelJoueurs.setBackground(new Color(40, 42, 54));
         this.panelJoueurs.setLayout(new GridLayout(4, 1, 1, 1));
 
+        /*panel de chaque joueurs */
         this.tabPanels = new JPanel[4];
         this.tabBoutons = new JButton[4];
 
@@ -69,6 +71,7 @@ public class PanelJoueurs extends JPanel implements ActionListener
             this.panelJoueurs.add(tabPanels[cpt]);
         }
 
+        /*JScrollPane */
         this.scrollJoueurs = new JScrollPane(panelJoueurs, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         this.scrollJoueurs.getVerticalScrollBar().setBackground(new Color(68, 71, 90));
         this.scrollJoueurs.setPreferredSize(new Dimension(200,200));
@@ -77,6 +80,7 @@ public class PanelJoueurs extends JPanel implements ActionListener
  
 		this.setVisible(true);
 
+        /*afficher les infos d'un joueur en fonction du joueur selectionné */
         for(int cpt=0; cpt< tabBoutons.length; cpt++)
         {
             this.tabBoutons[cpt].addActionListener(this);
@@ -98,6 +102,7 @@ public class PanelJoueurs extends JPanel implements ActionListener
 
     }
 
+    /*ouverture du panel infos joueur */
     private void ouvrirDialog(int numJoueur)
     {
         JDialog dialog = new JDialog();
