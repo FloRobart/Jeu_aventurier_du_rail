@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
-
+import java.awt.Graphics2D;
 
 import controleur.Controleur;
 import metier.Joueur;
@@ -50,7 +50,7 @@ public class PanelInfosJoueur extends JPanel
 
         this.lblNom              = new JLabel("nom" + numJoueur);
         this.lblNom.setForeground(Color.WHITE);
-        this.lblNbJeton          = new JLabel("jetons");
+        this.lblNbJeton          = new JLabel("jetons restants");
         this.lblNbJeton.setForeground(Color.WHITE);
         this.lblNbCartesWagon    = new JLabel("cartes wagon");
         this.lblNbCartesWagon.setForeground(Color.WHITE);
@@ -94,15 +94,10 @@ public class PanelInfosJoueur extends JPanel
         try {
             this.imgJoueur = ImageIO.read(new File("./donnees/images/IconJoueur.png"));
 
-           /*for (int x=0; x < imgJoueur.getWidth(); x++)
-                for (int y=0; y < imgJoueur.getHeight(); y++)
-                    if (imgJoueur.getRGB(x, y) == (new Color(237, 237, 237).getRGB()))
-                        this.imgJoueur.setRGB(x, y, Color.BLACK.getRGB());*/
             
             this.lblIcon.setIcon(new ImageIcon(this.imgJoueur));
             
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
