@@ -16,4 +16,13 @@ public class Ihm
         this.frameJeu = new FrameJeu(this.ctrl);
         //this.frameMenu = new FrameMenu(this.ctrl);
     }
+
+    /**
+     * Permet d'appliquer le thème à chaque élément de l'ihm qui en à besoins
+     */
+    public void appliquerTheme()
+    {
+        this.frameJeu.appliquerTheme();
+        //this.frameMenu.appliquerTheme();
+    }
 }

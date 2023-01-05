@@ -1,0 +1,24 @@
+<theme name="sombre">
+    <background red="255" green="255" blue="255"></background>
+    <titles>
+        <foreground red="0" green="0" blue="0"></foreground>
+        <background red="205" green="205" blue="205"></background>
+    </titles>
+    <labels>
+        <foreground red="0" green="0" blue="0"></foreground>
+        <background red="250" green="250" blue="250"></background>
+    </labels>
+    <saisies>
+        <foreground red="0" green="0" blue="0"></foreground>
+        <background red="230" green="230" blue="230"></background>
+        <placeholder red="0" green="0" blue="0" alpha="100"></placeholder>
+    </saisies>
+    <bottuns>
+        <foreground red="0" green="0" blue="0"></foreground>
+        <background red="210" green="210" blue="210"></background>
+    </bottuns>
+    <menuBar>
+        <foreground red="0" green="0" blue="0"></foreground>
+        <background red="243" green="243" blue="243"></background>
+    </menuBar>
+</theme>

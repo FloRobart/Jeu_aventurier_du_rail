@@ -9,7 +9,8 @@ import controleur.Controleur;
 public class FrameJeu extends JFrame
 {
     private Controleur ctrl;
-
+    
+    private PanelPartie     panelPartie;
     private PanelJoueurs    panelJoueurs;
     private PanelMainJoueur panelMainJoueur;
     private PanelPioche     panelPioche;
@@ -21,6 +22,7 @@ public class FrameJeu extends JFrame
         this.ctrl = ctrl;
 
         /* Creation des composants */
+        this.panelPartie     = new PanelPartie    (this.ctrl);
         this.panelJoueurs    = new PanelJoueurs   (this.ctrl);
         this.panelMainJoueur = new PanelMainJoueur(this.ctrl);
         this.panelPioche     = new PanelPioche    (this.ctrl);
@@ -31,5 +33,15 @@ public class FrameJeu extends JFrame
 
 
         /* Activation des composants */
+    }
+
+
+    public void appliquerTheme()
+    {
+        this.panelPartie    .appliquerTheme();
+        //this.panelJoueurs   .appliquerTheme();
+        //this.panelMainJoueur.appliquerTheme();
+        //this.panelPioche    .appliquerTheme();
+        //this.panelPlateau   .appliquerTheme();
     }
 }

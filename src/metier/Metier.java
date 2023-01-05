@@ -2,6 +2,7 @@ package metier;
 
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import controleur.Controleur;
 
@@ -50,7 +52,9 @@ public class Metier
 	private List<Integer>       lstPoints;
 
 	private BufferedImage       imageVersoObjectif;
-	
+
+	private HashMap<String, List<Color>> hmColorThemes;
+
 
 
     public Metier(Controleur ctrl)
@@ -236,6 +240,107 @@ public class Metier
 		                  Integer.parseInt(hexa.substring(3, 5), 16),
 		                  Integer.parseInt(hexa.substring(5, 7), 16) );
 	}
-    
+
+	public HashMap<String, List<Color>> getTheme() { return this.hmColorThemes;}
+
+
+	/**
+	 * Récupère le thème utilisé dans le fichier xml de sauvegarde
+	 * @return String : thème à utilisé
+	 */
+	public String getThemeUsed()
+	{
+		String themeUsed = "";
+		SAXBuilder sxb = new SAXBuilder();
+
+		try
+		{
+			themeUsed = sxb.build("./bin/donnees/themes/theme_sauvegarde.xml").getRootElement().getText();
+		}
+		catch (Exception e) { e.printStackTrace(); System.out.println("Erreur lors de la lecture du fichier XML du themes utilisé"); }
+
+		return themeUsed;
+	}
+
+	/**
+	 * Sauvegarde le thème selectionné par l'utilisateur dans le fichier xml de sauvegarde
+	 * @param theme : thème à sauvegarder
+	 */
+	public void setThemeUsed(String theme)
+	{
+		try
+		{
+			PrintWriter pw = new PrintWriter("./bin/donnees/themes/theme_sauvegarde.xml");
+			pw.println("<theme>" + theme + "</theme>");
+			pw.close();
+
+			// temporaire
+			//pw = new PrintWriter("./donnees/themes/theme_sauvegarde.xml");
+			//pw.println("<theme>" + theme + "</theme>");
+			//pw.close();
+		}
+		catch (Exception e) { e.printStackTrace(); System.out.println("Erreur lors de l'écriture du fichier XML du themes utilisé"); }
+
+		this.chargerThemes(theme);
+
+		this.ctrl.appliquerTheme();
+	}
+
+
+	/**
+	 * Charge les couleurs du thème choisi par l'utilisateur dans la HashMap
+	 * @param theme : thème à charger
+	 * @return HashMap contenant les couleurs du thème
+	 */
+	public HashMap<String, List<Color>> chargerThemes(String theme)
+	{
+		SAXBuilder sxb = new SAXBuilder();
+
+		try
+		{
+			Element racine = sxb.build("./bin/donnees/themes/theme_" + theme + ".xml").getRootElement();
+
+			/*----------------------------*/
+			/* BacKground Générale (=bkg) */
+			/*----------------------------*/
+			Element bkg = racine.getChild("background");
+
+			List<Color> lst = new ArrayList<Color>();
+			lst.add(new Color(Integer.parseInt(bkg.getAttributeValue("red")), Integer.parseInt(bkg.getAttributeValue("green")), Integer.parseInt(bkg.getAttributeValue("blue"))));
+			this.hmColorThemes.put("background", lst);
+
+
+			/*------------------------------------------*/
+			/* Récupération de tout les autres éléments */
+			/*------------------------------------------*/
+			String[] lstCles = new String[] {"titles", "labels", "saisies", "bottuns", "menuBar"};
+			for (int i = 0; i < lstCles.length; i++)
+			{
+				lst = new ArrayList<Color>();
+				Element foreground = racine.getChild(lstCles[i]).getChild("foreground");
+				Element background = racine.getChild(lstCles[i]).getChild("background");
+
+				lst.add(0, new Color(Integer.parseInt(foreground.getAttributeValue("red")), Integer.parseInt(foreground.getAttributeValue("green")), Integer.parseInt(foreground.getAttributeValue("blue"))));
+				lst.add(1, new Color(Integer.parseInt(background.getAttributeValue("red")), Integer.parseInt(background.getAttributeValue("green")), Integer.parseInt(background.getAttributeValue("blue"))));
+
+				/* Récupération de la couleur du PlaceHolder */
+				if (lstCles[i].equals("saisies"))
+				{
+					Element placeholder = racine.getChild(lstCles[i]).getChild("placeholder");
+					lst.add(2, new Color(Integer.parseInt(placeholder.getAttributeValue("red")), Integer.parseInt(placeholder.getAttributeValue("green")), Integer.parseInt(placeholder.getAttributeValue("blue")), Integer.parseInt(placeholder.getAttributeValue("alpha"))));
+				}
+
+
+				this.hmColorThemes.put(lstCles[i], lst);
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			System.out.println("Erreur lors de la lecture du fichier XML des informations du theme");
+		}
+
+		return this.hmColorThemes;
+	}
 }
 
