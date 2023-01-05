@@ -1,8 +1,7 @@
-package jeu;
+package ihm.jeu;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
@@ -10,9 +9,6 @@ import javax.swing.GroupLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
