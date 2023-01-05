@@ -75,6 +75,37 @@ public class Metier
             this.lstJoueurs.add(joueur);
     }
 
+
+	/* --------------------------- */
+	/*          Getters            */
+	/* --------------------------- */
+	public List<Joueur>        getJoueurs             () { return this.lstJoueurs;           }
+	public List<CarteWagon>    getCarteWagon          () { return this.lstCartesWagon;       }
+	public List<CarteObjectif> getCarteObjectif       () { return this.lstCartesObjectif;    }
+	public List<Noeud>         getNoeuds              () { return this.lstNoeuds;            }
+	public List<Arete>         getAretes              () { return this.lstAretes;            }
+
+	public int[]               getTaillePlateau       () { return this.taillePlateau;        }
+	public BufferedImage       getImagePlateau        () { return this.imagePlateau;         }
+	public Color               getCouleurPlateau      () { return this.couleurPlateau;       }
+	public Font                getPolicePlateau       () { return this.policePlateau;        }
+
+	public int                 getNbJoueursMin        () { return this.nbJoueursMin;         }
+	public int                 getNbJoueursMax        () { return this.nbJoueursMax;         }
+	public int                 getNbCarteCoul         () { return this.nbCarteCoul;          }
+	public int                 getNbCarteLocomotive   () { return this.nbCarteLocomotive;    }
+	public int                 getNbJetonJoueur       () { return this.nbJetonJoueur;        }
+	public int                 getNbJetonFin          () { return this.nbJetonFin;           }
+
+	public List<Color>         getCouleurs            () { return this.lstCouleurs;          }
+	public BufferedImage       getImageVersoCouleur   () { return this.imageVersoCouleur;    }
+	public BufferedImage       getImageRectoLocomotive() { return this.imageRectoLocomotive; }
+	public List<BufferedImage> getImagesRectoCouleur  () { return this.lstImagesRectoCouleur;}
+	public List<Integer>       getPoints              () { return this.lstPoints;            }
+
+	public BufferedImage       getImageVersoObjectif  () { return this.imageVersoObjectif;   }
+	
+
     /*Lecture du fichier XML afin de récupérer les infos du plateau */
     private boolean lireFichier(File fichier)
 	{
@@ -91,6 +122,7 @@ public class Metier
 			Element information = racine.getChild("information");
 
 			Element dimension = information.getChild("dimension");
+			this.taillePlateau = new int[2];
 			this.taillePlateau[0] = Integer.parseInt(dimension.getAttributeValue("x"));
 			this.taillePlateau[1] = Integer.parseInt(dimension.getAttributeValue("y"));
 			this.imagePlateau     = this.base64ToImage(information.getChild("image-fond").getText()); 
@@ -150,6 +182,7 @@ public class Metier
 			}
 
 			/* <liste-lstNoeuds> */
+			this.lstNoeuds = new ArrayList<Noeud>();
 			Noeud.reinitialiserId();
 			List<Element> listlstNoeuds = plateau.getChild("liste-lstNoeuds").getChildren("noeud");
 			Iterator<Element> itlstNoeuds = listlstNoeuds.iterator();
@@ -174,6 +207,7 @@ public class Metier
 			}
 
 			/* <liste-lstAretes> */
+			this.lstAretes = new ArrayList<Arete>();
 			List<Element> listlstAretes = plateau.getChild("liste-lstAretes").getChildren("arete");
 			Iterator<Element> itlstAretes = listlstAretes.iterator();
 
@@ -202,6 +236,7 @@ public class Metier
 			this.imageVersoObjectif = this.base64ToImage(racine.getChild("liste-objectifs")
 										.getChild("image-verso").getText());
 
+			this.lstCartesObjectif = new ArrayList<CarteObjectif>();
 			List<Element> listObjectifs = racine.getChild("liste-objectifs").getChildren("objectif");
 			Iterator<Element> itObjectifs = listObjectifs.iterator();
 
