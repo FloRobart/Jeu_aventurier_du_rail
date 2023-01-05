@@ -17,6 +17,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -55,6 +56,8 @@ public class Metier
 
 	private HashMap<String, List<Color>> hmColorThemes;
 
+	private String nomPartie;
+
 
 
     public Metier(Controleur ctrl)
@@ -69,14 +72,51 @@ public class Metier
 		this.chargerThemes(getThemeUsed());
     }
 
-    public void ajouterJoueur(Joueur joueur)
+    public boolean ajouterJoueur(Joueur joueur)
     {
         if(this.lstJoueurs.size() < this.nbJoueursMax)
+		{
             this.lstJoueurs.add(joueur);
+			return true;
+		}
+
+		return false;
     }
 
+
+	/* --------------------------- */
+	/*          Getters            */
+	/* --------------------------- */
+	public List<Joueur>        getJoueurs             () { return this.lstJoueurs;           }
+	public List<CarteWagon>    getCarteWagon          () { return this.lstCartesWagon;       }
+	public List<CarteObjectif> getCarteObjectif       () { return this.lstCartesObjectif;    }
+	public List<Noeud>         getNoeuds              () { return this.lstNoeuds;            }
+	public List<Arete>         getAretes              () { return this.lstAretes;            }
+
+	public int[]               getTaillePlateau       () { return this.taillePlateau;        }
+	public BufferedImage       getImagePlateau        () { return this.imagePlateau;         }
+	public Color               getCouleurPlateau      () { return this.couleurPlateau;       }
+	public Font                getPolicePlateau       () { return this.policePlateau;        }
+
+	public int                 getNbJoueursMin        () { return this.nbJoueursMin;         }
+	public int                 getNbJoueursMax        () { return this.nbJoueursMax;         }
+	public int                 getNbCarteCoul         () { return this.nbCarteCoul;          }
+	public int                 getNbCarteLocomotive   () { return this.nbCarteLocomotive;    }
+	public int                 getNbJetonJoueur       () { return this.nbJetonJoueur;        }
+	public int                 getNbJetonFin          () { return this.nbJetonFin;           }
+
+	public List<Color>         getCouleurs            () { return this.lstCouleurs;          }
+	public BufferedImage       getImageVersoCouleur   () { return this.imageVersoCouleur;    }
+	public BufferedImage       getImageRectoLocomotive() { return this.imageRectoLocomotive; }
+	public List<BufferedImage> getImagesRectoCouleur  () { return this.lstImagesRectoCouleur;}
+	public List<Integer>       getPoints              () { return this.lstPoints;            }
+
+	public BufferedImage       getImageVersoObjectif  () { return this.imageVersoObjectif;   }
+	
+	public String 			   getNomPartie           () { return this.nomPartie;            }
+
     /*Lecture du fichier XML afin de récupérer les infos du plateau */
-    private void lireFichier(File fichier)
+    private boolean lireFichier(File fichier)
 	{
 		SAXBuilder sxb = new SAXBuilder();
 
@@ -91,6 +131,7 @@ public class Metier
 			Element information = racine.getChild("information");
 
 			Element dimension = information.getChild("dimension");
+			this.taillePlateau    = new int[2];
 			this.taillePlateau[0] = Integer.parseInt(dimension.getAttributeValue("x"));
 			this.taillePlateau[1] = Integer.parseInt(dimension.getAttributeValue("y"));
 			this.imagePlateau     = this.base64ToImage(information.getChild("image-fond").getText()); 
@@ -150,6 +191,7 @@ public class Metier
 			}
 
 			/* <liste-lstNoeuds> */
+			this.lstNoeuds = new ArrayList<Noeud>();
 			Noeud.reinitialiserId();
 			List<Element> listlstNoeuds = plateau.getChild("liste-lstNoeuds").getChildren("noeud");
 			Iterator<Element> itlstNoeuds = listlstNoeuds.iterator();
@@ -174,6 +216,7 @@ public class Metier
 			}
 
 			/* <liste-lstAretes> */
+			this.lstAretes = new ArrayList<Arete>();
 			List<Element> listlstAretes = plateau.getChild("liste-lstAretes").getChildren("arete");
 			Iterator<Element> itlstAretes = listlstAretes.iterator();
 
@@ -202,6 +245,7 @@ public class Metier
 			this.imageVersoObjectif = this.base64ToImage(racine.getChild("liste-objectifs")
 										.getChild("image-verso").getText());
 
+			this.lstCartesObjectif = new ArrayList<CarteObjectif>();
 			List<Element> listObjectifs = racine.getChild("liste-objectifs").getChildren("objectif");
 			Iterator<Element> itObjectifs = listObjectifs.iterator();
 
@@ -219,10 +263,27 @@ public class Metier
 
 				this.lstCartesObjectif.add(new CarteObjectif(n1, n2, lstPoints, imageRecto));
 			}
-		} catch (Exception e){ e.printStackTrace(); }
+
+			return true;
+		} 
+		catch (Exception e)
+		{ 
+			e.printStackTrace();
+			return false;
+		}
 	}
 
-    private BufferedImage base64ToImage(String base64) throws IOException 
+	public String imageToBase64(BufferedImage image) throws IOException
+	{
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ImageIO.write(image, "png", baos);
+		baos.flush();
+		byte[] imageInByte = baos.toByteArray();
+		baos.close();
+		return Base64.getEncoder().encodeToString(imageInByte);
+	}
+
+    public BufferedImage base64ToImage(String base64) throws IOException 
 	{
 		if (base64.equals("NULL_IMAGE"))
 		{
