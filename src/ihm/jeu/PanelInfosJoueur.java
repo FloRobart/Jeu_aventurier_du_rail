@@ -2,7 +2,6 @@ package ihm.jeu;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
@@ -10,13 +9,9 @@ import javax.swing.GroupLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
-import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
-
 
 import controleur.Controleur;
 import metier.Joueur;
@@ -36,10 +31,12 @@ public class PanelInfosJoueur extends JPanel
     private int nbWagons;
     private int nbCartesObjectif;
     private int nbCartesWagon;
+    private int numJoueur;
 
-    public PanelInfosJoueur()
+    public PanelInfosJoueur(Controleur ctrl, int numJoueur)
     {
-        //this.ctrl = ctrl;
+        this.ctrl = ctrl;
+        this.numJoueur = numJoueur;
 
         initComponents();
     }
@@ -50,9 +47,9 @@ public class PanelInfosJoueur extends JPanel
         this.setLayout(new BorderLayout());
         this.setBackground(new Color(40, 42, 54));
 
-        this.lblNom              = new JLabel("nom");
+        this.lblNom              = new JLabel("nom" + numJoueur);
         this.lblNom.setForeground(Color.WHITE);
-        this.lblNbJeton          = new JLabel("jetons");
+        this.lblNbJeton          = new JLabel("jetons restants");
         this.lblNbJeton.setForeground(Color.WHITE);
         this.lblNbCartesWagon    = new JLabel("cartes wagon");
         this.lblNbCartesWagon.setForeground(Color.WHITE);
@@ -96,15 +93,10 @@ public class PanelInfosJoueur extends JPanel
         try {
             this.imgJoueur = ImageIO.read(new File("./donnees/images/IconJoueur.png"));
 
-           /*for (int x=0; x < imgJoueur.getWidth(); x++)
-                for (int y=0; y < imgJoueur.getHeight(); y++)
-                    if (imgJoueur.getRGB(x, y) == (new Color(237, 237, 237).getRGB()))
-                        this.imgJoueur.setRGB(x, y, Color.BLACK.getRGB());*/
             
             this.lblIcon.setIcon(new ImageIcon(this.imgJoueur));
             
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -141,16 +133,5 @@ public class PanelInfosJoueur extends JPanel
         this.add(panelIcon, BorderLayout.CENTER);
         this.add(panelInfos, BorderLayout.EAST);
     }
-
-    /*public static void main(String[] args) 
-    {
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300,200);
-        frame.add(new PanelInfosJoueur());
-        frame.pack();
-        frame.setVisible(true);
-    }*/
-   
     
 }

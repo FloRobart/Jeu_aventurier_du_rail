@@ -16,6 +16,7 @@ public class Ihm
         this.ctrl = ctrl;
 
 		this.frameAccueil = new FrameAccueil(this.ctrl);
+        this.frameJeu     = null;
 
         this.appliquerTheme();
     }
@@ -23,15 +24,18 @@ public class Ihm
 	public void demarrerJeu()
 	{
 		this.frameAccueil.dispose();
+        this.frameAccueil = null;
 		this.frameJeu     = new FrameJeu(this.ctrl);
 	}
+
+    public int getWidthFrameAccueil() { return this.frameAccueil.getWidth(); }
 
     /**
      * Permet d'appliquer le thème à chaque élément de l'ihm qui en à besoins
      */
     public void appliquerTheme()
     {
-        //this.frameJeu.appliquerTheme();
-        //this.frameAccueil.appliquerTheme();
+        if (this.frameJeu     != null) { this.frameJeu    .appliquerTheme(); }
+        if (this.frameAccueil != null) { this.frameAccueil.appliquerTheme(); }
     }
 }
