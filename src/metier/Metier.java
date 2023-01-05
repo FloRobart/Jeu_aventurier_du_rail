@@ -76,7 +76,7 @@ public class Metier
     }
 
     /*Lecture du fichier XML afin de récupérer les infos du plateau */
-    private void lireFichier(File fichier)
+    private boolean lireFichier(File fichier)
 	{
 		SAXBuilder sxb = new SAXBuilder();
 
@@ -219,7 +219,14 @@ public class Metier
 
 				this.lstCartesObjectif.add(new CarteObjectif(n1, n2, lstPoints, imageRecto));
 			}
-		} catch (Exception e){ e.printStackTrace(); }
+
+			return true;
+		} 
+		catch (Exception e)
+		{ 
+			e.printStackTrace();
+			return false;
+		}
 	}
 
     private BufferedImage base64ToImage(String base64) throws IOException 
