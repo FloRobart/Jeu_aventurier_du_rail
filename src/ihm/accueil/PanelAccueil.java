@@ -157,6 +157,7 @@ public class PanelAccueil extends JPanel implements ActionListener
             else if (btn == this.btnRejoindrePartie)
             {
                 //this.ctrl.rejoindrePartie(this.txtIpRejoindrePartie.getText(), this.txtMdpRejoindrePartie.getText());
+                this.ctrl.joinGame(this.txtIpRejoindrePartie.getText());
             }
         }
     }
