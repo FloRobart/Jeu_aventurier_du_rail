@@ -284,7 +284,7 @@ public class Metier
 	}
 	
 	/*Lecture du fichier XML afin de récupérer les infos du plateau */
-    private boolean lireFichier(File fichier)
+    public boolean lireFichier(File fichier)
 	{
 		// read file into a reader
 		try {
