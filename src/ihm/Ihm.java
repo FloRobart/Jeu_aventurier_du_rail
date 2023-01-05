@@ -15,11 +15,16 @@ public class Ihm
     {
         this.ctrl = ctrl;
 
-		//this.frameAccueil = new FrameAccueil(this.ctrl);
-        this.frameJeu     = new FrameJeu(this.ctrl);
+		this.frameAccueil = new FrameAccueil(this.ctrl);
 
         this.appliquerTheme();
     }
+
+	public void demarrerJeu()
+	{
+		this.frameAccueil.dispose();
+		this.frameJeu     = new FrameJeu(this.ctrl);
+	}
 
     /**
      * Permet d'appliquer le thème à chaque élément de l'ihm qui en à besoins

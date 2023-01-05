@@ -2,21 +2,19 @@ package jeu;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 import javax.swing.GroupLayout;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.awt.Graphics2D;
-import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 
 
@@ -50,11 +48,16 @@ public class PanelInfosJoueur extends JPanel
     {
         //this.joueur = ctrl.getJoueurSelect();
         this.setLayout(new BorderLayout());
+        this.setBackground(new Color(68, 71, 90));
 
         this.lblNom              = new JLabel("nom");
+        this.lblNom.setForeground(Color.WHITE);
         this.lblNbJeton          = new JLabel("jetons");
+        this.lblNbJeton.setForeground(Color.WHITE);
         this.lblNbCartesWagon    = new JLabel("cartes wagon");
+        this.lblNbCartesWagon.setForeground(Color.WHITE);
         this.lblNbCartesObjectif = new JLabel("cartes objectif");
+        this.lblNbCartesObjectif.setForeground(Color.WHITE);
         this.lblIcon             = new JLabel();
 
         this.nbWagons            = 0;
@@ -62,12 +65,15 @@ public class PanelInfosJoueur extends JPanel
         this.nbCartesWagon       = 0;
 
         JLabel lblInfos = new JLabel("Infos sur le Joueurs");
+        lblInfos.setForeground(Color.WHITE);
 
 
         JPanel panelInfos = new JPanel();
         panelInfos.setLayout(new GridLayout(3,1));
+        panelInfos.setBackground(new Color(68, 71, 90));
+
         JPanel panelIcon  = new JPanel();
-        panelIcon.setLayout(new GridLayout(2,1));
+        panelIcon.setBackground(new Color(68, 71, 90));
 
         /*this.lblNom.setText(joueur.getNom());
 
@@ -90,12 +96,12 @@ public class PanelInfosJoueur extends JPanel
         try {
             this.imgJoueur = ImageIO.read(new File("./donnees/images/IconJoueur.png"));
 
-            BufferedImage resizedImage = new BufferedImage(50, 50, BufferedImage.TYPE_INT_ARGB);
-            this.imgJoueur = resizedImage;
-
+           /*for (int x=0; x < imgJoueur.getWidth(); x++)
+                for (int y=0; y < imgJoueur.getHeight(); y++)
+                    if (imgJoueur.getRGB(x, y) == Color.BLACK.getRGB())
+                        this.imgJoueur.setRGB(x, y, Color.WHITE.getRGB());*/
+                  
             this.lblIcon.setIcon(new ImageIcon(this.imgJoueur));
-
-            
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -111,7 +117,7 @@ public class PanelInfosJoueur extends JPanel
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                     .addComponent(this.lblNom, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(this.lblIcon, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE))
+                    .addComponent(this.lblIcon, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
 
             )
         );
@@ -123,7 +129,7 @@ public class PanelInfosJoueur extends JPanel
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(this.lblNom))
-                .addGap(18,18,18)
+                .addGap(5,5,5)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                     .addComponent(this.lblIcon, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE))
                 
@@ -138,16 +144,14 @@ public class PanelInfosJoueur extends JPanel
         this.add(panelInfos, BorderLayout.EAST);
     }
 
-    private BufferedImage resize(BufferedImage img, int x, int y) 
+    /*public static void main(String[] args) 
     {
-        Image tmp = img.getScaledInstance(x, y, Image.SCALE_SMOOTH);
-        BufferedImage resized = new BufferedImage(x, y, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = resized.createGraphics();
-        g2d.drawImage(tmp, x, y, null);
-        g2d.dispose();
-        return resized;
-    }
-
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.add(new PanelInfosJoueur());
+        frame.pack();
+        frame.setVisible(true);
+    }*/
    
     
 }
