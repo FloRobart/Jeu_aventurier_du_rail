@@ -62,6 +62,7 @@ public class Controleur
 
 	public BufferedImage       getImageVersoObjectif() { return this.metier.getImageVersoObjectif(); }
 
+
     /**
      * Permet d'appliquer le thème à l'ihm
      */

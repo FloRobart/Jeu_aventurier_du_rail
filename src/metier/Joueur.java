@@ -10,14 +10,14 @@ public class Joueur
     private int score;
     private List<CarteObjectif> alCartesObjectif;
     private HashMap<Color,Integer> hashMapCarteWagons;
-    private int nbJetonsPosés;
+    private int nbJetonsRestant;
     private Color  couleur;
 
     public Joueur(String nom)
     {
         this.nom = nom;
         this.score = 0;
-        this.nbJetonsPosés = 0;
+        this.nbJetonsRestant = 0;
     }
 
     public String getNom() { return this.nom; }
@@ -26,14 +26,14 @@ public class Joueur
     public int getNbCartesObjectif() { return this.alCartesObjectif.size(); }
     public HashMap<Color,Integer> gethashMapCarteWagons() { return this.hashMapCarteWagons; }
     public int getNbCartesWagon() { return this.hashMapCarteWagons.size(); }
-    public int getNbJetonsPosés() { return this.nbJetonsPosés; }
+    public int getNbJetonsPosés() { return this.nbJetonsRestant; }
     public Color getCouleur() { return this.couleur; }
 
     public void setNom(String nom) { this.nom = nom; }
     public void setScore(int score) { this.score = score; }
     public void setAlCartesObjectif(List<CarteObjectif> alCartesObjectif) { this.alCartesObjectif = alCartesObjectif; }
     public void sethashMapCarteWagons(HashMap<Color,Integer> hashMapCarteWagons) { this.hashMapCarteWagons = hashMapCarteWagons; }
-    public void setNbJetonsPosés(int nbJetonsPosés) { this.nbJetonsPosés = nbJetonsPosés; }
+    public void setNbJetonsPosés(int nbJetonsRestant) { this.nbJetonsRestant = nbJetonsRestant; }
     public void setCouleur(Color couleur) { this.couleur = couleur; }
 
     public void ajouterCarteObjectif(CarteObjectif carteObjectif)
@@ -53,9 +53,9 @@ public class Joueur
         this.score += score;
     }
 
-    public void ajouterNbJetonsPosés(int nbJetonsPosés)
+    public void ajouterNbJetonsPosés(int nbJetonsRestant)
     {
-        this.nbJetonsPosés += nbJetonsPosés;
+        this.nbJetonsRestant += nbJetonsRestant;
     }
 
     public void retirerCarteObjectif(CarteObjectif carteObjectif)
@@ -72,7 +72,7 @@ public class Joueur
 
     public String toString()
     {
-        return this.nom + " (" + this.score + " points)" + " : " + this.nbJetonsPosés + " jetons posés" + " -- " + this.alCartesObjectif.size() + " cartes objectif" + " : " + this.hashMapCarteWagons.size() + " cartes wagon";
+        return this.nom + " (" + this.score + " points)" + " : " + this.nbJetonsRestant + " jetons posés" + " -- " + this.alCartesObjectif.size() + " cartes objectif" + " : " + this.hashMapCarteWagons.size() + " cartes wagon";
     }
 
 

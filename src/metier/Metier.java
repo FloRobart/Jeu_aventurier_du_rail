@@ -2,6 +2,7 @@ package metier;
 
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -33,13 +34,20 @@ import metier.reseau.Server;
 
 public class Metier
 {
+	private static final int TAILLE_TAB_WAGON = 5;
+	private static final int TAILLE_TAB_OBJECTIF = 3;
+
     private Controleur          ctrl;
 
     private List<Joueur>        lstJoueurs;
     private List<CarteWagon>    lstCartesWagon;
+	private List<CarteWagon>    lstDefausseCartesWagon;
     private List<CarteObjectif> lstCartesObjectif;
     private List<Arete>         lstAretes;
     private List<Noeud>         lstNoeuds;
+
+	private CarteWagon[]		tabCarteWagon;
+	private CarteObjectif[]		tabCarteObjectif;
     
     private int[]         taillePlateau;
 	private BufferedImage imagePlateau;
@@ -64,6 +72,7 @@ public class Metier
 	private HashMap<String, List<Color>> hmColorThemes;
 
 	private String nomPartie;
+	private String motDePassePartie;
 	private Server server;
 
 
@@ -71,9 +80,8 @@ public class Metier
     public Metier(Controleur ctrl)
     {
         this.ctrl = ctrl;
-
-		
-		//this.lireFichier(new File("./bin/donnees/France.xml"));
+		this.lireFichier(new File("./bin/donnees/France.xml"));
+		this.initCartes();
 		this.hmColorThemes = new HashMap<String, List<Color>>();
 		this.chargerThemes(getThemeUsed());
     }
@@ -88,27 +96,109 @@ public class Metier
 
 		return false;
     }
+
+	//initialise les decks
+	public void initCartes()
+	{
+		//Creation des cartes wagon
+
+		this.lstCartesWagon = new ArrayList<CarteWagon>();
+
+		while ( this.nbCarteLocomotive-- > 0 )
+			this.lstCartesWagon.add(new CarteWagon(null, this.imageVersoCouleur, this.imageRectoLocomotive));
+		
+		for ( int cpt = 0; cpt < this.lstCouleurs.size(); cpt++ )
+		{
+			int nbCarte = 0;
+			while ( nbCarte < this.nbCarteCoul )
+			{
+				this.lstCartesWagon.add(new CarteWagon(this.lstCouleurs.get(cpt), this.imageVersoCouleur, this.lstImagesRectoCouleur.get(cpt)));
+				nbCarte++;
+			}
+		}
+		Collections.shuffle(this.lstCartesWagon);
+
+		
+		this.lstDefausseCartesWagon = new ArrayList<CarteWagon>();
+		
+		this.tabCarteWagon = new CarteWagon[TAILLE_TAB_WAGON];
+		this.tabCarteObjectif = new CarteObjectif[TAILLE_TAB_OBJECTIF];
+
+		for (int cpt = 0; cpt < this.tabCarteWagon.length; cpt++)
+			this.tabCarteWagon[cpt] = this.lstCartesWagon.remove(0);
+	}
 	
+	//Permet de choisir parmi les trois cartes objectifs
+	public void piocherTabObjectif (boolean[] tabBool, String nomJoueur)
+	{
+		int cptJoueur = 0;
+		for ( Joueur joueur : this.lstJoueurs )
+		{
+			if ( nomJoueur == joueur.getNom()  )
+			{
+				for ( int cpt = 0; cpt < tabBool.length; cpt++ )
+				{
+					if ( tabBool[cpt] == true )
+					{
+						this.lstJoueurs.get(cptJoueur).ajouterCarteObjectif(this.tabCarteObjectif[cpt]);
+					}
+					else
+					{
+						this.lstCartesObjectif.add(this.tabCarteObjectif[cpt]);
+					}
+				}
+			}
+			cptJoueur++;
+		}
+	}
+
+	//Permet de choisir parmi les 5 cartes wagons
+	public void piocherTabWagon (int indiceTab, String nomJoueur)
+	{
+		int cptWagon = 0;
+
+		for ( Joueur joueur : this.lstJoueurs )
+		{
+			if ( nomJoueur == joueur.getNom()  )
+			{
+				//if ( this.lstJoueurs.get(cptWagon).aJouer() && this.tabCarteWagon[indiceTab].isJoker() )	//Creer un attribut dans joueur qui indique si il joue ou pas
+					//le joueur ne peut plus piocher
+
+				this.lstJoueurs.get(cptWagon).ajouterCarteWagon(this.tabCarteWagon[indiceTab]);
+				if ( this.tabCarteWagon[indiceTab].isJoker() )
+					//le joueur ne peut plus piocher
+
+				this.tabCarteWagon[indiceTab] = this.lstCartesWagon.remove(0);
+			}
+			cptWagon++;
+		}
+	}
+
+	//Permet de piocher dans le deck de wagon, ou de piocher les trois cartes objectifs
 	public void piocherDeck (char typeCarte, String nomJoueur)
 	{
 		switch(typeCarte)
 		{
 			case 'O':
-			int cptJoueur = 0;
-			for ( Joueur joueur : this.lstJoueurs )
-			{
-				if ( nomJoueur == joueur.getNom()  )
-					this.lstJoueurs.get(cptJoueur).ajouterCarteObjectif(this.lstCartesObjectif.get((int)Math.random()*(this.lstCartesObjectif.size())));
-				cptJoueur++;
-			}
+					for (int cpt = 0; cpt < this.tabCarteObjectif.length; cpt++)
+						this.tabCarteObjectif[cpt] = this.lstCartesObjectif.remove(0);
 				break;
 			
 			case 'W': 
+				if (this.lstCartesWagon.isEmpty())
+				{
+					Collections.shuffle(this.lstDefausseCartesWagon);
+					this.lstCartesWagon = this.lstDefausseCartesWagon;
+				}
+
 				int cptWagon = 0;
 				for ( Joueur joueur : this.lstJoueurs )
 				{
 					if ( nomJoueur == joueur.getNom()  )
-						this.lstJoueurs.get(cptWagon).ajouterCarteWagon(this.lstCartesWagon.get((int)Math.random()*(this.lstCartesWagon.size())));
+					{
+						this.lstJoueurs.get(cptWagon).ajouterCarteWagon(this.lstCartesWagon.get(0));
+						this.lstDefausseCartesWagon.add(this.lstCartesWagon.remove(0));
+					}
 					cptWagon++;
 				}
 				break;
@@ -146,7 +236,9 @@ public class Metier
 	public BufferedImage       getImageVersoObjectif  () { return this.imageVersoObjectif;   }
 	
 	public String 			   getNomPartie           () { return this.nomPartie;            }
+	public String              getMotDePasse		  () { return this.motDePassePartie;     }
 	public Server 			   getServer              () { return this.server;               }
+
 
     public boolean chargerXML(Reader cs)
 	{

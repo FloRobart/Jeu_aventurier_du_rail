@@ -14,7 +14,8 @@ import java.awt.Color;
  * PARTIE [nom] [valeur] : Envoi d'un paramètre de la partie au client
  * ERREUR [message] : Envoi d'un message d'erreur au client
  * NOUVEAU_JOUEUR : Un joueur a rejoint la partie
- * COMMENCER_PARTIE : La partie commence
+ * MOT_DE_PASSE [mot_de_passe] : Envoi du mot de passe au serveur
+ * 
  * 
  * Possibilité :
  * CHARGER_XML [taille] [xml] : Envoi d'un fichier xml au client
@@ -27,8 +28,6 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-
-import controleur.Controleur;
 import metier.Metier;
 
 
@@ -38,6 +37,8 @@ public class ServerClientHandler implements Runnable
     private BufferedInputStream in;
     private BufferedOutputStream out;
     private Metier metier;
+    private String nomJoueur;
+    private Boolean authentifie;
 
     public void sendCommand(String cmd)
     {
@@ -79,12 +80,22 @@ public class ServerClientHandler implements Runnable
     public ServerClientHandler(Metier metier, Socket socket)
     {
         this.metier = metier;
+        this.authentifie = false;
         try {
             this.in = new BufferedInputStream(socket.getInputStream());
             this.out = new BufferedOutputStream(socket.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void initialLoading()
+    {
+        this.metier.getServer().sendCommand("NOUVEAU_JOUEUR " + this.nomJoueur + "\n");
+        this.metier.getServer().sendCommand("PARTIE nombre_joueurs " + this.metier.getServer().getNbJoeurs() + "\n");
+        this.authentifie = true;
+        String xml = this.metier.getXml();
+        sendCommand("CHARGER_XML " + xml.length() + " " + xml + "\n");
     }
     
     public void run()
@@ -95,18 +106,39 @@ public class ServerClientHandler implements Runnable
             if (command == null)
                 break;
             
-            if (command.equals("BONJOUR"))
+            if (!this.authentifie)
             {
-                String joueur_nom = this.readUntil("\n");
+                if (command.equals("BONJOUR "))
+                {
+                    this.nomJoueur = this.readUntil("\n");
 
-                this.metier.getServer().sendCommand("NOUVEAU_JOUEUR " + joueur_nom + "\n");
-                this.metier.getServer().sendCommand("PARTIE nombre_joueurs " + this.metier.getServer().getNbJoeurs() + "\n");
-                
-                sendCommand("PARTIE nom " + this.metier.getNomPartie() + "\n");
-                String xml = this.metier.getXml();
-                sendCommand("CHARGER_XML " + xml.length() + " " + xml + "\n");
-                
+                    sendCommand("PARTIE nom " + this.metier.getNomPartie() + "\n");
+
+
+                    if (this.metier.getMotDePasse().isBlank())
+                    {
+                        initialLoading();
+                    }
+                }
+
+                if (command.equals("MOT_DE_PASSE "))
+                {
+                    String motDePasse = this.readUntil("\n");
+                    if (motDePasse.equals(this.metier.getMotDePasse()))
+                    {
+                        initialLoading();
+                    }
+                    else
+                    {
+                        sendCommand("ERREUR Mot de passe incorrect\n");
+                    }
+                }
+                continue;
             }
+
+            // Joueur authentifié
+
+            
                     
             
         }

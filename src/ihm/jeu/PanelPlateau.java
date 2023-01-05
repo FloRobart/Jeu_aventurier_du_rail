@@ -2,96 +2,148 @@ package ihm.jeu;
 
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import controleur.Controleur;
-import metier.*;
 
-
-public class PanelPlateau extends JPanel implements MouseWheelListener, MouseListener, MouseMotionListener
+public class PanelPlateau extends JPanel implements ActionListener, MouseWheelListener, MouseListener, MouseMotionListener
 {
     private Controleur ctrl;
+	private int[]      taillePlateau;
 
-	private int[]   taillePlateau;
-	private double  zoomFactor = 1;
-    private boolean dragger;
-    private boolean released;
-    private double  xOffset = 0;
-    private double  yOffset = 0;
+	private JButton btnCentrer;
+
+	// attributs pour le zoom
+	private double facteurZoom = 1;
+	private double facteurZoomMax = 2;
+	private double facteurZoomMin = 0.75;
+
+	// attributs pour le drag
+    private boolean cliqueGaucheDrag;
+    private boolean estDrag;
+    private double  xDecalage = 0;
+    private double  yDecalage = 0;
     private int     xDiff;
     private int     yDiff;
-    private Point   startPoint;
+    private Point   pDebutDrag;
 
 	private PanelImage panelImage;
 
     public PanelPlateau(Controleur ctrl)
     {
         this.ctrl = ctrl;
+		this.taillePlateau = this.ctrl.getTaillePlateau();
 
 		this.setLayout(null);
 
-		this.taillePlateau = this.ctrl.getTaillePlateau();
+		// Création des composants
 		this.panelImage = new PanelImage(ctrl, this.taillePlateau);
-		this.panelImage.setBounds(0, 0, this.taillePlateau[0], this.taillePlateau[1]);
+		//this.panelImage.setBounds(0, 0, this.taillePlateau[0], this.taillePlateau[1]);
 
+		this.btnCentrer = new JButton("Centrer Plateau");
+		this.btnCentrer.setBounds(0, 0, 150, 30);
+
+		// Ajout des composants
 		this.add(this.panelImage);
+		this.add(this.btnCentrer);
 
-		this.addMouseWheelListener(this);
+		// Ajout des listeners
+		this.btnCentrer.addActionListener(this);
+
+		this.addMouseWheelListener (this);
         this.addMouseMotionListener(this);
-        this.addMouseListener(this);
+        this.addMouseListener      (this);
+
     }
 
 	public void majIHM()
 	{
-		if (dragger) 
+		if (cliqueGaucheDrag) 
 		{
-			this.panelImage.setBounds( (int) (xOffset + xDiff ), 
-			                           (int) (yOffset + yDiff ),
-			                           (int) (this.taillePlateau[0] * zoomFactor), 
-									   (int) (this.taillePlateau[1] * zoomFactor) );
+			this.panelImage.setBounds( (int) (this.xDecalage + this.xDiff ), 
+			                           (int) (this.yDecalage + this.yDiff ),
+			                           (int) (this.taillePlateau[0] * this.facteurZoom), 
+									   (int) (this.taillePlateau[1] * this.facteurZoom) );
 
-			if (released) 
+			if (this.estDrag) 
 			{
-				xOffset += xDiff;
-				yOffset += yDiff;
-				dragger = false;
+				this.xDecalage += this.xDiff;
+				this.yDecalage += this.yDiff;
+				this.cliqueGaucheDrag = false;
 			}
 		}
 	}
 
-    @Override
+	public void centrer(int largeur, int hauteur)
+	{
+		largeur = this.getWidth();
+		hauteur = this.getHeight();
+		
+
+		// Calcul du facteur de zoom maximal
+		double zoomLargeur = (double) largeur / this.taillePlateau[0];
+		double zoomHauteur = (double) hauteur / this.taillePlateau[1];
+		this.facteurZoom = Math.min(zoomLargeur, zoomHauteur);
+
+		// Vérification des limites du zoom
+		if (this.facteurZoom > this.facteurZoomMax)
+			this.facteurZoomMax = this.facteurZoom + 1.0;
+		
+		if (this.facteurZoom < this.facteurZoomMin)
+			this.facteurZoomMin = this.facteurZoom - 0.5;
+
+
+		// Calcul du décalage pour centrer l'image
+		this.xDecalage = (largeur - (this.taillePlateau[0] * this.facteurZoom)) / 2;
+		this.yDecalage = (hauteur - (this.taillePlateau[1] * this.facteurZoom)) / 2;
+
+		// Mise à jour de l'image
+		this.panelImage.setBounds( (int)  this.xDecalage, (int) this.yDecalage,
+		                           (int) (this.taillePlateau[0] * facteurZoom), 
+								   (int) (this.taillePlateau[1] * facteurZoom) );
+		this.panelImage.majZoom(this.facteurZoom);
+	}
+
+	public void actionPerformed(ActionEvent e) 
+	{
+		this.centrer(this.getWidth(), this.getHeight());
+	}
+
     public void mouseWheelMoved(MouseWheelEvent e) 
 	{
-        if (e.getWheelRotation() < 0) 
+        if (e.getWheelRotation() < 0 && this.facteurZoom * 1.1 < this.facteurZoomMax) 
 		{
-            zoomFactor *= 1.1;
-			this.panelImage.majZoom(zoomFactor);
+            this.facteurZoom *= 1.1;
+			this.panelImage.majZoom(this.facteurZoom);
         }
 
-        if (e.getWheelRotation() > 0) 
+        if (e.getWheelRotation() > 0 && this.facteurZoom / 1.1 > this.facteurZoomMin) 
 		{
-            zoomFactor /= 1.1;
-			this.panelImage.majZoom(zoomFactor);
+            this.facteurZoom /= 1.1;
+			this.panelImage.majZoom(this.facteurZoom);
         }
     }
 
-    @Override
     public void mouseDragged(MouseEvent e) 
 	{
 		if (SwingUtilities.isRightMouseButton(e))
 		{
-			Point curPoint = e.getLocationOnScreen();
-			xDiff = curPoint.x - startPoint.x;
-			yDiff = curPoint.y - startPoint.y;
+			Point pointActu = e.getLocationOnScreen();
 
-			dragger = true;
+			this.xDiff = pointActu.x - this.pDebutDrag.x;
+			this.yDiff = pointActu.y - this.pDebutDrag.y;
+
+			this.cliqueGaucheDrag = true;
 			majIHM();
 		}
     }
@@ -100,8 +152,8 @@ public class PanelPlateau extends JPanel implements MouseWheelListener, MouseLis
 	{
 		if (SwingUtilities.isLeftMouseButton(e))
 		{
-			Point p = new Point( (int) ((e.getX() - xOffset) * (1 / zoomFactor)), 
-			                     (int) ((e.getY() - yOffset) * (1 / zoomFactor)) );
+			Point p = new Point( (int) ((e.getX() - this.xDecalage) * (1 / this.facteurZoom)), 
+			                     (int) ((e.getY() - this.yDecalage) * (1 / this.facteurZoom)) );
 
 			this.panelImage.checkArete(p);
 		}
@@ -111,8 +163,8 @@ public class PanelPlateau extends JPanel implements MouseWheelListener, MouseLis
 	{
 		if (SwingUtilities.isRightMouseButton(e))
 		{
-			released = false;
-			startPoint = MouseInfo.getPointerInfo().getLocation();
+			this.estDrag = false;
+			this.pDebutDrag = MouseInfo.getPointerInfo().getLocation();
 		}
     }
 
@@ -120,7 +172,7 @@ public class PanelPlateau extends JPanel implements MouseWheelListener, MouseLis
 	{
 		if (SwingUtilities.isRightMouseButton(e))
 		{
-        	released = true;
+        	this.estDrag = true;
         	majIHM();
 		}
     }
