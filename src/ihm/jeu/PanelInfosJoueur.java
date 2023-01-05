@@ -1,4 +1,4 @@
-package panels;
+package jeu;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
