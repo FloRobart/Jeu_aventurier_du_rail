@@ -69,10 +69,15 @@ public class Metier
 		this.chargerThemes(getThemeUsed());
     }
 
-    public void ajouterJoueur(Joueur joueur)
+    public boolean ajouterJoueur(Joueur joueur)
     {
         if(this.lstJoueurs.size() < this.nbJoueursMax)
+		{
             this.lstJoueurs.add(joueur);
+			return true;
+		}
+
+		return false;
     }
 
 
@@ -122,7 +127,7 @@ public class Metier
 			Element information = racine.getChild("information");
 
 			Element dimension = information.getChild("dimension");
-			this.taillePlateau = new int[2];
+			this.taillePlateau    = new int[2];
 			this.taillePlateau[0] = Integer.parseInt(dimension.getAttributeValue("x"));
 			this.taillePlateau[1] = Integer.parseInt(dimension.getAttributeValue("y"));
 			this.imagePlateau     = this.base64ToImage(information.getChild("image-fond").getText()); 
