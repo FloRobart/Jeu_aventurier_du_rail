@@ -79,9 +79,7 @@ public class Metier
     public Metier(Controleur ctrl)
     {
         this.ctrl = ctrl;
-
-		
-		//this.lireFichier(new File("./bin/donnees/France.xml"));
+		this.lireFichier(new File("./bin/donnees/France.xml"));
 		this.initCartes();
 		this.hmColorThemes = new HashMap<String, List<Color>>();
 		this.chargerThemes(getThemeUsed());
@@ -101,12 +99,24 @@ public class Metier
 	//initialise les decks
 	public void initCartes()
 	{
-		this.lstCartesObjectif = new ArrayList<CarteObjectif>();
-		Collections.shuffle(this.lstCartesObjectif);
-
+		//Creation des cartes wagon
 		this.lstCartesWagon = new ArrayList<CarteWagon>();
+
+		while ( this.nbCarteLocomotive-- > 0 )
+			this.lstCartesWagon.add(new CarteWagon(null, this.imageVersoCouleur, this.imageRectoLocomotive));
+		
+		for ( int cpt = 0; cpt < this.lstCouleurs.size(); cpt++ )
+		{
+			int nbCarte = 0;
+			while ( nbCarte < this.nbCarteCoul )
+			{
+				this.lstCartesWagon.add(new CarteWagon(this.lstCouleurs.get(cpt), this.imageVersoCouleur, this.lstImagesRectoCouleur.get(cpt)));
+				nbCarte++;
+			}
+		}
 		Collections.shuffle(this.lstCartesWagon);
 
+		
 		this.lstDefausseCartesWagon = new ArrayList<CarteWagon>();
 		
 		this.tabCarteWagon = new CarteWagon[TAILLE_TAB_WAGON];
@@ -149,7 +159,7 @@ public class Metier
 		{
 			if ( nomJoueur == joueur.getNom()  )
 			{
-				//if ( this.lstJoueurs.get(cptWagon).aJouer() && this.tabCarteWagon[indiceTab].isJoker() )	/*Creer un attribut dans joueur qui indique si il joue ou pas*/
+				//if ( this.lstJoueurs.get(cptWagon).aJouer() && this.tabCarteWagon[indiceTab].isJoker() )	//Creer un attribut dans joueur qui indique si il joue ou pas
 					//le joueur ne peut plus piocher
 
 				this.lstJoueurs.get(cptWagon).ajouterCarteWagon(this.tabCarteWagon[indiceTab]);
