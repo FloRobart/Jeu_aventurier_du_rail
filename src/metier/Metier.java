@@ -61,10 +61,8 @@ public class Metier
     {
         this.ctrl = ctrl;
 
+		
 		//this.lireFichier(new File("./bin/donnees/France.xml"));
-
-
-
 		this.hmColorThemes = new HashMap<String, List<Color>>();
 		this.chargerThemes(getThemeUsed());
     }
@@ -112,7 +110,7 @@ public class Metier
 	
 
     /*Lecture du fichier XML afin de récupérer les infos du plateau */
-    private boolean lireFichier(File fichier)
+    public boolean lireFichier(File fichier)
 	{
 		SAXBuilder sxb = new SAXBuilder();
 
