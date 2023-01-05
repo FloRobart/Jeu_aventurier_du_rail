@@ -16,6 +16,7 @@
 ./src/ihm/jeu/PanelMainJoueur.java
 ./src/ihm/jeu/PanelPioche.java
 ./src/ihm/jeu/PanelPlateau.java
+./src/ihm/jeu/PanelImage.java
 
 ./src/metier/reseau/Client.java
 ./src/metier/reseau/ClientServerHandler.java
