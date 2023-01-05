@@ -17,6 +17,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -54,6 +55,8 @@ public class Metier
 	private BufferedImage       imageVersoObjectif;
 
 	private HashMap<String, List<Color>> hmColorThemes;
+
+	private String nomPartie;
 
 
 
@@ -110,6 +113,7 @@ public class Metier
 
 	public BufferedImage       getImageVersoObjectif  () { return this.imageVersoObjectif;   }
 	
+	public String 			   getNomPartie           () { return this.nomPartie;            }
 
     /*Lecture du fichier XML afin de récupérer les infos du plateau */
     private boolean lireFichier(File fichier)
@@ -269,7 +273,17 @@ public class Metier
 		}
 	}
 
-    private BufferedImage base64ToImage(String base64) throws IOException 
+	public String imageToBase64(BufferedImage image) throws IOException
+	{
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ImageIO.write(image, "png", baos);
+		baos.flush();
+		byte[] imageInByte = baos.toByteArray();
+		baos.close();
+		return Base64.getEncoder().encodeToString(imageInByte);
+	}
+
+    public BufferedImage base64ToImage(String base64) throws IOException 
 	{
 		if (base64.equals("NULL_IMAGE"))
 		{

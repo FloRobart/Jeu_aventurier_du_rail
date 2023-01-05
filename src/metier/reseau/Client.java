@@ -4,6 +4,9 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.net.Socket;
 
+import controleur.Controleur;
+import metier.Metier;
+
 
 public class Client 
 {
@@ -13,12 +16,12 @@ public class Client
     private String nom;
     private Socket socket;
     private boolean connecte;
+
+    private Metier metier;
     
-    private BufferedInputStream in;
-    private BufferedOutputStream out;
-    
-    public Client(String ip)
+    public Client(String ip, Metier metier)
     {
+        this.metier = metier;
         this.ip = ip;
         this.port = 5000;
         this.nom = "nom_de_la_partie";
@@ -35,24 +38,10 @@ public class Client
         try
         {
             this.socket = new Socket(this.ip, this.port);
-            this.in = new BufferedInputStream(this.socket.getInputStream());
-            this.out = new BufferedOutputStream(this.socket.getOutputStream());
             this.connecte = true;
 
-            this.out.write(Packet.BONJOUR.ordinal());
-            this.out.flush();
-
-            if (this.in.read() != Packet.BONJOUR.ordinal())
-            {
-                System.out.println("Erreur lors de la connexion au serveur");
-                this.connecte = false;
-                return false;
-            }
-
-            int nom_taille = this.in.read();
-            byte[] nom = new byte[nom_taille];
-            this.in.read(nom, 0, nom_taille);
-            this.nom = new String(nom);
+            new Thread(new ClientServerHandler(this.metier, this.socket)).start();
+            
         }
         catch(Exception e)
         {

@@ -6,15 +6,16 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import controleur.Controleur;
+import metier.Metier;
 
 
 public class Server 
 {
-    private Controleur ctrl;
+    private Metier metier;
     private ServerSocket socket;
-    public Server(Controleur ctrl)
+    public Server(Metier metier)
     {
-        this.ctrl = ctrl;
+        this.metier = metier;
     }
 
     public void Stop()
@@ -32,7 +33,6 @@ public class Server
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
-                // TODO Auto-generated method stub
                 try {
                     socket = new ServerSocket(5000);
                 } catch (IOException e) {
@@ -42,7 +42,7 @@ public class Server
                 {
                     try {
                         Socket client = socket.accept();
-                        new Thread(new ServerClientHandler(ctrl, client)).start();
+                        new Thread(new ServerClientHandler(metier, client)).start();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
