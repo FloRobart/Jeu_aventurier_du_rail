@@ -2,6 +2,7 @@ package ihm.accueil;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,7 +44,7 @@ public class PanelAccueil extends JPanel implements ActionListener
     private Dimension  dimFrame;
 
     /* Titre et pseudo */
-    private JLabel            lblTitre;
+    private JLabel            lblImgTitre;
     private BufferedImage     bfImgTitre;
     private JLabel            lblPseudo;
     private TextFieldWithHint txtPseudo;
@@ -76,25 +77,38 @@ public class PanelAccueil extends JPanel implements ActionListener
         /*=========================*/
         /* Image du titre */
         try { this.bfImgTitre = ImageIO.read(new File("./bin/donnees/images/Titre_ADR.png")); } catch (IOException e) { e.printStackTrace(); System.out.println("Erreur lors du chargement de l'image TITRE"); }
-        this.lblTitre = new JLabel();
-        this.lblTitre.setSize(new Dimension((int) this.dimFrame.getWidth()-10, this.bfImgTitre.getHeight()));
-        this.lblTitre = new JLabel(new ImageIcon(this.bfImgTitre.getScaledInstance(this.lblTitre.getWidth(), this.lblTitre.getHeight(), Image.SCALE_SMOOTH)));
+        this.lblImgTitre = new JLabel();
+        this.lblImgTitre.setSize(new Dimension((int) this.dimFrame.getWidth()-10, this.bfImgTitre.getHeight()));
+        this.lblImgTitre = new JLabel(new ImageIcon(this.bfImgTitre.getScaledInstance(this.lblImgTitre.getWidth(), this.bfImgTitre.getHeight(), Image.SCALE_SMOOTH)));
 
         /* Titre et pseudo */
         this.lblPseudo = new JLabel("Comment vous appelez-vous ? ");
         this.txtPseudo = new TextFieldWithHint("sans nom", this.ctrl);
 
 
+        /*-----------------------------*/
         /* panel pour creer une partie */
-        this.panelCreerPartie  = new JPanel              (new GridLayout(4, 1, 30, 50));
+        /*-----------------------------*/
+        /* Panel Création partie */
+        this.panelCreerPartie  = new JPanel              ();
+        this.panelCreerPartie.setPreferredSize(new Dimension(400, 400));
+
+        /* Label Creer partie */
         this.lblCreerPartie    = new JLabel              ("Créer une partie"          );
+
         this.btnImportMappe    = new JButton             ("Importer une mappe"        );
-        this.txtMdpCreer       = new TextFieldOnlyInteger("0000", this.ctrl           );
+        this.btnImportMappe.setSize(200, 24);
+
+        this.txtMdpCreer       = new TextFieldOnlyInteger("Mot de passe de la partie", this.ctrl);
+ 
         this.btnCreerMulti    = new JButton             ("Créer la partie en Multi"  );
+        this.btnCreerMulti.setSize(new Dimension(150, 24));
+
         this.btnCreerSolo     = new JButton             ("Créer la partie en solo"   );
+        this.btnCreerSolo.setSize(new Dimension(150, 24));
 
         /* panel pour rejoindre une partie */
-        this.panelRejoindrePartie  = new JPanel              (new GridLayout(4, 1, 30, 50));
+        this.panelRejoindrePartie  = new JPanel              ();
         this.lblRejoindrePartie    = new JLabel              ("Rejoindre une partie"      );
         this.txtIpRejoindre  = new TextFieldWithHint   ("IP"  , this.ctrl           );
         this.txtMdpRejoindre = new TextFieldOnlyInteger("0000", this.ctrl           );
@@ -113,7 +127,7 @@ public class PanelAccueil extends JPanel implements ActionListener
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(this.lblTitre, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(this.lblImgTitre, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(80, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -133,7 +147,7 @@ public class PanelAccueil extends JPanel implements ActionListener
         layout.setVerticalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(this.lblTitre, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+                .addComponent(this.lblImgTitre, GroupLayout.PREFERRED_SIZE, this.bfImgTitre.getHeight(), GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(this.lblPseudo)
@@ -220,7 +234,8 @@ public class PanelAccueil extends JPanel implements ActionListener
                 .addContainerGap(47, Short.MAX_VALUE))
         );
 
-
+        // test
+        this.lblImgTitre.getAccessibleContext().setAccessibleName("lblImgTitre");
 
         /*===========================*/
         /* Activation des composants */
@@ -264,7 +279,8 @@ public class PanelAccueil extends JPanel implements ActionListener
             }
             else if (btn == this.btnRejoindre)
             {
-                //this.ctrl.rejoindrePartie(this.txtIpRejoindre.getText(), this.txtMdpRejoindre.getText());
+                //this.ctrl.rejoindrePartie(this.txtIpRejoindrePartie.getText(), this.txtMdpRejoindrePartie.getText());
+                this.ctrl.joinGame(this.txtIpRejoindre.getText());
             }
         }
     }
@@ -279,6 +295,7 @@ public class PanelAccueil extends JPanel implements ActionListener
 
 		Color background       = theme.get("background").get(0);
         Color titleForeColor   = theme.get("titles"    ).get(0);
+        Color titleBackColor   = theme.get("titles"    ).get(1);
         Color saisiForeColor   = theme.get("saisies"   ).get(0);
 		Color saisiBackColor   = theme.get("saisies"   ).get(1);
         Color placeholderColor = theme.get("saisies"   ).get(2);
@@ -294,9 +311,9 @@ public class PanelAccueil extends JPanel implements ActionListener
         /* Titre et pseudo */
         /*-----------------*/
         /* Titre */
-        this.lblTitre.setHorizontalAlignment(JLabel.CENTER);
-        this.lblTitre.setSize(new Dimension((int) this.dimFrame.getWidth()-10, this.bfImgTitre.getHeight()));
-        //this.lblTitre.setRequestFocusEnabled(false);
+        this.lblImgTitre.setHorizontalAlignment(JLabel.CENTER);
+        this.lblImgTitre.setSize(new Dimension((int) this.dimFrame.getWidth()-10, this.bfImgTitre.getHeight()));
+        this.lblImgTitre.setRequestFocusEnabled(false);
 
         /* Foreground */
         this.lblPseudo.setForeground(saisiForeColor);
@@ -315,7 +332,7 @@ public class PanelAccueil extends JPanel implements ActionListener
         this.txtPseudo.setBorder(null);
 
         /* Alignement */
-        this.lblTitre .setHorizontalAlignment(JLabel    .CENTER);
+        this.lblImgTitre .setHorizontalAlignment(JLabel    .CENTER);
         this.lblPseudo.setHorizontalAlignment(JLabel    .CENTER);
         this.txtPseudo.setHorizontalAlignment(JTextField.CENTER);
 
@@ -325,34 +342,41 @@ public class PanelAccueil extends JPanel implements ActionListener
         /* Création d'une partie */
         /*-----------------------*/
         /* Foreground */
-        this.panelCreerPartie .setForeground(saisiForeColor  );
-        this.lblCreerPartie   .setForeground(titleForeColor  );
-        this.btnImportMappe .setForeground(btnForeColor    );
-        this.txtMdpCreer.setForeground(placeholderColor);
+        this.panelCreerPartie.setForeground(saisiForeColor  );
+
+        this.lblCreerPartie  .setForeground(titleForeColor  );
+        this.lblCreerPartie  .setFont(new Font("Liberation Sans", 0, 36));
+
+        this.btnImportMappe  .setForeground(btnForeColor    );
+        this.txtMdpCreer     .setForeground(placeholderColor);
         this.btnCreerMulti   .setForeground(btnForeColor    );
+        this.btnCreerSolo    .setForeground(btnForeColor    );
 
         /* Placeholder */
         this.txtMdpCreer.setForegroundColor (saisiForeColor  );
         this.txtMdpCreer.setPlaceholderColor(placeholderColor);
 
         /* Background */
-        this.panelCreerPartie .setBackground(background.brighter());
-        this.lblCreerPartie   .setOpaque(false);
-        this.btnImportMappe .setBackground(btnBackColor         );
-        this.txtMdpCreer.setBackground(saisiBackColor       );
+        this.panelCreerPartie.setBackground(titleBackColor);
+        this.lblCreerPartie  .setOpaque(false);
+        this.btnImportMappe  .setBackground(btnBackColor         );
+        this.txtMdpCreer     .setBackground(saisiBackColor       );
         this.btnCreerMulti   .setBackground(btnBackColor         );
+        this.btnCreerSolo    .setBackground(btnBackColor         );
 
         /* Border */
-        this.lblCreerPartie   .setBorder(null);
-        this.btnImportMappe .setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        this.txtMdpCreer.setBorder(null);
-        this.btnCreerMulti   .setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        this.lblCreerPartie.setBorder(null);
+        this.btnImportMappe.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        this.txtMdpCreer   .setBorder(null);
+        this.btnCreerMulti .setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        this.btnCreerSolo  .setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 
         /* Alignement */
-        this.lblCreerPartie   .setHorizontalAlignment(JLabel    .CENTER);
-        this.btnImportMappe .setHorizontalAlignment(JButton   .CENTER);
-        this.txtMdpCreer.setHorizontalAlignment(JTextField.CENTER);
-        this.btnCreerMulti   .setHorizontalAlignment(JButton   .CENTER);
+        this.lblCreerPartie.setHorizontalAlignment(JLabel    .CENTER);
+        this.btnImportMappe.setHorizontalAlignment(JButton   .CENTER);
+        this.txtMdpCreer   .setHorizontalAlignment(JTextField.CENTER);
+        this.btnCreerMulti .setHorizontalAlignment(JButton   .CENTER);
+        this.btnCreerSolo  .setHorizontalAlignment(JButton   .CENTER);
 
 
 
@@ -360,11 +384,12 @@ public class PanelAccueil extends JPanel implements ActionListener
         /* Rejoindre une partie */
         /*----------------------*/
         /* Foreground */
-        this.panelRejoindrePartie .setForeground(saisiForeColor  );
-        this.lblRejoindrePartie   .setForeground(titleForeColor  );
-        this.txtIpRejoindre .setForeground(placeholderColor);
-        this.txtMdpRejoindre.setForeground(placeholderColor);
-        this.btnRejoindre   .setForeground(btnForeColor    );
+        this.panelRejoindrePartie.setForeground(saisiForeColor  );
+        lblRejoindrePartie.setFont(new Font("Liberation Sans", 0, 36));
+        this.lblRejoindrePartie  .setForeground(titleForeColor  );
+        this.txtIpRejoindre      .setForeground(placeholderColor);
+        this.txtMdpRejoindre     .setForeground(placeholderColor);
+        this.btnRejoindre        .setForeground(btnForeColor    );
 
         /* Placeholder */
         this.txtIpRejoindre .setForegroundColor(saisiForeColor);
@@ -374,23 +399,23 @@ public class PanelAccueil extends JPanel implements ActionListener
         this.txtMdpRejoindre.setPlaceholderColor(placeholderColor);
 
         /* Background */
-        this.panelRejoindrePartie .setBackground(background.brighter());
-        this.lblRejoindrePartie   .setOpaque(false);
-        this.txtIpRejoindre .setBackground(saisiBackColor       );
-        this.txtMdpRejoindre.setBackground(saisiBackColor       );
-        this.btnRejoindre   .setBackground(btnBackColor         );
+        this.panelRejoindrePartie.setBackground(titleBackColor);
+        this.lblRejoindrePartie  .setOpaque(false);
+        this.txtIpRejoindre      .setBackground(saisiBackColor);
+        this.txtMdpRejoindre     .setBackground(saisiBackColor);
+        this.btnRejoindre        .setBackground(btnBackColor  );
 
         /* Border */
-        this.lblRejoindrePartie   .setBorder(null);
-        this.txtIpRejoindre .setBorder(null);
-        this.txtMdpRejoindre.setBorder(null);
-        this.btnRejoindre   .setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        this.lblRejoindrePartie.setBorder(null);
+        this.txtIpRejoindre    .setBorder(null);
+        this.txtMdpRejoindre   .setBorder(null);
+        this.btnRejoindre      .setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 
         /* Alignement */
-        this.lblRejoindrePartie   .setHorizontalAlignment(JLabel    .CENTER);
-        this.txtIpRejoindre .setHorizontalAlignment(JTextField.CENTER);
-        this.txtMdpRejoindre.setHorizontalAlignment(JTextField.CENTER);
-        this.btnRejoindre   .setHorizontalAlignment(JButton   .CENTER);
+        this.lblRejoindrePartie.setHorizontalAlignment(JLabel    .CENTER);
+        this.txtIpRejoindre    .setHorizontalAlignment(JTextField.CENTER);
+        this.txtMdpRejoindre   .setHorizontalAlignment(JTextField.CENTER);
+        this.btnRejoindre      .setHorizontalAlignment(JButton   .CENTER);
     }
 }
 
@@ -402,60 +427,8 @@ public class PanelPartie extends JPanel {
 
     public PanelPartie()
     {
-        
 
-        panelCreerPartie.setBackground(new java.awt.Color(0, 0, 0));
-        panelCreerPartie.setPreferredSize(new java.awt.Dimension(400, 400));
 
-        lblCreerPartie.setFont(new java.awt.Font("Liberation Sans", 0, 36)); // NOI18N
-        lblCreerPartie.setHorizontalAlignment(SwingConstants.CENTER);
-        lblCreerPartie.setText("Créer une partie");
-
-        btnImportMappe.setText("Importer une mappe");
-        btnImportMappe.setAlignmentY(0.0F);
-        btnImportMappe.setMaximumSize(new java.awt.Dimension(200, 24));
-        btnImportMappe.setMinimumSize(new java.awt.Dimension(200, 24));
-        btnImportMappe.setPreferredSize(new java.awt.Dimension(200, 24));
-        btnImportMappe.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImportMappeActionPerformed(evt);
-            }
-        });
-
-        txtMdpCreer.setHorizontalAlignment(JTextField.CENTER);
-        txtMdpCreer.setText("Mot de passe de la partie");
-        txtMdpCreer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtMdpCreerActionPerformed(evt);
-            }
-        });
-
-        btnCreerSolo.setText("Solo");
-        btnCreerSolo.setAlignmentY(0.0F);
-        btnCreerSolo.setHorizontalTextPosition(SwingConstants.CENTER);
-        btnCreerSolo.setMaximumSize(new java.awt.Dimension(150, 24));
-        btnCreerSolo.setMinimumSize(new java.awt.Dimension(150, 24));
-        btnCreerSolo.setName(""); // NOI18N
-        btnCreerSolo.setPreferredSize(new java.awt.Dimension(150, 24));
-
-        btnCreerMulti.setText("Multi");
-        btnCreerMulti.setAlignmentY(0.0F);
-        btnCreerMulti.setMaximumSize(new java.awt.Dimension(150, 24));
-        btnCreerMulti.setMinimumSize(new java.awt.Dimension(150, 24));
-        btnCreerMulti.setPreferredSize(new java.awt.Dimension(150, 24));
-        btnCreerMulti.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCreerMultiActionPerformed(evt);
-            }
-        });
-
-        // layout creer partie
-
-        panelRejoindrePartie.setBackground(new java.awt.Color(0, 0, 0));
-
-        lblRejoindrePartie.setFont(new java.awt.Font("Liberation Sans", 0, 36)); // NOI18N
-        lblRejoindrePartie.setHorizontalAlignment(SwingConstants.CENTER);
-        lblRejoindrePartie.setText("Rejoindre une partie");
 
         txtIpRejoindre.setHorizontalAlignment(JTextField.CENTER);
         txtIpRejoindre.setText("IP de la partie");
@@ -494,7 +467,7 @@ public class PanelPartie extends JPanel {
 
         // layout titre et pseudo
 
-        lblTitre.getAccessibleContext().setAccessibleName("lblTitre");
+        
     }// </editor-fold>
 }
 */
