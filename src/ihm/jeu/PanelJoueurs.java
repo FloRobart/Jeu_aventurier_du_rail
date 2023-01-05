@@ -54,12 +54,9 @@ public class PanelJoueurs extends JPanel implements ActionListener
                    lblNomJoueur.setForeground(Color.WHITE);
             JLabel lblScoreJoueur = new JLabel("score" + (cpt+1));
                    lblScoreJoueur.setForeground(Color.WHITE);
-            JLabel lblIcon = new JLabel();
-                   lblIcon.setIcon(new ImageIcon("./donnees/images/IconJoueur.png"));
 
-            this.tabBoutons[cpt] = new JButton();
+            this.tabBoutons[cpt] = new JButton("", new ImageIcon("./donnees/images/IconJoueur.png"));
             this.tabBoutons[cpt].setBackground(new Color(68, 71, 90));
-            this.tabBoutons[cpt].setIcon(lblIcon.getIcon());
             this.tabBoutons[cpt].setBorderPainted(false);
             this.tabBoutons[cpt].setFocusPainted(false);
             this.tabBoutons[cpt].setContentAreaFilled(false);
