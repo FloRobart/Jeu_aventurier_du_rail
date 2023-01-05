@@ -11,7 +11,6 @@ import java.awt.Color;
  * 
  * Liste des commands :
  * BONJOUR : Envoi un message de bienvenue au serveur, le server répond avec des packets OPTION
- * OPTION [nom] [valeur] : Envoi d'un paramètre au client
  * PARTIE [nom] [valeur] : Envoi d'un paramètre de la partie au client
  * ERREUR [message] : Envoi d'un message d'erreur au client
  * NOUVEAU_JOUEUR : Un joueur a rejoint la partie
@@ -104,43 +103,9 @@ public class ServerClientHandler implements Runnable
                 sendCommand("PARTIE nom " + this.metier.getNomPartie() + "\n");
 
                 
-                //TODO: Envoyer tout le XML ? (dans se cas il faut une fonction dnas metier qui renvoie le XML)
-                sendCommand("OPTION couleur_plateau" + this.metier.getCouleurPlateau().getRGB() + "\n");
-
-                String couleurs = "";
-                for (Color c : this.metier.getCouleurs())
-                {
-                    couleurs += c.getRGB() + ",";
-                }
-                sendCommand("OPTION couleurs " + couleurs + "\n");
-
-                try {
-                    sendCommand("OPTION image_plateau " + this.metier.imageToBase64(this.metier.getImagePlateau()) + "\n");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    sendCommand("ERREUR Impossible d'envoyer l'image du plateau");
-                }
-
-                try {
-                    sendCommand("OPTION image_recto_locomotive " + this.metier.imageToBase64(this.metier.getImageRectoLocomotive()) + "\n");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    sendCommand("ERREUR Impossible d'envoyer l'image du recto de la locomotive");
-                }
-
-                try {
-                    sendCommand("OPTION image_verso_locomotive " + this.metier.imageToBase64(this.metier.getImageVersoCouleur()) + "\n");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    sendCommand("ERREUR Impossible d'envoyer l'image du verso de la locomotive");
-                }
-
-                try {
-                    sendCommand("OPTION image_verso_objectif " + this.metier.imageToBase64(this.metier.getImageVersoObjectif()) + "\n");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    sendCommand("ERREUR Impossible d'envoyer l'image du verso de l'objectif");
-                }
+                String xml = this.metier.getXml();
+                sendCommand("CHARGER_XML " + xml.length() + " " + xml + "\n");
+                
             }
                     
             

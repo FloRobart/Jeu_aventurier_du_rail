@@ -19,8 +19,12 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.io.Reader;
 
 import controleur.Controleur;
 import metier.reseau.Server;
@@ -118,14 +122,13 @@ public class Metier
 	public String 			   getNomPartie           () { return this.nomPartie;            }
 	public Server 			   getServer              () { return this.server;               }
 
-    /*Lecture du fichier XML afin de récupérer les infos du plateau */
-    private boolean lireFichier(File fichier)
+    public boolean chargerXML(Reader cs)
 	{
 		SAXBuilder sxb = new SAXBuilder();
 
 		try
 		{
-			Document document = sxb.build(fichier);
+			Document document = sxb.build(cs);
 
 			/* <jeu> */
 			Element racine = document.getRootElement();
@@ -271,6 +274,25 @@ public class Metier
 		} 
 		catch (Exception e)
 		{ 
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public String getXml()
+	{
+		// prendre exrire xml du projet generateur
+		return "";
+	}
+	
+	/*Lecture du fichier XML afin de récupérer les infos du plateau */
+    private boolean lireFichier(File fichier)
+	{
+		// read file into a reader
+		try {
+			this.chargerXML(new FileReader(fichier));
+			return true;
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return false;
 		}
