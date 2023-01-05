@@ -1,4 +1,4 @@
-package ihm.jeu;
+package jeu;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -48,7 +48,7 @@ public class PanelInfosJoueur extends JPanel
     {
         //this.joueur = ctrl.getJoueurSelect();
         this.setLayout(new BorderLayout());
-        this.setBackground(new Color(68, 71, 90));
+        this.setBackground(new Color(40, 42, 54));
 
         this.lblNom              = new JLabel("nom");
         this.lblNom.setForeground(Color.WHITE);
@@ -102,6 +102,7 @@ public class PanelInfosJoueur extends JPanel
                         this.imgJoueur.setRGB(x, y, Color.BLACK.getRGB());*/
             
             this.lblIcon.setIcon(new ImageIcon(this.imgJoueur));
+            
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -112,27 +113,23 @@ public class PanelInfosJoueur extends JPanel
         panelIcon.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(lblInfos, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                     .addComponent(this.lblNom, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
                     .addComponent(this.lblIcon, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
-
             )
         );
 
         layout.setVerticalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(lblInfos, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(5,5,5)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(this.lblNom))
                 .addGap(5,5,5)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                     .addComponent(this.lblIcon, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE))
-                
                 )
         );
 
@@ -140,7 +137,8 @@ public class PanelInfosJoueur extends JPanel
         panelInfos.add(this.lblNbCartesWagon);
         panelInfos.add(this.lblNbCartesObjectif);
 
-        this.add(panelIcon, BorderLayout.WEST);
+        this.add(lblInfos, BorderLayout.NORTH);
+        this.add(panelIcon, BorderLayout.CENTER);
         this.add(panelInfos, BorderLayout.EAST);
     }
 
@@ -148,6 +146,7 @@ public class PanelInfosJoueur extends JPanel
     {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300,200);
         frame.add(new PanelInfosJoueur());
         frame.pack();
         frame.setVisible(true);
