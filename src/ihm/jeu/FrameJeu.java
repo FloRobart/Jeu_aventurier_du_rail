@@ -42,6 +42,8 @@ public class FrameJeu extends JFrame
 		this.add(this.panelPlateau   , BorderLayout.CENTER);
 
         this.setVisible(true);
+		
+		this.panelPlateau.centrer(this.panelPlateau.getWidth(), this.panelPlateau.getHeight());
     }
 
 
