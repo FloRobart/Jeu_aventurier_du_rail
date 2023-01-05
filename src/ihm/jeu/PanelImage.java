@@ -22,7 +22,6 @@ import metier.*;
 public class PanelImage extends JPanel
 {
 	private Controleur ctrl;
-	private Point p = new Point(0, 0);
 
 	private HashMap<Arete, ArrayList<Shape>> hmArete;
 
@@ -108,7 +107,6 @@ public class PanelImage extends JPanel
 
 		
 		// affichage des noeuds
-		int i = 0;
         for (Noeud noeud : lstNoeud)
         {
 			int midX = noeud.getX();
@@ -178,5 +176,6 @@ public class PanelImage extends JPanel
 			for (Shape s : this.hmArete.get(arete))
 				if (s.contains(p))
 					System.out.println(arete.getNoeud1().getNom() + " - " + arete.getNoeud2().getNom());
+					// à changer plus tard pour récuperer l'arete
 	}
 }

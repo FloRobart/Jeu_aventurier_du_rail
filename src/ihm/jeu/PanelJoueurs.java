@@ -32,50 +32,50 @@ public class PanelJoueurs extends JPanel implements ActionListener
     {
         this.ctrl = ctrl;
 
-		this.setBackground(Color.YELLOW);
+		this.setBackground(new Color(68, 71, 90));
         this.setSize(500, 200);
+
+        
+
+        /*panel de chaque joueurs */
+        this.tabPanels = new JPanel[3];
+        this.tabBoutons = new JButton[this.tabPanels.length];
 
         /*panel joueurs */
         this.panelJoueurs = new JPanel();
         this.panelJoueurs.setBackground(new Color(40, 42, 54));
-        this.panelJoueurs.setLayout(new GridLayout(4, 1, 1, 1));
+        this.panelJoueurs.setLayout(new GridLayout(this.tabPanels.length, 1, 0,1));
 
-        /*panel de chaque joueurs */
-        this.tabPanels = new JPanel[4];
-        this.tabBoutons = new JButton[4];
-
-        for(int cpt=0; cpt< 4; cpt++)
+        for(int cpt=0; cpt< this.tabPanels.length; cpt++)
         {
             tabPanels[cpt] = new JPanel();
             tabPanels[cpt].setBackground(new Color(68, 71, 90));
-            tabPanels[cpt].setLayout(new BorderLayout(2,2));
+            tabPanels[cpt].setLayout(new BorderLayout());
 
-            JLabel lblNomJoueur = new JLabel("nom" + (cpt+1));
+            JLabel lblNomJoueur = new JLabel("nom " + (cpt+1));
                    lblNomJoueur.setForeground(Color.WHITE);
-            JLabel lblScoreJoueur = new JLabel("score" + (cpt+1));
+            JLabel lblScoreJoueur = new JLabel("score " + (cpt+1));
                    lblScoreJoueur.setForeground(Color.WHITE);
 
             this.tabBoutons[cpt] = new JButton("", new ImageIcon("./donnees/images/IconJoueur.png"));
-            this.tabBoutons[cpt].setBackground(new Color(68, 71, 90));
             this.tabBoutons[cpt].setBorderPainted(false);
             this.tabBoutons[cpt].setFocusPainted(false);
             this.tabBoutons[cpt].setContentAreaFilled(false);
             
             tabPanels[cpt].add(lblNomJoueur, BorderLayout.NORTH);
             tabPanels[cpt].add(this.tabBoutons[cpt], BorderLayout.WEST);
-            tabPanels[cpt].add(lblScoreJoueur, BorderLayout.EAST);
+            tabPanels[cpt].add(lblScoreJoueur, BorderLayout.CENTER);
 
             this.panelJoueurs.add(tabPanels[cpt]);
         }
 
         /*JScrollPane */
-        this.scrollJoueurs = new JScrollPane(panelJoueurs, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        this.scrollJoueurs = new JScrollPane(panelJoueurs, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         this.scrollJoueurs.getVerticalScrollBar().setBackground(new Color(68, 71, 90));
         this.scrollJoueurs.setPreferredSize(new Dimension(200,200));
+        this.scrollJoueurs.getVerticalScrollBar().setUnitIncrement(5);
 
         this.add(scrollJoueurs);
- 
-		this.setVisible(true);
 
         /*afficher les infos d'un joueur en fonction du joueur selectionné */
         for(int cpt=0; cpt< tabBoutons.length; cpt++)
@@ -85,7 +85,6 @@ public class PanelJoueurs extends JPanel implements ActionListener
        
     }
 
-
     @Override
     public void actionPerformed(ActionEvent e) 
     {
@@ -93,21 +92,15 @@ public class PanelJoueurs extends JPanel implements ActionListener
         {
             if(e.getSource() == this.tabBoutons[cpt])
             {
-                this.ouvrirDialog((cpt+1));
+                JDialog dialog = new JDialog();
+                dialog.setSize(400,200);
+                dialog.setLocation(200, 50);
+                dialog.add(new PanelInfosJoueur(this.ctrl, (cpt+1)));
+                dialog.pack();
+                dialog.setVisible(true);
             }
         }
 
-    }
-
-    /*ouverture du panel infos joueur */
-    private void ouvrirDialog(int numJoueur)
-    {
-        JDialog dialog = new JDialog();
-        dialog.setSize(400,200);
-        dialog.setLocation(200, 50);
-		dialog.add(new PanelInfosJoueur(this.ctrl, numJoueur));
-        dialog.pack();
-		dialog.setVisible(true);
     }
    
 }
