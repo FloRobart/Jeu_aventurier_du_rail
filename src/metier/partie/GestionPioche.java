@@ -39,7 +39,7 @@ public class GestionPioche
 			this.tabCartesVisible[cpt] = this.lstCartesWagon.remove(0);
 		
 		// Creation de la pile de cartes objectif
-		this.lstCartesObjectif = new LinkedList(List.copyOf(metier.getCarteObjectif()));
+		this.lstCartesObjectif = new LinkedList<CarteObjectif>(List.copyOf(metier.getCarteObjectif()));
 		Collections.shuffle(this.lstCartesObjectif);
 	}
 
