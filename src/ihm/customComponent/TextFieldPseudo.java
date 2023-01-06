@@ -10,7 +10,7 @@ import controleur.Controleur;
 
 public class TextFieldPseudo extends TextFieldWithHint
 {
-    private static final long MAX_SIZE_PSEUDO = 16;
+    private static final int MAX_SIZE_PSEUDO = 16;
 
 
     public TextFieldPseudo(Controleur ctrl)
@@ -28,8 +28,9 @@ public class TextFieldPseudo extends TextFieldWithHint
     public void setMaximumSize()
     {
         JTextField txt = this;
-        addKeyListener(new KeyAdapter()
+        this.addKeyListener(new KeyAdapter()
         {
+            @Override
             public void keyPressed(KeyEvent ke)
             {
                 if (txt.getText().length() < TextFieldPseudo.MAX_SIZE_PSEUDO || ke.getKeyChar() == KeyEvent.VK_BACK_SPACE || ke.getKeyChar() == KeyEvent.VK_DELETE)
@@ -42,5 +43,11 @@ public class TextFieldPseudo extends TextFieldWithHint
                 }               
             }
         });  
+    }
+
+
+    public static int getMaxSizePseudo()
+    {
+        return TextFieldPseudo.MAX_SIZE_PSEUDO;
     }
 }

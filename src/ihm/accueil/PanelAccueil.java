@@ -48,6 +48,7 @@ public class PanelAccueil extends JPanel implements ActionListener
     private JButton           btnRejoindre     ;
 
     /* Labels */
+    private JLabel            lblImportMappe   ;
     private JLabel            lblIpRejoindre   ;
     private JLabel            lblMdpCreer      ;
     private JLabel            lblMdpRejoindre  ;
@@ -84,6 +85,7 @@ public class PanelAccueil extends JPanel implements ActionListener
         this.btnRejoindre         = new JButton();
 
         /* Labels */
+        this.lblImportMappe       = new JLabel ();
         this.lblIpRejoindre       = new JLabel ();
         this.lblMdpCreer          = new JLabel ();
         this.lblMdpRejoindre      = new JLabel ();
@@ -137,6 +139,12 @@ public class PanelAccueil extends JPanel implements ActionListener
         this.lblTitreCreer.setMaximumSize  (new Dimension(400, 40));
         this.lblTitreCreer.setMinimumSize  (new Dimension(400, 40));
         this.lblTitreCreer.setPreferredSize(new Dimension(400, 40));
+
+        this.lblImportMappe.setText("");
+        this.lblImportMappe.setHorizontalAlignment(JLabel.CENTER);
+        this.lblImportMappe.setMaximumSize  (new Dimension(200, 30));
+        this.lblImportMappe.setMinimumSize  (new Dimension(200, 30));
+        this.lblImportMappe.setPreferredSize(new Dimension(200, 30));
 
         this.lblMdpCreer.setText("Mot de passe");
         this.lblMdpCreer.setHorizontalAlignment(JLabel.CENTER);
@@ -197,12 +205,11 @@ public class PanelAccueil extends JPanel implements ActionListener
 
 
         /* TextFields */
-        this.txtPseudo.setText("sans nom");
         this.txtPseudo.setFont(new Font("Liberation Sans", 0, 24));
         this.txtPseudo.setHorizontalAlignment(JTextField.CENTER);
-        this.txtPseudo.setMaximumSize  (new Dimension(200, 40));
-        this.txtPseudo.setMinimumSize  (new Dimension(200, 40));
-        this.txtPseudo.setPreferredSize(new Dimension(200, 40));
+        this.txtPseudo.setMaximumSize  (new Dimension(240, 40));
+        this.txtPseudo.setMinimumSize  (new Dimension(240, 40));
+        this.txtPseudo.setPreferredSize(new Dimension(240, 40));
 
 
         /* TextFields Creer */
@@ -213,18 +220,15 @@ public class PanelAccueil extends JPanel implements ActionListener
 
 
         /* TextFields Rejoindre */
-        this.txtIpRejoindre.setText("IP de la partie");
         this.txtIpRejoindre.setHorizontalAlignment(JTextField.CENTER);
         this.txtIpRejoindre.setMaximumSize  (new Dimension(200, 30));
         this.txtIpRejoindre.setMinimumSize  (new Dimension(200, 30));
         this.txtIpRejoindre.setPreferredSize(new Dimension(200, 30));
 
-        this.txtMdpRejoindre.setText("0000");
         this.txtMdpRejoindre.setHorizontalAlignment(JTextField.CENTER);
         this.txtMdpRejoindre.setMaximumSize  (new Dimension(200, 30));
         this.txtMdpRejoindre.setMinimumSize  (new Dimension(200, 30));
         this.txtMdpRejoindre.setPreferredSize(new Dimension(200, 30));
-
 
 
 
@@ -284,6 +288,7 @@ public class PanelAccueil extends JPanel implements ActionListener
             .addGroup(panelCreerPartieLayout.createSequentialGroup()
                 .addGap(100, 100, 100)
                 .addGroup(panelCreerPartieLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                    .addComponent(this.lblImportMappe, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(this.btnImportMappe, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(this.txtMdpCreer, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(this.lblMdpCreer, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -302,7 +307,9 @@ public class PanelAccueil extends JPanel implements ActionListener
             .addGroup(panelCreerPartieLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(this.lblTitreCreer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60)
+                .addGap(30, 30, 30)
+                .addComponent(this.lblImportMappe, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(ComponentPlacement.RELATED)
                 .addComponent(this.btnImportMappe, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(this.lblMdpCreer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -360,19 +367,76 @@ public class PanelAccueil extends JPanel implements ActionListener
         /*===========================*/
         /* Activation des composants */
         /*===========================*/
+        /* Titre et pseudo */
+        this.txtPseudo      .addActionListener(this);
+
         /* panel pour creer une partie */
         this.btnImportMappe.addActionListener(this);
         this.btnCreerMulti .addActionListener(this);
         this.btnCreerSolo  .addActionListener(this);
 
+        this.txtMdpCreer   .addActionListener(this);
+
+
         /* panel pour rejoindre une partie */
-        this.btnRejoindre.addActionListener(this);
+        this.btnRejoindre   .addActionListener(this);
+
+        this.txtMdpRejoindre.addActionListener(this);
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e)
     {
+        /* Textfields */
+        if (e.getSource() instanceof JTextField)
+        {
+            /* Textfield Pseudo */
+            if (e.getSource() == this.txtPseudo)
+            {
+                if (this.txtPseudo.getText().length() > TextFieldPseudo.getMaxSizePseudo())
+                    this.txtPseudo.setText(this.txtPseudo.getText().substring(0, TextFieldPseudo.getMaxSizePseudo()));
+            }
+
+            /* Textfield Mot de passe Creer */
+            if (e.getSource() == this.txtMdpCreer)
+            {
+                /* Empêche d'avoir plus de 4 caractères */
+                if (this.txtMdpCreer.getText().length() > TextFieldMdp.getMaxSizeMdp())
+                    this.txtMdpCreer.setText(this.txtMdpCreer.getText().substring(0, TextFieldMdp.getMaxSizeMdp()));
+
+                /* Complète avec des 0 s'il y a moins de 4 caractères */
+                if (this.txtMdpCreer.getText().length() < TextFieldMdp.getMaxSizeMdp())
+                {
+                    String complement = "";
+                    for (int i = this.txtMdpCreer.getText().length(); i < TextFieldMdp.getMaxSizeMdp(); i++)
+                        complement += "0";
+
+                    this.txtMdpCreer.setText(complement + this.txtMdpCreer.getText());
+                }
+            }
+
+            /* Textfield Mot de passe Rejoindre */
+            if (e.getSource() == this.txtMdpRejoindre)
+            {
+                /* Empêche d'avoir plus de 4 caractères */
+                if (this.txtMdpRejoindre.getText().length() > TextFieldMdp.getMaxSizeMdp())
+                    this.txtMdpRejoindre.setText(this.txtMdpRejoindre.getText().substring(0, TextFieldMdp.getMaxSizeMdp()));
+
+                /* Complète avec des 0 s'il y a moins de 4 caractères */
+                if (this.txtMdpRejoindre.getText().length() < TextFieldMdp.getMaxSizeMdp())
+                {
+                    String complement = "";
+                    for (int i = this.txtMdpRejoindre.getText().length(); i < TextFieldMdp.getMaxSizeMdp(); i++)
+                        complement += "0";
+
+                    this.txtMdpRejoindre.setText(complement + this.txtMdpRejoindre.getText());
+                }
+            }
+
+
+        }
+
         if (e.getSource() instanceof JButton)
         {
             if (e.getSource() == this.btnImportMappe)
@@ -392,12 +456,22 @@ public class PanelAccueil extends JPanel implements ActionListener
 
 						if (this.mappeImportee)
 						{
-							this.btnImportMappe.setText(fichier.getName());
-
 							if (this.btnImportMappe.getBackground() == Color.RED)
+                            {
+                                this.lblImportMappe.setText("");
 								this.btnImportMappe.setBackground(this.ctrl.getTheme().get("buttons").get(1));
+                            }
+
+                            this.btnImportMappe.setText(fichier.getName());
+
+                            this.lblImportMappe.setForeground(Color.GREEN);
+                            this.lblImportMappe.setText("Importation réussie");
 						}
-                        
+                        else
+                        {
+                            this.lblImportMappe.setForeground(Color.RED);
+                            this.lblImportMappe.setText("Le fichier est incorrect");
+                        }
                     }
 					else
 						JOptionPane.showMessageDialog(this, "Le fichier choisi doit-être au format XML", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -407,6 +481,7 @@ public class PanelAccueil extends JPanel implements ActionListener
             if (e.getSource() == this.btnCreerMulti)
             {
                 //this.ctrl.creerPartie(this.txtMdpCreer.getText());
+                this.ctrl.creerPartie();
 				new FrameAttente(ctrl); // en attendant de faire la fenetre d'attente (Floris l'à fait bientôt)
             }
 
@@ -415,7 +490,11 @@ public class PanelAccueil extends JPanel implements ActionListener
                 if (this.mappeImportee)
                     this.ctrl.creerPartieSolo();
                 else
+                {
+                    this.lblImportMappe.setForeground(Color.RED);
+                    this.lblImportMappe.setText("Veuillez importer un fichier");
                     this.btnImportMappe.setBackground(Color.RED);
+                }
             }
             
             if (e.getSource() == this.btnRejoindre)

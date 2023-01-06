@@ -2,12 +2,20 @@ package metier;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-public class CarteWagon 
+import javax.imageio.ImageIO;
+
+public class CarteWagon implements Serializable
 {
     private Color         couleur;
-    private BufferedImage imageVerso;
-    private BufferedImage imageRecto;
+    private transient BufferedImage imageVerso;
+    private transient BufferedImage imageRecto;
     private boolean       joker;
 
     public CarteWagon(Color couleur, BufferedImage imageVerso, BufferedImage imageRecto)
@@ -34,6 +42,26 @@ public class CarteWagon
     public void setImageRecto(BufferedImage imageVerso) { this.imageVerso = imageVerso; }
     public void setJoker(boolean joker) { this.joker = joker; }
 
+	private void writeObject(ObjectOutputStream out) throws IOException 
+	{
+		ByteArrayOutputStream baos;
+		out.defaultWriteObject();
+
+		baos = new ByteArrayOutputStream();
+		ImageIO.write(imageVerso, "png", baos);
+		out.writeObject(baos.toByteArray());
+
+		baos = new ByteArrayOutputStream();
+		ImageIO.write(imageRecto, "png", baos);
+		out.writeObject(baos.toByteArray());
 
 
+	}
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException 
+	{
+		in.defaultReadObject();
+		imageVerso    = ImageIO.read(new ByteArrayInputStream((byte[]) in.readObject()));
+		imageRecto   = ImageIO.read(new ByteArrayInputStream((byte[]) in.readObject()));
+
+	}
 }

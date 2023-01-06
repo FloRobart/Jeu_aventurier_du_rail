@@ -26,16 +26,20 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.Reader;
+import java.io.Serializable;
 
 import controleur.Controleur;
 import metier.reseau.Server;
 
-public class Metier
+public class Metier implements Serializable
 {
 	private static final int TAILLE_TAB_WAGON = 5;
 	private static final int TAILLE_TAB_OBJECTIF = 3;
+	private static final long serialVersionUID = 1L;
 
     private Controleur          ctrl;
 
@@ -50,7 +54,7 @@ public class Metier
 	private CarteObjectif[]		tabCarteObjectif;
     
     private int[]         taillePlateau;
-	private BufferedImage imagePlateau;
+	private transient BufferedImage imagePlateau;
 	private Color         couleurPlateau;
 	private Font          policePlateau;
 
@@ -62,12 +66,12 @@ public class Metier
 	private int nbJetonFin;
 
     private List<Color>         lstCouleurs;
-	private BufferedImage       imageVersoCouleur;
-	private BufferedImage       imageRectoLocomotive;
-	private List<BufferedImage> lstImagesRectoCouleur;
+	private transient BufferedImage       imageVersoCouleur;
+	private transient BufferedImage       imageRectoLocomotive;
+	private transient List<BufferedImage> lstImagesRectoCouleur;
 	private List<Integer>       lstPoints;
 
-	private BufferedImage       imageVersoObjectif;
+	private transient BufferedImage       imageVersoObjectif;
 
 	private HashMap<String, List<Color>> hmColorThemes;
 
@@ -214,6 +218,9 @@ public class Metier
 	public List<CarteObjectif> getCarteObjectif       () { return this.lstCartesObjectif;    }
 	public List<Noeud>         getNoeuds              () { return this.lstNoeuds;            }
 	public List<Arete>         getAretes              () { return this.lstAretes;            }
+	public List<CarteWagon>    getLstDefausseCartesWagon() { return this.lstDefausseCartesWagon;}
+	public CarteWagon[]		   getTabCarteWagon			() { return this.tabCarteWagon;         }
+	public CarteObjectif[]	   getTabCarteObjectif		() { return this.tabCarteObjectif;      }
 
 	public int[]               getTaillePlateau       () { return this.taillePlateau;        }
 	public BufferedImage       getImagePlateau        () { return this.imagePlateau;         }
@@ -391,8 +398,7 @@ public class Metier
 			return true;
 		} 
 		catch (Exception e)
-		{ 
-			e.printStackTrace();
+		{
 			return false;
 		}
 	}
@@ -600,12 +606,11 @@ public class Metier
 	{
 		// read file into a reader
 		try {
-			this.chargerXML(new FileReader(fichier));
-			return true;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			return false;
-		}
+			if (this.chargerXML(new FileReader(fichier)))
+				return true;
+			else
+				return false;
+		} catch (FileNotFoundException e) { return false; }
 	}
 
 	public String imageToBase64(BufferedImage image) throws IOException
@@ -688,13 +693,13 @@ public class Metier
 		this.ctrl.appliquerTheme();
 	}
 
-
 	/**
 	 * Charge les couleurs du thème choisi par l'utilisateur dans la HashMap
 	 * @param theme : thème à charger
 	 * @return HashMap contenant les couleurs du thème
 	 */
 	public void chargerThemes(String theme)
+
 	{
 		SAXBuilder sxb = new SAXBuilder();
 
@@ -742,4 +747,47 @@ public class Metier
 			System.out.println("Erreur lors de la lecture du fichier XML des informations du theme");
 		}
 	}
-}
+	private void writeObject(ObjectOutputStream out) throws IOException 
+	{
+		ByteArrayOutputStream baos;
+		out.defaultWriteObject();
+
+		baos = new ByteArrayOutputStream();
+		ImageIO.write(imagePlateau, "png", baos);
+		out.writeObject(baos.toByteArray());
+
+		baos = new ByteArrayOutputStream();
+		ImageIO.write(imageRectoLocomotive, "png", baos);
+		out.writeObject(baos.toByteArray());
+
+		baos = new ByteArrayOutputStream();
+		ImageIO.write(imageVersoCouleur, "png", baos);
+		out.writeObject(baos.toByteArray());
+
+		baos = new ByteArrayOutputStream();
+		ImageIO.write(imageVersoObjectif, "png", baos);
+		out.writeObject(baos.toByteArray());
+
+		out.writeInt(lstImagesRectoCouleur.size());
+		for (BufferedImage image : lstImagesRectoCouleur) 
+		{
+		   baos = new ByteArrayOutputStream();
+		   ImageIO.write(image, "png", baos);
+		   out.writeObject(baos.toByteArray());
+		}
+
+	}
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException 
+	{
+		in.defaultReadObject();
+		imagePlateau = ImageIO.read(new ByteArrayInputStream((byte[]) in.readObject()));
+		imageRectoLocomotive = ImageIO.read(new ByteArrayInputStream((byte[]) in.readObject()));
+		imageVersoCouleur    = ImageIO.read(new ByteArrayInputStream((byte[]) in.readObject()));
+		imageVersoObjectif   = ImageIO.read(new ByteArrayInputStream((byte[]) in.readObject()));
+		int size = in.readInt();
+		lstImagesRectoCouleur = new ArrayList<>(size);
+		for (int i = 0; i < size; i++) {
+			lstImagesRectoCouleur.add(ImageIO.read(new ByteArrayInputStream((byte[]) in.readObject())));
+		}
+	}
+}	

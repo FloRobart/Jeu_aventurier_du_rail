@@ -1,8 +1,9 @@
 package metier;
 
 import java.awt.Color;
+import java.io.Serializable;
 
-public class Noeud 
+public class Noeud implements Serializable
 {
 	private static int nbNoeud = 0;
 

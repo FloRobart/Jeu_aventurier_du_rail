@@ -10,6 +10,9 @@ import controleur.Controleur;
 
 public class TextFieldMdp extends TextFieldOnlyInteger
 {
+    private static final int MAX_SIZE_MDP = 4;
+
+
     public TextFieldMdp(Controleur ctrl)
     {
         super(ctrl);
@@ -26,11 +29,11 @@ public class TextFieldMdp extends TextFieldOnlyInteger
     public void setOnlyInteger()
     {
         JTextField txt = this;
-        addKeyListener(new KeyAdapter()
+        this.addKeyListener(new KeyAdapter()
         {
             public void keyPressed(KeyEvent ke)
             {
-                if (txt.getText().length() < 4 && ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9' || ke.getKeyChar() == KeyEvent.VK_BACK_SPACE || ke.getKeyChar() == KeyEvent.VK_DELETE )
+                if (txt.getText().length() < TextFieldMdp.MAX_SIZE_MDP && ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9' || ke.getKeyChar() == KeyEvent.VK_BACK_SPACE || ke.getKeyChar() == KeyEvent.VK_DELETE )
                 {
                     txt.setEditable(true);
                 }
@@ -40,5 +43,11 @@ public class TextFieldMdp extends TextFieldOnlyInteger
                 }               
             }
         });  
+    }
+
+
+    public static int getMaxSizeMdp()
+    {
+        return TextFieldMdp.MAX_SIZE_MDP;
     }
 }
