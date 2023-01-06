@@ -218,6 +218,9 @@ public class Metier implements Serializable
 	public List<CarteObjectif> getCarteObjectif       () { return this.lstCartesObjectif;    }
 	public List<Noeud>         getNoeuds              () { return this.lstNoeuds;            }
 	public List<Arete>         getAretes              () { return this.lstAretes;            }
+	public List<CarteWagon>    getLstDefausseCartesWagon() { return this.lstDefausseCartesWagon;}
+	public CarteWagon[]		   getTabCarteWagon			() { return this.tabCarteWagon;         }
+	public CarteObjectif[]	   getTabCarteObjectif		() { return this.tabCarteObjectif;      }
 
 	public int[]               getTaillePlateau       () { return this.taillePlateau;        }
 	public BufferedImage       getImagePlateau        () { return this.imagePlateau;         }
@@ -395,8 +398,7 @@ public class Metier implements Serializable
 			return true;
 		} 
 		catch (Exception e)
-		{ 
-			e.printStackTrace();
+		{
 			return false;
 		}
 	}
@@ -604,12 +606,11 @@ public class Metier implements Serializable
 	{
 		// read file into a reader
 		try {
-			this.chargerXML(new FileReader(fichier));
-			return true;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			return false;
-		}
+			if (this.chargerXML(new FileReader(fichier)))
+				return true;
+			else
+				return false;
+		} catch (FileNotFoundException e) { return false; }
 	}
 
 	public String imageToBase64(BufferedImage image) throws IOException
