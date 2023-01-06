@@ -10,6 +10,9 @@ import controleur.Controleur;
 
 public class TextFieldPseudo extends TextFieldWithHint
 {
+    private static final long MAX_SIZE_PSEUDO = 16;
+
+
     public TextFieldPseudo(Controleur ctrl)
     {
         super(ctrl);
@@ -29,7 +32,7 @@ public class TextFieldPseudo extends TextFieldWithHint
         {
             public void keyPressed(KeyEvent ke)
             {
-                if (txt.getText().length() < 20)
+                if (txt.getText().length() < TextFieldPseudo.MAX_SIZE_PSEUDO || ke.getKeyChar() == KeyEvent.VK_BACK_SPACE || ke.getKeyChar() == KeyEvent.VK_DELETE)
                 {
                     txt.setEditable(true);
                 }
