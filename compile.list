@@ -2,14 +2,12 @@
 ./src/controleur/Controleur.java
 ./src/controleur/ServerControleur.java
 
-./src/ihm/accueil/FrameAccueil.java
-./src/ihm/accueil/MenuBarre.java
-./src/ihm/accueil/PanelAccueil.java
-
 ./src/ihm/customComponent/TextFieldMdp.java
 ./src/ihm/customComponent/TextFieldOnlyInteger.java
 ./src/ihm/customComponent/TextFieldPseudo.java
 ./src/ihm/customComponent/TextFieldWithHint.java
+
+./src/ihm/attente/FrameAttente.java
 
 ./src/ihm/jeu/FrameJeu.java
 ./src/ihm/jeu/PanelImage.java
@@ -18,6 +16,10 @@
 ./src/ihm/jeu/PanelMainJoueur.java
 ./src/ihm/jeu/PanelPioche.java
 ./src/ihm/jeu/PanelPlateau.java
+
+./src/ihm/accueil/FrameAccueil.java
+./src/ihm/accueil/MenuBarre.java
+./src/ihm/accueil/PanelAccueil.java
 
 ./src/ihm/Ihm.java
 

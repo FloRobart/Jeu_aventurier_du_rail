@@ -25,12 +25,14 @@ public class Controleur
         this.ihm    = new Ihm(this);
     }
 
-	public void ouvrir(File fichier)
+	public boolean ouvrir(File fichier)
 	{
-		if (this.metier.lireFichier(fichier))
-		{
-			this.ihm.demarrerJeu();
-		}
+		return this.metier.lireFichier(fichier);
+	}
+
+	public void creerPartieSolo()
+	{
+		this.ihm.demarrerJeu();
 	}
 
 	/* --------------------------- */
