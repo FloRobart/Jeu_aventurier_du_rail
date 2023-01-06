@@ -5,7 +5,7 @@
 
 ./src/ihm/Ihm.java
 
-
+./src/ihm/customComponent/TextFieldAdresseIP.java
 ./src/ihm/customComponent/TextFieldMdp.java
 ./src/ihm/customComponent/TextFieldOnlyInteger.java
 ./src/ihm/customComponent/TextFieldPseudo.java

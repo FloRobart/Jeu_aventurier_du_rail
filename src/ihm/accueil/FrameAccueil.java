@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 
 import controleur.Controleur;
 
+
 public class FrameAccueil extends JFrame
 {
     private Controleur ctrl;
@@ -20,8 +21,7 @@ public class FrameAccueil extends JFrame
 
 		Dimension dimEcran = Toolkit.getDefaultToolkit().getScreenSize();
         this.setTitle("Frame Jeu");
-        this.setSize(dimEcran.width, dimEcran.height); // Définition d'une taille minimum (obligatoire)
-		this.setExtendedState(JFrame.MAXIMIZED_BOTH); // Ouvre la fenêtre en pleine écran
+        
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		this.menuBarre    = new MenuBarre   (this.ctrl);
@@ -30,6 +30,8 @@ public class FrameAccueil extends JFrame
 		this.setJMenuBar(this.menuBarre);
 		this.add(this.panelAccueil);
 
+        this.pack();
+        this.setLocation((dimEcran.width/2) - (this.getSize().width/2), (dimEcran.height/2) - (this.getSize().height/2));
 		this.setVisible(true);
     }
 
