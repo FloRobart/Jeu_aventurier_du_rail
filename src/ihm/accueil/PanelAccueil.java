@@ -22,6 +22,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controleur.Controleur;
+import ihm.attente.FrameAttente;
 import ihm.customComponent.TextFieldMdp;
 import ihm.customComponent.TextFieldPseudo;
 import ihm.customComponent.TextFieldWithHint;
@@ -34,6 +35,9 @@ import ihm.customComponent.TextFieldWithHint;
 public class PanelAccueil extends JPanel implements ActionListener
 {
     private Controleur        ctrl;
+    private File              mappe;
+
+	private boolean           mappeImportee = false;
 
     /* Panels */
     private JPanel            panelCreerPartie    ;
@@ -91,7 +95,7 @@ public class PanelAccueil extends JPanel implements ActionListener
         this.lblTitreRejoindre    = new JLabel ();
         
         /* Textfields */
-        this.txtIpRejoindre       = new TextFieldWithHint("Adresse IP", this.ctrl);
+        this.txtIpRejoindre       = new TextFieldWithHint("127.0.0.1" , this.ctrl);
         this.txtMdpCreer          = new TextFieldMdp     ("0000"      , this.ctrl);
         this.txtMdpRejoindre      = new TextFieldMdp     ("0000"      , this.ctrl);
         this.txtPseudo            = new TextFieldPseudo  ("sans nom"  , this.ctrl);
@@ -151,7 +155,7 @@ public class PanelAccueil extends JPanel implements ActionListener
         this.lblTitreRejoindre.setMinimumSize  (new Dimension(400, 40));
         this.lblTitreRejoindre.setPreferredSize(new Dimension(400, 40));
 
-        this.lblIpRejoindre.setText("Mot de passe");
+        this.lblIpRejoindre.setText("Adresse IP");
         this.lblIpRejoindre.setHorizontalAlignment(JLabel.CENTER);
         this.lblIpRejoindre.setMaximumSize  (new Dimension(200, 30));
         this.lblIpRejoindre.setMinimumSize  (new Dimension(200, 30));
@@ -385,7 +389,13 @@ public class PanelAccueil extends JPanel implements ActionListener
 					String extention = fichier.getName().substring(fichier.getName().lastIndexOf('.') + 1);
 
 					if (extention.equals("xml"))
-						this.ctrl.ouvrir(fichier);
+                    {
+						this.mappe = fichier;
+                        this.btnImportMappe.setText(fichier.getName());
+
+                        if (this.btnImportMappe.getBackground() == Color.RED)
+                            this.btnImportMappe.setBackground(this.ctrl.getTheme().get("buttons").get(1));
+                    }
 					else
 						JOptionPane.showMessageDialog(this, "Le fichier choisi doit-être au format XML", "Erreur", JOptionPane.ERROR_MESSAGE);
 				}
@@ -394,11 +404,15 @@ public class PanelAccueil extends JPanel implements ActionListener
             if (e.getSource() == this.btnCreerMulti)
             {
                 //this.ctrl.creerPartie(this.txtMdpCreer.getText());
+				new FrameAttente(ctrl); // en attendant de faire la fenetre d'attente (Floris l'à fait bientôt)
             }
 
             if (e.getSource() == this.btnCreerSolo)
             {
-                //this.ctrl.creerPartieSolo();
+                if (this.mappe != null)
+                    this.ctrl.ouvrir(this.mappe);
+                else
+                    this.btnImportMappe.setBackground(Color.RED);
             }
             
             if (e.getSource() == this.btnRejoindre)
