@@ -521,6 +521,7 @@ public class PanelAccueil extends JPanel implements ActionListener
                         {
                             this.lblImportMappe.setForeground(Color.RED);
                             this.lblImportMappe.setText("Le fichier est incorrect");
+                            this.btnImportMappe.setText("Importer une mappe");
                             this.btnImportMappe.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                         }
                     }

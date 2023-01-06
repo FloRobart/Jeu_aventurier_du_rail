@@ -21,8 +21,9 @@ public class FrameAccueil extends JFrame
 
 		Dimension dimEcran = Toolkit.getDefaultToolkit().getScreenSize();
         this.setTitle("Frame Jeu");
-        
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+
 
 		this.menuBarre    = new MenuBarre   (this.ctrl);
         this.panelAccueil = new PanelAccueil(ctrl);
