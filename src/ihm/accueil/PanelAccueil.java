@@ -426,7 +426,7 @@ public class PanelAccueil extends JPanel implements ActionListener
             /* Textfield Mot de passe Creer */
             if (e.getSource() == this.txtMdpCreer)
             {
-                /* Empêche d'avoir plus de 4 caractères */
+                /* Empêche d'avoir plus de 4 caractères même en copier/coller */
                 if (this.txtMdpCreer.getText().length() > TextFieldMdp.getMaxSizeMdp())
                     this.txtMdpCreer.setText(this.txtMdpCreer.getText().substring(0, TextFieldMdp.getMaxSizeMdp()));
 
@@ -439,6 +439,12 @@ public class PanelAccueil extends JPanel implements ActionListener
 
                     this.txtMdpCreer.setText(complement + this.txtMdpCreer.getText());
                 }
+
+                if (this.txtMdpCreer.getBorder() != null)
+                        this.txtMdpCreer.setBorder(null);
+
+                if (this.txtMdpCreer.getPlaceholderColor() == Color.RED)
+                    this.txtMdpCreer.setPlaceholderColor(this.ctrl.getTheme().get("saisies").get(2));
             }
 
             /* Textfield Mot de passe Rejoindre */
@@ -458,8 +464,6 @@ public class PanelAccueil extends JPanel implements ActionListener
                     this.txtMdpRejoindre.setText(complement + this.txtMdpRejoindre.getText());
                 }
             }
-
-
         }
 
 
@@ -536,11 +540,16 @@ public class PanelAccueil extends JPanel implements ActionListener
                 if (this.mappeImportee && pseudoCorrect)
                 {
                     if (e.getSource() == this.btnCreerSolo)
+                    {
                         this.ctrl.creerPartieSolo();
+                    }
                     else
                     {
-                        //this.ctrl.creerPartie(this.txtMdpCreer.getText());
-                        new FrameAttente(ctrl); // en attendant de faire la fenetre d'attente (Floris l'à fait bientôt)
+                        if (this.verifMdpCreer())
+                        {
+                            //this.ctrl.creerPartie(this.txtMdpCreer.getText());
+                            new FrameAttente(ctrl); // en attendant de faire la fenetre d'attente (Floris l'à fait bientôt)
+                        }
                     }
                 }
                 else
@@ -567,6 +576,29 @@ public class PanelAccueil extends JPanel implements ActionListener
                 this.ctrl.joinGame(this.txtIpRejoindre.getText());
             }
         }
+    }
+
+
+    private boolean verifMdpCreer()
+    {
+        boolean mdpCorrect = false;
+
+        if (this.txtMdpCreer.getText().isEmpty())
+        {
+            this.txtMdpCreer.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            this.txtMdpCreer.setHint("Entrez un mot de passe");
+            this.txtMdpCreer.setPlaceholderColor(Color.RED);
+        }
+        else
+        {
+            mdpCorrect = true;
+            this.txtMdpCreer.setBorder(null);
+
+            if (this.txtMdpCreer.getPlaceholderColor() == Color.RED)
+                this.txtMdpCreer.setPlaceholderColor(this.ctrl.getTheme().get("saisies").get(2));
+        }
+
+        return mdpCorrect;
     }
 
 
