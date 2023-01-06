@@ -5,7 +5,7 @@
 
 ./src/ihm/Ihm.java
 
-
+./src/ihm/customComponent/TextFieldAdresseIP.java
 ./src/ihm/customComponent/TextFieldMdp.java
 ./src/ihm/customComponent/TextFieldOnlyInteger.java
 ./src/ihm/customComponent/TextFieldPseudo.java
@@ -22,6 +22,7 @@
 ./src/ihm/jeu/PanelPioche.java
 ./src/ihm/jeu/PanelPlateau.java
 ./src/ihm/jeu/PanelObjectif.java
+./src/ihm/jeu/PanelPiocherObjectif.java
 
 ./src/ihm/accueil/FrameAccueil.java
 ./src/ihm/accueil/MenuBarre.java
