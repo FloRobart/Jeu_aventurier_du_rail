@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import controleur.Controleur;
 
 
@@ -22,24 +23,30 @@ public class PanelMainJoueur extends JPanel
     {
         this.ctrl = ctrl;
         this.setLayout(new BorderLayout());
-
 		this.setBackground(Color.BLUE);
-		//this.add(new JLabel("PanelMainJoueur"));
+
+
+        this.panelInfo  = new JPanel();
+        this.lblNom     = new JLabel("  nom ");
+        this.lblNbJeton = new JLabel("  jetons restants");
+        this.lblIcon    = new JLabel();
+
 
         //panelInfo Joueur
-        this.panelInfo = new JPanel();
-        this.panelInfo.setBackground(new Color(68, 71, 90));
-
-        this.lblNom = new JLabel("nom ");
+        JPanel panelLbl = new JPanel();
+        panelLbl.setBackground(null);
+        panelLbl.setLayout(new GridLayout(2,1));
+        this.panelInfo.setBackground(new Color(68, 71, 90)); 
+        //this.panelInfo.setLayout(new GridLayout(1,2));
         this.lblNom.setForeground(Color.WHITE);
-        this.lblNbJeton = new JLabel(" jetons restants");
         this.lblNbJeton.setForeground(Color.WHITE);
-        this.lblIcon = new JLabel();
         this.lblIcon.setIcon(new ImageIcon("./donnees/images/IconJoueur.png"));
 
+        panelLbl.add(this.lblNom);
+        panelLbl.add(this.lblNbJeton);
+
         this.panelInfo.add(this.lblIcon);
-        this.panelInfo.add(this.lblNom);
-        this.panelInfo.add(this.lblNbJeton);
+        this.panelInfo.add(panelLbl);
 
         this.add(this.panelInfo, BorderLayout.EAST);
 
