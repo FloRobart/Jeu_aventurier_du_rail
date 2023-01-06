@@ -32,10 +32,22 @@ public class Controleur
 		return this.metier.lireFichier(fichier);
 	}
 
+	/**
+	 * Permet de créer une partie solo.
+	 * Cette méthode lance le jeu directement.
+	 */
 	public void creerPartieSolo()
 	{
 		this.ihm.demarrerJeu();
+	}
 
+	/**
+	 * Permet de créer une partie multijoueur mais ne lance pas le jeu.
+	 * Le jeu pourra être lancé par le créateur de la partie à l'intérieur de la fenêtre d'attente.
+	 */
+	public void creerPartieMulti()
+	{
+		this.ihm.demarrerAttente();
 	}
 
 	/* --------------------------- */
