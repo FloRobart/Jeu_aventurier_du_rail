@@ -34,6 +34,8 @@ import ihm.customComponent.TextFieldWithHint;
  */
 public class PanelAccueil extends JPanel implements ActionListener
 {
+    private static final String FONT = "Liberation Sans";
+
     private Controleur        ctrl;
 	private boolean           mappeImportee = false;
 
@@ -46,6 +48,7 @@ public class PanelAccueil extends JPanel implements ActionListener
     private JButton           btnCreerSolo     ;
     private JButton           btnImportMappe   ;
     private JButton           btnRejoindre     ;
+    private JButton           btnTest          ;
 
     /* Labels */
     private JLabel            lblImportMappe   ;
@@ -83,6 +86,7 @@ public class PanelAccueil extends JPanel implements ActionListener
         this.btnCreerSolo         = new JButton();
         this.btnImportMappe       = new JButton();
         this.btnRejoindre         = new JButton();
+        this.btnTest              = new JButton();
 
         /* Labels */
         this.lblImportMappe       = new JLabel ();
@@ -95,10 +99,10 @@ public class PanelAccueil extends JPanel implements ActionListener
         this.lblTitreRejoindre    = new JLabel ();
         
         /* Textfields */
-        this.txtIpRejoindre       = new TextFieldWithHint("127.0.0.1" , this.ctrl);
-        this.txtMdpCreer          = new TextFieldMdp     ("0000"      , this.ctrl);
-        this.txtMdpRejoindre      = new TextFieldMdp     ("0000"      , this.ctrl);
-        this.txtPseudo            = new TextFieldPseudo  ("sans nom"  , this.ctrl);
+        this.txtIpRejoindre       = new TextFieldWithHint("127.0.0.1"       , this.ctrl);
+        this.txtMdpCreer          = new TextFieldMdp     ("0000"            , this.ctrl);
+        this.txtMdpRejoindre      = new TextFieldMdp     ("0000"            , this.ctrl);
+        this.txtPseudo            = new TextFieldPseudo  ("Entrez un pseudo", this.ctrl);
 
 
         /*--------------*/
@@ -116,7 +120,7 @@ public class PanelAccueil extends JPanel implements ActionListener
 
         /* Labels */
         this.lblTitre.setText("LES AVENTURIERS DU RAIL");
-        this.lblTitre.setFont(new Font("Liberation Sans", 0, 48));
+        this.lblTitre.setFont(new Font(PanelAccueil.FONT, 0, 48));
         this.lblTitre.setHorizontalAlignment   (JLabel.CENTER);
         this.lblTitre.setHorizontalTextPosition(JLabel.CENTER);
         this.lblTitre.setMaximumSize  (new Dimension(400, 100));
@@ -124,7 +128,7 @@ public class PanelAccueil extends JPanel implements ActionListener
         this.lblTitre.setPreferredSize(new Dimension(400, 100));
 
         this.lblPseudo.setText("Comment vous appelez-vous ?");
-        this.lblPseudo.setFont(new Font("Liberation Sans", 0, 24));
+        this.lblPseudo.setFont(new Font(PanelAccueil.FONT, 0, 24));
         this.lblPseudo.setHorizontalAlignment(JLabel.CENTER);
         this.lblPseudo.setMaximumSize  (new Dimension(350, 40));
         this.lblPseudo.setMinimumSize  (new Dimension(350, 40));
@@ -133,7 +137,7 @@ public class PanelAccueil extends JPanel implements ActionListener
 
         /* Labels Creer */
         this.lblTitreCreer.setText("Créer une partie");
-        this.lblTitreCreer.setFont(new Font("Liberation Sans", 0, 36));
+        this.lblTitreCreer.setFont(new Font(PanelAccueil.FONT, 0, 36));
         this.lblTitreCreer.setHorizontalAlignment   (JLabel.CENTER);
         this.lblTitreCreer.setHorizontalTextPosition(JLabel.CENTER);
         this.lblTitreCreer.setMaximumSize  (new Dimension(400, 40));
@@ -155,7 +159,7 @@ public class PanelAccueil extends JPanel implements ActionListener
 
         /* Labels Rejoindre */
         this.lblTitreRejoindre.setText("Rejoindre une partie");
-        this.lblTitreRejoindre.setFont(new Font("Liberation Sans", 0, 36));
+        this.lblTitreRejoindre.setFont(new Font(PanelAccueil.FONT, 0, 36));
         this.lblTitreRejoindre.setHorizontalAlignment(JLabel.CENTER);
         this.lblTitreRejoindre.setMaximumSize  (new Dimension(400, 40));
         this.lblTitreRejoindre.setMinimumSize  (new Dimension(400, 40));
@@ -175,6 +179,13 @@ public class PanelAccueil extends JPanel implements ActionListener
 
 
         /* Boutons */
+        this.btnTest.setText("Test rapide");
+        this.btnTest.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        this.btnTest.setMaximumSize  (new Dimension(200, 30));
+        this.btnTest.setMinimumSize  (new Dimension(200, 30));
+        this.btnTest.setPreferredSize(new Dimension(200, 30));
+        this.btnTest.addActionListener(this);
+
         /* Boutons Creer */
         this.btnImportMappe.setText("Importer une mappe");
         this.btnImportMappe.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
@@ -205,7 +216,7 @@ public class PanelAccueil extends JPanel implements ActionListener
 
 
         /* TextFields */
-        this.txtPseudo.setFont(new Font("Liberation Sans", 0, 24));
+        this.txtPseudo.setFont(new Font(PanelAccueil.FONT, 0, 24));
         this.txtPseudo.setHorizontalAlignment(JTextField.CENTER);
         this.txtPseudo.setMaximumSize  (new Dimension(240, 40));
         this.txtPseudo.setMinimumSize  (new Dimension(240, 40));
@@ -251,6 +262,8 @@ public class PanelAccueil extends JPanel implements ActionListener
                         .addComponent(this.lblPseudo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
                         .addComponent(this.txtPseudo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(this.btnTest, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(this.panelCreerPartie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -267,7 +280,8 @@ public class PanelAccueil extends JPanel implements ActionListener
                 .addPreferredGap(ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(this.lblPseudo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(this.txtPseudo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                    .addComponent(this.txtPseudo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(this.btnTest, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(this.panelCreerPartie, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -388,7 +402,9 @@ public class PanelAccueil extends JPanel implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
+        /*------------*/
         /* Textfields */
+        /*------------*/
         if (e.getSource() instanceof JTextField)
         {
             /* Textfield Pseudo */
@@ -396,6 +412,15 @@ public class PanelAccueil extends JPanel implements ActionListener
             {
                 if (this.txtPseudo.getText().length() > TextFieldPseudo.getMaxSizePseudo())
                     this.txtPseudo.setText(this.txtPseudo.getText().substring(0, TextFieldPseudo.getMaxSizePseudo()));
+
+                if (!this.txtPseudo.getText().isEmpty())
+                {
+                    if (this.txtPseudo.getBorder() != null)
+                        this.txtPseudo.setBorder(null);
+
+                    if (this.txtPseudo.getPlaceholderColor() == Color.RED)
+                        this.txtPseudo.setPlaceholderColor(this.ctrl.getTheme().get("saisies").get(2));
+                }
             }
 
             /* Textfield Mot de passe Creer */
@@ -437,6 +462,10 @@ public class PanelAccueil extends JPanel implements ActionListener
 
         }
 
+
+        /*---------------------*/
+        /* Bouton import mappe */
+        /*---------------------*/
         if (e.getSource() instanceof JButton)
         {
             if (e.getSource() == this.btnImportMappe)
@@ -456,21 +485,23 @@ public class PanelAccueil extends JPanel implements ActionListener
 
 						if (this.mappeImportee)
 						{
-							if (this.btnImportMappe.getBackground() == Color.RED)
+							if (this.btnImportMappe.getBorder() == BorderFactory.createLineBorder(Color.RED, 3))
                             {
                                 this.lblImportMappe.setText("");
-								this.btnImportMappe.setBackground(this.ctrl.getTheme().get("buttons").get(1));
+								this.btnImportMappe.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
                             }
 
                             this.btnImportMappe.setText(fichier.getName());
 
                             this.lblImportMappe.setForeground(Color.GREEN);
                             this.lblImportMappe.setText("Importation réussie");
+                            this.btnImportMappe.setBorder(BorderFactory.createLineBorder(Color.GREEN, 2));
 						}
                         else
                         {
                             this.lblImportMappe.setForeground(Color.RED);
                             this.lblImportMappe.setText("Le fichier est incorrect");
+                            this.btnImportMappe.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                         }
                     }
 					else
@@ -478,24 +509,58 @@ public class PanelAccueil extends JPanel implements ActionListener
 				}
             }
             
-            if (e.getSource() == this.btnCreerMulti)
-            {
-                //this.ctrl.creerPartie(this.txtMdpCreer.getText());
-				new FrameAttente(ctrl); // en attendant de faire la fenetre d'attente (Floris l'à fait bientôt)
-            }
 
-            if (e.getSource() == this.btnCreerSolo)
+            /*------------------*/
+            /* Creer une partie */
+            /*------------------*/
+            if (e.getSource() == this.btnCreerSolo || e.getSource() == this.btnCreerMulti)
             {
-                if (this.mappeImportee)
-                    this.ctrl.creerPartieSolo();
+                /* Vérification du pseudo */
+                boolean pseudoCorrect = false;
+                if (this.txtPseudo.getText().isEmpty())
+                {
+                    this.txtPseudo.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                    this.txtPseudo.setHint("Entrez un pseudo");
+                    this.txtPseudo.setPlaceholderColor(Color.RED);
+                }
+                else
+                {
+                    pseudoCorrect = true;
+                    this.txtPseudo.setBorder(null);
+
+                    if (this.txtPseudo.getPlaceholderColor() == Color.RED)
+                        this.txtPseudo.setPlaceholderColor(this.ctrl.getTheme().get("saisies").get(2));
+                }
+
+                /* Vérification de la mappe */
+                if (this.mappeImportee && pseudoCorrect)
+                {
+                    if (e.getSource() == this.btnCreerSolo)
+                        this.ctrl.creerPartieSolo();
+                    else
+                    {
+                        //this.ctrl.creerPartie(this.txtMdpCreer.getText());
+                        new FrameAttente(ctrl); // en attendant de faire la fenetre d'attente (Floris l'à fait bientôt)
+                    }
+                }
                 else
                 {
                     this.lblImportMappe.setForeground(Color.RED);
                     this.lblImportMappe.setText("Veuillez importer un fichier");
-                    this.btnImportMappe.setBackground(Color.RED);
+                    this.btnImportMappe.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
                 }
             }
-            
+
+            if (e.getSource() == this.btnTest)
+            {
+                this.mappeImportee = this.ctrl.ouvrir(new File("./France.xml"));
+                this.ctrl.creerPartieSolo();
+            }
+
+
+            /*---------------------*/
+            /* Rejoidre une partie */
+            /*---------------------*/
             if (e.getSource() == this.btnRejoindre)
             {
                 //this.ctrl.rejoindrePartie(this.txtIpRejoindrePartie.getText(), this.txtMdpRejoindrePartie.getText());
