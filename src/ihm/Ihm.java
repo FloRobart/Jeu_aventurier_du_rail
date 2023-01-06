@@ -6,7 +6,7 @@ import controleur.Controleur;
 import ihm.accueil.FrameAccueil;
 import ihm.jeu.FrameJeu;
 
-public class Ihm implements Serializable
+public class Ihm
 {
     private Controleur ctrl;
 

@@ -521,6 +521,10 @@ public class PanelAccueil extends JPanel implements ActionListener
             {
                 /* Vérification du pseudo */
                 boolean pseudoCorrect = false;
+                if (e.getSource() == this.btnCreerMulti)
+                {
+                    this.ctrl.hostGame();
+                }
                 if (this.txtPseudo.getText().isEmpty())
                 {
                     this.txtPseudo.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
@@ -576,6 +580,7 @@ public class PanelAccueil extends JPanel implements ActionListener
             if (e.getSource() == this.btnRejoindre)
             {
                 //this.ctrl.rejoindrePartie(this.txtIpRejoindrePartie.getText(), this.txtMdpRejoindrePartie.getText());
+                System.out.println(this.txtIpRejoindre.getText());
                 this.ctrl.joinGame(this.txtIpRejoindre.getText());
             }
         }

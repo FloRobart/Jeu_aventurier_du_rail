@@ -15,7 +15,7 @@ import metier.reseau.Client;
 import metier.reseau.Server;
 
 
-public class Controleur implements Serializable
+public class Controleur
 {
     private Metier metier;
     private Ihm    ihm;

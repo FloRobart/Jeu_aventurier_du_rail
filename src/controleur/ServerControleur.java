@@ -14,7 +14,7 @@ public class ServerControleur
         this.metier = metier;
 		try
 		{
-			ss	= new ServerSocket(6000);
+			ss	= new ServerSocket(9999);
             Thread threadWaitClient = new Thread(new WaitClient());
             threadWaitClient.start();
 		} 

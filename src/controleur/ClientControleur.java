@@ -9,7 +9,7 @@ import metier.Metier;
 
 public class ClientControleur {
     private String ip;
-    private int port=6000;
+    private int port=9999;
     private Socket socket;
     private Metier metier;
     public ClientControleur(String ip) 
@@ -22,7 +22,6 @@ public class ClientControleur {
             OutputStream outputStream = socket.getOutputStream();
             ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
             metier = (Metier) objectInputStream.readObject();
-            System.out.println(metier);
         }
         catch (Exception e) {e.printStackTrace();}
     }

@@ -3,8 +3,9 @@ package metier;
 import java.util.HashMap;
 import java.util.List;
 import java.awt.Color;
+import java.io.Serializable;
 
-public class Joueur
+public class Joueur implements Serializable
 {
     private String nom;
     private int score;
