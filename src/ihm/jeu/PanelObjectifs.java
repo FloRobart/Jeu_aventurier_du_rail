@@ -114,6 +114,16 @@ public class PanelObjectifs extends JPanel implements ActionListener
         p = new Point(100 - fm.stringWidth(str)/2, 90);
         g.drawString(str, p.x, p.y);
 
+		BufferedImage bi = this.ctrl.getImage();
+		double zoomLargeur = (double) 100 / bi.getWidth ();
+		double zoomHauteur = (double) 100 / bi.getHeight();
+		double facteurZoom = Math.min(zoomLargeur, zoomHauteur);
+		/*
+		 * AffineTransform at = new AffineTransform();
+		at.scale(zoomFactor, zoomFactor);
+        g2.transform(at);
+		 */
+
         return img;
     }
 

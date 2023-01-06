@@ -16,7 +16,7 @@ import metier.reseau.Client;
 import metier.reseau.Server;
 
 
-public class Controleur implements Serializable
+public class Controleur
 {
     private Metier metier;
     private Ihm    ihm;
@@ -68,6 +68,11 @@ public class Controleur implements Serializable
 	public List<Integer>       getPoints              () { return this.metier.getPoints              (); }
 
 	public BufferedImage       getImageVersoObjectif() { return this.metier.getImageVersoObjectif(); }
+
+	public BufferedImage getImage()
+	{
+		return this.ihm.getImage();
+	}
 
 	//public void piocherDeck (char typeCarte, String nomJoueur)			 {this.metier.piocherDeck(typeCarte, nomJoueur);		}
 	//public void piocherTabWagon (int indiceTab, String nomJoueur)		 {this.metier.piocherTabWagon(indiceTab, nomJoueur);	}

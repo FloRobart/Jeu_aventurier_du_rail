@@ -42,7 +42,7 @@ public class Metier implements Serializable
 	private static final int TAILLE_TAB_OBJECTIF = 3;
 	private static final long serialVersionUID = 1L;
 
-    private Controleur          ctrl;
+    private transient Controleur          ctrl;
 
     private List<Joueur>        lstJoueurs;
     private List<CarteObjectif> lstCartesObjectif;

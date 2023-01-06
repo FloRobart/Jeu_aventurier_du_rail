@@ -536,7 +536,24 @@ public class PanelAccueil extends JPanel implements ActionListener
             /*------------------*/
             if (e.getSource() == this.btnCreerSolo || e.getSource() == this.btnCreerMulti)
             {
-                boolean pseudoCorrect = this.verifPseudo();
+                /* Vérification du pseudo */
+                boolean pseudoCorrect = false;
+                if (e.getSource() == this.btnCreerMulti)
+                {
+                    this.ctrl.hostGame();
+                }
+                if (this.txtPseudo.getText().isEmpty())
+                {
+                    this.txtPseudo.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                    this.txtPseudo.setHint("Entrez un pseudo");
+                    this.txtPseudo.setPlaceholderColor(Color.RED);
+                }
+                else
+                {
+                    pseudoCorrect = true;
+                    this.txtPseudo.setBorder(null);
+                }
+                pseudoCorrect = this.verifPseudo();
                 boolean mdpCorrect    = false;
 
                 if (e.getSource() == this.btnCreerMulti) { mdpCorrect = this.verifMdp(this.txtMdpCreer); }
@@ -585,6 +602,9 @@ public class PanelAccueil extends JPanel implements ActionListener
             /*---------------------*/
             if (e.getSource() == this.btnRejoindre)
             {
+                //this.ctrl.rejoindrePartie(this.txtIpRejoindrePartie.getText(), this.txtMdpRejoindrePartie.getText());
+                System.out.println(this.txtIpRejoindre.getText());
+                this.ctrl.joinGame(this.txtIpRejoindre.getText());
                 boolean pseudoCorrect = this.verifPseudo();
                 boolean mdpCorrect    = this.verifMdp(this.txtMdpRejoindre);
 
