@@ -46,6 +46,7 @@ public class FrameJeu extends JFrame
 		this.panelPlateau.centrer(this.panelPlateau.getWidth(), this.panelPlateau.getHeight());
     }
 
+    public void setImageButton(int indice) { this.panelPioche.setImageButton(indice); }	
 
     public void appliquerTheme()
     {

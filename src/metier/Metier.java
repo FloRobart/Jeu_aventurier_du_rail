@@ -214,6 +214,9 @@ public class Metier
 	public List<CarteObjectif> getCarteObjectif       () { return this.lstCartesObjectif;    }
 	public List<Noeud>         getNoeuds              () { return this.lstNoeuds;            }
 	public List<Arete>         getAretes              () { return this.lstAretes;            }
+	public List<CarteWagon>    getLstDefausseCartesWagon() { return this.lstDefausseCartesWagon;}
+	public CarteWagon[]		   getTabCarteWagon			() { return this.tabCarteWagon;         }
+	public CarteObjectif[]	   getTabCarteObjectif		() { return this.tabCarteObjectif;      }
 
 	public int[]               getTaillePlateau       () { return this.taillePlateau;        }
 	public BufferedImage       getImagePlateau        () { return this.imagePlateau;         }
