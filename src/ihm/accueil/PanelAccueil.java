@@ -398,6 +398,7 @@ public class PanelAccueil extends JPanel implements ActionListener
         /* panel pour rejoindre une partie */
         this.btnRejoindre   .addActionListener(this);
 
+        this.txtIpRejoindre .addActionListener(this);
         this.txtMdpRejoindre.addActionListener(this);
     }
 
@@ -617,8 +618,7 @@ public class PanelAccueil extends JPanel implements ActionListener
                         {
                             // Vérifier que le mot de passe colle avec l'adresse IP
 
-                                //this.ctrl.rejoindrePartie(this.txtIpRejoindre.getText(), this.txtMdpRejoindre.getText());
-                                this.ctrl.joinGame(this.txtIpRejoindre.getText());
+                            this.ctrl.joinGame(this.txtIpRejoindre.getText());
                         }
                     }
                 }

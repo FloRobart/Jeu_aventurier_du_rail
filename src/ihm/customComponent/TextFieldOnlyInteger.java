@@ -31,14 +31,10 @@ public class TextFieldOnlyInteger extends TextFieldWithHint
         {
             public void keyPressed(KeyEvent ke)
             {
-                if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9' || ke.getKeyChar() == KeyEvent.VK_BACK_SPACE || ke.getKeyChar() == KeyEvent.VK_DELETE )
-                {
+                if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9' || ke.getKeyChar() == KeyEvent.VK_BACK_SPACE || ke.getKeyChar() == KeyEvent.VK_DELETE || ke.getKeyChar() == KeyEvent.VK_ENTER)
                     txt.setEditable(true);
-                }
                 else
-                {
                     txt.setEditable(false);
-                }               
             }
         });  
     }

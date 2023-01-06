@@ -36,7 +36,7 @@ public class TextFieldPseudo extends TextFieldWithHint
             @Override
             public void keyPressed(KeyEvent ke)
             {
-                if (txt.getText().length() < TextFieldPseudo.MAX_SIZE_PSEUDO || ke.getKeyChar() == KeyEvent.VK_BACK_SPACE || ke.getKeyChar() == KeyEvent.VK_DELETE)
+                if (txt.getText().length() < TextFieldPseudo.MAX_SIZE_PSEUDO || ke.getKeyChar() == KeyEvent.VK_BACK_SPACE || ke.getKeyChar() == KeyEvent.VK_DELETE || ke.getKeyChar() == KeyEvent.VK_ENTER)
                     txt.setEditable(true);
                 else
                     txt.setEditable(false);

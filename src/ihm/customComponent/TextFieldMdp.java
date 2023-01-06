@@ -16,12 +16,14 @@ public class TextFieldMdp extends TextFieldOnlyInteger
     public TextFieldMdp(Controleur ctrl)
     {
         super(ctrl);
+        this.setOnlyInteger();
     }
 
 
     public TextFieldMdp(String hint, Controleur ctrl)
     {
         super(hint, ctrl);
+        this.setOnlyInteger();
     }
 
 
@@ -33,7 +35,7 @@ public class TextFieldMdp extends TextFieldOnlyInteger
         {
             public void keyPressed(KeyEvent ke)
             {
-                if (txt.getText().length() < TextFieldMdp.MAX_SIZE_MDP && ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9' || ke.getKeyChar() == KeyEvent.VK_BACK_SPACE || ke.getKeyChar() == KeyEvent.VK_DELETE )
+                if (txt.getText().length() < TextFieldMdp.MAX_SIZE_MDP && ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9' || ke.getKeyChar() == KeyEvent.VK_BACK_SPACE || ke.getKeyChar() == KeyEvent.VK_DELETE || ke.getKeyChar() == KeyEvent.VK_ENTER)
                 {
                     txt.setEditable(true);
                 }
