@@ -72,6 +72,8 @@ public class PanelInfosJoueur extends JPanel
         JPanel panelIcon  = new JPanel();
         panelIcon.setBackground(new Color(68, 71, 90));
 
+
+        /*-----NE PAS SUPPRIMER------ */
         /*this.lblNom.setText(joueur.getNom());
 
         
