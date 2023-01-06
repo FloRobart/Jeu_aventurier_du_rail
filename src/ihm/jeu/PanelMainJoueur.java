@@ -2,23 +2,23 @@ package ihm.jeu;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.util.List;
 import java.awt.Graphics2D;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+
 import controleur.Controleur;
 
-
-
-
-public class PanelMainJoueur extends JPanel
+public class PanelMainJoueur extends JPanel implements ActionListener
 {
     private Controleur ctrl;
 
@@ -28,12 +28,13 @@ public class PanelMainJoueur extends JPanel
     private JLabel     lblIcon;
 
     private JPanel              panelMainWagon;
-    private JButton[]            tabIconWagon;
+    private JButton[]           tabIconWagon;
     private JLabel[]            tabLblWagon;
     private List<BufferedImage> listImageWagon;
 
     private JPanel     panelMainObjectif;
-    private JLabel     lblIconObjectif;
+    private JButton    btnIconObjectif;
+       
 
     public PanelMainJoueur(Controleur ctrl)
     {
@@ -43,8 +44,8 @@ public class PanelMainJoueur extends JPanel
 
         //initialisation des composants
         this.panelInfo  = new JPanel();
-        this.lblNom     = new JLabel("  nom ");
-        this.lblNbJeton = new JLabel("  jetons restants");
+        this.lblNom     = new JLabel("  nom   ");
+        this.lblNbJeton = new JLabel("  jetons restants   ");
         this.lblIcon    = new JLabel(new ImageIcon("./donnees/images/IconJoueur.png"), JLabel.LEFT);
         
         this.panelMainWagon = new JPanel();
@@ -55,21 +56,22 @@ public class PanelMainJoueur extends JPanel
         this.tabLblWagon    = new JLabel[taille];
         
         this.panelMainObjectif = new JPanel();
-        this.lblIconObjectif   = new JLabel(new ImageIcon(this.ctrl.getCarteObjectif().get(2).getImageRecto()), JLabel.LEFT);
+        this.btnIconObjectif   = new JButton();
 
         //panelInfo Joueur
         JPanel panelLbl = new JPanel();
         panelLbl.setBackground(null);
-        panelLbl.setLayout(new GridLayout(2,1));
+        panelLbl.setLayout(new GridLayout(2,1)); // à modifier en fonction du nombre d'infos à afficher
         this.panelInfo.setBackground(new Color(68, 71, 90));
+        this.panelInfo.setLayout(new BorderLayout());
         this.lblNom.setForeground(Color.WHITE);
         this.lblNbJeton.setForeground(Color.WHITE);
 
         panelLbl.add(this.lblNom);
         panelLbl.add(this.lblNbJeton);
 
-        this.panelInfo.add(this.lblIcon);
-        this.panelInfo.add(panelLbl);
+        this.panelInfo.add(this.lblIcon, BorderLayout.NORTH);
+        this.panelInfo.add(panelLbl, BorderLayout.CENTER);
 
         //panelMainWagon
         this.panelMainWagon.setBackground(new Color(68, 71, 90));
@@ -92,7 +94,11 @@ public class PanelMainJoueur extends JPanel
 
         //panelMainObjectif
         this.panelMainObjectif.setBackground(new Color(68, 71, 90));
-        this.panelMainObjectif.add(this.lblIconObjectif);
+        this.btnIconObjectif.setIcon(new ImageIcon(creerCarte(this.ctrl.getCarteObjectif().get(2).getImageRecto(), null)));
+        this.btnIconObjectif.setBorderPainted(false);
+        this.btnIconObjectif.setContentAreaFilled(false);
+        this.btnIconObjectif.setFocusPainted(false);
+        this.panelMainObjectif.add(this.btnIconObjectif);
 
 
         //ajout des composants
@@ -101,19 +107,20 @@ public class PanelMainJoueur extends JPanel
         this.add(this.panelMainObjectif, BorderLayout.WEST);
 
 		this.setVisible(true);
+
+        this.btnIconObjectif.addActionListener(this);
     }
 
     /**
      * Permet de retourner la carte et afficher le nombre de carte de cette couleur
      * @param bufferedImage image de la carte
-     * @param lblWagon label contenant le nombre de carte de cette couleur
+     * @param lbl label contenant le nombre de carte de cette couleur
      * @return BufferedImage carte retourné avec le nombre de carte de cette couleur
      */
-    private BufferedImage creerCarte(BufferedImage bufferedImage, JLabel lblWagon) 
+    private BufferedImage creerCarte(BufferedImage bufferedImage, JLabel lbl) 
     {
         int width = bufferedImage.getWidth();
         int height = bufferedImage.getHeight();
-        
 
         int taille = Math.max(width + 30, height);
         BufferedImage bi = new BufferedImage(taille, taille, BufferedImage.TYPE_INT_ARGB);
@@ -123,8 +130,24 @@ public class PanelMainJoueur extends JPanel
         g2d.drawImage(bufferedImage, (taille-width)/2, (taille-height)/2-30, width, height, null);
         g2d.rotate((1.57*3), taille / 2, taille / 2);
         g2d.setColor(Color.WHITE);
-        g2d.drawString(lblWagon.getText(), 50, 50);
+        if(lbl != null)
+            g2d.drawString(lbl.getText(), 50, 50);
 
         return bi;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) 
+    {
+        if(e.getSource() == this.btnIconObjectif)
+        {
+            JDialog dialog = new JDialog();
+            dialog.setSize(400,200);
+            dialog.setLocation(200, 50);
+            dialog.add(new PanelObjectifs(this.ctrl));
+            dialog.pack();
+            dialog.setVisible(true);
+        }
+        
     }  
 }

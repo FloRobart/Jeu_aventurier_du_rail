@@ -115,8 +115,14 @@ public class ClientServerHandler implements Runnable
                         Metier nouveau_metier = (Metier) ois.readObject();
                         //TODO: Charger le nouveau metier
 
+                        for (java.lang.reflect.Field f : this.metier.getClass().getDeclaredFields()) {
+                            if (java.lang.reflect.Modifier.isStatic(f.getModifiers())) continue;
+                            f.setAccessible(true);
+                            f.set(this.metier, f.get(nouveau_metier));
+                        }
+
                         System.out.println("Class metier charger");
-                    } catch (ClassNotFoundException e) {
+                    } catch (ClassNotFoundException | IllegalArgumentException | IllegalAccessException e) {
                         e.printStackTrace();
                     }
                     
