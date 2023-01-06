@@ -11,6 +11,7 @@ import java.io.Serializable;
 
 import ihm.Ihm;
 import metier.*;
+import metier.partie.CarteWagon;
 import metier.reseau.Client;
 import metier.reseau.Server;
 
@@ -41,11 +42,10 @@ public class Controleur implements Serializable
 	/*          Getters            */
 	/* --------------------------- */
 	public List<Joueur>        getJoueurs             () { return this.metier.getJoueurs      (); }
-	public List<CarteWagon>    getCarteWagon          () { return this.metier.getCarteWagon   (); }
+	//public List<CarteWagon>    getCarteWagon          () { return this.metier.getCarteWagon   (); }
 	public List<CarteObjectif> getCarteObjectif       () { return this.metier.getCarteObjectif(); }
 	public List<Noeud>         getNoeuds              () { return this.metier.getNoeuds       (); }
 	public List<Arete>         getAretes              () { return this.metier.getAretes       (); }
-	public List<CarteWagon>    getLstDefausseCartesWagon() { return this.metier.getLstDefausseCartesWagon();}
 	public CarteWagon[]		   getTabCarteWagon			() { return this.metier.getTabCarteWagon();         }
 	public CarteObjectif[]	   getTabCarteObjectif		() { return this.metier.getTabCarteObjectif();     	}
 

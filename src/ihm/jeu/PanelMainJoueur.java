@@ -28,7 +28,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
     private JLabel     lblIcon;
 
     private JPanel              panelMainWagon;
-    private JButton[]            tabIconWagon;
+    private JButton[]           tabIconWagon;
     private JLabel[]            tabLblWagon;
     private List<BufferedImage> listImageWagon;
 
@@ -44,8 +44,8 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 
         //initialisation des composants
         this.panelInfo  = new JPanel();
-        this.lblNom     = new JLabel("  nom ");
-        this.lblNbJeton = new JLabel("  jetons restants");
+        this.lblNom     = new JLabel("  nom   ");
+        this.lblNbJeton = new JLabel("  jetons restants   ");
         this.lblIcon    = new JLabel(new ImageIcon("./donnees/images/IconJoueur.png"), JLabel.LEFT);
         
         this.panelMainWagon = new JPanel();
@@ -61,16 +61,17 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         //panelInfo Joueur
         JPanel panelLbl = new JPanel();
         panelLbl.setBackground(null);
-        panelLbl.setLayout(new GridLayout(2,1));
+        panelLbl.setLayout(new GridLayout(2,1)); // à modifier en fonction du nombre d'infos à afficher
         this.panelInfo.setBackground(new Color(68, 71, 90));
+        this.panelInfo.setLayout(new BorderLayout());
         this.lblNom.setForeground(Color.WHITE);
         this.lblNbJeton.setForeground(Color.WHITE);
 
         panelLbl.add(this.lblNom);
         panelLbl.add(this.lblNbJeton);
 
-        this.panelInfo.add(this.lblIcon);
-        this.panelInfo.add(panelLbl);
+        this.panelInfo.add(this.lblIcon, BorderLayout.NORTH);
+        this.panelInfo.add(panelLbl, BorderLayout.CENTER);
 
         //panelMainWagon
         this.panelMainWagon.setBackground(new Color(68, 71, 90));

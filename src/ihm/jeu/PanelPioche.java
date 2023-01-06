@@ -31,48 +31,50 @@ public class PanelPioche extends JPanel implements ActionListener
         this.ctrl = ctrl;
 
         //Parametrage du panel
-        this.setLayout(new GridLayout(6,1));
+        this.setLayout(new BorderLayout(3, 3));
 		this.setBackground(new Color(68, 71, 90));
 
-        //Creation des composants
-        JPanel[] tabPanel = new JPanel[TAILLE+1];
+		//Creation des panels
+		JPanel panelHaut = new JPanel();
+		JPanel panelMilieu = new JPanel(new GridLayout(5,1));
 
-        for ( int cpt=0; cpt <= TAILLE; cpt++ )
-        {
-            tabPanel[cpt] = new JPanel();
-            tabPanel[cpt].setBackground(new Color(68, 71, 90));
-        }
+		panelHaut.setBackground(new Color(68, 71, 90));
+		panelMilieu.setBackground(new Color(68, 71, 90));
 
-        this.tabCarteWagon = new JButton[TAILLE];
-        for (int cpt=0; cpt<TAILLE; cpt++)
+        this.tabCarteWagon = new JButton[this.TAILLE];
+        for (int cpt=0; cpt<this.TAILLE; cpt++)
         {
             this.tabCarteWagon[cpt] = new JButton();
 			this.tabCarteWagon[cpt].setBackground(new Color(70, 73, 89));
-            this.tabCarteWagon[cpt].setPreferredSize(new Dimension(150, 100));
+            this.tabCarteWagon[cpt].setPreferredSize(new Dimension(200, 100));
             this.tabCarteWagon[cpt].setBorder(BorderFactory.createBevelBorder(1, new Color(32, 40, 44), new Color(32, 40, 44)));
             this.setImageButton(cpt);
         }
 
         this.deckCarteWagon = new JButton(new ImageIcon(this.ctrl.getImageVersoCouleur()));
 		this.deckCarteWagon.setBackground(new Color(70, 73, 89));
-        this.deckCarteWagon.setPreferredSize(new Dimension(150, 100));
+        this.deckCarteWagon.setPreferredSize(new Dimension(200, 150));
         this.deckCarteWagon.setBorder(BorderFactory.createBevelBorder(1, new Color(32, 40, 44), new Color(32, 40, 44)));
 
         //Ajout des composants
-        tabPanel[0].add(this.deckCarteWagon);
+		this.add(panelHaut, BorderLayout.NORTH);
+        panelHaut.add(this.deckCarteWagon);
 
+		this.add(panelMilieu, BorderLayout.CENTER);
 		for (int cpt=0; cpt<TAILLE; cpt++)
-            tabPanel[cpt+1].add(this.tabCarteWagon[cpt]);
+            panelMilieu.add(this.tabCarteWagon[cpt]);
 
-		for (int cpt=0; cpt<=TAILLE; cpt++)
-            this.add(tabPanel[cpt]);
+		//Activation des composants
+		this.deckCarteWagon.addActionListener(this);
+		for (int cpt=0; cpt<TAILLE; cpt++)
+			this.tabCarteWagon[cpt].addActionListener(this);
     }
 
     public void setImageButton(int indice)
     {
         BufferedImage resizedImage = new BufferedImage(150, 100, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = resizedImage.createGraphics();
-        g2d.drawImage(this.ctrl.getTabCarteWagon()[indice].getImageRecto(), 0, 0, 150, 100, null);
+		//g2d.drawImage(this.ctrl.getTabCarteWagon()[indice].getImageRecto(), 0, 0, 200, 100, null);
         g2d.dispose();
         this.tabCarteWagon[indice].setIcon(new ImageIcon (resizedImage));
     }

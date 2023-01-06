@@ -35,10 +35,12 @@
 
 ./src/metier/Arete.java
 ./src/metier/CarteObjectif.java
-./src/metier/CarteWagon.java
 ./src/metier/Joueur.java
 ./src/metier/Metier.java
 ./src/metier/Noeud.java
-./src/metier/Pioche.java
+
+./src/metier/partie/CarteWagon.java
+./src/metier/partie/GestionPioche.java
+./src/metier/partie/Partie.java
 
 -d bin
