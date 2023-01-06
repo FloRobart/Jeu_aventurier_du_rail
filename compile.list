@@ -1,24 +1,25 @@
+./src/controleur/ClientControleur.java
 ./src/controleur/Controleur.java
+./src/controleur/ServerControleur.java
 
-
-./src/ihm/Ihm.java
+./src/ihm/accueil/FrameAccueil.java
+./src/ihm/accueil/MenuBarre.java
+./src/ihm/accueil/PanelAccueil.java
 
 ./src/ihm/customComponent/TextFieldMdp.java
 ./src/ihm/customComponent/TextFieldOnlyInteger.java
 ./src/ihm/customComponent/TextFieldPseudo.java
 ./src/ihm/customComponent/TextFieldWithHint.java
 
-./src/ihm/accueil/FrameAccueil.java
-./src/ihm/accueil/PanelAccueil.java
-./src/ihm/accueil/MenuBarre.java
-
 ./src/ihm/jeu/FrameJeu.java
+./src/ihm/jeu/PanelImage.java
 ./src/ihm/jeu/PanelInfosJoueur.java
 ./src/ihm/jeu/PanelJoueurs.java
 ./src/ihm/jeu/PanelMainJoueur.java
 ./src/ihm/jeu/PanelPioche.java
 ./src/ihm/jeu/PanelPlateau.java
-./src/ihm/jeu/PanelImage.java
+
+./src/ihm/Ihm.java
 
 ./src/metier/reseau/Client.java
 ./src/metier/reseau/ClientServerHandler.java
@@ -31,5 +32,6 @@
 ./src/metier/Joueur.java
 ./src/metier/Metier.java
 ./src/metier/Noeud.java
+./src/metier/Pioche.java
 
 -d bin
