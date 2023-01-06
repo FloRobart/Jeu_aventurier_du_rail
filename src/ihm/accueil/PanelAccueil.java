@@ -402,11 +402,6 @@ public class PanelAccueil extends JPanel implements ActionListener
 					else
 						JOptionPane.showMessageDialog(this, "Le fichier choisi doit-être au format XML", "Erreur", JOptionPane.ERROR_MESSAGE);
 				}
-
-				if (!this.mappeImportee)
-				{
-					this.btnImportMappe.setBackground(Color.RED);
-				}
             }
             
             if (e.getSource() == this.btnCreerMulti)
@@ -420,9 +415,7 @@ public class PanelAccueil extends JPanel implements ActionListener
                 if (this.mappeImportee)
                     this.ctrl.creerPartieSolo();
                 else
-				{
                     this.btnImportMappe.setBackground(Color.RED);
-				}
             }
             
             if (e.getSource() == this.btnRejoindre)
