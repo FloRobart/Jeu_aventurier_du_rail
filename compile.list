@@ -20,6 +20,7 @@
 ./src/ihm/jeu/PanelMainJoueur.java
 ./src/ihm/jeu/PanelPioche.java
 ./src/ihm/jeu/PanelPlateau.java
+./src/ihm/jeu/PanelObjectif.java
 
 ./src/ihm/accueil/FrameAccueil.java
 ./src/ihm/accueil/MenuBarre.java
