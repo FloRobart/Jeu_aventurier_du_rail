@@ -42,9 +42,9 @@ public class PanelObjectif extends JPanel implements ActionListener
         if(e.getSource() == this.btnCarteObjectif)
         {
             JDialog dialog = new JDialog();
-            dialog.setSize(600,300);
+            dialog.setSize(750,250);
             dialog.setLocation(200, 300);
-            //dialog.add(new(this.ctrl, new PanelPiocherObjectif()));
+            dialog.add(new PanelPiocherObjectif(this.ctrl));
             dialog.setVisible(true);
         }
     }
