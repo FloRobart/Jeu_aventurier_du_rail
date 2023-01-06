@@ -5,9 +5,10 @@ import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
+import java.awt.Dimension;
 
 import javax.swing.JLabel;
-
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -37,13 +38,15 @@ public class PanelPioche extends JPanel implements ActionListener
         {
             tabPanel[cpt] = new JPanel();
             tabPanel[cpt].setBackground(new Color(68, 71, 90));
+            tabPanel[cpt].setBorder(BorderFactory.createLineBorder(Color.black));
         }
 
         this.tabCarteWagon = new JButton[TAILLE];
         for (int cpt=0; cpt<TAILLE; cpt++)
         {
             this.tabCarteWagon[cpt] = new JButton();
-			 this.tabCarteWagon[cpt].setBackground(new Color(70, 73, 89));
+			this.tabCarteWagon[cpt].setBackground(new Color(70, 73, 89));
+            this.tabCarteWagon[cpt].setBorder(BorderFactory.createBevelBorder(1, new Color(32, 40, 44), new Color(32, 40, 44)));
             this.setImageButton(cpt);
         }
 
