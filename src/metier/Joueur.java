@@ -2,6 +2,9 @@ package metier;
 
 import java.util.HashMap;
 import java.util.List;
+
+import metier.partie.CarteWagon;
+
 import java.awt.Color;
 
 public class Joueur
