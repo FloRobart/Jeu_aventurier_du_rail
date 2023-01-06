@@ -2,23 +2,20 @@ package ihm.jeu;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Graphics2D;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
 import java.util.List;
+import java.awt.Graphics2D;
 
-import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.GroupLayout.ParallelGroup;
-import javax.swing.GroupLayout.SequentialGroup;
-import javax.swing.text.html.HTMLDocument.HTMLReader.ParagraphAction;
-import java.awt.geom.AffineTransform;
-import java.awt.Shape;
 
 import controleur.Controleur;
+
+
 
 
 public class PanelMainJoueur extends JPanel
@@ -49,16 +46,16 @@ public class PanelMainJoueur extends JPanel
         this.lblNom     = new JLabel("  nom ");
         this.lblNbJeton = new JLabel("  jetons restants");
         this.lblIcon    = new JLabel(new ImageIcon("./donnees/images/IconJoueur.png"), JLabel.LEFT);
-
-        this.panelMainWagon = new JPanel();
-        this.listImageWagon = this.ctrl.getImagesRectoCouleur();
-        this.tabIconWagon   = new JButton[this.listImageWagon.size()+1];
-        this.tabLblWagon    = new JLabel[this.listImageWagon.size()+1];
         
-
+        this.panelMainWagon = new JPanel();
+        this.listImageWagon = this.ctrl.getImagesRectoCouleur(); // joueur.getCarteWagon();
+        this.listImageWagon.add(this.ctrl.getImageRectoLocomotive());
+        int taille = this.listImageWagon.size();
+        this.tabIconWagon   = new JButton[taille];
+        this.tabLblWagon    = new JLabel[taille];
+        
         this.panelMainObjectif = new JPanel();
         this.lblIconObjectif   = new JLabel(new ImageIcon(this.ctrl.getCarteObjectif().get(2).getImageRecto()), JLabel.LEFT);
-
 
         //panelInfo Joueur
         JPanel panelLbl = new JPanel();
@@ -67,7 +64,6 @@ public class PanelMainJoueur extends JPanel
         this.panelInfo.setBackground(new Color(68, 71, 90));
         this.lblNom.setForeground(Color.WHITE);
         this.lblNbJeton.setForeground(Color.WHITE);
-        //this.lblIcon.setIcon(new ImageIcon("./donnees/images/IconJoueur.png"));
 
         panelLbl.add(this.lblNom);
         panelLbl.add(this.lblNbJeton);
@@ -77,40 +73,22 @@ public class PanelMainJoueur extends JPanel
 
         //panelMainWagon
         this.panelMainWagon.setBackground(new Color(68, 71, 90));
-        this.panelMainWagon.setLayout(new GridLayout(2, 5));
 
-       
-        for(int i = 0; i < this.listImageWagon.size(); i++)
+        System.out.println(this.listImageWagon.size());
+
+        for(int i = 0; i < taille; i++)
         {
-            this.tabIconWagon[i] = new JButton();
             this.tabLblWagon[i]  = new JLabel();
+            this.tabLblWagon[i].setText("X"+ i);
 
-            //this.tabIconWagon[i].setIcon(new ImageIcon(this.creerCarte(this.listImageWagon.get(i))));
+            this.tabIconWagon[i] = new JButton();
+            this.tabIconWagon[i].setIcon(new ImageIcon(creerCarte(this.listImageWagon.get(i), this.tabLblWagon[i])));
             this.tabIconWagon[i].setBorderPainted(false);
             this.tabIconWagon[i].setContentAreaFilled(false);
             this.tabIconWagon[i].setFocusPainted(false);
-            this.tabLblWagon[i].setText("X"+ i);
-            this.tabLblWagon[i].setForeground(Color.WHITE);
         
             this.panelMainWagon.add(this.tabIconWagon[i]);
         }   
-        
-        int taille = this.listImageWagon.size();
-        this.tabIconWagon[taille] = new JButton();
-        this.tabLblWagon[taille]  = new JLabel();
-        //this.tabIconWagon[taille].setIcon(new ImageIcon(this.creerCarte(this.listImageWagon.get(taille))));
-        this.tabIconWagon[taille].setBorderPainted(false);
-        this.tabIconWagon[taille].setContentAreaFilled(false);
-        this.tabIconWagon[taille].setFocusPainted(false);
-        this.tabLblWagon[taille].setText("X"+ taille);
-        this.tabLblWagon[taille].setForeground(Color.WHITE);
-        this.panelMainWagon.add(this.tabIconWagon[taille]);
-        
-        for(int i = 0; i < this.listImageWagon.size()+1; i++)
-        {
-            this.panelMainWagon.add(this.tabLblWagon[i]);
-        }
-
 
         //panelMainObjectif
         this.panelMainObjectif.setBackground(new Color(68, 71, 90));
@@ -125,23 +103,28 @@ public class PanelMainJoueur extends JPanel
 		this.setVisible(true);
     }
 
-    private BufferedImage creerCarte(BufferedImage bufferedImage) 
+    /**
+     * Permet de retourner la carte et afficher le nombre de carte de cette couleur
+     * @param bufferedImage image de la carte
+     * @param lblWagon label contenant le nombre de carte de cette couleur
+     * @return BufferedImage carte retourné avec le nombre de carte de cette couleur
+     */
+    private BufferedImage creerCarte(BufferedImage bufferedImage, JLabel lblWagon) 
     {
-        BufferedImage bi = bufferedImage;
-        Shape fig1 = (Shape) bi;
-        int milieuXcarré = bi.getWidth()/2;
-        int milieuYcarré = bi.getHeight()/2;
+        int width = bufferedImage.getWidth();
+        int height = bufferedImage.getHeight();
+        
 
-        AffineTransform t = new AffineTransform();
-        t.rotate(1.57, milieuXcarré, milieuYcarré);
-        Shape fig2 = t.createTransformedShape(fig1);
+        int taille = Math.max(width + 30, height);
+        BufferedImage bi = new BufferedImage(taille, taille, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = (Graphics2D) bi.getGraphics();
 
-        bi = new BufferedImage(bi.getWidth(), bi.getHeight(), BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = bi.createGraphics();
-        g2d.setPaint(Color.WHITE);
-        g2d.fill(fig2);
-        g2d.dispose();
-   
+        g2d.rotate(1.57, width / 2, height / 2);
+        g2d.drawImage(bufferedImage, (taille-width)/2, (taille-height)/2-30, width, height, null);
+        g2d.rotate((1.57*3), taille / 2, taille / 2);
+        g2d.setColor(Color.WHITE);
+        g2d.drawString(lblWagon.getText(), 50, 50);
+
         return bi;
-    }
+    }  
 }
