@@ -103,6 +103,11 @@ public class TextFieldWithHint extends JTextField implements FocusListener
         this.majColor();
     }
 
+    public void setPlaceholderColorOnly(Color placeholder)
+    {
+        this.placeholderColor = placeholder;
+    }
+
 
     /**
      * Permet de mettre à jour la couleur des éléments
