@@ -35,8 +35,6 @@ import ihm.customComponent.TextFieldWithHint;
 public class PanelAccueil extends JPanel implements ActionListener
 {
     private Controleur        ctrl;
-    private File              mappe;
-
 	private boolean           mappeImportee = false;
 
     /* Panels */
@@ -390,14 +388,24 @@ public class PanelAccueil extends JPanel implements ActionListener
 
 					if (extention.equals("xml"))
                     {
-						this.mappe = fichier;
-                        this.btnImportMappe.setText(fichier.getName());
+						this.mappeImportee = this.ctrl.ouvrir(fichier);
 
-                        if (this.btnImportMappe.getBackground() == Color.RED)
-                            this.btnImportMappe.setBackground(this.ctrl.getTheme().get("buttons").get(1));
+						if (this.mappeImportee)
+						{
+							this.btnImportMappe.setText(fichier.getName());
+
+							if (this.btnImportMappe.getBackground() == Color.RED)
+								this.btnImportMappe.setBackground(this.ctrl.getTheme().get("buttons").get(1));
+						}
+                        
                     }
 					else
 						JOptionPane.showMessageDialog(this, "Le fichier choisi doit-être au format XML", "Erreur", JOptionPane.ERROR_MESSAGE);
+				}
+
+				if (!this.mappeImportee)
+				{
+					this.btnImportMappe.setBackground(Color.RED);
 				}
             }
             
@@ -409,10 +417,12 @@ public class PanelAccueil extends JPanel implements ActionListener
 
             if (e.getSource() == this.btnCreerSolo)
             {
-                if (this.mappe != null)
-                    this.ctrl.ouvrir(this.mappe);
+                if (this.mappeImportee)
+                    this.ctrl.creerPartieSolo();
                 else
+				{
                     this.btnImportMappe.setBackground(Color.RED);
+				}
             }
             
             if (e.getSource() == this.btnRejoindre)
