@@ -73,6 +73,16 @@ public class TextFieldWithHint extends JTextField implements FocusListener
         return this.hint;
     }
 
+    public void setHint(String hint)
+    {
+        super.setText(hint);
+    }
+
+    public Color getPlaceholderColor()
+    {
+        return this.placeholderColor;
+    }
+
     /**
      * Permet de modifier la couleur du texte par défaut
      * @param placeholderColor : Couleur du texte par défaut
