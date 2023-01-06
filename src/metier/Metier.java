@@ -124,8 +124,11 @@ public class Metier
 		this.tabCarteWagon = new CarteWagon[TAILLE_TAB_WAGON];
 		this.tabCarteObjectif = new CarteObjectif[TAILLE_TAB_OBJECTIF];
 
-		for (int cpt = 0; cpt < this.tabCarteWagon.length; cpt++)
+		for (int cpt = 0; cpt < TAILLE_TAB_WAGON; cpt++)
+		{
 			this.tabCarteWagon[cpt] = this.lstCartesWagon.remove(0);
+			this.ctrl.setImageButton(cpt);
+		}
 	}
 	
 	//Permet de choisir parmi les trois cartes objectifs
@@ -169,6 +172,7 @@ public class Metier
 					//le joueur ne peut plus piocher
 
 				this.tabCarteWagon[indiceTab] = this.lstCartesWagon.remove(0);
+				this.ctrl.setImageButton(indiceTab);
 			}
 			cptWagon++;
 		}
@@ -209,11 +213,14 @@ public class Metier
 	/* --------------------------- */
 	/*          Getters            */
 	/* --------------------------- */
-	public List<Joueur>        getJoueurs             () { return this.lstJoueurs;           }
-	public List<CarteWagon>    getCarteWagon          () { return this.lstCartesWagon;       }
-	public List<CarteObjectif> getCarteObjectif       () { return this.lstCartesObjectif;    }
-	public List<Noeud>         getNoeuds              () { return this.lstNoeuds;            }
-	public List<Arete>         getAretes              () { return this.lstAretes;            }
+	public List<Joueur>        getJoueurs             	() { return this.lstJoueurs;            }
+	public List<CarteWagon>    getCarteWagon          	() { return this.lstCartesWagon;        }
+	public List<CarteObjectif> getCarteObjectif       	() { return this.lstCartesObjectif;     }
+	public List<Noeud>         getNoeuds              	() { return this.lstNoeuds;             }
+	public List<Arete>         getAretes              	() { return this.lstAretes;             }
+	public List<CarteWagon>    getLstDefausseCartesWagon() { return this.lstDefausseCartesWagon;}
+	public CarteWagon[]		   getTabCarteWagon			() { return this.tabCarteWagon;         }
+	public CarteObjectif[]	   getTabCarteObjectif		() { return this.tabCarteObjectif;      }
 
 	public int[]               getTaillePlateau       () { return this.taillePlateau;        }
 	public BufferedImage       getImagePlateau        () { return this.imagePlateau;         }
