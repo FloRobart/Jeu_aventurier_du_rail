@@ -35,8 +35,6 @@ public class PanelJoueurs extends JPanel implements ActionListener
 		this.setBackground(new Color(68, 71, 90));
         this.setSize(500, 200);
 
-        
-
         /*panel de chaque joueurs */
         this.tabPanels = new JPanel[3];
         this.tabBoutons = new JButton[this.tabPanels.length];
