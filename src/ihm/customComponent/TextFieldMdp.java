@@ -8,22 +8,21 @@ import javax.swing.JTextField;
 import controleur.Controleur;
 
 
-public class TextFieldOnlyInteger extends TextFieldWithHint 
+public class TextFieldMdp extends TextFieldOnlyInteger
 {
-    public TextFieldOnlyInteger(Controleur ctrl)
+    public TextFieldMdp(Controleur ctrl)
     {
         super(ctrl);
-        this.setOnlyInteger();
     }
 
 
-    public TextFieldOnlyInteger(String hint, Controleur ctrl)
+    public TextFieldMdp(String hint, Controleur ctrl)
     {
         super(hint, ctrl);
-        this.setOnlyInteger();
     }
 
 
+    @Override
     public void setOnlyInteger()
     {
         JTextField txt = this;
@@ -31,7 +30,7 @@ public class TextFieldOnlyInteger extends TextFieldWithHint
         {
             public void keyPressed(KeyEvent ke)
             {
-                if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9' || ke.getKeyChar() == KeyEvent.VK_BACK_SPACE || ke.getKeyChar() == KeyEvent.VK_DELETE )
+                if (txt.getText().length() < 4 && ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9' || ke.getKeyChar() == KeyEvent.VK_BACK_SPACE || ke.getKeyChar() == KeyEvent.VK_DELETE )
                 {
                     txt.setEditable(true);
                 }
