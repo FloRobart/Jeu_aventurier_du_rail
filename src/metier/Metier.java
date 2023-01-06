@@ -391,8 +391,7 @@ public class Metier
 			return true;
 		} 
 		catch (Exception e)
-		{ 
-			e.printStackTrace();
+		{
 			return false;
 		}
 	}
@@ -600,12 +599,11 @@ public class Metier
 	{
 		// read file into a reader
 		try {
-			this.chargerXML(new FileReader(fichier));
-			return true;
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			return false;
-		}
+			if (this.chargerXML(new FileReader(fichier)))
+				return true;
+			else
+				return false;
+		} catch (FileNotFoundException e) { return false; }
 	}
 
 	public String imageToBase64(BufferedImage image) throws IOException
