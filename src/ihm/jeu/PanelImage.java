@@ -1,6 +1,7 @@
 package ihm.jeu;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -134,9 +135,6 @@ public class PanelImage extends JPanel
 			              midX + noeud.getXNom() - (noeud.getNom().length() * 3), 
 			              midY + noeud.getYNom() + 4);
 		}
-
-		BufferedImage test1 = this.ctrl.getImageVersoObjectif();
-		g2.drawImage(test1, 0, 0, this);
 	}
 
 	private void paintArete(Graphics2D g2, Point n1, Point n2, int d, Color c, double angle, Arete arete)
@@ -189,5 +187,15 @@ public class PanelImage extends JPanel
 					System.out.println(arete + " | Couleur " + indCouleur);
 				}
 					
+	}
+
+	public BufferedImage getImage()
+	{
+		Dimension     d     = new Dimension (this.ctrl.getTaillePlateau()[0], this.ctrl.getTaillePlateau()[1]) ;
+		BufferedImage image = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_RGB);
+		Graphics2D    g2d   = image.createGraphics();
+		this.print(g2d);
+
+		return image;
 	}
 }

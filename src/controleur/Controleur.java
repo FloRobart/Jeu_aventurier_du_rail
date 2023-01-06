@@ -11,6 +11,7 @@ import java.io.Serializable;
 
 import ihm.Ihm;
 import metier.*;
+import metier.partie.CarteWagon;
 import metier.reseau.Client;
 import metier.reseau.Server;
 
@@ -41,11 +42,10 @@ public class Controleur
 	/*          Getters            */
 	/* --------------------------- */
 	public List<Joueur>        getJoueurs             () { return this.metier.getJoueurs      (); }
-	public List<CarteWagon>    getCarteWagon          () { return this.metier.getCarteWagon   (); }
+	//public List<CarteWagon>    getCarteWagon          () { return this.metier.getCarteWagon   (); }
 	public List<CarteObjectif> getCarteObjectif       () { return this.metier.getCarteObjectif(); }
 	public List<Noeud>         getNoeuds              () { return this.metier.getNoeuds       (); }
 	public List<Arete>         getAretes              () { return this.metier.getAretes       (); }
-	public List<CarteWagon>    getLstDefausseCartesWagon() { return this.metier.getLstDefausseCartesWagon();}
 	public CarteWagon[]		   getTabCarteWagon			() { return this.metier.getTabCarteWagon();         }
 	public CarteObjectif[]	   getTabCarteObjectif		() { return this.metier.getTabCarteObjectif();     	}
 
@@ -68,6 +68,11 @@ public class Controleur
 	public List<Integer>       getPoints              () { return this.metier.getPoints              (); }
 
 	public BufferedImage       getImageVersoObjectif() { return this.metier.getImageVersoObjectif(); }
+
+	public BufferedImage getImage()
+	{
+		return this.ihm.getImage();
+	}
 
 	//public void piocherDeck (char typeCarte, String nomJoueur)			 {this.metier.piocherDeck(typeCarte, nomJoueur);		}
 	//public void piocherTabWagon (int indiceTab, String nomJoueur)		 {this.metier.piocherTabWagon(indiceTab, nomJoueur);	}

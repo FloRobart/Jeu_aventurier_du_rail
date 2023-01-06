@@ -1,5 +1,6 @@
 package ihm;
 
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
 import controleur.Controleur;
@@ -34,6 +35,11 @@ public class Ihm
 
 
     public int getWidthFrameAccueil() { return this.frameAccueil.getWidth(); }
+
+	public BufferedImage getImage()
+	{
+		return this.frameJeu.getImage();
+	}
 
     /**
      * Permet d'appliquer le thème à chaque élément de l'ihm qui en à besoins

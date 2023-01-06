@@ -1,10 +1,13 @@
 package ihm.jeu;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import controleur.Controleur;
 
@@ -16,7 +19,7 @@ public class FrameJeu extends JFrame
     private PanelMainJoueur panelMainJoueur;
     private PanelPioche     panelPioche;
     private PanelPlateau    panelPlateau;
-
+    private PanelObjectif panelObjectif;
 
     public FrameJeu(Controleur ctrl)
     {
@@ -34,12 +37,17 @@ public class FrameJeu extends JFrame
         this.panelMainJoueur = new PanelMainJoueur(this.ctrl);
         this.panelPioche     = new PanelPioche    (this.ctrl);
         this.panelPlateau    = new PanelPlateau   (this.ctrl);
+        this.panelObjectif   = new PanelObjectif  (this.ctrl);
+        JPanel panelGauche   = new JPanel();
+        panelGauche.setLayout(new GridLayout(2,1));
 
         /* Ajout des composants */
-		this.add(this.panelJoueurs   , BorderLayout.WEST);
+		this.add(panelGauche , BorderLayout.WEST);
 		this.add(this.panelMainJoueur, BorderLayout.SOUTH);
 		this.add(this.panelPioche    , BorderLayout.EAST);
 		this.add(this.panelPlateau   , BorderLayout.CENTER);
+        panelGauche.add(this.panelJoueurs);
+        panelGauche.add(this.panelObjectif);
 
         this.setVisible(true);
 		
@@ -47,6 +55,11 @@ public class FrameJeu extends JFrame
     }
 
     public void setImageButton(int indice) { this.panelPioche.setImageButton(indice); }	
+
+	public BufferedImage getImage()
+	{
+		return this.panelPlateau.getImage();
+	}
 
     public void appliquerTheme()
     {

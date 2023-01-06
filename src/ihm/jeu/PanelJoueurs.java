@@ -35,8 +35,6 @@ public class PanelJoueurs extends JPanel implements ActionListener
 		this.setBackground(new Color(68, 71, 90));
         this.setSize(500, 200);
 
-        
-
         /*panel de chaque joueurs */
         this.tabPanels = new JPanel[3];
         this.tabBoutons = new JButton[this.tabPanels.length];
@@ -72,7 +70,7 @@ public class PanelJoueurs extends JPanel implements ActionListener
         /*JScrollPane */
         this.scrollJoueurs = new JScrollPane(panelJoueurs, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         this.scrollJoueurs.getVerticalScrollBar().setBackground(new Color(68, 71, 90));
-        this.scrollJoueurs.setPreferredSize(new Dimension(200,200));
+        this.scrollJoueurs.setPreferredSize(new Dimension(200,400));
         this.scrollJoueurs.getVerticalScrollBar().setUnitIncrement(5);
 
         this.add(scrollJoueurs);

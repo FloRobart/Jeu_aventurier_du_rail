@@ -8,19 +8,17 @@ import javax.swing.JTextField;
 import controleur.Controleur;
 
 
-public class TextFieldOnlyInteger extends TextFieldWithHint 
+public class TextFieldAdresseIP extends TextFieldWithHint
 {
-    public TextFieldOnlyInteger(Controleur ctrl)
+
+    public TextFieldAdresseIP(Controleur ctrl)
     {
         super(ctrl);
-        this.setOnlyInteger();
     }
-
-
-    public TextFieldOnlyInteger(String hint, Controleur ctrl)
+  
+    public TextFieldAdresseIP(final String hint, Controleur ctrl)
     {
         super(hint, ctrl);
-        this.setOnlyInteger();
     }
 
 
@@ -31,7 +29,7 @@ public class TextFieldOnlyInteger extends TextFieldWithHint
         {
             public void keyPressed(KeyEvent ke)
             {
-                if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9' || ke.getKeyChar() == KeyEvent.VK_BACK_SPACE || ke.getKeyChar() == KeyEvent.VK_DELETE )
+                if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9'  && ke.getKeyChar() == '.' || ke.getKeyChar() == KeyEvent.VK_BACK_SPACE || ke.getKeyChar() == KeyEvent.VK_DELETE )
                 {
                     txt.setEditable(true);
                 }
@@ -42,4 +40,5 @@ public class TextFieldOnlyInteger extends TextFieldWithHint
             }
         });  
     }
+    
 }

@@ -23,6 +23,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controleur.Controleur;
 import ihm.attente.FrameAttente;
+import ihm.customComponent.TextFieldAdresseIP;
 import ihm.customComponent.TextFieldMdp;
 import ihm.customComponent.TextFieldPseudo;
 import ihm.customComponent.TextFieldWithHint;
@@ -61,10 +62,10 @@ public class PanelAccueil extends JPanel implements ActionListener
     private JLabel            lblTitreRejoindre;
 
     /* TextFields */
-    private TextFieldWithHint txtIpRejoindre   ;
-    private TextFieldMdp      txtMdpCreer      ;
-    private TextFieldMdp      txtMdpRejoindre  ;
-    private TextFieldPseudo   txtPseudo        ;
+    private TextFieldAdresseIP txtIpRejoindre   ;
+    private TextFieldMdp       txtMdpCreer      ;
+    private TextFieldMdp       txtMdpRejoindre  ;
+    private TextFieldPseudo    txtPseudo        ;
 
 
     public PanelAccueil(Controleur ctrl)
@@ -99,10 +100,10 @@ public class PanelAccueil extends JPanel implements ActionListener
         this.lblTitreRejoindre    = new JLabel ();
         
         /* Textfields */
-        this.txtIpRejoindre       = new TextFieldWithHint("127.0.0.1"       , this.ctrl);
-        this.txtMdpCreer          = new TextFieldMdp     ("0000"            , this.ctrl);
-        this.txtMdpRejoindre      = new TextFieldMdp     ("0000"            , this.ctrl);
-        this.txtPseudo            = new TextFieldPseudo  ("Entrez un pseudo", this.ctrl);
+        this.txtIpRejoindre       = new TextFieldAdresseIP("127.0.0.1"       , this.ctrl);
+        this.txtMdpCreer          = new TextFieldMdp      ("0000"            , this.ctrl);
+        this.txtMdpRejoindre      = new TextFieldMdp      ("0000"            , this.ctrl);
+        this.txtPseudo            = new TextFieldPseudo   ("Entrez un pseudo", this.ctrl);
 
 
         /*--------------*/
@@ -112,7 +113,6 @@ public class PanelAccueil extends JPanel implements ActionListener
         this.panelCreerPartie.setMaximumSize  (new Dimension(400, 400));
         this.panelCreerPartie.setMinimumSize  (new Dimension(400, 400));
         this.panelCreerPartie.setPreferredSize(new Dimension(400, 400));
-
         this.panelRejoindrePartie.setMaximumSize  (new Dimension(400, 400));
         this.panelRejoindrePartie.setMinimumSize  (new Dimension(400, 400));
         this.panelRejoindrePartie.setPreferredSize(new Dimension(400, 400));
@@ -447,6 +447,16 @@ public class PanelAccueil extends JPanel implements ActionListener
                     this.txtMdpCreer.setPlaceholderColor(this.ctrl.getTheme().get("saisies").get(2));
             }
 
+            /* Textfield Adresse IP */
+            if (e.getSource() == this.txtIpRejoindre)
+            {
+                if (this.txtIpRejoindre.getBorder() != null)
+                    this.txtIpRejoindre.setBorder(null);
+
+                if (this.txtIpRejoindre.getPlaceholderColor() == Color.RED)
+                    this.txtIpRejoindre.setPlaceholderColor(this.ctrl.getTheme().get("saisies").get(2));
+            }
+
             /* Textfield Mot de passe Rejoindre */
             if (e.getSource() == this.txtMdpRejoindre)
             {
@@ -463,6 +473,12 @@ public class PanelAccueil extends JPanel implements ActionListener
 
                     this.txtMdpRejoindre.setText(complement + this.txtMdpRejoindre.getText());
                 }
+
+                if (this.txtMdpRejoindre.getBorder() != null)
+                        this.txtMdpRejoindre.setBorder(null);
+                    
+                if (this.txtMdpRejoindre.getPlaceholderColor() == Color.RED)
+                    this.txtMdpRejoindre.setPlaceholderColor(this.ctrl.getTheme().get("saisies").get(2));
             }
         }
 
@@ -535,10 +551,12 @@ public class PanelAccueil extends JPanel implements ActionListener
                 {
                     pseudoCorrect = true;
                     this.txtPseudo.setBorder(null);
-
-                    if (this.txtPseudo.getPlaceholderColor() == Color.RED)
-                        this.txtPseudo.setPlaceholderColor(this.ctrl.getTheme().get("saisies").get(2));
                 }
+                pseudoCorrect = this.verifPseudo();
+                boolean mdpCorrect    = false;
+
+                if (e.getSource() == this.btnCreerMulti) { mdpCorrect = this.verifMdp(this.txtMdpCreer); }
+
 
                 /* Vérification de la mappe */
                 if (!this.mappeImportee)
@@ -549,6 +567,7 @@ public class PanelAccueil extends JPanel implements ActionListener
                 }
                 else
                 {
+                    /* Vérification du pseudo */
                     if (pseudoCorrect)
                     {
                         if (e.getSource() == this.btnCreerSolo)
@@ -557,7 +576,8 @@ public class PanelAccueil extends JPanel implements ActionListener
                         }
                         else
                         {
-                            if (this.verifMdpCreer())
+                            /* Vérification du mot de passe */
+                            if (mdpCorrect)
                             {
                                 //this.ctrl.creerPartie(this.txtMdpCreer.getText());
                                 new FrameAttente(ctrl); // en attendant de faire la fenetre d'attente (Floris l'à fait bientôt)
@@ -567,6 +587,8 @@ public class PanelAccueil extends JPanel implements ActionListener
                 }
             }
 
+
+            /* Test */
             if (e.getSource() == this.btnTest)
             {
                 this.mappeImportee = this.ctrl.ouvrir(new File("./France.xml"));
@@ -582,28 +604,85 @@ public class PanelAccueil extends JPanel implements ActionListener
                 //this.ctrl.rejoindrePartie(this.txtIpRejoindrePartie.getText(), this.txtMdpRejoindrePartie.getText());
                 System.out.println(this.txtIpRejoindre.getText());
                 this.ctrl.joinGame(this.txtIpRejoindre.getText());
+                boolean pseudoCorrect = this.verifPseudo();
+                boolean mdpCorrect    = this.verifMdp(this.txtMdpRejoindre);
+
+                /* Vérification de l'adresse IP */
+                if (this.txtIpRejoindre.getText().isEmpty() /*|| !this.ctrl.verifAdresseIP()*/)
+                {
+                    this.txtIpRejoindre.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                    this.txtIpRejoindre.setHint("Entrez une adresse IP");
+                    this.txtIpRejoindre.setPlaceholderColor(Color.RED);
+                }
+                else
+                {
+                    /* Vérification du pseudo */
+                    if (pseudoCorrect)
+                    {
+                        if (mdpCorrect)
+                        {
+                            // Vérifier que le mot de passe colle avec l'adresse IP
+
+                                //this.ctrl.rejoindrePartie(this.txtIpRejoindre.getText(), this.txtMdpRejoindre.getText());
+                                this.ctrl.joinGame(this.txtIpRejoindre.getText());
+                        }
+                    }
+                }
             }
         }
     }
 
 
-    private boolean verifMdpCreer()
+    /**
+     * Permet de vérifier qu'il y a bien un pseudo et de changer les couleurs en fonction
+     * @return boolean, true si le pseudo est correct, sinon false
+     */
+    private boolean verifPseudo()
+    {
+        boolean pseudoCorrect = false;
+
+        if (this.txtPseudo.getText().isEmpty())
+        {
+            this.txtPseudo.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            this.txtPseudo.setHint("Entrez un pseudo");
+            this.txtPseudo.setPlaceholderColor(Color.RED);
+        }
+        else
+        {
+            pseudoCorrect = true;
+            this.txtPseudo.setBorder(null);
+
+            if (this.txtPseudo.getPlaceholderColor() == Color.RED)
+                this.txtPseudo.setPlaceholderColor(this.ctrl.getTheme().get("saisies").get(2));
+        }
+
+        return pseudoCorrect;
+    }
+
+
+    /**
+     * Permet de vérifier qu'il y a bien un mot de passe et de changer les couleurs en fonction.
+     * Cette vérification s'effectue uniquement sur le texte brut du TextFieldMdp et non sur la partie réseau
+     * @param txt : TextFieldMdp --> le TextField à vérifier
+     * @return bollean, true si le mot de passe est correct, sinon false
+     */
+    private boolean verifMdp(TextFieldWithHint txt)
     {
         boolean mdpCorrect = false;
 
-        if (this.txtMdpCreer.getText().isEmpty())
+        if (txt.getText().isEmpty())
         {
-            this.txtMdpCreer.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
-            this.txtMdpCreer.setHint("Entrez un mot de passe");
-            this.txtMdpCreer.setPlaceholderColor(Color.RED);
+            txt.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            txt.setHint("Entrez un mot de passe");
+            txt.setPlaceholderColor(Color.RED);
         }
         else
         {
             mdpCorrect = true;
-            this.txtMdpCreer.setBorder(null);
+            txt.setBorder(null);
 
-            if (this.txtMdpCreer.getPlaceholderColor() == Color.RED)
-                this.txtMdpCreer.setPlaceholderColor(this.ctrl.getTheme().get("saisies").get(2));
+            if (txt.getPlaceholderColor() == Color.RED)
+                txt.setPlaceholderColor(this.ctrl.getTheme().get("saisies").get(2));
         }
 
         return mdpCorrect;

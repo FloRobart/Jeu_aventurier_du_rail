@@ -2,6 +2,9 @@ package metier;
 
 import java.util.HashMap;
 import java.util.List;
+
+import metier.partie.CarteWagon;
+
 import java.awt.Color;
 import java.io.Serializable;
 
@@ -18,7 +21,6 @@ public class Joueur implements Serializable
     {
         this.nom = nom;
         this.score = 0;
-        this.nbJetonsRestant = 0;
     }
 
     public String getNom() { return this.nom; }
@@ -27,14 +29,14 @@ public class Joueur implements Serializable
     public int getNbCartesObjectif() { return this.alCartesObjectif.size(); }
     public HashMap<Color,Integer> gethashMapCarteWagons() { return this.hashMapCarteWagons; }
     public int getNbCartesWagon() { return this.hashMapCarteWagons.size(); }
-    public int getNbJetonsPosés() { return this.nbJetonsRestant; }
+    public int getNbJetonsRestant() { return this.nbJetonsRestant; }
     public Color getCouleur() { return this.couleur; }
 
     public void setNom(String nom) { this.nom = nom; }
     public void setScore(int score) { this.score = score; }
     public void setAlCartesObjectif(List<CarteObjectif> alCartesObjectif) { this.alCartesObjectif = alCartesObjectif; }
     public void sethashMapCarteWagons(HashMap<Color,Integer> hashMapCarteWagons) { this.hashMapCarteWagons = hashMapCarteWagons; }
-    public void setNbJetonsPosés(int nbJetonsRestant) { this.nbJetonsRestant = nbJetonsRestant; }
+    public void setNbJetonsRestant(int nbJetonsRestant) { this.nbJetonsRestant = nbJetonsRestant; }
     public void setCouleur(Color couleur) { this.couleur = couleur; }
 
     public void ajouterCarteObjectif(CarteObjectif carteObjectif)

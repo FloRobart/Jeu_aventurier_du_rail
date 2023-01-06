@@ -33,6 +33,7 @@ import java.io.Reader;
 import java.io.Serializable;
 
 import controleur.Controleur;
+import metier.partie.CarteWagon;
 import metier.reseau.Server;
 
 public class Metier implements Serializable
@@ -44,8 +45,6 @@ public class Metier implements Serializable
     private transient Controleur          ctrl;
 
     private List<Joueur>        lstJoueurs;
-    private List<CarteWagon>    lstCartesWagon;
-	private List<CarteWagon>    lstDefausseCartesWagon;
     private List<CarteObjectif> lstCartesObjectif;
     private List<Arete>         lstAretes;
     private List<Noeud>         lstNoeuds;
@@ -105,11 +104,9 @@ public class Metier implements Serializable
 	/*          Getters            */
 	/* --------------------------- */
 	public List<Joueur>        getJoueurs             () { return this.lstJoueurs;           }
-	public List<CarteWagon>    getCarteWagon          () { return this.lstCartesWagon;       }
 	public List<CarteObjectif> getCarteObjectif       () { return this.lstCartesObjectif;    }
 	public List<Noeud>         getNoeuds              () { return this.lstNoeuds;            }
 	public List<Arete>         getAretes              () { return this.lstAretes;            }
-	public List<CarteWagon>    getLstDefausseCartesWagon() { return this.lstDefausseCartesWagon;}
 	public CarteWagon[]		   getTabCarteWagon			() { return this.tabCarteWagon;         }
 	public CarteObjectif[]	   getTabCarteObjectif		() { return this.tabCarteObjectif;      }
 
