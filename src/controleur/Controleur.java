@@ -25,16 +25,16 @@ public class Controleur implements Serializable
         this.metier = new Metier(this);
         this.ihm    = new Ihm(this);
     }
-	/*
-	 * Method sert à tester, il n'est pas officielle
-	 */
-	public void ouvrir(File fichier)
+
+	public boolean ouvrir(File fichier)
 	{
-		if (this.metier.lireFichier(fichier))
-		{
-			this.ihm.demarrerJeu();
-			this.hostGame();
-		}
+		return this.metier.lireFichier(fichier);
+	}
+
+	public void creerPartieSolo()
+	{
+		this.ihm.demarrerJeu();
+
 	}
 
 	/* --------------------------- */
@@ -114,5 +114,10 @@ public class Controleur implements Serializable
 
     public Joueur getJoueurSelect() {
         return null;
+    }
+
+    public void creerPartie() 
+	{
+		this.hostGame();
     }
 }

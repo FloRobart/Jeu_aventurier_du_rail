@@ -8,30 +8,31 @@ import javax.swing.JTextField;
 import controleur.Controleur;
 
 
-public class TextFieldOnlyInteger extends TextFieldWithHint 
+public class TextFieldPseudo extends TextFieldWithHint
 {
-    public TextFieldOnlyInteger(Controleur ctrl)
+    private static final long MAX_SIZE_PSEUDO = 16;
+
+
+    public TextFieldPseudo(Controleur ctrl)
     {
         super(ctrl);
-        this.setOnlyInteger();
+        this.setMaximumSize();
     }
-
-
-    public TextFieldOnlyInteger(String hint, Controleur ctrl)
+  
+    public TextFieldPseudo(final String hint, Controleur ctrl)
     {
         super(hint, ctrl);
-        this.setOnlyInteger();
+        this.setMaximumSize();
     }
 
-
-    public void setOnlyInteger()
+    public void setMaximumSize()
     {
         JTextField txt = this;
         addKeyListener(new KeyAdapter()
         {
             public void keyPressed(KeyEvent ke)
             {
-                if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9' || ke.getKeyChar() == KeyEvent.VK_BACK_SPACE || ke.getKeyChar() == KeyEvent.VK_DELETE )
+                if (txt.getText().length() < TextFieldPseudo.MAX_SIZE_PSEUDO || ke.getKeyChar() == KeyEvent.VK_BACK_SPACE || ke.getKeyChar() == KeyEvent.VK_DELETE)
                 {
                     txt.setEditable(true);
                 }

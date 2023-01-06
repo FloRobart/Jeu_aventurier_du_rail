@@ -172,10 +172,19 @@ public class PanelImage extends JPanel
 
 	public void checkArete(Point p)
 	{
-		for (Arete arete : this.hmArete.keySet())
+		for (Arete arete : this.ctrl.getAretes())
 			for (Shape s : this.hmArete.get(arete))
 				if (s.contains(p))
-					System.out.println(arete.getNoeud1().getNom() + " - " + arete.getNoeud2().getNom());
+				{
+					int indCouleur = 1;
+					
+					double milieu = (double) this.hmArete.get(arete).size() / 2;
+					if (arete.getCouleur2() != null && this.hmArete.get(arete).indexOf(s) >= milieu)
+						indCouleur = 2;
+					
 					// à changer plus tard pour récuperer l'arete
+					System.out.println(arete + " | Couleur " + indCouleur);
+				}
+					
 	}
 }
