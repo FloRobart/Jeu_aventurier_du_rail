@@ -389,17 +389,23 @@ public class Metier implements Serializable
 			/*----------------------------*/
 			/* BacKground Générale (=bkg) */
 			/*----------------------------*/
-			Element bkg = racine.getChild("background");
+			String lstCles[] = new String[] {"background", "disableColor", "enableColor"};
 
 			List<Color> lst = new ArrayList<Color>();
-			lst.add(new Color(Integer.parseInt(bkg.getAttributeValue("red")), Integer.parseInt(bkg.getAttributeValue("green")), Integer.parseInt(bkg.getAttributeValue("blue"))));
-			this.hmColorThemes.put("background", lst);
+			for (int i = 0; i < lstCles.length; i++)
+			{
+				Element bkg = racine.getChild(lstCles[i]);
+
+				lst = new ArrayList<Color>();
+				lst.add(new Color(Integer.parseInt(bkg.getAttributeValue("red")), Integer.parseInt(bkg.getAttributeValue("green")), Integer.parseInt(bkg.getAttributeValue("blue"))));
+				this.hmColorThemes.put(lstCles[i], lst);
+			}
 
 
 			/*------------------------------------------*/
 			/* Récupération de tout les autres éléments */
 			/*------------------------------------------*/
-			String[] lstCles = new String[] {"titles", "labels", "saisies", "buttons", "menuBar"};
+			lstCles = new String[] {"titles", "labels", "saisies", "buttons", "menuBar"};
 			for (int i = 0; i < lstCles.length; i++)
 			{
 				lst = new ArrayList<Color>();

@@ -1,5 +1,7 @@
 <theme name="sombre">
     <background red="255" green="255" blue="255"></background>
+    <disableColor red="180" green="0" blue="0"></disableColor>
+    <enableColor red="0" green="180" blue="0"></enableColor>
     <titles>
         <foreground red="0" green="0" blue="0"></foreground>
         <background red="205" green="205" blue="205"></background>

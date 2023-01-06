@@ -38,7 +38,8 @@ public class PanelAccueil extends JPanel implements ActionListener
     private static final String FONT = "Liberation Sans";
 
     private Controleur        ctrl;
-	private boolean           mappeImportee = false;
+	private boolean           mappeImportee;
+    private HashMap<String, List<Color>> theme;
 
     /* Panels */
     private JPanel            panelCreerPartie    ;
@@ -77,6 +78,8 @@ public class PanelAccueil extends JPanel implements ActionListener
         /* Création */
         /*----------*/
         this.ctrl                 = ctrl;
+        this.mappeImportee        = false;
+        this.theme                = this.ctrl.getTheme();
 
         /* Panels */
         this.panelCreerPartie     = new JPanel ();
@@ -402,6 +405,9 @@ public class PanelAccueil extends JPanel implements ActionListener
     @Override
     public void actionPerformed(ActionEvent e)
     {
+        Color disableColor = this.theme.get("disableColor").get(0);
+        Color enableColor  = this.theme.get("enableColor" ).get(0);
+
         /*------------*/
         /* Textfields */
         /*------------*/
@@ -418,14 +424,14 @@ public class PanelAccueil extends JPanel implements ActionListener
                     if (this.txtPseudo.getBorder() != null)
                         this.txtPseudo.setBorder(null);
 
-                    if (this.txtPseudo.getPlaceholderColor() == Color.RED)
-                        this.txtPseudo.setPlaceholderColor(this.ctrl.getTheme().get("saisies").get(2));
+                    if (this.txtPseudo.getPlaceholderColor() == disableColor)
+                        this.txtPseudo.setPlaceholderColor(this.theme.get("saisies").get(2));
                 }
                 else
                 {
                     this.txtPseudo.setText("");
-                    this.txtPseudo.setPlaceholderColorOnly(Color.RED);
-                    this.txtPseudo.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                    this.txtPseudo.setPlaceholderColorOnly(disableColor);
+                    this.txtPseudo.setBorder(BorderFactory.createLineBorder(disableColor, 3));
                 }
             }
 
@@ -449,8 +455,8 @@ public class PanelAccueil extends JPanel implements ActionListener
                 if (this.txtMdpCreer.getBorder() != null)
                         this.txtMdpCreer.setBorder(null);
 
-                if (this.txtMdpCreer.getPlaceholderColor() == Color.RED)
-                    this.txtMdpCreer.setPlaceholderColor(this.ctrl.getTheme().get("saisies").get(2));
+                if (this.txtMdpCreer.getPlaceholderColor() == disableColor)
+                    this.txtMdpCreer.setPlaceholderColor(this.theme.get("saisies").get(2));
             }
 
             /* Textfield Adresse IP */
@@ -459,8 +465,8 @@ public class PanelAccueil extends JPanel implements ActionListener
                 if (this.txtIpRejoindre.getBorder() != null)
                     this.txtIpRejoindre.setBorder(null);
 
-                if (this.txtIpRejoindre.getPlaceholderColor() == Color.RED)
-                    this.txtIpRejoindre.setPlaceholderColor(this.ctrl.getTheme().get("saisies").get(2));
+                if (this.txtIpRejoindre.getPlaceholderColor() == disableColor)
+                    this.txtIpRejoindre.setPlaceholderColor(this.theme.get("saisies").get(2));
             }
 
             /* Textfield Mot de passe Rejoindre */
@@ -483,8 +489,8 @@ public class PanelAccueil extends JPanel implements ActionListener
                 if (this.txtMdpRejoindre.getBorder() != null)
                         this.txtMdpRejoindre.setBorder(null);
                     
-                if (this.txtMdpRejoindre.getPlaceholderColor() == Color.RED)
-                    this.txtMdpRejoindre.setPlaceholderColor(this.ctrl.getTheme().get("saisies").get(2));
+                if (this.txtMdpRejoindre.getPlaceholderColor() == disableColor)
+                    this.txtMdpRejoindre.setPlaceholderColor(this.theme.get("saisies").get(2));
             }
         }
 
@@ -511,7 +517,7 @@ public class PanelAccueil extends JPanel implements ActionListener
 
 						if (this.mappeImportee)
 						{
-							if (this.btnImportMappe.getBorder() == BorderFactory.createLineBorder(Color.RED, 3))
+							if (this.btnImportMappe.getBorder() == BorderFactory.createLineBorder(disableColor, 3))
                             {
                                 this.lblImportMappe.setText("");
 								this.btnImportMappe.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
@@ -519,16 +525,16 @@ public class PanelAccueil extends JPanel implements ActionListener
 
                             this.btnImportMappe.setText(fichier.getName());
 
-                            this.lblImportMappe.setForeground(Color.GREEN.darker());
+                            this.lblImportMappe.setForeground(enableColor);
                             this.lblImportMappe.setText("Importation réussie");
-                            this.btnImportMappe.setBorder(BorderFactory.createLineBorder(Color.GREEN.darker(), 3));
+                            this.btnImportMappe.setBorder(BorderFactory.createLineBorder(enableColor, 3));
 						}
                         else
                         {
-                            this.lblImportMappe.setForeground(Color.RED);
+                            this.lblImportMappe.setForeground(disableColor);
                             this.lblImportMappe.setText("Le fichier est incorrect");
                             this.btnImportMappe.setText("Importer une mappe");
-                            this.btnImportMappe.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                            this.btnImportMappe.setBorder(BorderFactory.createLineBorder(disableColor, 3));
                         }
                     }
 					else
@@ -552,9 +558,9 @@ public class PanelAccueil extends JPanel implements ActionListener
                 /* Vérification de la mappe */
                 if (!this.mappeImportee)
                 {
-                    this.lblImportMappe.setForeground(Color.RED);
+                    this.lblImportMappe.setForeground(disableColor);
                     this.lblImportMappe.setText("Veuillez importer un fichier");
-                    this.btnImportMappe.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                    this.btnImportMappe.setBorder(BorderFactory.createLineBorder(disableColor, 3));
                 }
                 else
                 {
@@ -598,9 +604,9 @@ public class PanelAccueil extends JPanel implements ActionListener
                 /* Vérification de l'adresse IP */
                 if (this.txtIpRejoindre.getText().isEmpty() /*|| !this.ctrl.verifAdresseIP()*/)
                 {
-                    this.txtIpRejoindre.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                    this.txtIpRejoindre.setBorder(BorderFactory.createLineBorder(disableColor, 3));
                     this.txtIpRejoindre.setHint("Entrez une adresse IP");
-                    this.txtIpRejoindre.setPlaceholderColor(Color.RED);
+                    this.txtIpRejoindre.setPlaceholderColor(disableColor);
                 }
                 else
                 {
@@ -627,21 +633,22 @@ public class PanelAccueil extends JPanel implements ActionListener
      */
     private boolean verifPseudo()
     {
+        Color disableColor = this.theme.get("disableColor").get(0);
         boolean pseudoCorrect = false;
 
         if (this.txtPseudo.getText().isEmpty())
         {
             this.txtPseudo.setHint("Entrez un pseudo");
-            this.txtPseudo.setPlaceholderColor(Color.RED);
-            this.txtPseudo.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            this.txtPseudo.setPlaceholderColor(disableColor);
+            this.txtPseudo.setBorder(BorderFactory.createLineBorder(disableColor, 3));
         }
         else
         {
             pseudoCorrect = true;
             this.txtPseudo.setBorder(null);
 
-            if (this.txtPseudo.getPlaceholderColor() == Color.RED)
-                this.txtPseudo.setPlaceholderColor(this.ctrl.getTheme().get("saisies").get(2));
+            if (this.txtPseudo.getPlaceholderColor() == disableColor)
+                this.txtPseudo.setPlaceholderColor(this.theme.get("saisies").get(2));
         }
 
         return pseudoCorrect;
@@ -656,21 +663,22 @@ public class PanelAccueil extends JPanel implements ActionListener
      */
     private boolean verifMdp(TextFieldWithHint txt)
     {
+        Color disableColor = this.theme.get("disableColor").get(0);
         boolean mdpCorrect = false;
 
         if (txt.getText().isEmpty())
         {
-            txt.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+            txt.setBorder(BorderFactory.createLineBorder(disableColor, 3));
             txt.setHint("Entrez un mot de passe");
-            txt.setPlaceholderColor(Color.RED);
+            txt.setPlaceholderColor(disableColor);
         }
         else
         {
             mdpCorrect = true;
             txt.setBorder(null);
 
-            if (txt.getPlaceholderColor() == Color.RED)
-                txt.setPlaceholderColor(this.ctrl.getTheme().get("saisies").get(2));
+            if (txt.getPlaceholderColor() == disableColor)
+                txt.setPlaceholderColor(this.theme.get("saisies").get(2));
         }
 
         return mdpCorrect;
@@ -682,17 +690,16 @@ public class PanelAccueil extends JPanel implements ActionListener
      */
     public void appliquerTheme()
     {
-        HashMap<String, List<Color>> theme = this.ctrl.getTheme();
-
-		Color background       = theme.get("background").get(0);
-        Color titleForeColor   = theme.get("titles"    ).get(0);
-        Color titleBackColor   = theme.get("titles"    ).get(1);
-        Color labelForeColor   = theme.get("labels"    ).get(0);
-        Color saisiForeColor   = theme.get("saisies"   ).get(0);
-		Color saisiBackColor   = theme.get("saisies"   ).get(1);
-        Color placeholderColor = theme.get("saisies"   ).get(2);
-        Color btnForeColor     = theme.get("buttons"   ).get(0);
-		Color btnBackColor     = theme.get("buttons"   ).get(1);
+        Color background       = this.theme.get("background"  ).get(0);
+        Color disableColor     = this.theme.get("disableColor").get(0);
+        Color titleForeColor   = this.theme.get("titles"      ).get(0);
+        Color titleBackColor   = this.theme.get("titles"      ).get(1);
+        Color labelForeColor   = this.theme.get("labels"      ).get(0);
+        Color saisiForeColor   = this.theme.get("saisies"     ).get(0);
+		Color saisiBackColor   = this.theme.get("saisies"     ).get(1);
+        Color placeholderColor = this.theme.get("saisies"     ).get(2);
+        Color btnForeColor     = this.theme.get("buttons"     ).get(0);
+		Color btnBackColor     = this.theme.get("buttons"     ).get(1);
 
 
         this.setForeground(saisiForeColor);
@@ -740,8 +747,7 @@ public class PanelAccueil extends JPanel implements ActionListener
         /* Boutons */
         /* Boutons Creer */
         this.btnImportMappe.setForeground(btnForeColor);
-        if (this.btnImportMappe.getBackground() != Color.RED)
-            this.btnImportMappe.setBackground(btnBackColor);
+        this.btnImportMappe.setBackground(btnBackColor);
 
         this.btnCreerSolo.setForeground(btnForeColor);
         this.btnCreerSolo.setBackground(btnBackColor);
