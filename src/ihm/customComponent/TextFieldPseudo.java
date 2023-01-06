@@ -3,9 +3,6 @@ package ihm.customComponent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import java.awt.Color;
-
-import javax.swing.BorderFactory;
 import javax.swing.JTextField;
 
 import controleur.Controleur;
