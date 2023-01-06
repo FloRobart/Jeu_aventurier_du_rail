@@ -1,4 +1,4 @@
-package metier;
+package metier.partie;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;

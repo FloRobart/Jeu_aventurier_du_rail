@@ -17,6 +17,7 @@
 ./src/ihm/jeu/PanelImage.java
 ./src/ihm/jeu/PanelInfosJoueur.java
 ./src/ihm/jeu/PanelJoueurs.java
+./src/ihm/jeu/PanelObjectifs.java
 ./src/ihm/jeu/PanelMainJoueur.java
 ./src/ihm/jeu/PanelPioche.java
 ./src/ihm/jeu/PanelPlateau.java
@@ -35,10 +36,12 @@
 
 ./src/metier/Arete.java
 ./src/metier/CarteObjectif.java
-./src/metier/CarteWagon.java
 ./src/metier/Joueur.java
 ./src/metier/Metier.java
 ./src/metier/Noeud.java
-./src/metier/Pioche.java
+
+./src/metier/partie/CarteWagon.java
+./src/metier/partie/GestionPioche.java
+./src/metier/partie/Partie.java
 
 -d bin
