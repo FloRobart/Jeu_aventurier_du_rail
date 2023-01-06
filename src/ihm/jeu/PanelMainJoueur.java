@@ -3,7 +3,6 @@ package ihm.jeu;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FontMetrics;
 import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -41,26 +40,22 @@ public class PanelMainJoueur extends JPanel
         this.ctrl = ctrl;
         this.setLayout(new BorderLayout());
 		this.setBackground(Color.BLUE);
-        this.setPreferredSize(new Dimension(HEIGHT, 200));
 
         //initialisation des composants
         this.panelInfo  = new JPanel();
         this.lblNom     = new JLabel("  nom ");
         this.lblNbJeton = new JLabel("  jetons restants");
         this.lblIcon    = new JLabel(new ImageIcon("./donnees/images/IconJoueur.png"), JLabel.LEFT);
-
         
         this.panelMainWagon = new JPanel();
-        this.listImageWagon = this.ctrl.getImagesRectoCouleur();
+        this.listImageWagon = this.ctrl.getImagesRectoCouleur(); // joueur.getCarteWagon();
         this.listImageWagon.add(this.ctrl.getImageRectoLocomotive());
         int taille = this.listImageWagon.size();
         this.tabIconWagon   = new JButton[taille];
         this.tabLblWagon    = new JLabel[taille];
         
-
         this.panelMainObjectif = new JPanel();
         this.lblIconObjectif   = new JLabel(new ImageIcon(this.ctrl.getCarteObjectif().get(2).getImageRecto()), JLabel.LEFT);
-
 
         //panelInfo Joueur
         JPanel panelLbl = new JPanel();
@@ -78,7 +73,6 @@ public class PanelMainJoueur extends JPanel
 
         //panelMainWagon
         this.panelMainWagon.setBackground(new Color(68, 71, 90));
-        //this.panelMainWagon.setLayout(new GridLayout(1, 5));
 
         System.out.println(this.listImageWagon.size());
 
@@ -95,7 +89,6 @@ public class PanelMainJoueur extends JPanel
         
             this.panelMainWagon.add(this.tabIconWagon[i]);
         }   
-
 
         //panelMainObjectif
         this.panelMainObjectif.setBackground(new Color(68, 71, 90));
