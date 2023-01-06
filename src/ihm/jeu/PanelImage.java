@@ -134,6 +134,9 @@ public class PanelImage extends JPanel
 			              midX + noeud.getXNom() - (noeud.getNom().length() * 3), 
 			              midY + noeud.getYNom() + 4);
 		}
+
+		BufferedImage test1 = this.ctrl.getImageVersoObjectif();
+		g2.drawImage(test1, 0, 0, this);
 	}
 
 	private void paintArete(Graphics2D g2, Point n1, Point n2, int d, Color c, double angle, Arete arete)
