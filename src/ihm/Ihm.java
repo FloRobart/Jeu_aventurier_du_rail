@@ -28,8 +28,6 @@ public class Ihm
 		this.frameJeu     = new FrameJeu(this.ctrl);
 	}
 
-    public void setImageButton(int indice) { if ( this.frameJeu != null ) this.frameJeu.setImageButton(indice); }						
-
     public int getWidthFrameAccueil() { return this.frameAccueil.getWidth(); }
 
     /**
