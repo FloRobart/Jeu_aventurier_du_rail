@@ -8,6 +8,7 @@ package metier.reseau;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.StringReader;
 import java.net.Socket;
 
@@ -89,7 +90,7 @@ public class ClientServerHandler implements Runnable
                 String message = this.readUntil("\n");
                 System.out.println("MESSAGE DU SERVER : " + message);
             }
-
+            /*
             if (command.equals("CHARGER_XML "))
             {
                 String tailleString = this.readUntil(" ");
@@ -99,6 +100,27 @@ public class ClientServerHandler implements Runnable
                 try {
                     this.in.read(xml, 0, taille);
                     this.metier.chargerXML(new StringReader(new String(xml)));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            */
+
+            if (command.equals("METIER "))
+            {
+                try {
+                    ObjectInputStream ois = new ObjectInputStream(this.in);
+                    try {
+
+                        Metier nouveau_metier = (Metier) ois.readObject();
+                        //TODO: Charger le nouveau metier
+
+                        System.out.println("Class metier charger");
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
