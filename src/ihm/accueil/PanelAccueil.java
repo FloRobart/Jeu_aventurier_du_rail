@@ -176,13 +176,13 @@ public class PanelAccueil extends JPanel implements ActionListener
         this.btnImportMappe.setMinimumSize  (new Dimension(200, 30));
         this.btnImportMappe.setPreferredSize(new Dimension(200, 30));
 
-        this.btnCreerSolo.setText("Solo");
+        this.btnCreerSolo.setText("Lancer en solo");
         this.btnCreerSolo.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         this.btnCreerSolo.setMaximumSize  (new Dimension(150, 30));
         this.btnCreerSolo.setMinimumSize  (new Dimension(150, 30));
         this.btnCreerSolo.setPreferredSize(new Dimension(150, 30));
 
-        this.btnCreerMulti.setText("Multi");
+        this.btnCreerMulti.setText("Lancer en multi");
         this.btnCreerMulti.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         this.btnCreerMulti.setMaximumSize  (new Dimension(150, 30));
         this.btnCreerMulti.setMinimumSize  (new Dimension(150, 30));
@@ -410,7 +410,10 @@ public class PanelAccueil extends JPanel implements ActionListener
             if (e.getSource() == this.btnCreerSolo)
             {
                 if (this.mappe != null)
+                {
                     this.ctrl.ouvrir(this.mappe);
+                    this.ctrl.creerPartieSolo();
+                }
                 else
                     this.btnImportMappe.setBackground(Color.RED);
             }
