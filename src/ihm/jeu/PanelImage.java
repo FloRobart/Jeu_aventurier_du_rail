@@ -181,7 +181,7 @@ public class PanelImage extends JPanel
 					double milieu = (double) this.hmArete.get(arete).size() / 2;
 					if (arete.getCouleur2() != null && this.hmArete.get(arete).indexOf(s) >= milieu)
 						indCouleur = 2;
-
+					
 					// à changer plus tard pour récuperer l'arete
 					System.out.println(arete + " | Couleur " + indCouleur);
 				}

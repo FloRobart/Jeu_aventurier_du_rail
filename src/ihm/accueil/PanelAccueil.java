@@ -22,6 +22,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controleur.Controleur;
+import ihm.attente.FrameAttente;
 import ihm.customComponent.TextFieldMdp;
 import ihm.customComponent.TextFieldPseudo;
 import ihm.customComponent.TextFieldWithHint;
@@ -35,6 +36,8 @@ public class PanelAccueil extends JPanel implements ActionListener
 {
     private Controleur        ctrl;
     private File              mappe;
+
+	private boolean           mappeImportee = false;
 
     /* Panels */
     private JPanel            panelCreerPartie    ;
@@ -401,6 +404,7 @@ public class PanelAccueil extends JPanel implements ActionListener
             if (e.getSource() == this.btnCreerMulti)
             {
                 //this.ctrl.creerPartie(this.txtMdpCreer.getText());
+				new FrameAttente(ctrl); // en attendant de faire la fenetre d'attente
             }
 
             if (e.getSource() == this.btnCreerSolo)
