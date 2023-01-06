@@ -3,7 +3,9 @@
 
 ./src/ihm/Ihm.java
 
+./src/ihm/customComponent/TextFieldMdp.java
 ./src/ihm/customComponent/TextFieldOnlyInteger.java
+./src/ihm/customComponent/TextFieldPseudo.java
 ./src/ihm/customComponent/TextFieldWithHint.java
 
 ./src/ihm/accueil/FrameAccueil.java
@@ -29,6 +31,5 @@
 ./src/metier/Joueur.java
 ./src/metier/Metier.java
 ./src/metier/Noeud.java
-
 
 -d bin
