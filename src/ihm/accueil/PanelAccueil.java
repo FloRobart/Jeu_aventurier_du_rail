@@ -421,6 +421,12 @@ public class PanelAccueil extends JPanel implements ActionListener
                     if (this.txtPseudo.getPlaceholderColor() == Color.RED)
                         this.txtPseudo.setPlaceholderColor(this.ctrl.getTheme().get("saisies").get(2));
                 }
+                else
+                {
+                    this.txtPseudo.setText("");
+                    this.txtPseudo.setPlaceholderColor(Color.RED);
+                    this.txtPseudo.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                }
             }
 
             /* Textfield Mot de passe Creer */

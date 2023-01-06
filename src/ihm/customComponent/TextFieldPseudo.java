@@ -3,6 +3,9 @@ package ihm.customComponent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import java.awt.Color;
+
+import javax.swing.BorderFactory;
 import javax.swing.JTextField;
 
 import controleur.Controleur;
@@ -40,9 +43,15 @@ public class TextFieldPseudo extends TextFieldWithHint
                 else
                 {
                     txt.setEditable(false);
-                }               
+                }
+
+                if (ke.getKeyChar() != KeyEvent.VK_ENTER && (ke.getKeyChar() >= 'A' || ke.getKeyChar() <= 'Z' || ke.getKeyChar() >= '0' || ke.getKeyChar() <= '9' ))
+                {
+                    if (txt.getBorder() != null)
+                        txt.setBorder(null);
+                }
             }
-        });  
+        });
     }
 
 
