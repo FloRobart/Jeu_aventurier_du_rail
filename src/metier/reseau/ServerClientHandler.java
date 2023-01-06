@@ -16,9 +16,8 @@ import java.awt.Color;
  * NOUVEAU_JOUEUR : Un joueur a rejoint la partie
  * MOT_DE_PASSE [mot_de_passe] : Envoi du mot de passe au serveur
  * 
- * 
- * Possibilité :
  * CHARGER_XML [taille] [xml] : Envoi d'un fichier xml au client
+ * METIER [class_metier] : Envoi d'un fichier class au client (serealisation de la classe Metier)
  */
 
 
@@ -26,6 +25,7 @@ import java.awt.Color;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import metier.Metier;
@@ -94,8 +94,15 @@ public class ServerClientHandler implements Runnable
         this.metier.getServer().sendCommand("NOUVEAU_JOUEUR " + this.nomJoueur + "\n");
         this.metier.getServer().sendCommand("PARTIE nombre_joueurs " + this.metier.getServer().getNbJoeurs() + "\n");
         this.authentifie = true;
-        String xml = this.metier.getXml();
-        sendCommand("CHARGER_XML " + xml.length() + " " + xml + "\n");
+        //String xml = this.metier.getXml();
+        //sendCommand("CHARGER_XML " + xml.length() + " " + xml + "\n");
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(this.out);
+            oos.writeObject(this.metier);
+            oos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     public void run()
