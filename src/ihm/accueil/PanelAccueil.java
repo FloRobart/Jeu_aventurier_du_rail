@@ -91,7 +91,7 @@ public class PanelAccueil extends JPanel implements ActionListener
         this.lblTitreRejoindre    = new JLabel ();
         
         /* Textfields */
-        this.txtIpRejoindre       = new TextFieldWithHint("Adresse IP", this.ctrl);
+        this.txtIpRejoindre       = new TextFieldWithHint("127.0.0.1" , this.ctrl);
         this.txtMdpCreer          = new TextFieldMdp     ("0000"      , this.ctrl);
         this.txtMdpRejoindre      = new TextFieldMdp     ("0000"      , this.ctrl);
         this.txtPseudo            = new TextFieldPseudo  ("sans nom"  , this.ctrl);
@@ -151,7 +151,7 @@ public class PanelAccueil extends JPanel implements ActionListener
         this.lblTitreRejoindre.setMinimumSize  (new Dimension(400, 40));
         this.lblTitreRejoindre.setPreferredSize(new Dimension(400, 40));
 
-        this.lblIpRejoindre.setText("Mot de passe");
+        this.lblIpRejoindre.setText("Adresse IP");
         this.lblIpRejoindre.setHorizontalAlignment(JLabel.CENTER);
         this.lblIpRejoindre.setMaximumSize  (new Dimension(200, 30));
         this.lblIpRejoindre.setMinimumSize  (new Dimension(200, 30));
