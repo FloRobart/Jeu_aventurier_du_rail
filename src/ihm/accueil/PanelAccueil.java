@@ -537,26 +537,29 @@ public class PanelAccueil extends JPanel implements ActionListener
                 }
 
                 /* Vérification de la mappe */
-                if (this.mappeImportee && pseudoCorrect)
-                {
-                    if (e.getSource() == this.btnCreerSolo)
-                    {
-                        this.ctrl.creerPartieSolo();
-                    }
-                    else
-                    {
-                        if (this.verifMdpCreer())
-                        {
-                            //this.ctrl.creerPartie(this.txtMdpCreer.getText());
-                            new FrameAttente(ctrl); // en attendant de faire la fenetre d'attente (Floris l'à fait bientôt)
-                        }
-                    }
-                }
-                else
+                if (!this.mappeImportee)
                 {
                     this.lblImportMappe.setForeground(Color.RED);
                     this.lblImportMappe.setText("Veuillez importer un fichier");
                     this.btnImportMappe.setBorder(BorderFactory.createLineBorder(Color.RED, 3));
+                }
+                else
+                {
+                    if (pseudoCorrect)
+                    {
+                        if (e.getSource() == this.btnCreerSolo)
+                        {
+                            this.ctrl.creerPartieSolo();
+                        }
+                        else
+                        {
+                            if (this.verifMdpCreer())
+                            {
+                                //this.ctrl.creerPartie(this.txtMdpCreer.getText());
+                                new FrameAttente(ctrl); // en attendant de faire la fenetre d'attente (Floris l'à fait bientôt)
+                            }
+                        }
+                    }
                 }
             }
 
