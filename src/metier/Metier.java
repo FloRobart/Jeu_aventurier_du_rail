@@ -85,7 +85,7 @@ public class Metier implements Serializable
     {
         this.ctrl = ctrl;
 		this.lireFichier(new File("./bin/donnees/France.xml"));
-		this.initCartes();
+		//this.initCartes();
 		this.hmColorThemes = new HashMap<String, List<Color>>();
 		this.chargerThemes(getThemeUsed());
     }
@@ -100,115 +100,6 @@ public class Metier implements Serializable
 
 		return false;
     }
-
-	//initialise les decks
-	public void initCartes()
-	{
-		//Creation des cartes wagon
-
-		this.lstCartesWagon = new ArrayList<CarteWagon>();
-
-		while ( this.nbCarteLocomotive-- > 0 )
-			this.lstCartesWagon.add(new CarteWagon(null, this.imageVersoCouleur, this.imageRectoLocomotive));
-		
-		for ( int cpt = 0; cpt < this.lstCouleurs.size(); cpt++ )
-		{
-			int nbCarte = 0;
-			while ( nbCarte < this.nbCarteCoul )
-			{
-				this.lstCartesWagon.add(new CarteWagon(this.lstCouleurs.get(cpt), this.imageVersoCouleur, this.lstImagesRectoCouleur.get(cpt)));
-				nbCarte++;
-			}
-		}
-		Collections.shuffle(this.lstCartesWagon);
-
-		
-		this.lstDefausseCartesWagon = new ArrayList<CarteWagon>();
-		
-		this.tabCarteWagon = new CarteWagon[TAILLE_TAB_WAGON];
-		this.tabCarteObjectif = new CarteObjectif[TAILLE_TAB_OBJECTIF];
-
-		for (int cpt = 0; cpt < this.tabCarteWagon.length; cpt++)
-			this.tabCarteWagon[cpt] = this.lstCartesWagon.remove(0);
-	}
-	
-	//Permet de choisir parmi les trois cartes objectifs
-	public void piocherTabObjectif (boolean[] tabBool, String nomJoueur)
-	{
-		int cptJoueur = 0;
-		for ( Joueur joueur : this.lstJoueurs )
-		{
-			if ( nomJoueur == joueur.getNom()  )
-			{
-				for ( int cpt = 0; cpt < tabBool.length; cpt++ )
-				{
-					if ( tabBool[cpt] == true )
-					{
-						this.lstJoueurs.get(cptJoueur).ajouterCarteObjectif(this.tabCarteObjectif[cpt]);
-					}
-					else
-					{
-						this.lstCartesObjectif.add(this.tabCarteObjectif[cpt]);
-					}
-				}
-			}
-			cptJoueur++;
-		}
-	}
-
-	//Permet de choisir parmi les 5 cartes wagons
-	public void piocherTabWagon (int indiceTab, String nomJoueur)
-	{
-		int cptWagon = 0;
-
-		for ( Joueur joueur : this.lstJoueurs )
-		{
-			if ( nomJoueur == joueur.getNom()  )
-			{
-				//if ( this.lstJoueurs.get(cptWagon).aJouer() && this.tabCarteWagon[indiceTab].isJoker() )	//Creer un attribut dans joueur qui indique si il joue ou pas
-					//le joueur ne peut plus piocher
-
-				this.lstJoueurs.get(cptWagon).ajouterCarteWagon(this.tabCarteWagon[indiceTab]);
-				if ( this.tabCarteWagon[indiceTab].isJoker() )
-					//le joueur ne peut plus piocher
-
-				this.tabCarteWagon[indiceTab] = this.lstCartesWagon.remove(0);
-			}
-			cptWagon++;
-		}
-	}
-
-	//Permet de piocher dans le deck de wagon, ou de piocher les trois cartes objectifs
-	public void piocherDeck (char typeCarte, String nomJoueur)
-	{
-		switch(typeCarte)
-		{
-			case 'O':
-					for (int cpt = 0; cpt < this.tabCarteObjectif.length; cpt++)
-						this.tabCarteObjectif[cpt] = this.lstCartesObjectif.remove(0);
-				break;
-			
-			case 'W': 
-				if (this.lstCartesWagon.isEmpty())
-				{
-					Collections.shuffle(this.lstDefausseCartesWagon);
-					this.lstCartesWagon = this.lstDefausseCartesWagon;
-				}
-
-				int cptWagon = 0;
-				for ( Joueur joueur : this.lstJoueurs )
-				{
-					if ( nomJoueur == joueur.getNom()  )
-					{
-						this.lstJoueurs.get(cptWagon).ajouterCarteWagon(this.lstCartesWagon.get(0));
-						this.lstDefausseCartesWagon.add(this.lstCartesWagon.remove(0));
-					}
-					cptWagon++;
-				}
-				break;
-		}
-	}
-
 
 	/* --------------------------- */
 	/*          Getters            */
@@ -246,6 +137,17 @@ public class Metier implements Serializable
 	public String              getMotDePasse		  () { return this.motDePassePartie;     }
 	public Server 			   getServer              () { return this.server;               }
 
+	/*Lecture du fichier XML afin de récupérer les infos du plateau */
+    public boolean lireFichier(File fichier)
+	{
+		// read file into a reader
+		try {
+			if (this.chargerXML(new FileReader(fichier)))
+				return true;
+			else
+				return false;
+		} catch (FileNotFoundException e) { return false; }
+	}
 
     public boolean chargerXML(Reader cs)
 	{
@@ -401,226 +303,6 @@ public class Metier implements Serializable
 		{
 			return false;
 		}
-	}
-
-	public String getXml()
-	{
-		try {
-			Document document = new Document();
-			
-			/* <jeu> */
-			Element racine = new Element("jeu");
-			document.setRootElement(racine);
-			
-			/* <information> */
-			Element information = new Element("information");
-			racine.addContent(information);
-
-			Element dimension = new Element("dimension");
-			information.addContent(dimension);
-			dimension.setAttribute("x", Integer.toString(this.taillePlateau[0]));
-			dimension.setAttribute("y", Integer.toString(this.taillePlateau[1]));
-
-			Element imageFond = new Element("image-fond");
-			information.addContent(imageFond);
-			imageFond.setText(this.imageToBase64(this.imagePlateau));
-
-			Element couleurFond = new Element("couleur-fond");
-			information.addContent(couleurFond);
-			couleurFond.setText(this.colorToHexa(this.couleurPlateau));
-
-			Element police = new Element("police");
-			information.addContent(police);
-			police.setText(this.policePlateau.getFontName());
-
-			Element nbJoueurs = new Element("nombre-joueurs");
-			information.addContent(nbJoueurs);
-			nbJoueurs.setAttribute("min", Integer.toString(this.nbJoueursMin));
-			nbJoueurs.setAttribute("max", Integer.toString(this.nbJoueursMax));
-
-			Element nbCarte = new Element("nombre-carte");
-			information.addContent(nbCarte);
-			nbCarte.setAttribute("couleur", Integer.toString(this.nbCarteCoul));
-			nbCarte.setAttribute("multicouleur", Integer.toString(this.nbCarteLocomotive));
-
-			Element nbJeton = new Element("nombre-jeton");
-			information.addContent(nbJeton);
-			nbJeton.setAttribute("joueur", Integer.toString(this.nbJetonJoueur));
-			nbJeton.setAttribute("fin", Integer.toString(this.nbJetonFin));
-	
-			Element plateau = new Element("plateau");
-			racine.addContent(plateau);
-
-			/* <liste-lstCouleurs> */
-			Element lstCouleurs = new Element("liste-lstCouleurs");
-			plateau.addContent(lstCouleurs);
-
-			for (int i = 0; i < this.lstCouleurs.size(); i++)
-			{
-				Element couleur = new Element("couleur");
-				lstCouleurs.addContent(couleur);
-				couleur.setAttribute("id", Integer.toString(i+1));
-				couleur.setText(this.colorToHexa(this.lstCouleurs.get(i)));
-			}
-
-			/* <liste-image-cartes> */
-			Element imagesCartes = new Element("liste-image-cartes");
-			plateau.addContent(imagesCartes);
-
-			Element imageVersoCoul = new Element("image-verso");
-			imagesCartes.addContent(imageVersoCoul);
-			imageVersoCoul.setText(imageToBase64(this.imageVersoCouleur));
-
-			Element imageRectoLoco = new Element("image-recto");
-			imagesCartes.addContent(imageRectoLoco);
-			imageRectoLoco.setAttribute("id", "locomotive");
-			imageRectoLoco.setText(imageToBase64(this.imageRectoLocomotive));
-
-			for (int i = 0; i < this.lstImagesRectoCouleur.size(); i++)
-			{
-				Element imageRecto = new Element("image-recto");
-				imagesCartes.addContent(imageRecto);
-				imageRecto.setAttribute("id", Integer.toString(i+1));
-				imageRecto.setText(this.imageToBase64(this.lstImagesRectoCouleur.get(i)));
-			}
-			
-			/* <tableau-lstPoints> */
-			Element tablstPoints = new Element("tableau-lstPoints");
-			plateau.addContent(tablstPoints);
-
-			for (int i = 0; i < this.lstPoints.size(); i++)
-			{
-				Element distance = new Element("distance");
-				tablstPoints.addContent(distance);
-				distance.setAttribute("id", Integer.toString(i+1));
-				distance.setText(Integer.toString(this.lstPoints.get(i)));
-			}
-
-			/* <liste-lstNoeuds> */
-			Element lstNoeuds = new Element("liste-lstNoeuds");
-			plateau.addContent(lstNoeuds);
-
-			for (int i = 0; i < this.lstNoeuds.size(); i++)
-			{
-				Element noeud = new Element("noeud");
-				lstNoeuds.addContent(noeud);
-				noeud.setAttribute("id", Integer.toString(i+1));
-				
-				Element position = new Element("position");
-				noeud.addContent(position);
-				position.setAttribute("x", Integer.toString(this.lstNoeuds.get(i).getX()));
-				position.setAttribute("y", Integer.toString(this.lstNoeuds.get(i).getY()));
-
-				Element nom = new Element("nom");
-				noeud.addContent(nom);
-				nom.setText(this.lstNoeuds.get(i).getNom());
-
-				Element position_nom = new Element("position-nom");
-				noeud.addContent(position_nom);
-				position_nom.setAttribute("x", Integer.toString(this.lstNoeuds.get(i).getXNom()));
-				position_nom.setAttribute("y", Integer.toString(this.lstNoeuds.get(i).getYNom()));
-
-				Element couleur = new Element("couleur");
-				noeud.addContent(couleur);
-				couleur.setText(this.colorToHexa(this.lstNoeuds.get(i).getCouleur()));
-			}
-
-			/* <liste-lstAretes> */
-			Element arrets = new Element("liste-lstAretes");
-			plateau.addContent(arrets);
-
-			for (int i = 0; i < this.lstAretes.size(); i++)
-			{
-				Element arret = new Element("arete");
-				arrets.addContent(arret);
-
-				Element noeud = new Element("noeud");
-				arret.addContent(noeud);
-				noeud.setAttribute("n1", Integer.toString(this.lstAretes.get(i).getNoeud1().getId()));
-				noeud.setAttribute("n2", Integer.toString(this.lstAretes.get(i).getNoeud2().getId()));
-
-				Element couleur1 = new Element("couleur1");
-				arret.addContent(couleur1);
-				couleur1.setText(this.colorToHexa(this.lstAretes.get(i).getCouleur1()));
-
-				Element couleur2 = new Element("couleur2");
-				arret.addContent(couleur2);
-				if (this.lstAretes.get(i).getCouleur2() == null)
-					couleur2.setText("NULL");
-				else
-					couleur2.setText(this.colorToHexa(this.lstAretes.get(i).getCouleur2()));
-
-				Element distance = new Element("distance");
-				arret.addContent(distance);
-				distance.setText(Integer.toString(this.lstAretes.get(i).getDistance()));
-			}
-
-			/* <liste-objectifs> */
-			Element objectifs = new Element("liste-objectifs");
-			racine.addContent(objectifs);
-
-			Element versoObjectif = new Element("image-verso");
-			objectifs.addContent(versoObjectif);
-			versoObjectif.setText(imageToBase64(this.imageVersoObjectif));
-
-			/*
-			for (int i = 0; i < this.carteObjectif.size(); i++)
-			{
-				Element objectif = new Element("objectif");
-				objectifs.addContent(objectif);
-
-				Element noeud = new Element("noeud");
-				objectif.addContent(noeud);
-				noeud.setAttribute("n1", Integer.toString(this.carteObjectif.get(i).getNoeud1().getId()));
-				noeud.setAttribute("n2", Integer.toString(this.carteObjectif.get(i).getNoeud2().getId()));
-
-				Element lstPoints = new Element("lstPoints");
-				objectif.addContent(lstPoints);
-				lstPoints.setText(Integer.toString(this.carteObjectif.get(i).getPoints()));
-
-				Element rectoObjectif = new Element("image-recto");
-				objectif.addContent(rectoObjectif);
-				rectoObjectif.setText(imageToBase64(this.carteObjectif.get(i).getImageRecto()));
-			}
-			*/
-
-			XMLOutputter sortie = new XMLOutputter(Format.getCompactFormat());
-			String xml = sortie.outputString(document);
-			return xml;
-			
-		} catch (Exception e){
-			e.printStackTrace();
-			return "ERREUR";
-		}
-
-	}
-	
-	private String colorToHexa(Color color)
-	{
-		if (color == null) return "#0F0F0F";
-		return "#" + Integer.toHexString(color.getRGB()).substring(2);
-	}
-
-	/*Lecture du fichier XML afin de récupérer les infos du plateau */
-    public boolean lireFichier(File fichier)
-	{
-		// read file into a reader
-		try {
-			if (this.chargerXML(new FileReader(fichier)))
-				return true;
-			else
-				return false;
-		} catch (FileNotFoundException e) { return false; }
-	}
-
-	public String imageToBase64(BufferedImage image) throws IOException
-	{
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ImageIO.write(image, "png", baos);
-		baos.flush();
-		byte[] imageInByte = baos.toByteArray();
-		baos.close();
-		return Base64.getEncoder().encodeToString(imageInByte);
 	}
 
     public BufferedImage base64ToImage(String base64) throws IOException 
