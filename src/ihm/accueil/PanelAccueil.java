@@ -490,7 +490,8 @@ public class PanelAccueil extends JPanel implements ActionListener
         /* Boutons */
         /* Boutons Creer */
         this.btnImportMappe.setForeground(btnForeColor);
-        this.btnImportMappe.setBackground(btnBackColor);
+        if (this.btnImportMappe.getBackground() != Color.RED)
+            this.btnImportMappe.setBackground(btnBackColor);
 
         this.btnCreerSolo.setForeground(btnForeColor);
         this.btnCreerSolo.setBackground(btnBackColor);
