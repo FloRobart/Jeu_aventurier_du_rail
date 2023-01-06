@@ -96,6 +96,7 @@ public class ServerClientHandler implements Runnable
         this.authentifie = true;
         //String xml = this.metier.getXml();
         //sendCommand("CHARGER_XML " + xml.length() + " " + xml + "\n");
+        sendCommand("METIER ");
         try {
             ObjectOutputStream oos = new ObjectOutputStream(this.out);
             oos.writeObject(this.metier);
