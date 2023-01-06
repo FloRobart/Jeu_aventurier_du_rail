@@ -46,14 +46,14 @@ public class PanelPioche extends JPanel implements ActionListener
         {
             this.tabCarteWagon[cpt] = new JButton();
 			this.tabCarteWagon[cpt].setBackground(new Color(70, 73, 89));
-            this.tabCarteWagon[cpt].setPreferredSize(new Dimension(150, 100));
+            this.tabCarteWagon[cpt].setPreferredSize(new Dimension(200, 100));
             this.tabCarteWagon[cpt].setBorder(BorderFactory.createBevelBorder(1, new Color(32, 40, 44), new Color(32, 40, 44)));
             this.setImageButton(cpt);
         }
 
         this.deckCarteWagon = new JButton(new ImageIcon(this.ctrl.getImageVersoCouleur()));
 		this.deckCarteWagon.setBackground(new Color(70, 73, 89));
-        this.deckCarteWagon.setPreferredSize(new Dimension(300, 200));
+        this.deckCarteWagon.setPreferredSize(new Dimension(200, 150));
         this.deckCarteWagon.setBorder(BorderFactory.createBevelBorder(1, new Color(32, 40, 44), new Color(32, 40, 44)));
 
         //Ajout des composants
@@ -74,8 +74,7 @@ public class PanelPioche extends JPanel implements ActionListener
     {
         BufferedImage resizedImage = new BufferedImage(150, 100, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = resizedImage.createGraphics();
-        //g2d.drawImage(this.ctrl.getTabCarteWagon()[indice].getImageRecto(), 0, 0, 150, 100, null);
-		g2d.drawImage(this.ctrl.getImageVersoCouleur(), 0, 0, 150, 100, null);
+		//g2d.drawImage(this.ctrl.getTabCarteWagon()[indice].getImageRecto(), 0, 0, 200, 100, null);
         g2d.dispose();
         this.tabCarteWagon[indice].setIcon(new ImageIcon (resizedImage));
     }
