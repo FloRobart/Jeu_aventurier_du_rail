@@ -13,10 +13,10 @@
         <background red="47" green="49" blue="63"></background>
         <placeholder red="255" green="255" blue="255" alpha="100"></placeholder>
     </saisies>
-    <bottuns>
+    <buttons>
         <foreground red="255" green="255" blue="255"></foreground>
         <background red="40" green="42" blue="54"></background>
-    </bottuns>
+    </buttons>
     <menuBar>
         <foreground red="255" green="255" blue="255"></foreground>
         <background red="63" green="63" blue="63"></background>

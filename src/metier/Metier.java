@@ -715,7 +715,7 @@ public class Metier
 			/*------------------------------------------*/
 			/* Récupération de tout les autres éléments */
 			/*------------------------------------------*/
-			String[] lstCles = new String[] {"titles", "labels", "saisies", "bottuns", "menuBar"};
+			String[] lstCles = new String[] {"titles", "labels", "saisies", "buttons", "menuBar"};
 			for (int i = 0; i < lstCles.length; i++)
 			{
 				lst = new ArrayList<Color>();
