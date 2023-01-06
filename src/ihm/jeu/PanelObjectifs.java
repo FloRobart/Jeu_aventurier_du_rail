@@ -1,6 +1,5 @@
 package ihm.jeu;
 
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -9,49 +8,46 @@ import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
 import java.awt.FontMetrics;
 import java.awt.Point;
-import java.nio.Buffer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 
 import controleur.Controleur;
 import metier.CarteObjectif;
 import metier.Noeud;
 
-public class PanelObjectifs extends JPanel
+public class PanelObjectifs extends JPanel implements ActionListener
 {
     private Controleur ctrl;
 
     private JButton[] tabBtnObjectifs;
     private List<CarteObjectif>  listObjectifs;
-
-    //private JScrollPane     scrollPane;
     
     public PanelObjectifs(Controleur ctrl)
     {
         this.ctrl = ctrl;
-        //int taille = this.ctrl.getCarteObjectif().size();
-        int taille = 8;
+        //int taille = this.ctrl.getCarteObjectif().size(); 
+        int taille = 5; // a remplacer par le nombre de carte objectif du joueur
+        
+        int grid = taille;
         if(taille%2 != 0)
-            taille += 1;
+            grid = taille+1;
 
         this.setBackground(new Color(68, 71, 90));
 
         JPanel panel = new JPanel();
         panel.setBackground(new Color(68, 71, 90));
-        panel.setLayout(new GridLayout(taille/2, 2, 0, 1));
+        panel.setLayout(new GridLayout(grid/2, 2, 0, 1));
 
         this.tabBtnObjectifs = new JButton[taille];
         this.listObjectifs = this.ctrl.getCarteObjectif();
 
-        //this.scrollPane = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
-        for (int i = 0; i < taille-1; i++)
+        for (int i = 0; i < taille; i++)
         {
             this.tabBtnObjectifs[i] = new JButton();
             this.tabBtnObjectifs[i].setBackground(new Color(68, 71, 90));
@@ -64,12 +60,6 @@ public class PanelObjectifs extends JPanel
             panel.add(this.tabBtnObjectifs[i]);
         }
 
-        /*this.scrollPane.setViewportView(panel);
-        this.scrollPane.setVerticalScrollBar(new JScrollBar());
-        
-        this.scrollPane.setPreferredSize(new Dimension(400,300));
-        this.scrollPane.getVerticalScrollBar().setUnitIncrement(5);*/
-
         JPanel container = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         container.setBackground(new Color(68, 71, 90));
         container.add(panel);
@@ -78,8 +68,10 @@ public class PanelObjectifs extends JPanel
         scrollPane.getVerticalScrollBar().setUnitIncrement(5);
         scrollPane.getVerticalScrollBar().setBackground(new Color(68, 71, 90));
 
-        //this.scrollPane.add(panel);
-        this.add(scrollPane);        
+        this.add(scrollPane);   
+        
+        for(JButton btn : this.tabBtnObjectifs)
+            btn.addActionListener(this);
     }
 
 
@@ -126,13 +118,17 @@ public class PanelObjectifs extends JPanel
     }
 
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 300);
-        frame.add(new PanelObjectifs(new Controleur()));
-        frame.setVisible(true);
-
+    @Override
+    public void actionPerformed(ActionEvent e) 
+    {
+        for(int i = 0; i < this.tabBtnObjectifs.length; i++)
+        {
+            if(e.getSource() == this.tabBtnObjectifs[i])
+            {
+                System.out.println("Carte objectif " + i + " cliquée");
+            }
+        }
+        
     }
 
 }
