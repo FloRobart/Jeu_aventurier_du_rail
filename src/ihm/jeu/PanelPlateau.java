@@ -9,6 +9,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -112,6 +113,11 @@ public class PanelPlateau extends JPanel implements ActionListener, MouseWheelLi
 		                           (int) (this.taillePlateau[0] * facteurZoom), 
 								   (int) (this.taillePlateau[1] * facteurZoom) );
 		this.panelImage.majZoom(this.facteurZoom);
+	}
+
+	public BufferedImage getImage()
+	{
+		return this.panelImage.getImage();
 	}
 
 	public void actionPerformed(ActionEvent e) 

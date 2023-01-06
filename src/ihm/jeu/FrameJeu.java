@@ -3,6 +3,7 @@ package ihm.jeu;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
@@ -54,6 +55,11 @@ public class FrameJeu extends JFrame
     }
 
     public void setImageButton(int indice) { this.panelPioche.setImageButton(indice); }	
+
+	public BufferedImage getImage()
+	{
+		return this.panelPlateau.getImage();
+	}
 
     public void appliquerTheme()
     {

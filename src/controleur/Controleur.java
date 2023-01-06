@@ -69,6 +69,11 @@ public class Controleur implements Serializable
 
 	public BufferedImage       getImageVersoObjectif() { return this.metier.getImageVersoObjectif(); }
 
+	public BufferedImage getImage()
+	{
+		return this.ihm.getImage();
+	}
+
 	//public void piocherDeck (char typeCarte, String nomJoueur)			 {this.metier.piocherDeck(typeCarte, nomJoueur);		}
 	//public void piocherTabWagon (int indiceTab, String nomJoueur)		 {this.metier.piocherTabWagon(indiceTab, nomJoueur);	}
 	//public void piocherTabObjectif (boolean[] tabBool, String nomJoueur) {this.metier.piocherTabObjectif(tabBool, nomJoueur);	}
