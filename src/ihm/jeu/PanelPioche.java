@@ -74,32 +74,32 @@ public class PanelPioche extends JPanel implements ActionListener
 
         if ( e.getSource() == this.tabCarteWagon[0] )
         {
-            this.ctrl.piocherTabWagon (0, this.ctrl.getJoueurSelect().getNom());
+            //this.ctrl.piocherTabWagon (0, this.ctrl.getJoueurSelect().getNom());
             this.setImageButton(0);
         }
 
         if ( e.getSource() == this.tabCarteWagon[1] )
         {
-            this.ctrl.piocherTabWagon (1, this.ctrl.getJoueurSelect().getNom());
+            //this.ctrl.piocherTabWagon (1, this.ctrl.getJoueurSelect().getNom());
             this.setImageButton(1);
         }
 
         if ( e.getSource() == this.tabCarteWagon[2] )
         {
-            this.ctrl.piocherTabWagon (2, this.ctrl.getJoueurSelect().getNom());
+            //this.ctrl.piocherTabWagon (2, this.ctrl.getJoueurSelect().getNom());
             this.setImageButton(2);
         }
 
         if ( e.getSource() == this.tabCarteWagon[3] )
         {
-            this.ctrl.piocherTabWagon (3, this.ctrl.getJoueurSelect().getNom());
+            //this.ctrl.piocherTabWagon (3, this.ctrl.getJoueurSelect().getNom());
             this.setImageButton(3);
         }
 
 		this.setVisible(true);
         if ( e.getSource() == this.tabCarteWagon[4] )
         {
-            this.ctrl.piocherTabWagon (4, this.ctrl.getJoueurSelect().getNom());
+            //this.ctrl.piocherTabWagon (4, this.ctrl.getJoueurSelect().getNom());
             this.setImageButton(4);
         }
     }
