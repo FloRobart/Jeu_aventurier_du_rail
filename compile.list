@@ -1,6 +1,10 @@
 ./src/controleur/ClientControleur.java
 ./src/controleur/Controleur.java
 ./src/controleur/ServerControleur.java
+./src/controleur/ClientControleur.java
+
+./src/ihm/Ihm.java
+
 
 ./src/ihm/customComponent/TextFieldMdp.java
 ./src/ihm/customComponent/TextFieldOnlyInteger.java

@@ -7,6 +7,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.awt.Font;
 import java.io.File;
+import java.io.Serializable;
 
 import ihm.Ihm;
 import metier.*;
@@ -14,7 +15,7 @@ import metier.reseau.Client;
 import metier.reseau.Server;
 
 
-public class Controleur 
+public class Controleur implements Serializable
 {
     private Metier metier;
     private Ihm    ihm;
@@ -33,6 +34,7 @@ public class Controleur
 	public void creerPartieSolo()
 	{
 		this.ihm.demarrerJeu();
+
 	}
 
 	/* --------------------------- */
@@ -43,6 +45,9 @@ public class Controleur
 	public List<CarteObjectif> getCarteObjectif       () { return this.metier.getCarteObjectif(); }
 	public List<Noeud>         getNoeuds              () { return this.metier.getNoeuds       (); }
 	public List<Arete>         getAretes              () { return this.metier.getAretes       (); }
+	public List<CarteWagon>    getLstDefausseCartesWagon() { return this.metier.getLstDefausseCartesWagon();}
+	public CarteWagon[]		   getTabCarteWagon			() { return this.metier.getTabCarteWagon();         }
+	public CarteObjectif[]	   getTabCarteObjectif		() { return this.metier.getTabCarteObjectif();     	}
 
 	public int[]         getTaillePlateau () { return this.metier.getTaillePlateau (); }
 	public BufferedImage getImagePlateau  () { return this.metier.getImagePlateau  (); }
@@ -64,7 +69,10 @@ public class Controleur
 
 	public BufferedImage       getImageVersoObjectif() { return this.metier.getImageVersoObjectif(); }
 
-
+	//public void piocherDeck (char typeCarte, String nomJoueur)			 {this.metier.piocherDeck(typeCarte, nomJoueur);		}
+	//public void piocherTabWagon (int indiceTab, String nomJoueur)		 {this.metier.piocherTabWagon(indiceTab, nomJoueur);	}
+	//public void piocherTabObjectif (boolean[] tabBool, String nomJoueur) {this.metier.piocherTabObjectif(tabBool, nomJoueur);	}
+	public void setImageButton(int indice) 								 { if ( this.ihm != null ) this.ihm.setImageButton(indice);}
     /**
      * Permet d'appliquer le thème à l'ihm
      */
@@ -112,5 +120,10 @@ public class Controleur
 
     public Joueur getJoueurSelect() {
         return null;
+    }
+
+    public void creerPartie() 
+	{
+		this.hostGame();
     }
 }

@@ -1,13 +1,23 @@
 package metier;
 
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
-public class CarteObjectif 
+import javax.imageio.ImageIO;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+public class CarteObjectif implements Serializable
 {
 	private Noeud         noeud1;
 	private Noeud         noeud2;
 	private int           points;
-	private BufferedImage imageRecto;
+	private transient BufferedImage imageRecto;
 
 	public CarteObjectif(Noeud noeud1, Noeud noeud2, int points, BufferedImage imageRecto)
 	{
@@ -30,5 +40,20 @@ public class CarteObjectif
 	public String toString()
 	{
 		return this.noeud1.getNom() + " - " + this.noeud2.getNom();
+	}
+	private void writeObject(ObjectOutputStream out) throws IOException 
+	{
+		ByteArrayOutputStream baos;
+		out.defaultWriteObject();
+
+		baos = new ByteArrayOutputStream();
+		ImageIO.write(imageRecto, "png", baos);
+		out.writeObject(baos.toByteArray());
+
+	}
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException 
+	{
+		in.defaultReadObject();
+		imageRecto    = ImageIO.read(new ByteArrayInputStream((byte[]) in.readObject()));
 	}
 }

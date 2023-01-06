@@ -1,10 +1,12 @@
 package ihm;
 
+import java.io.Serializable;
+
 import controleur.Controleur;
 import ihm.accueil.FrameAccueil;
 import ihm.jeu.FrameJeu;
 
-public class Ihm 
+public class Ihm implements Serializable
 {
     private Controleur ctrl;
 
@@ -27,6 +29,9 @@ public class Ihm
         this.frameAccueil = null;
 		this.frameJeu     = new FrameJeu(this.ctrl);
 	}
+
+    public void setImageButton(int indice) { if ( this.frameJeu != null ) this.frameJeu.setImageButton(indice); }						
+
 
     public int getWidthFrameAccueil() { return this.frameAccueil.getWidth(); }
 
