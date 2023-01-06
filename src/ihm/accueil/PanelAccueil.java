@@ -391,6 +391,7 @@ public class PanelAccueil extends JPanel implements ActionListener
 					if (extention.equals("xml"))
                     {
 						this.mappe = fichier;
+                        this.ctrl.ouvrir(this.mappe);
                         this.btnImportMappe.setText(fichier.getName());
 
                         if (this.btnImportMappe.getBackground() == Color.RED)
@@ -410,10 +411,7 @@ public class PanelAccueil extends JPanel implements ActionListener
             if (e.getSource() == this.btnCreerSolo)
             {
                 if (this.mappe != null)
-                {
-                    this.ctrl.ouvrir(this.mappe);
                     this.ctrl.creerPartieSolo();
-                }
                 else
                     this.btnImportMappe.setBackground(Color.RED);
             }
