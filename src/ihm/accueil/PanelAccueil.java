@@ -50,7 +50,8 @@ public class PanelAccueil extends JPanel implements ActionListener
     private JButton           btnCreerSolo     ;
     private JButton           btnImportMappe   ;
     private JButton           btnRejoindre     ;
-    private JButton           btnTest          ;
+    private JButton           btnTestSolo      ;
+    private JButton           btnTestRejoindre ;
 
     /* Labels */
     private JLabel            lblImportMappe   ;
@@ -90,7 +91,8 @@ public class PanelAccueil extends JPanel implements ActionListener
         this.btnCreerSolo         = new JButton();
         this.btnImportMappe       = new JButton();
         this.btnRejoindre         = new JButton();
-        this.btnTest              = new JButton();
+        this.btnTestSolo          = new JButton();
+        this.btnTestRejoindre     = new JButton();
 
         /* Labels */
         this.lblImportMappe       = new JLabel ();
@@ -182,12 +184,20 @@ public class PanelAccueil extends JPanel implements ActionListener
 
 
         /* Boutons */
-        this.btnTest.setText("Test rapide");
-        this.btnTest.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        this.btnTest.setMaximumSize  (new Dimension(200, 30));
-        this.btnTest.setMinimumSize  (new Dimension(200, 30));
-        this.btnTest.setPreferredSize(new Dimension(200, 30));
-        this.btnTest.addActionListener(this);
+        this.btnTestSolo.setText("Creer partie solo");
+        this.btnTestSolo.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        this.btnTestSolo.setMaximumSize  (new Dimension(200, 30));
+        this.btnTestSolo.setMinimumSize  (new Dimension(200, 30));
+        this.btnTestSolo.setPreferredSize(new Dimension(200, 30));
+        this.btnTestSolo.addActionListener(this);
+
+        this.btnTestRejoindre.setText("Rejoindre partie rapide");
+        this.btnTestRejoindre.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        this.btnTestRejoindre.setMaximumSize  (new Dimension(200, 30));
+        this.btnTestRejoindre.setMinimumSize  (new Dimension(200, 30));
+        this.btnTestRejoindre.setPreferredSize(new Dimension(200, 30));
+        this.btnTestRejoindre.addActionListener(this);
+
 
         /* Boutons Creer */
         this.btnImportMappe.setText("Importer une mappe");
@@ -266,7 +276,9 @@ public class PanelAccueil extends JPanel implements ActionListener
                         .addGap(30, 30, 30)
                         .addComponent(this.txtPseudo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20)
-                        .addComponent(this.btnTest, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(this.btnTestSolo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(this.btnTestRejoindre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(this.panelCreerPartie, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -284,7 +296,8 @@ public class PanelAccueil extends JPanel implements ActionListener
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(this.lblPseudo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addComponent(this.txtPseudo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(this.btnTest, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                    .addComponent(this.btnTestSolo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(this.btnTestRejoindre, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(this.panelCreerPartie, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -587,10 +600,16 @@ public class PanelAccueil extends JPanel implements ActionListener
 
 
             /* Test */
-            if (e.getSource() == this.btnTest)
+            if (e.getSource() == this.btnTestSolo)
             {
                 this.mappeImportee = this.ctrl.ouvrir(new File("./France.xml"));
                 this.ctrl.creerPartieSolo();
+            }
+
+            if (e.getSource() == this.btnTestRejoindre)
+            {
+                this.mappeImportee = this.ctrl.ouvrir(new File("./France.xml"));
+                this.ctrl.joinGame(this.txtIpRejoindre.getText()); // IP en dur
             }
 
 
