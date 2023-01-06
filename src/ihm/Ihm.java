@@ -1,10 +1,12 @@
 package ihm;
 
+import java.io.Serializable;
+
 import controleur.Controleur;
 import ihm.accueil.FrameAccueil;
 import ihm.jeu.FrameJeu;
 
-public class Ihm 
+public class Ihm implements Serializable
 {
     private Controleur ctrl;
 

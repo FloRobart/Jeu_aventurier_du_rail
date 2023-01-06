@@ -1,9 +1,10 @@
 package metier;
 
 import java.awt.Color;
+import java.io.Serializable;
 
 
-public class Arete 
+public class Arete implements Serializable
 {
 	private Noeud noeud1;
 	private Noeud noeud2;

@@ -7,6 +7,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.awt.Font;
 import java.io.File;
+import java.io.Serializable;
 
 import ihm.Ihm;
 import metier.*;
@@ -14,7 +15,7 @@ import metier.reseau.Client;
 import metier.reseau.Server;
 
 
-public class Controleur 
+public class Controleur implements Serializable
 {
     private Metier metier;
     private Ihm    ihm;
@@ -24,12 +25,15 @@ public class Controleur
         this.metier = new Metier(this);
         this.ihm    = new Ihm(this);
     }
-
+	/*
+	 * Method sert à tester, il n'est pas officielle
+	 */
 	public void ouvrir(File fichier)
 	{
 		if (this.metier.lireFichier(fichier))
 		{
 			this.ihm.demarrerJeu();
+			this.hostGame();
 		}
 	}
 

@@ -15,17 +15,26 @@ public class ServerControleur
 		try
 		{
 			ss	= new ServerSocket(6000);
-            waitClient();
+            Thread threadWaitClient = new Thread(new WaitClient());
+            threadWaitClient.start();
 		} 
 		catch (Exception e){e.printStackTrace();}        
     }
-    public void waitClient() throws ConnectException, IOException
+
+    class WaitClient implements Runnable
     {
-        while (isWating)
+        public void run ()
         {
-            Socket s =  ss.accept();
-            Thread thread = new Thread (new ClientHandler(s));
-            thread.start();
+            try
+            {
+                while (isWating)
+                {
+                    Socket s =  ss.accept();
+                    Thread thread = new Thread (new ClientHandler(s));
+                    thread.start();
+                }    
+            }
+            catch (IOException e){e.printStackTrace();}
         }
     }
     class ClientHandler implements Runnable
