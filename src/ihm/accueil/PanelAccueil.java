@@ -34,6 +34,7 @@ import ihm.customComponent.TextFieldWithHint;
 public class PanelAccueil extends JPanel implements ActionListener
 {
     private Controleur        ctrl;
+    private File              mappe;
 
     /* Panels */
     private JPanel            panelCreerPartie    ;
@@ -385,7 +386,13 @@ public class PanelAccueil extends JPanel implements ActionListener
 					String extention = fichier.getName().substring(fichier.getName().lastIndexOf('.') + 1);
 
 					if (extention.equals("xml"))
-						this.ctrl.ouvrir(fichier);
+                    {
+						this.mappe = fichier;
+                        this.btnImportMappe.setText(fichier.getName());
+
+                        if (this.btnImportMappe.getBackground() == Color.RED)
+                            this.btnImportMappe.setBackground(this.ctrl.getTheme().get("buttons").get(1));
+                    }
 					else
 						JOptionPane.showMessageDialog(this, "Le fichier choisi doit-être au format XML", "Erreur", JOptionPane.ERROR_MESSAGE);
 				}
@@ -398,7 +405,10 @@ public class PanelAccueil extends JPanel implements ActionListener
 
             if (e.getSource() == this.btnCreerSolo)
             {
-                //this.ctrl.creerPartieSolo();
+                if (this.mappe != null)
+                    this.ctrl.ouvrir(this.mappe);
+                else
+                    this.btnImportMappe.setBackground(Color.RED);
             }
             
             if (e.getSource() == this.btnRejoindre)
