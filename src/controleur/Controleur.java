@@ -7,13 +7,11 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.awt.Font;
 import java.io.File;
-import java.io.Serializable;
 
+import ihm.FrameTest;
 import ihm.Ihm;
 import metier.*;
 import metier.partie.CarteWagon;
-import metier.reseau.Client;
-import metier.reseau.Server;
 
 
 public class Controleur
@@ -26,6 +24,18 @@ public class Controleur
         this.metier = new Metier(this);
         this.ihm    = new Ihm(this);
     }
+
+
+	/**
+	 * Ceci est un controleur de test, pour pouvoir tester une frame ou un panel en particulier.
+	 * @param test : permet de différencier le controleur de test de celui de l'application.
+	 */
+	public Controleur(int test)
+	{
+		this.metier = new Metier(this);
+		this.ihm	= new Ihm(this, 1);
+	}
+
 
 	/**
 	 * Permet de lire le fichier xml contenant toutes les informations du plateau.
@@ -97,6 +107,13 @@ public class Controleur
      */
     public HashMap<String, List<Color>> getTheme() { return this.metier.getTheme(); }
 
+	/**
+	 * Permet de récupérer le nom du thème utilisé
+	 * @return Nom du thème utilisé
+	 */
+	public String getThemeUsed() { return this.metier.getThemeUsed(); }
+
+
     /**
      * Change le thème à utilisé dans le fichier de sauvegarde.
      * Charge en mémoire le nouveau thème.
@@ -117,17 +134,23 @@ public class Controleur
 		this.metier = clientCtrl.getMetier();
 		this.ihm.demarrerJeu();
 	}
-    public static void main(String[] args)
-    {
-        new Controleur();
-    }
-
+	
     public Joueur getJoueurSelect() {
-        return null;
+		return null;
     }
-
+	
     public void creerPartie() 
 	{
 		this.hostGame();
     }
+
+
+
+
+
+
+	public static void main(String[] args)
+	{
+		new Controleur(1);
+	}
 }

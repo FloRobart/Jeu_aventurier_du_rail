@@ -1,13 +1,15 @@
 package ihm;
 
 import java.awt.image.BufferedImage;
-import java.io.Serializable;
 
 import controleur.Controleur;
 import ihm.accueil.FrameAccueil;
 import ihm.attente.FrameAttente;
 import ihm.jeu.FrameJeu;
 
+/**
+ * Classe qui gère l'ensemble des fenêtres de l'application.
+ */
 public class Ihm
 {
     private Controleur ctrl;
@@ -15,6 +17,9 @@ public class Ihm
     private FrameJeu     frameJeu;
     private FrameAccueil frameAccueil;
     private FrameAttente frameAttente;
+
+    // Test
+    private FrameTest frameTest;
 
     public Ihm(Controleur ctrl)
     {
@@ -26,6 +31,21 @@ public class Ihm
 
         this.appliquerTheme();
     }
+
+
+    /**
+	 * Ceci est un controleur de test, pour pouvoir tester une frame ou un panel en particulier.
+     * @param ctrl : controleur de l'application qui permet de faire le lien avec le metier
+	 * @param test : permet de différencier le controleur de test de celui de l'application.
+	 */
+    public Ihm(Controleur ctrl, int test)
+    {
+        this.ctrl = ctrl;
+        this.frameTest = new FrameTest(ctrl);
+
+        this.appliquerTheme();
+    }
+
 
     /**
      * Permet de démarrer le jeu et de fermer la fenêtre d'accueil.
@@ -51,15 +71,12 @@ public class Ihm
         this.appliquerTheme();
     }
 
-    public void setImageButton(int indice) { if ( this.frameJeu != null ) this.frameJeu.setImageButton(indice); }						
-
+    public void setImageButton(int indice) { if ( this.frameJeu != null ) this.frameJeu.setImageButton(indice); }
 
     public int getWidthFrameAccueil() { return this.frameAccueil.getWidth(); }
 
-	public BufferedImage getImage()
-	{
-		return this.frameJeu.getImage();
-	}
+	public BufferedImage getImage() { return this.frameJeu.getImage(); }
+
 
     /**
      * Permet d'appliquer le thème à chaque élément de l'ihm qui en à besoins
@@ -69,5 +86,7 @@ public class Ihm
         if (this.frameJeu     != null) { this.frameJeu    .appliquerTheme(); }
         if (this.frameAccueil != null) { this.frameAccueil.appliquerTheme(); }
         if (this.frameAttente != null) { this.frameAttente.appliquerTheme(); }
+
+        if (this.frameTest    != null) { this.frameTest   .appliquerTheme(); }
     }
 }

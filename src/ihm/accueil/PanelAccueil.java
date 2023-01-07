@@ -22,7 +22,6 @@ import javax.swing.border.BevelBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controleur.Controleur;
-import ihm.attente.FrameAttente;
 import ihm.customComponent.TextFieldAdresseIP;
 import ihm.customComponent.TextFieldMdp;
 import ihm.customComponent.TextFieldPseudo;

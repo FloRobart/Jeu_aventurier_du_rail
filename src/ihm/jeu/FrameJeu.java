@@ -57,20 +57,21 @@ public class FrameJeu extends JFrame
 
     public void setImageButton(int indice) { this.panelPioche.setImageButton(indice); }	
 
-	public BufferedImage getImage()
-	{
-		return this.panelPlateau.getImage();
-	}
+	public BufferedImage getImage() { return this.panelPlateau.getImage(); }
 
+
+    /**
+     * Permet d'appliquer le thème à l'ensemble de l'IHM (tout les panels existant)
+     */
     public void appliquerTheme()
     {
+        this.panelGauche    .setForeground(this.ctrl.getTheme().get("labels"    ).get(0));
+        this.panelGauche    .setBackground(this.ctrl.getTheme().get("background").get(0));
+
         this.panelJoueurs   .appliquerTheme();
         this.panelMainJoueur.appliquerTheme();
         this.panelPioche    .appliquerTheme();
         this.panelPlateau   .appliquerTheme();
         this.panelObjectif  .appliquerTheme();
-
-        this.panelGauche    .setForeground(this.ctrl.getTheme().get("labels"    ).get(0));
-        this.panelGauche    .setBackground(this.ctrl.getTheme().get("background").get(0));
     }
 }

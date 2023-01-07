@@ -389,7 +389,7 @@ public class PanelAttente extends JPanel implements ActionListener
      */
     public void appliquerTheme()
     {
-        Color background = this.theme.get("background"  ).get(0);
+        Color background       = this.theme.get("background"  ).get(0);
         Color disableColor     = this.theme.get("disableColor").get(0);
         Color titleForeColor   = this.theme.get("titles"      ).get(0);
         Color titleBackColor   = this.theme.get("titles"      ).get(1);

@@ -46,4 +46,7 @@
 ./src/metier/partie/GestionPioche.java
 ./src/metier/partie/Partie.java
 
+
+./src/ihm/FrameTest.java
+
 -d bin
