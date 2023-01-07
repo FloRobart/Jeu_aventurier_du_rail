@@ -134,7 +134,12 @@ public class Metier implements Serializable
 	public String              getMotDePasse		  () { return this.motDePassePartie;     }
 	public Server 			   getServer              () { return this.server;               }
 
-	/*Lecture du fichier XML afin de récupérer les infos du plateau */
+
+	/**
+	 * Lecture du fichier XML afin de récupérer les infos du plateau
+	 * @param fichier : fichier xml à lire
+	 * @return true si le fichier a été lu, sinon false
+	 */
     public boolean lireFichier(File fichier)
 	{
 		// read file into a reader
@@ -145,6 +150,7 @@ public class Metier implements Serializable
 				return false;
 		} catch (FileNotFoundException e) { return false; }
 	}
+
 
     public boolean chargerXML(Reader cs)
 	{

@@ -186,4 +186,13 @@ public class PanelPlateau extends JPanel implements ActionListener, MouseWheelLi
 	public void mouseMoved  (MouseEvent e) {}
     public void mouseEntered(MouseEvent e) {}
     public void mouseExited (MouseEvent e) {}
+
+
+	/**
+     * Applique les couleurs du thème sélectionné à tout les éléments du panel et au panel lui même
+     */
+    public void appliquerTheme()
+    {
+        // TODO A compléter
+    }
 }

@@ -117,4 +117,13 @@ public class PanelPioche extends JPanel implements ActionListener
             System.out.println(5);
         }
     }
+
+
+    /**
+     * Applique les couleurs du thème sélectionné à tout les éléments du panel et au panel lui même
+     */
+    public void appliquerTheme()
+    {
+        // TODO A compléter
+    }
 }

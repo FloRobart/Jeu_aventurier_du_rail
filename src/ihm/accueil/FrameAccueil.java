@@ -15,6 +15,7 @@ public class FrameAccueil extends JFrame
 	private MenuBarre    menuBarre;
     private PanelAccueil panelAccueil;
 
+
     public FrameAccueil(Controleur ctrl)
     {
         this.ctrl = ctrl;
@@ -23,7 +24,6 @@ public class FrameAccueil extends JFrame
         this.setTitle("Frame Jeu");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
-
 
 		this.menuBarre    = new MenuBarre   (this.ctrl);
         this.panelAccueil = new PanelAccueil(ctrl);

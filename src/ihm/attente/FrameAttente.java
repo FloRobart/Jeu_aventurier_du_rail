@@ -5,12 +5,16 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import controleur.Controleur;
+import ihm.accueil.MenuBarre;
+
 
 public class FrameAttente extends JFrame
 {
 	private Controleur ctrl;
 
+	private MenuBarre    menuBarre;
 	private PanelAttente panelAttente;
+
 
 	public FrameAttente(Controleur ctrl)
 	{
@@ -19,8 +23,12 @@ public class FrameAttente extends JFrame
 		Dimension dimEcran = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setTitle("Attente");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setResizable(false);
 
+		this.menuBarre    = new MenuBarre   (this.ctrl);
 		this.panelAttente = new PanelAttente(this.ctrl);
+
+		this.setJMenuBar(this.menuBarre);
 		this.add(this.panelAttente);
 
 		this.pack();
@@ -28,8 +36,10 @@ public class FrameAttente extends JFrame
 		this.setVisible(true);
 	}
 
+
 	public void appliquerTheme()
 	{
+		this.menuBarre   .appliquerTheme();
 		this.panelAttente.appliquerTheme();
 	}
 }

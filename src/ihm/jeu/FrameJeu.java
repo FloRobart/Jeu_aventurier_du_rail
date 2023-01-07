@@ -19,7 +19,8 @@ public class FrameJeu extends JFrame
     private PanelMainJoueur panelMainJoueur;
     private PanelPioche     panelPioche;
     private PanelPlateau    panelPlateau;
-    private PanelObjectif panelObjectif;
+    private PanelObjectif   panelObjectif;
+    private JPanel          panelGauche;
 
     public FrameJeu(Controleur ctrl)
     {
@@ -38,19 +39,19 @@ public class FrameJeu extends JFrame
         this.panelPioche     = new PanelPioche    (this.ctrl);
         this.panelPlateau    = new PanelPlateau   (this.ctrl);
         this.panelObjectif   = new PanelObjectif  (this.ctrl);
-        JPanel panelGauche   = new JPanel();
-        panelGauche.setLayout(new GridLayout(2,1));
+        this.panelGauche     = new JPanel();
+        this.panelGauche.setLayout(new GridLayout(2,1));
 
         /* Ajout des composants */
-		this.add(panelGauche , BorderLayout.WEST);
+		this.add(this.panelGauche    , BorderLayout.WEST);
 		this.add(this.panelMainJoueur, BorderLayout.SOUTH);
 		this.add(this.panelPioche    , BorderLayout.EAST);
 		this.add(this.panelPlateau   , BorderLayout.CENTER);
-        panelGauche.add(this.panelJoueurs);
-        panelGauche.add(this.panelObjectif);
+        this.panelGauche.add(this.panelJoueurs);
+        this.panelGauche.add(this.panelObjectif);
+
 
         this.setVisible(true);
-		
 		this.panelPlateau.centrer(this.panelPlateau.getWidth(), this.panelPlateau.getHeight());
     }
 
@@ -63,9 +64,13 @@ public class FrameJeu extends JFrame
 
     public void appliquerTheme()
     {
-        //this.panelJoueurs   .appliquerTheme();
-        //this.panelMainJoueur.appliquerTheme();
-        //this.panelPioche    .appliquerTheme();
-        //this.panelPlateau   .appliquerTheme();
+        this.panelJoueurs   .appliquerTheme();
+        this.panelMainJoueur.appliquerTheme();
+        this.panelPioche    .appliquerTheme();
+        this.panelPlateau   .appliquerTheme();
+        this.panelObjectif  .appliquerTheme();
+
+        this.panelGauche    .setForeground(this.ctrl.getTheme().get("labels"    ).get(0));
+        this.panelGauche    .setBackground(this.ctrl.getTheme().get("background").get(0));
     }
 }

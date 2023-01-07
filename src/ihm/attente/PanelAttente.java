@@ -11,11 +11,21 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.swing.AbstractListModel;
+import javax.swing.BorderFactory;
+import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.LayoutStyle;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.BevelBorder;
 
 import controleur.Controleur;
 
@@ -23,312 +33,348 @@ import controleur.Controleur;
 public class PanelAttente extends JPanel implements ActionListener
 {
     private Controleur ctrl;
+    private HashMap<String, List<Color>> theme;
 
+    /* Panel */
+    private JPanel panelInfo;
+
+    /* Boutons */
+    private JButton btnChangeMappe;
+    private JButton btnLancer;
+    
+    /* Labels */
+    private JLabel lblCarteCoul;
+    private JLabel lblCarteCoulRes;
+    private JLabel lblCarteLoco;
+    private JLabel lblCarteLocoRes;
+    private JLabel lblCoulDispo;
+    private JLabel lblCoulDispoRes;
+    private JLabel lblJetonFin;
+    private JLabel lblJetonFinRes;
+    private JLabel lblJetonJoueur;
+    private JLabel lblJetonJoueurRes;
+    private JLabel lblJoueurMax;
+    private JLabel lblJoueurMaxRes;
+    private JLabel lblJoueurMin;
+    private JLabel lblJoueurMinRes;
+    private JLabel lblLstParticipants;
+    private JLabel lblNombreDe;
+    private JLabel lblPreviewMappe;
+    private JLabel lblStatut;
+    private JLabel lblTitre;
+
+    /* Listes */
+    private JScrollPane   jspLstParticipants;
+    private JList<String> lstParticipants;
+    
 
     public PanelAttente(Controleur ctrl)
     {
-        lblTitre = new javax.swing.JLabel();
-        btnChangeMappe = new javax.swing.JButton();
-        lblPreviewMappe = new javax.swing.JLabel();
-        panelInfo = new javax.swing.JPanel();
-        lblNombreDe = new javax.swing.JLabel();
-        lblJoueurMin = new javax.swing.JLabel();
-        lblJoueurMax = new javax.swing.JLabel();
-        lblCarteCoul = new javax.swing.JLabel();
-        lblCarteLoco = new javax.swing.JLabel();
-        lblJetonJoueur = new javax.swing.JLabel();
-        lblJetonFin = new javax.swing.JLabel();
-        lblCoulDispo = new javax.swing.JLabel();
-        lblJoueurMinRes = new javax.swing.JLabel();
-        lblJoueurMaxRes = new javax.swing.JLabel();
-        lblCarteCoulRes = new javax.swing.JLabel();
-        lblCarteLocoRes = new javax.swing.JLabel();
-        lblJetonJoueurRes = new javax.swing.JLabel();
-        lblJetonFinRes = new javax.swing.JLabel();
-        lblCoulDispoRes = new javax.swing.JLabel();
-        lblLstParticipants = new javax.swing.JLabel();
-        jspLstParticipants = new javax.swing.JScrollPane();
-        lstParticipants = new javax.swing.JList<>();
-        lblStatut = new javax.swing.JLabel();
-        btnLancer = new javax.swing.JButton();
+        this.ctrl  = ctrl;
+        this.theme = this.ctrl.getTheme();
 
-        lblTitre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitre.setText("lblTitre");
-        lblTitre.setMaximumSize(new java.awt.Dimension(43, 80));
-        lblTitre.setMinimumSize(new java.awt.Dimension(43, 80));
-        lblTitre.setPreferredSize(new java.awt.Dimension(43, 80));
+        /* Panel */
+        this.panelInfo          = new JPanel();
 
-        btnChangeMappe.setText("btnChangerMappe");
-        btnChangeMappe.setMaximumSize(new java.awt.Dimension(150, 30));
-        btnChangeMappe.setMinimumSize(new java.awt.Dimension(150, 30));
-        btnChangeMappe.setPreferredSize(new java.awt.Dimension(150, 30));
+        /* Boutons */
+        this.btnChangeMappe     = new JButton();
+        this.btnLancer          = new JButton();
+        
+        /* Labels */
+        this.lblCarteCoul       = new JLabel();
+        this.lblCarteCoulRes    = new JLabel();
+        this.lblCarteLoco       = new JLabel();
+        this.lblCarteLocoRes    = new JLabel();
+        this.lblCoulDispo       = new JLabel();
+        this.lblCoulDispoRes    = new JLabel();
+        this.lblJetonFin        = new JLabel();
+        this.lblJetonFinRes     = new JLabel();
+        this.lblJetonJoueur     = new JLabel();
+        this.lblJetonJoueurRes  = new JLabel();
+        this.lblJoueurMax       = new JLabel();
+        this.lblJoueurMaxRes    = new JLabel();
+        this.lblJoueurMin       = new JLabel();
+        this.lblJoueurMinRes    = new JLabel();
+        this.lblLstParticipants = new JLabel();
+        this.lblNombreDe        = new JLabel();
+        this.lblPreviewMappe    = new JLabel();
+        this.lblStatut          = new JLabel();
+        this.lblTitre           = new JLabel();
 
-        lblPreviewMappe.setBackground(new java.awt.Color(0, 0, 0));
-        lblPreviewMappe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblPreviewMappe.setText("lblPreviewMappe");
-        lblPreviewMappe.setMaximumSize(new java.awt.Dimension(400, 250));
-        lblPreviewMappe.setMinimumSize(new java.awt.Dimension(400, 250));
-        lblPreviewMappe.setOpaque(true);
-        lblPreviewMappe.setPreferredSize(new java.awt.Dimension(400, 250));
+        /* Listes */
+        this.jspLstParticipants = new JScrollPane  ();
+        this.lstParticipants    = new JList<String>();
+        
 
-        panelInfo.setBackground(new java.awt.Color(0, 0, 0));
-        panelInfo.setMaximumSize(new java.awt.Dimension(250, 200));
-        panelInfo.setMinimumSize(new java.awt.Dimension(250, 200));
-        panelInfo.setPreferredSize(new java.awt.Dimension(250, 200));
 
-        lblNombreDe.setText("Nombre de :");
+        this.lblTitre.setText("this.lblTitre");
+        this.lblTitre.setHorizontalAlignment(JLabel.CENTER);
+        this.lblTitre.setMaximumSize  (new Dimension(43, 80));
+        this.lblTitre.setMinimumSize  (new Dimension(43, 80));
+        this.lblTitre.setPreferredSize(new Dimension(43, 80));
 
-        lblJoueurMin.setText("● Joueurs minimum");
-        lblJoueurMin.setMaximumSize(new java.awt.Dimension(150, 18));
-        lblJoueurMin.setMinimumSize(new java.awt.Dimension(150, 18));
-        lblJoueurMin.setPreferredSize(new java.awt.Dimension(150, 18));
 
-        lblJoueurMax.setText("● Joueurs Maximum");
-        lblJoueurMax.setMaximumSize(new java.awt.Dimension(150, 18));
-        lblJoueurMax.setMinimumSize(new java.awt.Dimension(150, 18));
-        lblJoueurMax.setPreferredSize(new java.awt.Dimension(150, 18));
+        this.btnChangeMappe.setText("btnChangerMappe");
+        this.btnChangeMappe.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        this.btnChangeMappe.setMaximumSize  (new Dimension(150, 30));
+        this.btnChangeMappe.setMinimumSize  (new Dimension(150, 30));
+        this.btnChangeMappe.setPreferredSize(new Dimension(150, 30));
 
-        lblCarteCoul.setText("● Cartes couleur");
-        lblCarteCoul.setMaximumSize(new java.awt.Dimension(150, 18));
-        lblCarteCoul.setMinimumSize(new java.awt.Dimension(150, 18));
-        lblCarteCoul.setPreferredSize(new java.awt.Dimension(150, 18));
 
-        lblCarteLoco.setText("● Cartes locomotives");
-        lblCarteLoco.setMaximumSize(new java.awt.Dimension(150, 18));
-        lblCarteLoco.setMinimumSize(new java.awt.Dimension(150, 18));
-        lblCarteLoco.setPreferredSize(new java.awt.Dimension(150, 18));
+        this.lblPreviewMappe.setOpaque(true);
+        this.lblPreviewMappe.setText("this.lblPreviewMappe");
+        this.lblPreviewMappe.setHorizontalAlignment(JLabel.CENTER);
+        this.lblPreviewMappe.setMaximumSize  (new Dimension(400, 250));
+        this.lblPreviewMappe.setMinimumSize  (new Dimension(400, 250));
+        this.lblPreviewMappe.setPreferredSize(new Dimension(400, 250));
 
-        lblJetonJoueur.setText("● Jetons par joueur");
-        lblJetonJoueur.setMaximumSize(new java.awt.Dimension(150, 18));
-        lblJetonJoueur.setMinimumSize(new java.awt.Dimension(150, 18));
-        lblJetonJoueur.setPreferredSize(new java.awt.Dimension(150, 18));
 
-        lblJetonFin.setText("● Jetons pour finir");
-        lblJetonFin.setMaximumSize(new java.awt.Dimension(150, 18));
-        lblJetonFin.setMinimumSize(new java.awt.Dimension(150, 18));
-        lblJetonFin.setPreferredSize(new java.awt.Dimension(150, 18));
+        this.panelInfo.setMaximumSize  (new Dimension(250, 200));
+        this.panelInfo.setMinimumSize  (new Dimension(250, 200));
+        this.panelInfo.setPreferredSize(new Dimension(250, 200));
 
-        lblCoulDispo.setText("● Couleurs disponibles");
-        lblCoulDispo.setMaximumSize(new java.awt.Dimension(150, 18));
-        lblCoulDispo.setMinimumSize(new java.awt.Dimension(150, 18));
-        lblCoulDispo.setPreferredSize(new java.awt.Dimension(150, 18));
+        this.lblNombreDe.setText("Nombre de :");
 
-        lblJoueurMinRes.setText(": 2");
-        lblJoueurMinRes.setMaximumSize(new java.awt.Dimension(40, 18));
-        lblJoueurMinRes.setMinimumSize(new java.awt.Dimension(40, 18));
-        lblJoueurMinRes.setPreferredSize(new java.awt.Dimension(40, 18));
+        this.lblJoueurMin.setText("● Joueurs minimum");
+        this.lblJoueurMin.setMaximumSize  (new Dimension(150, 18));
+        this.lblJoueurMin.setMinimumSize  (new Dimension(150, 18));
+        this.lblJoueurMin.setPreferredSize(new Dimension(150, 18));
 
-        lblJoueurMaxRes.setText(": 4");
-        lblJoueurMaxRes.setMaximumSize(new java.awt.Dimension(40, 18));
-        lblJoueurMaxRes.setMinimumSize(new java.awt.Dimension(40, 18));
-        lblJoueurMaxRes.setPreferredSize(new java.awt.Dimension(40, 18));
+        this.lblJoueurMax.setText("● Joueurs Maximum");
+        this.lblJoueurMax.setMaximumSize  (new Dimension(150, 18));
+        this.lblJoueurMax.setMinimumSize  (new Dimension(150, 18));
+        this.lblJoueurMax.setPreferredSize(new Dimension(150, 18));
 
-        lblCarteCoulRes.setText(": 30");
-        lblCarteCoulRes.setMaximumSize(new java.awt.Dimension(40, 18));
-        lblCarteCoulRes.setMinimumSize(new java.awt.Dimension(40, 18));
-        lblCarteCoulRes.setPreferredSize(new java.awt.Dimension(40, 18));
+        this.lblCarteCoul.setText("● Cartes couleur");
+        this.lblCarteCoul.setMaximumSize  (new Dimension(150, 18));
+        this.lblCarteCoul.setMinimumSize  (new Dimension(150, 18));
+        this.lblCarteCoul.setPreferredSize(new Dimension(150, 18));
 
-        lblCarteLocoRes.setText(": 35");
-        lblCarteLocoRes.setMaximumSize(new java.awt.Dimension(40, 18));
-        lblCarteLocoRes.setMinimumSize(new java.awt.Dimension(40, 18));
-        lblCarteLocoRes.setPreferredSize(new java.awt.Dimension(40, 18));
+        this.lblCarteLoco.setText("● Cartes locomotives");
+        this.lblCarteLoco.setMaximumSize  (new Dimension(150, 18));
+        this.lblCarteLoco.setMinimumSize  (new Dimension(150, 18));
+        this.lblCarteLoco.setPreferredSize(new Dimension(150, 18));
 
-        lblJetonJoueurRes.setText(": 50");
-        lblJetonJoueurRes.setMaximumSize(new java.awt.Dimension(40, 18));
-        lblJetonJoueurRes.setMinimumSize(new java.awt.Dimension(40, 18));
-        lblJetonJoueurRes.setPreferredSize(new java.awt.Dimension(40, 18));
+        this.lblJetonJoueur.setText("● Jetons par joueur");
+        this.lblJetonJoueur.setMaximumSize  (new Dimension(150, 18));
+        this.lblJetonJoueur.setMinimumSize  (new Dimension(150, 18));
+        this.lblJetonJoueur.setPreferredSize(new Dimension(150, 18));
 
-        lblJetonFinRes.setText(": 2");
-        lblJetonFinRes.setMaximumSize(new java.awt.Dimension(40, 18));
-        lblJetonFinRes.setMinimumSize(new java.awt.Dimension(40, 18));
-        lblJetonFinRes.setPreferredSize(new java.awt.Dimension(40, 18));
+        this.lblJetonFin.setText("● Jetons pour finir");
+        this.lblJetonFin.setMaximumSize  (new Dimension(150, 18));
+        this.lblJetonFin.setMinimumSize  (new Dimension(150, 18));
+        this.lblJetonFin.setPreferredSize(new Dimension(150, 18));
 
-        lblCoulDispoRes.setText(": 4");
-        lblCoulDispoRes.setMaximumSize(new java.awt.Dimension(40, 18));
-        lblCoulDispoRes.setMinimumSize(new java.awt.Dimension(40, 18));
-        lblCoulDispoRes.setPreferredSize(new java.awt.Dimension(40, 18));
+        this.lblCoulDispo.setText("● Couleurs disponibles");
+        this.lblCoulDispo.setMaximumSize  (new Dimension(150, 18));
+        this.lblCoulDispo.setMinimumSize  (new Dimension(150, 18));
+        this.lblCoulDispo.setPreferredSize(new Dimension(150, 18));
 
-        javax.swing.GroupLayout panelInfoLayout = new javax.swing.GroupLayout(panelInfo);
-        panelInfo.setLayout(panelInfoLayout);
+        this.lblJoueurMinRes.setText(": 2");
+        this.lblJoueurMinRes.setMaximumSize  (new Dimension(40, 18));
+        this.lblJoueurMinRes.setMinimumSize  (new Dimension(40, 18));
+        this.lblJoueurMinRes.setPreferredSize(new Dimension(40, 18));
+
+        this.lblJoueurMaxRes.setText(": 4");
+        this.lblJoueurMaxRes.setMaximumSize  (new Dimension(40, 18));
+        this.lblJoueurMaxRes.setMinimumSize  (new Dimension(40, 18));
+        this.lblJoueurMaxRes.setPreferredSize(new Dimension(40, 18));
+
+        this.lblCarteCoulRes.setText(": 30");
+        this.lblCarteCoulRes.setMaximumSize  (new Dimension(40, 18));
+        this.lblCarteCoulRes.setMinimumSize  (new Dimension(40, 18));
+        this.lblCarteCoulRes.setPreferredSize(new Dimension(40, 18));
+
+        this.lblCarteLocoRes.setText(": 35");
+        this.lblCarteLocoRes.setMaximumSize  (new Dimension(40, 18));
+        this.lblCarteLocoRes.setMinimumSize  (new Dimension(40, 18));
+        this.lblCarteLocoRes.setPreferredSize(new Dimension(40, 18));
+
+        this.lblJetonJoueurRes.setText(": 50");
+        this.lblJetonJoueurRes.setMaximumSize  (new Dimension(40, 18));
+        this.lblJetonJoueurRes.setMinimumSize  (new Dimension(40, 18));
+        this.lblJetonJoueurRes.setPreferredSize(new Dimension(40, 18));
+
+        this.lblJetonFinRes.setText(": 2");
+        this.lblJetonFinRes.setMaximumSize  (new Dimension(40, 18));
+        this.lblJetonFinRes.setMinimumSize  (new Dimension(40, 18));
+        this.lblJetonFinRes.setPreferredSize(new Dimension(40, 18));
+
+        this.lblCoulDispoRes.setText(": 4");
+        this.lblCoulDispoRes.setMaximumSize  (new Dimension(40, 18));
+        this.lblCoulDispoRes.setMinimumSize  (new Dimension(40, 18));
+        this.lblCoulDispoRes.setPreferredSize(new Dimension(40, 18));
+
+
+        /* Horizontale */
+        GroupLayout panelInfoLayout = new GroupLayout(this.panelInfo);
+        this.panelInfo.setLayout(panelInfoLayout);
         panelInfoLayout.setHorizontalGroup(
-            panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            panelInfoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(panelInfoLayout.createSequentialGroup()
-                .addGroup(panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelInfoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(panelInfoLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(lblNombreDe))
+                        .addComponent(this.lblNombreDe))
                     .addGroup(panelInfoLayout.createSequentialGroup()
                         .addGap(20, 20, 20)
-                        .addGroup(panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelInfoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(panelInfoLayout.createSequentialGroup()
-                                .addComponent(lblJoueurMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(this.lblJoueurMax, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(lblJoueurMaxRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(this.lblJoueurMaxRes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                             .addGroup(panelInfoLayout.createSequentialGroup()
-                                .addComponent(lblCarteLoco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(this.lblCarteLoco, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(lblCarteLocoRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(this.lblCarteLocoRes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                             .addGroup(panelInfoLayout.createSequentialGroup()
-                                .addComponent(lblJetonJoueur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(this.lblJetonJoueur, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(lblJetonJoueurRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(this.lblJetonJoueurRes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                             .addGroup(panelInfoLayout.createSequentialGroup()
-                                .addComponent(lblJetonFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(this.lblJetonFin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(lblJetonFinRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(this.lblJetonFinRes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                             .addGroup(panelInfoLayout.createSequentialGroup()
-                                .addComponent(lblCoulDispo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(this.lblCoulDispo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(lblCoulDispoRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(this.lblCoulDispoRes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                             .addGroup(panelInfoLayout.createSequentialGroup()
-                                .addComponent(lblJoueurMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(this.lblJoueurMin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(lblJoueurMinRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(this.lblJoueurMinRes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                             .addGroup(panelInfoLayout.createSequentialGroup()
-                                .addComponent(lblCarteCoul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(this.lblCarteCoul, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(lblCarteCoulRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(this.lblCarteCoulRes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))))
                 .addGap(0, 0, 0))
         );
+
+        /* Verticale */
         panelInfoLayout.setVerticalGroup(
-            panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            panelInfoLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(panelInfoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblNombreDe)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblJoueurMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblJoueurMinRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblJoueurMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblJoueurMaxRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCarteCoul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCarteCoulRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCarteLoco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCarteLocoRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblJetonJoueur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblJetonJoueurRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblJetonFin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblJetonFinRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCoulDispo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCoulDispoRes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(this.lblNombreDe)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelInfoLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(this.lblJoueurMin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(this.lblJoueurMinRes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelInfoLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(this.lblJoueurMax, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(this.lblJoueurMaxRes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelInfoLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(this.lblCarteCoul, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(this.lblCarteCoulRes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelInfoLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(this.lblCarteLoco, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(this.lblCarteLocoRes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelInfoLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(this.lblJetonJoueur, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(this.lblJetonJoueurRes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelInfoLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(this.lblJetonFin, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(this.lblJetonFinRes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelInfoLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(this.lblCoulDispo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(this.lblCoulDispoRes, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        lblLstParticipants.setFont(new java.awt.Font("Liberation Sans", 0, 24)); // NOI18N
-        lblLstParticipants.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblLstParticipants.setText("lblLstParticipants");
 
-        jspLstParticipants.setMaximumSize(new java.awt.Dimension(200, 250));
-        jspLstParticipants.setMinimumSize(new java.awt.Dimension(200, 250));
-        jspLstParticipants.setPreferredSize(new java.awt.Dimension(200, 250));
 
-        lstParticipants.setModel(new javax.swing.AbstractListModel<String>() {
+        this.lblLstParticipants.setText("this.lblLstParticipants");
+        this.lblLstParticipants.setHorizontalAlignment(JLabel.CENTER);
+        this.lblLstParticipants.setFont(new Font("Liberation Sans", 0, 24));
+
+
+        this.jspLstParticipants.setMaximumSize  (new Dimension(200, 250));
+        this.jspLstParticipants.setMinimumSize  (new Dimension(200, 250));
+        this.jspLstParticipants.setPreferredSize(new Dimension(200, 250));
+
+        this.lstParticipants.setModel(new AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7", "Item 8" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        lstParticipants.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        lstParticipants.setMaximumSize(new java.awt.Dimension(200, 250));
-        lstParticipants.setMinimumSize(new java.awt.Dimension(200, 250));
-        lstParticipants.setPreferredSize(new java.awt.Dimension(200, 250));
-        lstParticipants.setVisibleRowCount(6);
-        jspLstParticipants.setViewportView(lstParticipants);
+        this.jspLstParticipants.setViewportView(this.lstParticipants);
 
-        lblStatut.setFont(new java.awt.Font("Liberation Sans", 0, 36)); // NOI18N
-        lblStatut.setText("Statut : en attente de joueur");
+        this.lstParticipants.setVisibleRowCount(6);
+        this.lstParticipants.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        this.lstParticipants.setMaximumSize  (new Dimension(200, 250));
+        this.lstParticipants.setMinimumSize  (new Dimension(200, 250));
+        this.lstParticipants.setPreferredSize(new Dimension(200, 250));
 
-        btnLancer.setText("btnLancer");
-        btnLancer.setMaximumSize(new java.awt.Dimension(150, 40));
-        btnLancer.setMinimumSize(new java.awt.Dimension(150, 40));
-        btnLancer.setPreferredSize(new java.awt.Dimension(150, 40));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.lblStatut.setText("Statut : en attente de joueur");
+        this.lblStatut.setFont(new Font("Liberation Sans", 0, 36));
+
+
+        this.btnLancer.setText("this.btnLancer");
+        this.btnLancer.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        this.btnLancer.setMaximumSize  (new Dimension(150, 40));
+        this.btnLancer.setMinimumSize  (new Dimension(150, 40));
+        this.btnLancer.setPreferredSize(new Dimension(150, 40));
+
+
+
+        /* Horizontale */
+        GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblTitre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(this.lblTitre, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(22, 22, 22)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnChangeMappe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                            .addComponent(this.btnChangeMappe, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblPreviewMappe, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(this.lblPreviewMappe, GroupLayout.PREFERRED_SIZE, 400, GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(panelInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(this.panelInfo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
                         .addGap(64, 64, 64)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblLstParticipants, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jspLstParticipants, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                            .addComponent(this.lblLstParticipants, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(this.jspLstParticipants, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(300, 300, 300)
-                        .addComponent(btnLancer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(this.btnLancer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(200, 200, 200)
-                        .addComponent(lblStatut)))
+                        .addComponent(this.lblStatut)))
                 .addGap(40, 40, 40))
         );
+
+        /* Verticale */
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(lblTitre, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(this.lblTitre, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnChangeMappe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblLstParticipants))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(this.btnChangeMappe, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(this.lblLstParticipants))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(panelInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                    .addComponent(lblPreviewMappe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jspLstParticipants, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                    .addComponent(this.panelInfo, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(this.lblPreviewMappe, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(this.jspLstParticipants, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(35, 35, 35)
-                .addComponent(lblStatut)
+                .addComponent(this.lblStatut)
                 .addGap(18, 18, 18)
-                .addComponent(btnLancer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(this.btnLancer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40))
         );
     }
 
-
-    // Variables declaration - do not modify
-    private javax.swing.JButton btnChangeMappe;
-    private javax.swing.JButton btnLancer;
-    private javax.swing.JScrollPane jspLstParticipants;
-    private javax.swing.JLabel lblCarteCoul;
-    private javax.swing.JLabel lblCarteCoulRes;
-    private javax.swing.JLabel lblCarteLoco;
-    private javax.swing.JLabel lblCarteLocoRes;
-    private javax.swing.JLabel lblCoulDispo;
-    private javax.swing.JLabel lblCoulDispoRes;
-    private javax.swing.JLabel lblJetonFin;
-    private javax.swing.JLabel lblJetonFinRes;
-    private javax.swing.JLabel lblJetonJoueur;
-    private javax.swing.JLabel lblJetonJoueurRes;
-    private javax.swing.JLabel lblJoueurMax;
-    private javax.swing.JLabel lblJoueurMaxRes;
-    private javax.swing.JLabel lblJoueurMin;
-    private javax.swing.JLabel lblJoueurMinRes;
-    private javax.swing.JLabel lblLstParticipants;
-    private javax.swing.JLabel lblNombreDe;
-    private javax.swing.JLabel lblPreviewMappe;
-    private javax.swing.JLabel lblStatut;
-    private javax.swing.JLabel lblTitre;
-    private javax.swing.JList<String> lstParticipants;
-    private javax.swing.JPanel panelInfo;
-    // End of variables declaration
 
 
     @Override
@@ -337,8 +383,86 @@ public class PanelAttente extends JPanel implements ActionListener
         
     }
 
+
+    /**
+     * Applique les couleurs du thème sélectionné à tout les éléments du panel et au panel lui même
+     */
     public void appliquerTheme()
     {
-        
+        Color background = this.theme.get("background"  ).get(0);
+        Color disableColor     = this.theme.get("disableColor").get(0);
+        Color titleForeColor   = this.theme.get("titles"      ).get(0);
+        Color titleBackColor   = this.theme.get("titles"      ).get(1);
+        Color labelForeColor   = this.theme.get("labels"      ).get(0);
+        Color saisiForeColor   = this.theme.get("saisies"     ).get(0);
+		Color saisiBackColor   = this.theme.get("saisies"     ).get(1);
+        Color placeholderColor = this.theme.get("saisies"     ).get(2);
+        Color btnForeColor     = this.theme.get("buttons"     ).get(0);
+		Color btnBackColor     = this.theme.get("buttons"     ).get(1);
+
+
+        /* Ce panel */
+        this.setBackground(background);
+        this.setForeground(labelForeColor);
+
+
+
+        /*-------*/
+        /* Panel */
+        /*-------*/
+        this.panelInfo         .setBackground(background);
+
+
+
+        /*---------*/
+        /* Boutons */
+        /*---------*/
+        /* Background */
+        this.btnChangeMappe    .setBackground(btnBackColor);
+        this.btnLancer         .setBackground(btnBackColor);
+
+        /* Foreground */
+        this.btnChangeMappe    .setForeground(btnForeColor);
+        this.btnLancer         .setForeground(btnForeColor);
+
+
+
+        /*--------*/
+        /* Labels */
+        /*--------*/
+        /* Background */
+        this.lblPreviewMappe   .setBackground(titleBackColor);
+
+        /* Foreground */
+        this.lblCarteCoul      .setForeground(labelForeColor);
+        this.lblCarteCoulRes   .setForeground(labelForeColor);
+        this.lblCarteLoco      .setForeground(labelForeColor);
+        this.lblCarteLocoRes   .setForeground(labelForeColor);
+        this.lblCoulDispo      .setForeground(labelForeColor);
+        this.lblCoulDispoRes   .setForeground(labelForeColor);
+        this.lblJetonFin       .setForeground(labelForeColor);
+        this.lblJetonFinRes    .setForeground(labelForeColor);
+        this.lblJetonJoueur    .setForeground(labelForeColor);
+        this.lblJetonJoueurRes .setForeground(labelForeColor);
+        this.lblJoueurMax      .setForeground(labelForeColor);
+        this.lblJoueurMaxRes   .setForeground(labelForeColor);
+        this.lblJoueurMin      .setForeground(labelForeColor);
+        this.lblJoueurMinRes   .setForeground(labelForeColor);
+        this.lblLstParticipants.setForeground(labelForeColor);
+        this.lblNombreDe       .setForeground(labelForeColor);
+        this.lblPreviewMappe   .setForeground(labelForeColor);
+        this.lblStatut         .setForeground(labelForeColor);
+        this.lblTitre          .setForeground(labelForeColor);
+
+
+
+        /*--------*/
+        /* Listes */
+        /*--------*/
+        /* Background */
+        this.lstParticipants   .setBackground(saisiBackColor);
+
+        /* Foreground */
+        this.lstParticipants   .setForeground(saisiForeColor);
     }
 }

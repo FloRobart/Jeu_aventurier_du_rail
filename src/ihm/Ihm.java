@@ -35,6 +35,8 @@ public class Ihm
 		this.frameAccueil.dispose();
         this.frameAccueil = null;
 		this.frameJeu     = new FrameJeu(this.ctrl);
+
+        this.appliquerTheme();
 	}
 
     /**
@@ -45,6 +47,8 @@ public class Ihm
         this.frameAccueil.dispose();
         this.frameAccueil = null;
         this.frameAttente = new FrameAttente(this.ctrl);
+
+        this.appliquerTheme();
     }
 
     public void setImageButton(int indice) { if ( this.frameJeu != null ) this.frameJeu.setImageButton(indice); }						
