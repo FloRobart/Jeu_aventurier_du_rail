@@ -20,6 +20,7 @@ import javax.imageio.ImageIO;
 import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -126,7 +127,7 @@ public class PanelAttente extends JPanel implements ActionListener
 
 
         this.lblPreviewMappe.setOpaque(true);
-        this.lblPreviewMappe.setText("this.lblPreviewMappe");
+        this.lblPreviewMappe.setIcon(new ImageIcon("./bin/donnees/images/Titre_ADR.png")); // il faut adapter la taille de l'image
         this.lblPreviewMappe.setHorizontalAlignment(JLabel.CENTER);
         this.lblPreviewMappe.setMaximumSize  (new Dimension(400, 250));
         this.lblPreviewMappe.setMinimumSize  (new Dimension(400, 250));
@@ -297,8 +298,6 @@ public class PanelAttente extends JPanel implements ActionListener
         this.lblLstParticipants.setHorizontalAlignment(JLabel.CENTER);
         this.lblLstParticipants.setFont(new Font("Liberation Sans", 0, 24));
 
-        
-
 
         /* Boutons des joueurs */
         for (int i = 0; i < this.ctrl.getNbJoueursMax(); i++)
@@ -313,9 +312,7 @@ public class PanelAttente extends JPanel implements ActionListener
 
         this.panelBtn.setLayout(new GridLayout(this.lstParticipants.size(), 1));
         for (int i = 0; i < this.lstParticipants.size(); i++)
-        {
             this.panelBtn.add(this.lstParticipants.get(i));
-        }
 
         this.jspLstParticipants = new JScrollPane(this.panelBtn, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         this.jspLstParticipants.setMaximumSize  (new Dimension(200, 250));
