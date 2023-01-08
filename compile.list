@@ -45,5 +45,3 @@
 ./src/metier/partie/CarteWagon.java
 ./src/metier/partie/GestionPioche.java
 ./src/metier/partie/Partie.java
-
--d bin
