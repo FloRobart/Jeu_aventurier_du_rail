@@ -18,33 +18,74 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
     private static final int TAILLE = 3;
 
     private Controleur ctrl;
+
     private JButton[]  tabCarteobjectif;
+
+	private JLabel     lblInfos;
 
 	public PanelPiocherObjectif(Controleur ctrl)
 	{
 		this.ctrl = ctrl;
 
 		//Parametrage du panel
-		this.setBackground(new Color(68, 71, 90));
-		this.setLayout(new GridLayout(1,3));
-		JLabel lblInfos = new JLabel("Infos sur le Joueurs");
-        lblInfos.setForeground(Color.WHITE);
+		this.setLayout    (new GridLayout(1,3));
+		this.lblInfos = new JLabel("Infos sur le Joueurs");
 
 		//Creation des boutons
-		this.tabCarteobjectif = new JButton[this.TAILLE];
-        for (int cpt=0; cpt<this.TAILLE; cpt++)
+		Color titleBackColor = this.ctrl.getTheme().get("titles").get(1);
+		this.tabCarteobjectif = new JButton[PanelPiocherObjectif.TAILLE];
+        for (int cpt = 0; cpt < PanelPiocherObjectif.TAILLE; cpt++)
         {
             this.tabCarteobjectif[cpt] = new JButton();
-			this.tabCarteobjectif[cpt].setBackground(new Color(70, 73, 89));
             this.tabCarteobjectif[cpt].setPreferredSize(new Dimension(300, 200));
-            this.tabCarteobjectif[cpt].setBorder(BorderFactory.createBevelBorder(1, new Color(32, 40, 44), new Color(32, 40, 44)));
+			
+            this.tabCarteobjectif[cpt].setBorder(BorderFactory.createBevelBorder(1, titleBackColor, titleBackColor));
+
 			this.add(this.tabCarteobjectif[cpt]);
 			this.tabCarteobjectif[cpt].addActionListener(this);;
         }
+
+		this.appliquerTheme();
 	}
 
 	public void actionPerformed(ActionEvent e) 
     {
+		for (int i = 0; i < PanelPiocherObjectif.TAILLE; i++)
+		{
+			if (e.getSource() == this.tabCarteobjectif[i])
+			{
+				// action à faire en cas de clic sur un bouton
+			}
+		}
+	}
 
+
+	/**
+     * Applique les couleurs du thème sélectionné à tout les éléments du panel et au panel lui même
+     */
+    public void appliquerTheme()
+    {
+		Color background       = this.ctrl.getTheme().get("background"  ).get(0);
+        Color labelForeColor   = this.ctrl.getTheme().get("labels"      ).get(0);
+        Color btnForeColor     = this.ctrl.getTheme().get("buttons"     ).get(0);
+		Color btnBackColor     = this.ctrl.getTheme().get("buttons"     ).get(1);
+
+		/* Ce panel */
+		this.setBackground(background);
+		this.setForeground(labelForeColor);
+
+		/* Label */
+		this.lblInfos.setOpaque(false);
+		this.lblInfos.setForeground(labelForeColor);
+
+
+		/*---------*/
+		/* Boutons */
+		/*---------*/
+		for (int i = 0; i < PanelPiocherObjectif.TAILLE; i++)
+		{
+			this.tabCarteobjectif[i].setForeground(btnForeColor);
+			this.tabCarteobjectif[i].setBackground(btnBackColor);
+		}
 	}
 }

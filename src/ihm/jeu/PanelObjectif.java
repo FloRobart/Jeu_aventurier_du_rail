@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowListener;
+import java.awt.event.WindowEvent;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -11,21 +14,25 @@ import javax.swing.JPanel;
 
 import controleur.Controleur;
 
+
 public class PanelObjectif extends JPanel implements ActionListener 
 {
     private Controleur ctrl;
+
+    private JDialog dialogInfosJoueur;
+    private PanelPiocherObjectif panelPiocherObjectif;
+
 	private JButton btnCarteObjectif;
 
     public PanelObjectif(Controleur ctrl)
     {
         this.ctrl = ctrl;
+        this.dialogInfosJoueur    = null;
+        this.panelPiocherObjectif = null;
 
-        //Parametrage du panel
-		this.setBackground(new Color(68, 71, 90));
 
 		//Creation des composants
 		this.btnCarteObjectif = new JButton(new ImageIcon(this.ctrl.getImageVersoObjectif()));
-		this.btnCarteObjectif.setBackground(new Color(68, 71, 90));
 		this.btnCarteObjectif.setPreferredSize(new Dimension(200, 100));
 
         //Ajout des composants
@@ -39,11 +46,37 @@ public class PanelObjectif extends JPanel implements ActionListener
     {
         if(e.getSource() == this.btnCarteObjectif)
         {
-            JDialog dialog = new JDialog();
-            dialog.setSize(750,250);
-            dialog.setLocation(200, 300);
-            dialog.add(new PanelPiocherObjectif(this.ctrl));
-            dialog.setVisible(true);
+            /* Création du panel */
+            if (this.panelPiocherObjectif == null) { this.panelPiocherObjectif = new PanelPiocherObjectif(this.ctrl); }
+
+            /* Création du JDialog */
+            if (this.dialogInfosJoueur == null)
+            {
+                this.dialogInfosJoueur = new JDialog();
+
+                this.dialogInfosJoueur.setSize(750,250);
+                this.dialogInfosJoueur.setLocation(200, 300);
+                this.dialogInfosJoueur.setResizable(false);
+                this.dialogInfosJoueur.add(this.panelPiocherObjectif);
+                this.dialogInfosJoueur.pack();
+                this.dialogInfosJoueur.setVisible(true);
+            }
+            else
+            {
+                this.dialogInfosJoueur.setVisible(true);
+            }
+
+            /* Permet de detecter la fermeture de la fenêtre de dialogue */
+            this.dialogInfosJoueur.addWindowListener(new WindowListener()
+            {
+                public void windowClosing    (WindowEvent e) {}
+                public void windowOpened     (WindowEvent e) {}
+                public void windowClosed     (WindowEvent e) {}
+                public void windowIconified  (WindowEvent e) {}
+                public void windowDeiconified(WindowEvent e) {}
+                public void windowActivated  (WindowEvent e) {}
+                public void windowDeactivated(WindowEvent e) { dialogInfosJoueur.dispose(); }
+            });
         }
     }
 
@@ -53,6 +86,27 @@ public class PanelObjectif extends JPanel implements ActionListener
      */
     public void appliquerTheme()
     {
-        // TODO A compléter
+        Color background       = this.ctrl.getTheme().get("background"  ).get(0);
+        Color labelForeColor   = this.ctrl.getTheme().get("labels"      ).get(0);
+        Color btnForeColor     = this.ctrl.getTheme().get("buttons"     ).get(0);
+
+
+        /*--------*/
+        /* Panels */
+        /*--------*/
+        /* Ce panel */
+        this.setForeground(labelForeColor);
+        this.setBackground(background    );
+
+        /* Panel pioche objectif */
+        if (this.panelPiocherObjectif != null)
+            this.panelPiocherObjectif.appliquerTheme();
+
+
+        /*---------*/
+        /* Boutons */
+        /*---------*/
+	    this.btnCarteObjectif.setForeground(btnForeColor);
+        this.btnCarteObjectif.setBackground(background  );
     }
 }

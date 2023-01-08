@@ -1,5 +1,6 @@
 package ihm.jeu;
 
+import java.awt.Color;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -11,9 +12,11 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.image.BufferedImage;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import javax.swing.border.BevelBorder;
 
 import controleur.Controleur;
 
@@ -25,7 +28,7 @@ public class PanelPlateau extends JPanel implements ActionListener, MouseWheelLi
 	private JButton btnCentrer;
 
 	// attributs pour le zoom
-	private double facteurZoom = 1;
+	private double facteurZoom    = 1;
 	private double facteurZoomMax = 2;
 	private double facteurZoomMin = 0.75;
 
@@ -193,6 +196,19 @@ public class PanelPlateau extends JPanel implements ActionListener, MouseWheelLi
      */
     public void appliquerTheme()
     {
-        // TODO A compléter
+		Color background       = this.ctrl.getTheme().get("background"  ).get(0);
+        Color labelForeColor   = this.ctrl.getTheme().get("labels"      ).get(0);
+        Color btnForeColor     = this.ctrl.getTheme().get("buttons"     ).get(0);
+		Color btnBackColor     = this.ctrl.getTheme().get("buttons"     ).get(1);
+
+
+		/* Ce panel */
+		this.setForeground(labelForeColor);
+		this.setBackground(background    );
+
+		/* Bouton pour centrer l'image */
+		this.btnCentrer.setForeground(btnForeColor);
+        this.btnCentrer.setBackground(btnBackColor);
+		this.btnCentrer.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
     }
 }

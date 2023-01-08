@@ -21,7 +21,7 @@ public class FrameTest extends JFrame
     private MenuBarre mb;
     private JPanel panel;
 
-    private PanelJoueurs panelJoueurs;
+    private PanelObjectif panelATester;
 
 
     public FrameTest(Controleur ctrl)
@@ -33,10 +33,10 @@ public class FrameTest extends JFrame
 
         this.mb           = new MenuBarre(ctrl);
         this.panel        = new JPanel();
-        this.panelJoueurs = new PanelJoueurs(ctrl);
+        this.panelATester = new PanelObjectif(ctrl);
 
         this.setJMenuBar(this.mb);
-        this.panel.add(this.panelJoueurs);
+        this.panel.add(this.panelATester);
 
         this.add(panel);
 
@@ -49,6 +49,6 @@ public class FrameTest extends JFrame
     {
         this.panel.setBackground(Color.BLACK);
         this.mb.appliquerTheme();
-        this.panelJoueurs.appliquerTheme();
+        this.panelATester.appliquerTheme();
     }
 }

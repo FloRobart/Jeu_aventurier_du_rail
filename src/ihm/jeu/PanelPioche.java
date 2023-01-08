@@ -6,6 +6,8 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.List;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 
@@ -21,6 +23,10 @@ public class PanelPioche extends JPanel implements ActionListener
     private static final int TAILLE = 5;
 
     private Controleur ctrl;
+
+    private JPanel     panelHaut;
+    private JPanel     panelMilieu;
+
     private JButton[]  tabCarteWagon;
     private JButton    deckCarteWagon; 
 
@@ -30,41 +36,33 @@ public class PanelPioche extends JPanel implements ActionListener
 
         //Parametrage du panel
         this.setLayout(new BorderLayout(3, 3));
-		this.setBackground(new Color(68, 71, 90));
 
 		//Creation des panels
-		JPanel panelHaut = new JPanel();
-		JPanel panelMilieu = new JPanel(new GridLayout(5,1));
+		this.panelHaut   = new JPanel();
+		this.panelMilieu = new JPanel(new GridLayout(5,1));
 
-		panelHaut.setBackground(new Color(68, 71, 90));
-		panelMilieu.setBackground(new Color(68, 71, 90));
-
-        this.tabCarteWagon = new JButton[this.TAILLE];
-        for (int cpt=0; cpt<this.TAILLE; cpt++)
+        this.tabCarteWagon = new JButton[PanelPioche.TAILLE];
+        for (int cpt=0; cpt<PanelPioche.TAILLE; cpt++)
         {
             this.tabCarteWagon[cpt] = new JButton();
-			this.tabCarteWagon[cpt].setBackground(new Color(70, 73, 89));
             this.tabCarteWagon[cpt].setPreferredSize(new Dimension(200, 100));
-            this.tabCarteWagon[cpt].setBorder(BorderFactory.createBevelBorder(1, new Color(32, 40, 44), new Color(32, 40, 44)));
             this.setImageButton(cpt);
         }
 
         this.deckCarteWagon = new JButton(new ImageIcon(this.ctrl.getImageVersoCouleur()));
-		this.deckCarteWagon.setBackground(new Color(70, 73, 89));
         this.deckCarteWagon.setPreferredSize(new Dimension(200, 150));
-        this.deckCarteWagon.setBorder(BorderFactory.createBevelBorder(1, new Color(32, 40, 44), new Color(32, 40, 44)));
 
         //Ajout des composants
 		this.add(panelHaut, BorderLayout.NORTH);
         panelHaut.add(this.deckCarteWagon);
 
 		this.add(panelMilieu, BorderLayout.CENTER);
-		for (int cpt=0; cpt<TAILLE; cpt++)
+		for (int cpt=0; cpt<PanelPioche.TAILLE; cpt++)
             panelMilieu.add(this.tabCarteWagon[cpt]);
 
 		//Activation des composants
 		this.deckCarteWagon.addActionListener(this);
-		for (int cpt=0; cpt<TAILLE; cpt++)
+		for (int cpt=0; cpt<PanelPioche.TAILLE; cpt++)
 			this.tabCarteWagon[cpt].addActionListener(this);
     }
 
@@ -124,6 +122,43 @@ public class PanelPioche extends JPanel implements ActionListener
      */
     public void appliquerTheme()
     {
-        // TODO A compléter
+        HashMap<String, List<Color>> theme = this.ctrl.getTheme();
+
+        Color background       = theme.get("background"  ).get(0);
+        Color titleBackColor   = theme.get("titles"      ).get(1);
+        Color labelForeColor   = theme.get("labels"      ).get(0);
+        Color btnForeColor     = theme.get("buttons"     ).get(0);
+
+
+        /*--------*/
+        /* Panels */
+        /*--------*/
+        /* Ce panel */
+        this.setForeground(labelForeColor);
+        this.setBackground(background    );
+
+        /* Panel haut */
+        this.panelHaut.setForeground(labelForeColor);
+        this.panelHaut.setBackground(background    );
+
+        /* Panel milieu */
+        this.panelMilieu.setForeground(labelForeColor);
+        this.panelMilieu.setBackground(background    );
+
+
+        /*---------*/
+        /* Boutons */
+        /*---------*/
+        /* Boutons carte wagon */
+        for (int i = 0; i < tabCarteWagon.length; i++)
+        {
+            this.tabCarteWagon[i].setForeground(btnForeColor);
+            this.tabCarteWagon[i].setBackground(background);
+            this.tabCarteWagon[i].setBorder(BorderFactory.createBevelBorder(1, titleBackColor, titleBackColor)); //BorderFactory.createBevelBorder(1, /* couleur border haut et gauche */, /* couleur border bas et droite */)
+        }
+
+        /* Bouton deck */
+        this.deckCarteWagon.setForeground(btnForeColor);
+        this.deckCarteWagon.setBackground(background);
     }
 }

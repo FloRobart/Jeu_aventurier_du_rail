@@ -10,11 +10,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.BevelBorder;
+import java.awt.event.WindowListener;
+import java.awt.event.WindowEvent;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.List;
 import java.awt.BorderLayout;
 
 import controleur.Controleur;
@@ -38,23 +42,26 @@ public class PanelJoueurs extends JPanel implements ActionListener
     public PanelJoueurs(Controleur ctrl)
     {
         this.ctrl = ctrl;
-        this.panelInfosJoueur = null;
+        this.dialogInfosJoueur = null;
+        this.panelInfosJoueur  = null;
 
-        this.setSize(500, 200);
+        this.setSize(200, 400);
 
         /*panel de chaque joueurs */
-        this.tabPanels  = new JPanel[3];
+        this.tabPanels  = new JPanel [4];
         this.tabBoutons = new JButton[this.tabPanels.length];
-        this.tabLblNom  = new JLabel[this.tabPanels.length];
-        this.tabLblScore= new JLabel[this.tabPanels.length];
+        this.tabLblNom  = new JLabel [this.tabPanels.length];
+        this.tabLblScore= new JLabel [this.tabPanels.length];
 
         /*panel joueurs */
         this.panelJoueurs = new JPanel();
-        this.panelJoueurs.setLayout(new GridLayout(this.tabPanels.length, 1, 0,1));
+        this.panelJoueurs.setLayout(new GridLayout(this.tabPanels.length, 1));
 
         for(int cpt=0; cpt< this.tabPanels.length; cpt++)
         {
             this.tabPanels[cpt] = new JPanel();
+            Color titleBackColor = this.ctrl.getTheme().get("titles").get(1);
+            this.tabPanels[cpt].setBorder(BorderFactory.createBevelBorder(1, titleBackColor, titleBackColor));
             this.tabPanels[cpt].setLayout(new BorderLayout());
 
             this.tabLblNom  [cpt] = new JLabel("nom "   + (cpt+1));
@@ -74,7 +81,7 @@ public class PanelJoueurs extends JPanel implements ActionListener
 
         /*JScrollPane */
         this.scrollJoueurs = new JScrollPane(panelJoueurs, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        this.scrollJoueurs.setPreferredSize(new Dimension(200,400));
+        this.scrollJoueurs.setPreferredSize(new Dimension(200, 385)); // 400 c'est trop, ça déborder du panel
         this.scrollJoueurs.getVerticalScrollBar().setUnitIncrement(5);
 
         this.add(scrollJoueurs);
@@ -93,19 +100,28 @@ public class PanelJoueurs extends JPanel implements ActionListener
         {
             if(e.getSource() == this.tabBoutons[cpt])
             {
-                if (this.panelInfosJoueur == null || (this.panelInfosJoueur != null && this.panelInfosJoueur.getNumJoueur() != (cpt+1)))
-                {
-                    if (this.dialogInfosJoueur != null) { this.dialogInfosJoueur.dispose(); }
-                    this.dialogInfosJoueur = new JDialog();
-                    this.panelInfosJoueur  = new PanelInfosJoueur(this.ctrl, (cpt+1));
+                this.dialogInfosJoueur = new JDialog();
+                this.panelInfosJoueur  = new PanelInfosJoueur(this.ctrl, (cpt+1));
 
-                    this.dialogInfosJoueur.setSize(400,200);
-                    this.dialogInfosJoueur.setLocation(200, 50);
-                    this.dialogInfosJoueur.setResizable(false);
-                    this.dialogInfosJoueur.add(this.panelInfosJoueur);
-                    this.dialogInfosJoueur.pack();
-                    this.dialogInfosJoueur.setVisible(true);
-                }
+                this.dialogInfosJoueur.setSize(400,200);
+                this.dialogInfosJoueur.setLocation(200, 50);
+                this.dialogInfosJoueur.setResizable(false);
+                this.dialogInfosJoueur.add(this.panelInfosJoueur);
+                this.dialogInfosJoueur.pack();
+                this.dialogInfosJoueur.setVisible(true);
+
+
+                /* Permet de detecter la fermeture de la fenêtre de dialogue */
+                this.dialogInfosJoueur.addWindowListener(new WindowListener()
+                {
+                    public void windowClosing    (WindowEvent e) {}
+                    public void windowOpened     (WindowEvent e) {}
+                    public void windowClosed     (WindowEvent e) {}
+                    public void windowIconified  (WindowEvent e) {}
+                    public void windowDeiconified(WindowEvent e) {}
+                    public void windowActivated  (WindowEvent e) {}
+                    public void windowDeactivated(WindowEvent e) { dialogInfosJoueur.dispose(); }
+                });
             }
         }
     }
@@ -116,21 +132,16 @@ public class PanelJoueurs extends JPanel implements ActionListener
      */
     public void appliquerTheme()
     {
-        Color background       = this.ctrl.getTheme().get("background"  ).get(0);
-        Color disableColor     = this.ctrl.getTheme().get("disableColor").get(0);
-        Color titleForeColor   = this.ctrl.getTheme().get("titles"      ).get(0);
-        Color titleBackColor   = this.ctrl.getTheme().get("titles"      ).get(1);
-        Color labelForeColor   = this.ctrl.getTheme().get("labels"      ).get(0);
-        Color saisiForeColor   = this.ctrl.getTheme().get("saisies"     ).get(0);
-		Color saisiBackColor   = this.ctrl.getTheme().get("saisies"     ).get(1);
-        Color placeholderColor = this.ctrl.getTheme().get("saisies"     ).get(2);
-        Color btnForeColor     = this.ctrl.getTheme().get("buttons"     ).get(0);
-		Color btnBackColor     = this.ctrl.getTheme().get("buttons"     ).get(1);
+        HashMap<String, List<Color>> theme = this.ctrl.getTheme();
+
+        Color background       = theme.get("background"  ).get(0);
+        Color labelForeColor   = theme.get("labels"      ).get(0);
+        Color btnForeColor     = theme.get("buttons"     ).get(0);
+		Color btnBackColor     = theme.get("buttons"     ).get(1);
 
         if (this.panelInfosJoueur != null) { this.panelInfosJoueur.appliquerTheme(); }
 
         this.setBackground(background);
-        this.panelJoueurs.setBackground(titleBackColor); // new Color(40, 42, 54)
 
         this.scrollJoueurs.getVerticalScrollBar().setBackground(background);
 
@@ -155,18 +166,14 @@ public class PanelJoueurs extends JPanel implements ActionListener
             /* Background */
             this.tabBoutons[i].setBackground(btnBackColor);
 
-            /* Border */
-            this.tabBoutons[i].setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-
             /* Images */
             String pathImage = "";
             if (this.ctrl.getThemeUsed().equals("dark"))
                 pathImage = "./bin/donnees/images/IconJoueurWhite.png";
             else
                 pathImage = "./bin/donnees/images/IconJoueurBlack.png";
-
-            for(int cpt=0; cpt< this.tabBoutons.length; cpt++)
-                this.tabBoutons[cpt].setIcon(new ImageIcon(pathImage));
+            
+            this.tabBoutons[i].setIcon(new ImageIcon(pathImage));
 
 
             /*--------*/
