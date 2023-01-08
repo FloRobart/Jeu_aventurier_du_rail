@@ -6,5 +6,6 @@ ls ./bin/donnees/ >> /dev/null 2>&1 || mkdir "./bin/donnees/"
 
 cp -r ./donnees/ ./bin/
 
+export CLASSPATH="$CLASSPATH:./bin/donnees/jar_librairies/jdom-2.0.6.jar"
 echo Compilation...
 javac -encoding utf8 @compile.list && (echo Lancement de l\'application... ; java -cp "./bin:$CLASSPATH" controleur.Controleur && echo Fin de l\'execution. || echo -e "\nErreur de L\'EXECUTION.") || echo -e "\nErreur de COMPILATION."

@@ -12,5 +12,6 @@ compilation()
 }
 
 
+export CLASSPATH="$CLASSPATH:./bin/donnees/jar_librairies/jdom-2.0.6.jar"
 echo Lancement de l\'application...
 java -cp "./bin:$CLASSPATH" controleur.Controleur && echo Fin de l\'execution. || compilation
