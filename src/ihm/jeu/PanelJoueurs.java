@@ -80,7 +80,7 @@ public class PanelJoueurs extends JPanel implements ActionListener
         }
 
         /*JScrollPane */
-        this.scrollJoueurs = new JScrollPane(panelJoueurs, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        this.scrollJoueurs = new JScrollPane(this.panelJoueurs, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         this.scrollJoueurs.setPreferredSize(new Dimension(200, 385)); // 400 c'est trop, ça déborder du panel
         this.scrollJoueurs.getVerticalScrollBar().setUnitIncrement(5);
 
