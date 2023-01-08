@@ -3,13 +3,10 @@ package ihm.attente;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,17 +14,14 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.imageio.ImageIO;
-import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.LayoutStyle;
-import javax.swing.ListSelectionModel;
 import javax.swing.border.BevelBorder;
 
 import controleur.Controleur;
@@ -111,12 +105,15 @@ public class PanelAttente extends JPanel implements ActionListener
         this.lstParticipants    = new ArrayList<JLabel>();
         
 
-
-        this.lblTitre.setText("this.lblTitre");
         this.lblTitre.setHorizontalAlignment(JLabel.CENTER);
-        this.lblTitre.setMaximumSize  (new Dimension(43, 80));
-        this.lblTitre.setMinimumSize  (new Dimension(43, 80));
-        this.lblTitre.setPreferredSize(new Dimension(43, 80));
+        this.lblTitre.setSize         (new Dimension(1000, 100));
+        this.lblTitre.setMaximumSize  (new Dimension(1000, 100));
+        this.lblTitre.setMinimumSize  (new Dimension(1000, 100));
+        this.lblTitre.setPreferredSize(new Dimension(1000, 100));
+
+        ImageIcon imgIconTitre = null;
+        try { imgIconTitre = new ImageIcon(ImageIO.read(new File("./bin/donnees/images/Titre_ADR.png")).getScaledInstance((this.lblTitre.getWidth()-100), this.lblTitre.getHeight(), Image.SCALE_SMOOTH)); } catch (IOException e) {}
+        this.lblTitre.setIcon(imgIconTitre);
 
 
         this.btnChangeMappe.setText("btnChangerMappe");
@@ -127,12 +124,16 @@ public class PanelAttente extends JPanel implements ActionListener
 
 
         this.lblPreviewMappe.setOpaque(true);
-        this.lblPreviewMappe.setIcon(new ImageIcon("./bin/donnees/images/Titre_ADR.png")); // il faut adapter la taille de l'image
         this.lblPreviewMappe.setHorizontalAlignment(JLabel.CENTER);
+        this.lblPreviewMappe.setSize         (new Dimension(400, 250));
         this.lblPreviewMappe.setMaximumSize  (new Dimension(400, 250));
         this.lblPreviewMappe.setMinimumSize  (new Dimension(400, 250));
         this.lblPreviewMappe.setPreferredSize(new Dimension(400, 250));
 
+        ImageIcon imgIconPreviewMappe = null;
+        try { imgIconPreviewMappe = new ImageIcon(ImageIO.read(new File("./bin/donnees/images/Titre_ADR.png")).getScaledInstance(this.lblPreviewMappe.getWidth(), this.lblPreviewMappe.getHeight(), Image.SCALE_SMOOTH)); } catch (IOException e) {}
+        this.lblPreviewMappe.setIcon(imgIconPreviewMappe);
+        
 
         this.panelInfo.setMaximumSize  (new Dimension(250, 200));
         this.panelInfo.setMinimumSize  (new Dimension(250, 200));
@@ -365,7 +366,7 @@ public class PanelAttente extends JPanel implements ActionListener
         layout.setVerticalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(this.lblTitre, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+                .addComponent(this.lblTitre, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(this.btnChangeMappe, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)

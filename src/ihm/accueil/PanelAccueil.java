@@ -5,12 +5,16 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Image;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -119,19 +123,24 @@ public class PanelAccueil extends JPanel implements ActionListener
         this.panelCreerPartie.setMaximumSize  (new Dimension(400, 400));
         this.panelCreerPartie.setMinimumSize  (new Dimension(400, 400));
         this.panelCreerPartie.setPreferredSize(new Dimension(400, 400));
+
         this.panelRejoindrePartie.setMaximumSize  (new Dimension(400, 400));
         this.panelRejoindrePartie.setMinimumSize  (new Dimension(400, 400));
         this.panelRejoindrePartie.setPreferredSize(new Dimension(400, 400));
 
 
         /* Labels */
-        this.lblTitre.setText("LES AVENTURIERS DU RAIL");
-        this.lblTitre.setFont(new Font(PanelAccueil.FONT, 0, 48));
-        this.lblTitre.setHorizontalAlignment   (JLabel.CENTER);
-        this.lblTitre.setHorizontalTextPosition(JLabel.CENTER);
-        this.lblTitre.setMaximumSize  (new Dimension(400, 100));
-        this.lblTitre.setMinimumSize  (new Dimension(400, 100));
-        this.lblTitre.setPreferredSize(new Dimension(400, 100));
+        this.lblTitre.setVerticalAlignment  (JLabel.CENTER);
+        this.lblTitre.setHorizontalAlignment(JLabel.CENTER);
+        this.lblTitre.setSize         (new Dimension(1000, 100));
+        this.lblTitre.setMaximumSize  (new Dimension(1000, 100));
+        this.lblTitre.setMinimumSize  (new Dimension(1000, 100));
+        this.lblTitre.setPreferredSize(new Dimension(1000, 100));
+
+        ImageIcon imgIconTitre = null;
+        try { imgIconTitre = new ImageIcon(ImageIO.read(new File("./bin/donnees/images/Titre_ADR.png")).getScaledInstance((this.lblTitre.getWidth()), this.lblTitre.getHeight(), Image.SCALE_SMOOTH)); } catch (IOException e) {}
+        this.lblTitre.setIcon(imgIconTitre);
+
 
         this.lblPseudo.setText("Comment vous appelez-vous ?");
         this.lblPseudo.setFont(new Font(PanelAccueil.FONT, 0, 24));
@@ -301,7 +310,7 @@ public class PanelAccueil extends JPanel implements ActionListener
         layout.setVerticalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(this.lblTitre, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+                .addComponent(this.lblTitre, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                     .addComponent(this.lblPseudo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
