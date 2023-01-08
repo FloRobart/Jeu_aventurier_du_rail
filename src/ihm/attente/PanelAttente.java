@@ -72,7 +72,7 @@ public class PanelAttente extends JPanel implements ActionListener
     private List<JLabel> lstParticipants;
     
 
-    public PanelAttente(Controleur ctrl)
+    public PanelAttente(Controleur ctrl, boolean hote)
     {
         this.ctrl  = ctrl;
         this.theme = this.ctrl.getTheme();
@@ -126,11 +126,12 @@ public class PanelAttente extends JPanel implements ActionListener
         this.lblTitre.setIcon(imgIconTitre);
 
 
-        this.btnChangeMappe.setText("btnChangerMappe");
+        this.btnChangeMappe.setText("Changer de mappe");
         this.btnChangeMappe.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         this.btnChangeMappe.setMaximumSize  (new Dimension(150, 30));
         this.btnChangeMappe.setMinimumSize  (new Dimension(150, 30));
         this.btnChangeMappe.setPreferredSize(new Dimension(150, 30));
+        if (!hote) { this.btnChangeMappe.setEnabled(false); }
 
 
         this.panelPreviewMappe.setOpaque(true);
@@ -333,7 +334,7 @@ public class PanelAttente extends JPanel implements ActionListener
         this.lblStatut.setFont(new Font("Liberation Sans", 0, 36));
 
 
-        this.btnLancer.setText("this.btnLancer");
+        this.btnLancer.setText("Lancer la partie");
         this.btnLancer.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         this.btnLancer.setMaximumSize  (new Dimension(150, 40));
         this.btnLancer.setMinimumSize  (new Dimension(150, 40));
@@ -404,6 +405,12 @@ public class PanelAttente extends JPanel implements ActionListener
     }
 
 
+    public void updateStatus(String status)
+    {
+        this.lblStatut.setText(status);
+    }
+
+
     @Override
     public void actionPerformed(ActionEvent e)
     {
@@ -437,7 +444,7 @@ public class PanelAttente extends JPanel implements ActionListener
 						}
                         else
                         {
-                            this.btnChangeMappe.setText("Importer une mappe");
+                            this.btnChangeMappe.setText("Changer de mappe");
                             this.btnChangeMappe.setBorder(BorderFactory.createLineBorder(disableColor, 3));
                         }
                     }

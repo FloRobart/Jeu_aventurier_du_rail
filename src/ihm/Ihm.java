@@ -46,11 +46,11 @@ public class Ihm
     /**
      * Permet d'ouvrir la fenêtre d'attente et de fermer la fenêtre d'accueil.
      */
-    public void demarrerAttente()
+    public void demarrerAttente(boolean hote)
     {
         this.frameAccueil.dispose();
         this.frameAccueil = null;
-        this.frameAttente = new FrameAttente(this.ctrl);
+        this.frameAttente = new FrameAttente(this.ctrl, hote);
 
         this.appliquerTheme();
     }

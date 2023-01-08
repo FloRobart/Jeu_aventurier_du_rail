@@ -16,7 +16,7 @@ public class FrameAttente extends JFrame
 	private PanelAttente panelAttente;
 
 
-	public FrameAttente(Controleur ctrl)
+	public FrameAttente(Controleur ctrl, boolean hote)
 	{
 		this.ctrl = ctrl;
 
@@ -26,7 +26,7 @@ public class FrameAttente extends JFrame
 		this.setResizable(false);
 
 		this.menuBarre    = new MenuBarre   (this.ctrl);
-		this.panelAttente = new PanelAttente(this.ctrl);
+		this.panelAttente = new PanelAttente(this.ctrl, hote);
 
 		this.setJMenuBar(this.menuBarre);
 		this.add(this.panelAttente);
