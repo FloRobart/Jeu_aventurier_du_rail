@@ -18,8 +18,6 @@ public class Ihm
     private FrameAccueil frameAccueil;
     private FrameAttente frameAttente;
 
-    // Test
-    private FrameTest frameTest;
 
     public Ihm(Controleur ctrl)
     {
@@ -28,20 +26,6 @@ public class Ihm
         this.frameJeu     = null;
 		this.frameAccueil = new FrameAccueil(this.ctrl);
         this.frameAttente = null;
-
-        this.appliquerTheme();
-    }
-
-
-    /**
-	 * Ceci est un controleur de test, pour pouvoir tester une frame ou un panel en particulier.
-     * @param ctrl : controleur de l'application qui permet de faire le lien avec le metier
-	 * @param test : permet de différencier le controleur de test de celui de l'application.
-	 */
-    public Ihm(Controleur ctrl, int test)
-    {
-        this.ctrl = ctrl;
-        this.frameTest = new FrameTest(ctrl);
 
         this.appliquerTheme();
     }
@@ -86,7 +70,5 @@ public class Ihm
         if (this.frameJeu     != null) { this.frameJeu    .appliquerTheme(); }
         if (this.frameAccueil != null) { this.frameAccueil.appliquerTheme(); }
         if (this.frameAttente != null) { this.frameAttente.appliquerTheme(); }
-
-        if (this.frameTest    != null) { this.frameTest   .appliquerTheme(); }
     }
 }

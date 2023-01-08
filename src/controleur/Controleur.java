@@ -8,7 +8,6 @@ import java.awt.image.BufferedImage;
 import java.awt.Font;
 import java.io.File;
 
-import ihm.FrameTest;
 import ihm.Ihm;
 import metier.*;
 import metier.partie.CarteWagon;
@@ -24,17 +23,6 @@ public class Controleur
         this.metier = new Metier(this);
         this.ihm    = new Ihm(this);
     }
-
-
-	/**
-	 * Ceci est un controleur de test, pour pouvoir tester une frame ou un panel en particulier.
-	 * @param test : permet de différencier le controleur de test de celui de l'application.
-	 */
-	public Controleur(int test)
-	{
-		this.metier = new Metier(this);
-		this.ihm	= new Ihm(this, 1);
-	}
 
 
 	/**
