@@ -11,6 +11,7 @@
 
 ./src/ihm/attente/FrameAttente.java
 ./src/ihm/attente/PanelAttente.java
+./src/ihm/attente/PanelPreviewMappe.java
 
 ./src/ihm/customComponent/TextFieldAdresseIP.java
 ./src/ihm/customComponent/TextFieldMdp.java
