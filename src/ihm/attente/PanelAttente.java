@@ -431,7 +431,9 @@ public class PanelAttente extends JPanel implements ActionListener
 						{
                             this.btnChangeMappe.setText(fichier.getName());
                             this.btnChangeMappe.setBorder(BorderFactory.createLineBorder(enableColor, 3));
-                            // TODO : Afficher la preview de la mappe
+                            this.panelPreviewMappe.setMappe();
+                            this.panelPreviewMappe.repaint();
+                            this.panelPreviewMappe.centrer(this.getWidth(), this.getHeight());
 						}
                         else
                         {

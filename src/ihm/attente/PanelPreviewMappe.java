@@ -52,7 +52,6 @@ public class PanelPreviewMappe extends JPanel implements MouseWheelListener, Mou
 
 		// Création des composants
 		this.panelImage = new PanelImage(ctrl, this.taillePlateau);
-		//this.panelImage.setBounds(0, 0, this.taillePlateau[0], this.taillePlateau[1]);
 
 
 		// Ajout des composants
@@ -64,6 +63,15 @@ public class PanelPreviewMappe extends JPanel implements MouseWheelListener, Mou
         this.addMouseMotionListener(this);
         this.addMouseListener      (this);
     }
+
+
+	public void setMappe()
+	{
+		this.panelImage = new PanelImage(this.ctrl, this.ctrl.getTaillePlateau());
+		this.removeAll();
+		this.add(this.panelImage);
+	}
+
 
 	public void majIHM()
 	{
