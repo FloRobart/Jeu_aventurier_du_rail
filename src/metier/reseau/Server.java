@@ -53,6 +53,14 @@ public class Server
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                if (socket == null)
+                {
+                    System.out.println("Socket null");
+                    return;
+                }else{
+                    System.out.println("Socket not null");
+                                    
+                }
                 while (true)
                 {
                     try {
@@ -65,7 +73,7 @@ public class Server
                     }
                 }
             }
-        });
+        }).start();
     }
 
 

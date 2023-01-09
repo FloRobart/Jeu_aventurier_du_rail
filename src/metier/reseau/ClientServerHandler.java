@@ -22,6 +22,7 @@ public class ClientServerHandler implements Runnable
     private BufferedInputStream in;
     private BufferedOutputStream out;
     private Metier metier;
+    private String password;
 
     public void sendCommand(String cmd)
     {
@@ -60,12 +61,17 @@ public class ClientServerHandler implements Runnable
         return null;
     }
 
-    public ClientServerHandler(Metier metier, Socket socket)
+    public ClientServerHandler(Metier metier, Socket socket, String password)
     {
         this.metier = metier;
+        this.password = password;
         try {
             this.in = new BufferedInputStream(socket.getInputStream());
             this.out = new BufferedOutputStream(socket.getOutputStream());
+
+            this.sendCommand("BONJOUR " + this.metier.getNomPartie() +"\n");
+            this.sendCommand("MOT_DE_PASSE " + this.password + "\n");
+
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -34,6 +34,7 @@ import java.io.Serializable;
 
 import controleur.Controleur;
 import metier.partie.CarteWagon;
+import metier.reseau.Client;
 import metier.reseau.Server;
 
 public class Metier implements Serializable
@@ -75,8 +76,11 @@ public class Metier implements Serializable
 	private HashMap<String, List<Color>> hmColorThemes;
 
 	private String nomPartie;
-	private String motDePassePartie;
-	private Server server;
+	private transient String motDePassePartie;
+	private transient Server server;
+	
+	private transient Client client;
+	private transient String nomClient;
 
 
 
@@ -133,7 +137,24 @@ public class Metier implements Serializable
 	public String 			   getNomPartie           () { return this.nomPartie;            }
 	public String              getMotDePasse		  () { return this.motDePassePartie;     }
 	public Server 			   getServer              () { return this.server;               }
+	public Client 			   getClient              () { return this.client;               }
+	public String 			   getNomClient           () { return this.nomClient;            }
 
+	public void creeServer(Boolean demarer)
+	{
+		
+		this.server = new Server(this);
+		if (demarer)
+			this.server.Start();
+	}
+
+	public void creeClient(String ip, Boolean demarer, String password)
+	{
+		this.nomClient = "Joueur " + Math.round(Math.random()*100);
+		this.client = new Client(ip, this);
+		if (demarer)
+			this.client.Connect(password);
+	}
 
 	/**
 	 * Lecture du fichier XML afin de récupérer les infos du plateau

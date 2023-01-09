@@ -15,6 +15,7 @@ import java.net.UnknownHostException;
 import ihm.Ihm;
 import metier.*;
 import metier.partie.CarteWagon;
+import metier.reseau.Server;
 
 
 public class Controleur
@@ -47,7 +48,11 @@ public class Controleur
 	 * Permet de créer une partie multijoueur mais ne lance pas le jeu.
 	 * Le jeu pourra être lancé par le créateur de la partie à l'intérieur de la fenêtre d'attente.
 	 */
-	public void creerPartieMulti() { this.ihm.demarrerAttente(true); }
+	public void creerPartieMulti()
+	{
+		this.metier.creeServer(true);
+		this.ihm.demarrerAttente(true);
+	}
 
 
 
@@ -131,7 +136,11 @@ public class Controleur
 	 */
 	public int joinGame(String ip, String password)
 	{
-		try 
+
+		this.metier.creeClient(ip, true, password);
+
+		return 1;
+		/*try 
 		{
 			ClientControleur clientCtrl = new ClientControleur(ip);
 			this.metier = clientCtrl.getMetier();
@@ -139,7 +148,7 @@ public class Controleur
 		}
 		catch (ConnectException e){ return 2;}
 		if (!password.equals(this.metier.getMotDePasse())) return 3;
-		return 1;
+		return 1;*/
 
 	}
     public static void main(String[] args)

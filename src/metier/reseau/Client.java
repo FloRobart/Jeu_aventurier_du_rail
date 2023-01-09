@@ -31,14 +31,14 @@ public class Client
      * Connexion au serveur
      * @return true si la connexion a réussi, false sinon
      */
-    public boolean Connect()
+    public boolean Connect(String password)
     {
         try
         {
             this.socket = new Socket(this.ip, this.port);
             this.connecte = true;
 
-            new Thread(new ClientServerHandler(this.metier, this.socket)).start();
+            new Thread(new ClientServerHandler(this.metier, this.socket, password)).start();
             
         }
         catch(Exception e)
