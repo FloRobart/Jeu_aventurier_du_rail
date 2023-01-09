@@ -48,6 +48,7 @@ public class PanelInfosJoueur extends JPanel
         this.setLayout(new BorderLayout());
 
         this.lblNom              = new JLabel("nom " + this.numJoueur); //this.joueur.getNom());
+        //this.lblNom.setForeground(this.joueur.getCouleur());
         this.lblNbJeton          = new JLabel("jetons restants"); //this.joueur.getNbJetonsRestant());
         this.lblNbCartesWagon    = new JLabel("cartes wagon"); //this.joueur.getNbCartesWagon());
         this.lblNbCartesObjectif = new JLabel("cartes objectif"); //this.joueur.getNbCartesObjectif());
