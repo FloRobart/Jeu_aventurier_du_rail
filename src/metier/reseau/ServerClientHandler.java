@@ -41,7 +41,7 @@ public class ServerClientHandler implements Runnable
     private String nomJoueur;
     private Boolean authentifie;
 
-    public void sendCommand(String cmd)
+    public void writeonce(String cmd)
     {
         try
         {
@@ -59,17 +59,13 @@ public class ServerClientHandler implements Runnable
      * @param until Chaîne à lire
      * @return Chaîne lue
      */
-    private String readUntil(String until)
+    private String readonce()
     {
         // read until string "until" is read, blocking
         String ret = "";
         try
         {
-            while (!ret.endsWith(until))
-            {
-                ret += this.in.readUTF();
-                System.out.println("recu " + ret);
-            }
+            ret = this.in.readUTF();
         }
         catch(Exception e)
         {
@@ -93,12 +89,17 @@ public class ServerClientHandler implements Runnable
 
     private void initialLoading()
     {
-        this.metier.getServer().sendCommand("NOUVEAU_JOUEUR " + this.nomJoueur + "\n");
-        this.metier.getServer().sendCommand("PARTIE nombre_joueurs " + this.metier.getServer().getNbJoeurs() + "\n");
+        Server s = this.metier.getServer();
+        s.writeonce("NOUVEAU_JOUEUR");
+        s.writeonce(this.nomJoueur);
+
+        s.writeonce("PARTIE");
+        s.writeonce("nb_joueurs");
+        s.writeonce("" + s.getNbJoeurs());
+        
+
         this.authentifie = true;
-        //String xml = this.metier.getXml();
-        //sendCommand("CHARGER_XML " + xml.length() + " " + xml + "\n");
-        sendCommand("METIER ");
+        writeonce("METIER");
         try {
             out.writeObject(this.metier);
             out.flush();
@@ -111,7 +112,7 @@ public class ServerClientHandler implements Runnable
     {
         while (true)
         {
-            String command = this.readUntil(" ");          
+            String command = readonce();      
             if (command == null)
                 break;
 
@@ -119,25 +120,20 @@ public class ServerClientHandler implements Runnable
             
             if (!this.authentifie)
             {
-                if (command.equals("BONJOUR "))
+                if (command.equals("BONJOUR"))
                 {
-                    this.nomJoueur = this.readUntil("\n");
+                    this.nomJoueur = readonce();
                     System.out.println("nom joueur : " + this.nomJoueur + "");
 
-                    sendCommand("PARTIE nom " + this.metier.getNomPartie() + "\n");
+                    writeonce("PARTIE");
+                    writeonce("nom");
+                    writeonce(this.metier.getNomPartie());
 
-
-                    if (this.metier.getMotDePasse().isBlank())
-                    {
-                        initialLoading();
-                    }
                 }
 
-                if (command.equals("MOT_DE_PASSE "))
+                if (command.equals("MOT_DE_PASSE"))
                 {
-                    String motDePasse = this.readUntil("\n");
-                    // le dernier charactere est un retour à la ligne
-                    motDePasse = motDePasse.substring(0, motDePasse.length() - 1);
+                    String motDePasse = readonce();
                     System.out.println("mot de passe : " + motDePasse + "");
                     if (motDePasse.equals(this.metier.getMotDePasse()))
                     {
@@ -145,7 +141,8 @@ public class ServerClientHandler implements Runnable
                     }
                     else
                     {
-                        sendCommand("ERREUR Mot de passe incorrect\n");
+                        writeonce("ERREUR");
+                        writeonce("Mot de passe incorrect");
                     }
                 }
                 continue;

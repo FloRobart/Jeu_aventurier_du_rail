@@ -20,11 +20,11 @@ public class Server
         this.metier = metier;
     }
 
-    public void sendCommand(String cmd)
+    public void writeonce(String cmd)
     {
         for (ServerClientHandler sch : clients)
         {
-            sch.sendCommand(cmd);
+            sch.writeonce(cmd);
         }
     }
 

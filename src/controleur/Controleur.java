@@ -18,6 +18,7 @@ import ihm.Ihm;
 import metier.*;
 import metier.partie.Partie;
 import metier.partie.CarteWagon;
+import metier.partie.Partie;
 import metier.reseau.Server;
 
 
@@ -142,7 +143,8 @@ public class Controleur
 	 */
 	public void hostGame()
 	{
-		new ServerControleur(metier);
+		this.partie = new Partie(this, this.metier,true);
+		new ServerControleur(this.metier,this.partie);
 	}
 
 
@@ -159,6 +161,7 @@ public class Controleur
 		{
 			ClientControleur clientCtrl = new ClientControleur(ip);
 			this.metier = clientCtrl.getMetier();
+			this.partie = clientCtrl.getPartie();
 			this.ihm.demarrerJeu();
 		}
 		catch (ConnectException e){ return 2;}
