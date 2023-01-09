@@ -11,6 +11,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -156,19 +157,36 @@ public class PanelImage extends JPanel
 			AffineTransform t = new AffineTransform();
 			t.rotate(angle, fig1.getX()+25, fig1.getY()+10);
 			Shape fig2 = t.createTransformedShape(fig1);
-
+			System.out.println("coul : " + couleur + " | proprio1 : " + arete.getProprietaire1() + " | proprio2 : " + arete.getProprietaire2());
 			// on dessine notre troncon*
-			if (this.ctrl.estPrenable(arete, couleur)) g2.setColor(c);
-			else                                       g2.setColor(c.darker().darker());
-			g2.fill(fig2);
-
-			if ( arete.equals(this.ctrl.getAreteSelectionne()) && couleur == this.ctrl.getCouleurSelectionne() )
+			if ((couleur == 1 && arete.getProprietaire1() == null) ||
+			    (couleur == 2 && arete.getProprietaire2() == null)   )
 			{
-				g2.setColor(Color.RED);
+				if (this.ctrl.estPrenable(arete, couleur)) g2.setColor(c);
+				else                                       g2.setColor(c.darker().darker());
+				g2.fill(fig2);
+	
+				if ( arete.equals(this.ctrl.getAreteSelectionne()) && couleur == this.ctrl.getCouleurSelectionne() )
+					g2.setStroke(new BasicStroke(3));
+				else
+					g2.setStroke(new BasicStroke(1));
+					
+				g2.setColor(Color.BLACK);
+				g2.draw(fig2);
 			}
 			else
+			{
+				System.out.println("ca marche batard");
+				Shape fig3 = t.createTransformedShape(new Rectangle2D.Double(x - 25, y - 10, 50, 20));
+				
+				if (couleur == 1) g2.setColor(arete.getProprietaire1().getCouleur());
+				else              g2.setColor(arete.getProprietaire2().getCouleur());
+				g2.fill(fig3);
+
 				g2.setColor(Color.BLACK);
-			g2.draw(fig2);
+				g2.draw(fig3);
+			}
+			
 
 			this.hmArete.get(arete).add(fig2);
 		}

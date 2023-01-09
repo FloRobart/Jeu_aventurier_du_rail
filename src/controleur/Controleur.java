@@ -132,7 +132,7 @@ public class Controleur
 
 			if (couleur == 1) coul = arete.getCouleur1();
 			else              coul = arete.getCouleur2();
-
+			
 			// if : voix neutre | else : voix couleur
 			if ( coul.equals(this.metier.getCouleurs().get(0)))
 			{
@@ -178,15 +178,18 @@ public class Controleur
 			if (this.couleurSelectionnee == 1) cVoie = this.areteSelectionnee.getCouleur1();
 			else                               cVoie = this.areteSelectionnee.getCouleur2();
 
-			if ( ( c == null || c.equals(cVoie) ) && 
-			     nbCarte >= this.areteSelectionnee.getDistance() )
+			if ( ( c == null || c.equals(cVoie) || cVoie.equals(this.getCouleurs().get(0))) && 
+			       nbCarte >= this.areteSelectionnee.getDistance()                             )
 			{
-				if ( this.couleurSelectionnee == 1 )
-					this.areteSelectionnee.setProprietaire1(joueur);
-				else
-					this.areteSelectionnee.setProprietaire1(joueur);
 
-				this.joueur.gethashMapCarteWagons().put(null, nbCarte - this.areteSelectionnee.getDistance());
+				if      ( this.couleurSelectionnee == 1 && this.areteSelectionnee.getProprietaire1() == null)
+					this.areteSelectionnee.setProprietaire1(joueur);
+				else if ( this.couleurSelectionnee == 2 && this.areteSelectionnee.getProprietaire2() == null)	
+					this.areteSelectionnee.setProprietaire2(joueur);
+				else
+					return;
+
+				this.joueur.gethashMapCarteWagons().put(c, nbCarte - this.areteSelectionnee.getDistance());
 
 				if (this.joueur.gethashMapCarteWagons().get(c) == 0)
 				{
