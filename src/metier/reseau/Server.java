@@ -6,18 +6,20 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import controleur.Controleur;
 import metier.Metier;
+import metier.partie.Partie;
 
 
 public class Server 
 {
-    private Metier metier;
+    private Controleur ctrl;
     private ServerSocket socket;
     private ArrayList<ServerClientHandler> clients;
-    public Server(Metier metier)
+    public Server(Controleur ctrl)
     {
         this.clients = new ArrayList<ServerClientHandler>();
-        this.metier = metier;
+        this.ctrl = ctrl;
     }
 
     public void writeonce(String cmd)
@@ -25,6 +27,19 @@ public class Server
         for (ServerClientHandler sch : clients)
         {
             sch.writeonce(cmd);
+        }
+    }
+
+    public void demarerPartie()
+    {
+        writeonce("DEMARRER_PARTIE");
+    }
+
+    public void majPartie(Partie partie)
+    {
+        for (ServerClientHandler sch : clients)
+        {
+            sch.majPartie(partie);
         }
     }
 
@@ -66,7 +81,7 @@ public class Server
                 {
                     try {
                         Socket client = socket.accept();
-                        ServerClientHandler sch = new ServerClientHandler(metier, client);
+                        ServerClientHandler sch = new ServerClientHandler(ctrl, client);
                         clients.add(sch);
                         new Thread(sch).start();
                     } catch (IOException e) {
