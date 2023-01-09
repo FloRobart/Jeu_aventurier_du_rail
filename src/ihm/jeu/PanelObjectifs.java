@@ -109,7 +109,6 @@ public class PanelObjectifs extends JPanel implements ActionListener
      */
     private BufferedImage creerCarte(CarteObjectif carteObjectif) 
     {
-        Color titleBackColor   = this.theme.get("titles").get(1);
         Color labelForeColor   = this.theme.get("labels").get(0);
 
         Noeud noeud1 = carteObjectif.getNoeud1();
@@ -124,12 +123,13 @@ public class PanelObjectifs extends JPanel implements ActionListener
 
 		BufferedImage bi = this.ctrl.getImagePlateau();
         Graphics2D g2 = (Graphics2D) g;
+        //zoom de l'image du plateau
 		double zoomLargeur = (double) 150 / bi.getWidth ();
 		double zoomHauteur = (double) 150 / bi.getHeight();
-		double facteurZoom = Math.min(zoomLargeur, zoomHauteur);
 	    AffineTransform at = new AffineTransform();
 		at.scale(zoomLargeur, zoomHauteur);
         g2.transform(at);
+        
         g2.drawImage(bi, 0, 0, null);
 
        //Ligne
@@ -164,7 +164,6 @@ public class PanelObjectifs extends JPanel implements ActionListener
         g2.drawString(noeud2.getNom(), noeud2.getX() + noeud2.getXNom() - (noeud2.getNom().length() * 3), noeud2.getY() + noeud2.getYNom() + 4);
 
 
-        
         //Nombre de points
         at.scale(35, 35);
         g2.transform(at);
@@ -172,39 +171,6 @@ public class PanelObjectifs extends JPanel implements ActionListener
         g2.setColor(labelForeColor);
         g2.setFont(g2.getFont().deriveFont(10f));
         g2.drawString(nbPoints + " points", 0, 10);
-
-        
-
-        /*g2.drawImage(bi, bi.getWidth()/2, bi.getHeight()/2-150, null);
-
-        
-        
-
-        at.scale(60, 60);
-        g2.transform(at);
-
-        g.setColor(new Color(255, 255, 255, 150));
-        g.fillRect(10, 10, 280, 150);
-
-        g.setColor(Color.BLUE);
-        g.setFont(g.getFont().deriveFont(20f));
-        FontMetrics fm = g.getFontMetrics();
-        String str = "Objectif";
-        Point p = new Point(100 - fm.stringWidth(str)/2, 30);
-        g.drawString(str, p.x, p.y);
-
-        g.setColor(Color.BLACK);
-        g.setFont(g.getFont().deriveFont(15f));
-        fm = g.getFontMetrics();
-        str = noeud1.getNom() + " ==> " + noeud2.getNom();
-        p = new Point(100 - fm.stringWidth(str)/2, 60);
-        g.drawString(str, p.x, p.y);
-
-        g.setFont(g.getFont().deriveFont(15f));
-        fm = g.getFontMetrics();
-        str = nbPoints + " points";
-        p = new Point(100 - fm.stringWidth(str)/2, 90);
-        g.drawString(str, p.x, p.y);*/
 
         return img;
     }
