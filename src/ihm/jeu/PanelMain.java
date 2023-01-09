@@ -26,7 +26,7 @@ import metier.CarteObjectif;
 import metier.Joueur;
 import metier.partie.CarteWagon;
 
-public class PanelMain extends JPanel
+public class PanelMain extends JPanel implements ActionListener
 {
 	private Controleur ctrl;
 	private Joueur joueur;
@@ -67,6 +67,9 @@ public class PanelMain extends JPanel
 			i++;
         } 
 
+		for (JButton btn : this.tabIconWagon)
+			btn.addActionListener(this);
+
 		this.setVisible(true);
 	}
 
@@ -93,4 +96,12 @@ public class PanelMain extends JPanel
 
         return bi;
     }
+
+	public void actionPerformed(ActionEvent e) 
+	{
+		if (this.ctrl.peuxJouer())
+			for (int i = 0; i < this.tabIconWagon.length; i++)
+				if (e.getSource() == this.tabIconWagon[i])
+					this.ctrl.prendreArete(i);
+	}
 }

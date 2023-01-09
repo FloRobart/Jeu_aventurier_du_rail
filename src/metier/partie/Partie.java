@@ -1,8 +1,11 @@
 package metier.partie;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import controleur.Controleur;
+import metier.Arete;
 import metier.CarteObjectif;
 import metier.Joueur;
 import metier.Metier;
@@ -13,6 +16,7 @@ public class Partie implements Serializable
 	private static final long serialVersionUID = 2L;
 
 	private transient GestionPioche  gestionPioche;
+	private List<Arete>   alArete;
 	private Joueur[]      joueurs;
 	private Joueur        joueurCourant;
 	private int           nbJetonFin;
@@ -21,8 +25,9 @@ public class Partie implements Serializable
 
 	public Partie(Controleur ctrl, Metier metier, boolean estMulti)
 	{
-		this.ctrl = ctrl;
+		this.ctrl          = ctrl;
 		this.gestionPioche = new GestionPioche(metier);
+		this.alArete       = metier.getAretes();
 
 		this.joueurs = new Joueur[metier.getJoueurs().size()];
 		for (int i = 0; i < this.joueurs.length; i++)

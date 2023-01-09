@@ -167,6 +167,40 @@ public class Controleur
 		this.ihm.majIHM();
 	}
 
+	public void prendreArete(int indMain)
+	{
+		if (this.areteSelectionnee != null)
+		{
+			Color c = this.joueur.getAlCouleurs().get(indMain);
+			int nbCarte = this.joueur.gethashMapCarteWagons().get(c);
+
+			Color cVoie;
+			if (this.couleurSelectionnee == 1) cVoie = this.areteSelectionnee.getCouleur1();
+			else                               cVoie = this.areteSelectionnee.getCouleur2();
+
+			if ( ( c == null || c.equals(cVoie) ) && 
+			     nbCarte >= this.areteSelectionnee.getDistance() )
+			{
+				if ( this.couleurSelectionnee == 1 )
+					this.areteSelectionnee.setProprietaire1(joueur);
+				else
+					this.areteSelectionnee.setProprietaire1(joueur);
+
+				this.joueur.gethashMapCarteWagons().put(null, nbCarte - this.areteSelectionnee.getDistance());
+
+				if (this.joueur.gethashMapCarteWagons().get(c) == 0)
+				{
+					this.joueur.getAlCouleurs().remove(c);
+					this.joueur.gethashMapCarteWagons().remove(c);
+				}
+
+				this.ihm.majIHM();
+			}
+			
+			
+		}
+	}
+
 	public void piocherPioche ()        { this.partie.piocherPioche ();    }
 	public void piocherVisible(int ind) { this.partie.piocherVisible(ind); }
 

@@ -70,9 +70,8 @@ public class Arete implements Serializable
 	}
 	public void setProprietaire2(Joueur j) 
 	{ 
-		if(is2Sens())
-			if(this.proprietaire2 != null)
-				this.proprietaire2 = j; 
+		if(is2Sens() && this.proprietaire2 != null)
+			this.proprietaire2 = j; 
 	}
 
 	public void genererTroncon()
