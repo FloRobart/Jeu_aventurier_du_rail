@@ -8,6 +8,8 @@ import java.awt.image.BufferedImage;
 import java.awt.Font;
 import java.io.File;
 import java.io.Serializable;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import ihm.Ihm;
 import metier.*;
@@ -25,12 +27,13 @@ public class Controleur
     {
         this.metier = new Metier(this);
         this.ihm    = new Ihm(this);
+
     }
 
 	/**
 	 * Permet de lire le fichier xml contenant toutes les informations du plateau.
 	 * @param fichier :  fichier xml à lire
-	 * @return boolean : true si le fichier a été lu correctement, sinon flase
+	 * @return boolean : true si le fichier a été lu correctement, sinon false
 	 */
 	public boolean ouvrir(File fichier) { return this.metier.lireFichier(fichier); }
 
@@ -120,6 +123,17 @@ public class Controleur
     public static void main(String[] args)
     {
         new Controleur();
+		//Les commandes pour voir l'IP de la machine
+		InetAddress ip;
+        String hostname;
+        try {
+            ip = InetAddress.getLocalHost();
+            hostname = ip.getHostName();
+            System.out.println("Your current IP address : " + ip);
+            System.out.println("Your current Hostname : " + hostname);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
     }
 
     public Joueur getJoueurSelect() {

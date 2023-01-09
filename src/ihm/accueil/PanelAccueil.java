@@ -578,7 +578,7 @@ public class PanelAccueil extends JPanel implements ActionListener
                 boolean pseudoCorrect = this.verifPseudo();
                 boolean mdpCorrect = false;
 
-                if (e.getSource() == this.btnCreerMulti) { mdpCorrect = this.verifMdp(this.txtMdpCreer); }
+                if (e.getSource() == this.btnCreerMulti) { mdpCorrect = this.verifMdp(this.txtMdpCreer);this.ctrl.creerPartie();}
 
 
                 /* Vérification de la mappe */

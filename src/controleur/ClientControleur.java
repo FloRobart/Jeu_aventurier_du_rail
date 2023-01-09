@@ -25,6 +25,7 @@ public class ClientControleur {
         }
         catch (Exception e) {e.printStackTrace();}
     }
+    
     public Metier getMetier (){return this.metier;}
     
 }
