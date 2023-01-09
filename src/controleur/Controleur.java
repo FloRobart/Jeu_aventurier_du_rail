@@ -169,15 +169,4 @@ public class Controleur
     }
 
 
-	public void setVillesObjectif(CarteObjectif carteObjectif) 
-	{
-		this.ihm.setVillesObjectif(carteObjectif);
-	}
-
-
-
-
-
-
-
 }

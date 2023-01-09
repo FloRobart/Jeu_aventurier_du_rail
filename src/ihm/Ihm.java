@@ -73,9 +73,4 @@ public class Ihm
         if (this.frameAttente != null) { this.frameAttente.appliquerTheme(); }
     }
 
-
-    public void setVillesObjectif(CarteObjectif carteObjectif) 
-    {
-        if (this.frameJeu != null) { this.frameJeu.setVillesObjectif(carteObjectif); }
-    }
 }

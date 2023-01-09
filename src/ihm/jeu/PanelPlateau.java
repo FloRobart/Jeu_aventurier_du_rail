@@ -213,8 +213,4 @@ public class PanelPlateau extends JPanel implements ActionListener, MouseWheelLi
 		this.btnCentrer.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
     }
 
-    public void setVillesObjectif(CarteObjectif carteObjectif) 
-	{
-		this.panelImage.setVillesObjectif(carteObjectif);
-    }
 }

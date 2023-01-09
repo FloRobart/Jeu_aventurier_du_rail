@@ -82,8 +82,4 @@ public class FrameJeu extends JFrame
         this.panelObjectif  .appliquerTheme();
     }
 
-    public void setVillesObjectif(CarteObjectif carteObjectif) 
-    {
-        this.panelPlateau.setVillesObjectif(carteObjectif);
-    }
 }

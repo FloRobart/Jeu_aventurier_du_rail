@@ -201,29 +201,4 @@ public class PanelImage extends JPanel
 		return image;
 	}
 
-	public void setVillesObjectif(CarteObjectif carteObjectif) 
-	{
-		this.selecVillesObjectif(carteObjectif.getNoeud1(), carteObjectif.getNoeud2());
-	}
-
-	private void selecVillesObjectif(Noeud noeud1, Noeud noeud2) 
-	{
-		Graphics g = this.getGraphics();
-		this.paint(g);
-
-        Graphics2D g2 = (Graphics2D) g;
-
-		int midX1 = noeud1.getX();
-		int midY1 = noeud1.getY();
-
-		int midX2 = noeud2.getX();
-		int midY2 = noeud2.getY();
-
-		g2.setColor(Color.RED);
-		g2.setStroke(new BasicStroke(2.5f));
-		g2.drawOval(midX1-16, midY1-16, 30, 30);
-		g2.drawOval(midX2-16, midY2-16, 30, 30);
-
-
-	}
 }

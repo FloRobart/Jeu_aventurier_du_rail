@@ -143,7 +143,7 @@ public class PanelObjectifs extends JPanel implements ActionListener
         {
             if(e.getSource() == this.tabBtnObjectifs[i])
             {
-                this.ctrl.setVillesObjectif(this.listObjectifs.get(i));
+                
             }
         }
         
