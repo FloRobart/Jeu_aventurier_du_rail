@@ -35,6 +35,7 @@ public class GestionPioche
 		Collections.shuffle(this.lstCartesWagon);
 
 		// Creation du tableau de cartes visible
+		this.tabCartesVisible = new CarteWagon[5];
 		for ( int cpt = 0 ; cpt < 5 ; cpt++)
 			this.tabCartesVisible[cpt] = this.lstCartesWagon.remove(0);
 		

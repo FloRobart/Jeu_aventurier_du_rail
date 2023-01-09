@@ -27,14 +27,14 @@ public class Partie
 			this.joueurs[i].setNbJetonsRestant(metier.getNbJetonJoueur());
 
 			// attributions des cartes de départ
-			for (int cpt = 0 ; cpt < 4 ; cpt++)
-				this.joueurs[i].ajouterCarteWagon(this.gestionPioche.piocherCarteWagon());
+			//for (int cpt = 0 ; cpt < 4 ; cpt++)
+				//this.joueurs[i].ajouterCarteWagon(this.gestionPioche.piocherCarteWagon());
 		}
 
-		this.nbJetonFin = metier.getNbJetonFin();
-		this.tour = 1;
+		this.nbJetonFin    = metier.getNbJetonFin();
+		this.tour          = 1;
 		this.joueurCourant = this.joueurs[0];
-		this.estMulti = estMulti;
+		this.estMulti      = estMulti;
 
 		//while (!this.estTerminee())
 	}
