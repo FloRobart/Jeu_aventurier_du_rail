@@ -14,6 +14,7 @@ public class Joueur implements Serializable
     private int score;
     private List<CarteObjectif> alCartesObjectif;
     private HashMap<Color,Integer> hashMapCarteWagons;
+    private List<CarteWagon> alCartesWagons;
     private int nbJetonsRestant;
     private Color  couleur;
 
@@ -28,6 +29,7 @@ public class Joueur implements Serializable
     public List<CarteObjectif> getAlCartesObjectif() { return this.alCartesObjectif; }
     public int getNbCartesObjectif() { return this.alCartesObjectif.size(); }
     public HashMap<Color,Integer> gethashMapCarteWagons() { return this.hashMapCarteWagons; }
+    public List<CarteWagon> getAlCartesWagons() { return this.alCartesWagons; }
     public int getNbCartesWagon() { return this.hashMapCarteWagons.size(); }
     public int getNbJetonsRestant() { return this.nbJetonsRestant; }
     public Color getCouleur() { return this.couleur; }
@@ -49,6 +51,7 @@ public class Joueur implements Serializable
         Color coul = carteWagon.getCouleur();
         Integer nbCarte = this.hashMapCarteWagons.get(coul) + 1 ;
         this.hashMapCarteWagons.replace(coul,nbCarte);
+        this.alCartesWagons.add(carteWagon);
     }
 
     public void ajouterScore(int score)
@@ -71,6 +74,7 @@ public class Joueur implements Serializable
         Color coul = carteWagon.getCouleur();
         Integer nbCarte = this.hashMapCarteWagons.get(coul)  -1 ;
         this.hashMapCarteWagons.replace(coul,nbCarte);
+        this.alCartesWagons.remove(carteWagon);
     }
 
     public String toString()

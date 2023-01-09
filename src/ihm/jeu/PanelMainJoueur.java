@@ -6,6 +6,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.nio.Buffer;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.awt.Graphics2D;
@@ -21,12 +23,16 @@ import javax.swing.BorderFactory;
 
 import controleur.Controleur;
 import metier.Joueur;
+import metier.partie.CarteWagon;
 
 public class PanelMainJoueur extends JPanel implements ActionListener
 {
-    private Controleur ctrl;
-    private Joueur     joueur;
-    private JDialog    dialogObjectifs;
+    private Controleur             ctrl;
+    private Joueur                 joueur;
+    private HashMap<Color,Integer> hashMapCarteWagons;
+    private List<CarteWagon>       alCartesWagons;
+
+    private JDialog                      dialogObjectifs;
     private HashMap<String, List<Color>> theme;
 
     private JPanel         panelImgJoueur;
@@ -58,8 +64,13 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 
         //initialisation des composants
         this.panelImgJoueur  = new JPanel();
-        this.lblNom     = new JLabel("  nom   ");
-        this.lblNbJeton = new JLabel("  jetons restants   ");
+        
+        this.joueur = this.ctrl.getJoueurSelect();
+        this.hashMapCarteWagons = this.joueur.gethashMapCarteWagons();
+        this.alCartesWagons     = this.joueur.getAlCartesWagons();
+
+        this.lblNom     = new JLabel("  nom   "); //this.joueur.getNom()
+        this.lblNbJeton = new JLabel("  jetons restants   "); //this.joueur.getNbJetons()
 
         String pathImage = "";
         if (this.ctrl.getThemeUsed().equals("dark"))
@@ -70,17 +81,19 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         this.lblIcon    = new JLabel(new ImageIcon(pathImage), JLabel.LEFT);
         
         this.panelMainWagon = new JPanel();
-        this.listImageWagon = this.ctrl.getImagesRectoCouleur(); // this.joueur.getCarteWagon().getImageRecto();
-        this.listImageWagon.add(this.ctrl.getImageRectoLocomotive());
+        /*this.listImageWagon = new ArrayList<BufferedImage>();
+        for(CarteWagon carte : this.alCartesWagons)
+        {
+            this.listImageWagon.add(carte.getImageRecto());
+        }*/
+        this.listImageWagon = this.ctrl.getImagesRectoCouleur(); // this.joueur.getAlCartesWagons()
+        this.listImageWagon.add(this.ctrl.getImageRectoLocomotive());//ligne à supprimer
         int taille = this.listImageWagon.size();
         this.tabIconWagon   = new JButton[5];
         this.tabLblWagon    = new JLabel[5];
         
         this.panelMainObjectif = new JPanel();
         this.btnIconObjectif   = new JButton();
-
-        this.joueur = this.ctrl.getJoueurSelect();
-
 
         //panelImgJoueur Joueur
         this.panelInfoJoueur = new JPanel();
@@ -97,7 +110,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         for(int i = 0; i < taille; i++)
         {
             this.tabLblWagon[i]  = new JLabel();
-            this.tabLblWagon[i].setText("X"+ i);
+            this.tabLblWagon[i].setText("X"+ i); //this.tabLblWagon[i].setText("X"+ this.hashMapCarteWagons.get(this.alCarteWagon.get(i).getCouleur()));
 
             this.tabIconWagon[i] = new JButton();
             this.tabIconWagon[i].setIcon(new ImageIcon(creerCarte(this.listImageWagon.get(i), this.tabLblWagon[i])));
