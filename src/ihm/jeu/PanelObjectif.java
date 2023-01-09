@@ -6,11 +6,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowListener;
 import java.awt.event.WindowEvent;
+import java.awt.BorderLayout;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 
 import controleur.Controleur;
 
@@ -29,6 +32,7 @@ public class PanelObjectif extends JPanel implements ActionListener
         this.ctrl = ctrl;
         this.dialogInfosJoueur    = null;
         this.panelPiocherObjectif = null;
+        this.setBorder( BorderFactory.createLineBorder(Color.black, 2) );
 
 
 		//Creation des composants
@@ -36,7 +40,7 @@ public class PanelObjectif extends JPanel implements ActionListener
 		this.btnCarteObjectif.setPreferredSize(new Dimension(200, 100));
 
         //Ajout des composants
-		this.add(this.btnCarteObjectif);
+		this.add(this.btnCarteObjectif , BorderLayout.NORTH);
 
 		//Activation des composants
 		this.btnCarteObjectif.addActionListener(this);

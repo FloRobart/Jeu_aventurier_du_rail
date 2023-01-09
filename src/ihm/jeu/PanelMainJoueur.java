@@ -17,7 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+import javax.swing.BorderFactory;
 
 import controleur.Controleur;
 import metier.Joueur;
@@ -54,6 +54,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         this.theme           = this.ctrl.getTheme();
 
         this.setLayout(new BorderLayout());
+        this.setBorder( BorderFactory.createLineBorder(Color.black, 3) );
 
         //initialisation des composants
         this.panelImgJoueur  = new JPanel();

@@ -143,7 +143,7 @@ public class PanelObjectifs extends JPanel implements ActionListener
         {
             if(e.getSource() == this.tabBtnObjectifs[i])
             {
-                System.out.println("Carte objectif " + i + " cliquée");
+                
             }
         }
         

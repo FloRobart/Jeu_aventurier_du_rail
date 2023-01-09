@@ -9,7 +9,6 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.border.BevelBorder;
 import java.awt.event.WindowListener;
 import java.awt.event.WindowEvent;
 
@@ -44,8 +43,10 @@ public class PanelJoueurs extends JPanel implements ActionListener
         this.ctrl = ctrl;
         this.dialogInfosJoueur = null;
         this.panelInfosJoueur  = null;
+        this.setLayout(new BorderLayout());
 
         this.setSize(200, 400);
+        this.setBorder( BorderFactory.createLineBorder(Color.black, 2) );
 
         /*panel de chaque joueurs */
         this.tabPanels  = new JPanel [4];
@@ -84,7 +85,7 @@ public class PanelJoueurs extends JPanel implements ActionListener
         this.scrollJoueurs.setPreferredSize(new Dimension(200, 385)); // 400 c'est trop, ça déborder du panel
         this.scrollJoueurs.getVerticalScrollBar().setUnitIncrement(5);
 
-        this.add(scrollJoueurs);
+        this.add(scrollJoueurs, BorderLayout.CENTER);
 
         /*afficher les infos d'un joueur en fonction du joueur selectionné */
         for(int cpt=0; cpt< tabBoutons.length; cpt++)
