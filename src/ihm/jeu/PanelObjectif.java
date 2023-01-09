@@ -33,14 +33,18 @@ public class PanelObjectif extends JPanel implements ActionListener
         this.dialogInfosJoueur    = null;
         this.panelPiocherObjectif = null;
         this.setBorder( BorderFactory.createLineBorder(Color.black, 2) );
-
+        this.setLayout(new BorderLayout());
 
 		//Creation des composants
 		this.btnCarteObjectif = new JButton(new ImageIcon(this.ctrl.getImageVersoObjectif()));
-		this.btnCarteObjectif.setPreferredSize(new Dimension(200, 100));
+        this.btnCarteObjectif.setSize(new Dimension(200, 150));
 
         //Ajout des composants
-		this.add(this.btnCarteObjectif , BorderLayout.NORTH);
+		this.add(this.btnCarteObjectif, BorderLayout.CENTER);
+        this.add(new JLabel("    "), BorderLayout.SOUTH);
+        this.add(new JLabel("    "), BorderLayout.NORTH);
+        this.add(new JLabel("    "), BorderLayout.WEST);
+        this.add(new JLabel("    "), BorderLayout.EAST);
 
 		//Activation des composants
 		this.btnCarteObjectif.addActionListener(this);

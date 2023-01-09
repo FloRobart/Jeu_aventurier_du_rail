@@ -87,6 +87,7 @@ public class Metier implements Serializable
     public Metier(Controleur ctrl)
     {
         this.ctrl = ctrl;
+		this.lstJoueurs = new ArrayList<Joueur>();
 		this.lireFichier(new File("./bin/donnees/France.xml"));
 		//this.initCartes();
 		this.hmColorThemes = new HashMap<String, List<Color>>();

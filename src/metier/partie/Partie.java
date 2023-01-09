@@ -1,14 +1,18 @@
 package metier.partie;
 
+import java.io.Serializable;
+
 import controleur.Controleur;
+import metier.CarteObjectif;
 import metier.Joueur;
 import metier.Metier;
 
-public class Partie 
+public class Partie implements Serializable
 {
-	private Controleur ctrl;
+	private transient Controleur ctrl;
+	private static final long serialVersionUID = 2L;
 
-	private GestionPioche gestionPioche;
+	private transient GestionPioche  gestionPioche;
 	private Joueur[]      joueurs;
 	private Joueur        joueurCourant;
 	private int           nbJetonFin;
@@ -25,17 +29,26 @@ public class Partie
 		{
 			this.joueurs[i] = metier.getJoueurs().get(i);
 			this.joueurs[i].setNbJetonsRestant(metier.getNbJetonJoueur());
-
+System.out.println("--------------");
 			// attributions des cartes de départ
+			CarteWagon carte;
 			for (int cpt = 0 ; cpt < 4 ; cpt++)
-				this.joueurs[i].ajouterCarteWagon(this.gestionPioche.piocherCarteWagon());
+			{
+				carte = this.gestionPioche.piocherCarteWagon();
+System.out.println(carte.getCouleur());
+				if (carte != null)
+					this.joueurs[i].ajouterCarteWagon(carte);
+			}
+
 		}
 
-		this.nbJetonFin = metier.getNbJetonFin();
-		this.tour = 1;
-		this.joueurCourant = this.joueurs[0];
-		this.estMulti = estMulti;
+		this.nbJetonFin    = metier.getNbJetonFin();
+		this.tour          = 1;
+		// this.joueurCourant = this.joueurs[0];
+		this.estMulti      = estMulti;
 
+		// while (!this.estTerminee())
+		// 	this.jouerTour();
 		//while (!this.estTerminee())
 	}
 
@@ -57,7 +70,7 @@ public class Partie
 				indJoueur = (cpt++) % this.joueurs.length;
 		
 		this.joueurCourant = this.joueurs[indJoueur];
-
 		if (indJoueur == 0) this.tour++;
 	}
+
 }

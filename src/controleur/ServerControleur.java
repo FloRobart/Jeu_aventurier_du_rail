@@ -1,17 +1,28 @@
 package controleur;
 
 import metier.Metier;
+import metier.partie.Partie;
+
 import java.net.*;
+import java.util.ArrayList;
+import java.util.List;
+
+
 import java.io.*;
 public class ServerControleur 
 {
     private ServerSocket ss;
     private boolean      isWating;
     private Metier       metier;
-    public ServerControleur(Metier metier) 
+    private Partie       partie;
+    private List<ClientHandler> lstClientHandler;
+
+    public ServerControleur(Metier metier,Partie partie) 
     {
         this.isWating = true;
         this.metier = metier;
+        this.partie = partie;
+        this.lstClientHandler = new ArrayList<ClientHandler>();
 		try
 		{
 			ss	= new ServerSocket(9999);
@@ -20,12 +31,13 @@ public class ServerControleur
 		} 
 		catch (Exception e){e.printStackTrace();}        
     }
-    /*
+    /**
      * Method updateMap() notify (to all clients) that the map has been changed
      */
     public void updateMap()
     {
-
+        for (ClientHandler clientHandler : this.lstClientHandler)
+            clientHandler.updateMap();
     }
 
 
@@ -38,7 +50,9 @@ public class ServerControleur
                 while (isWating)
                 {
                     Socket s =  ss.accept();
-                    Thread thread = new Thread (new ClientHandler(s));
+                    ClientHandler clientHandler = new ClientHandler(s);
+                    lstClientHandler.add(clientHandler);
+                    Thread thread = new Thread (clientHandler);
                     thread.start();
                 }    
             }
@@ -55,16 +69,25 @@ public class ServerControleur
         @Override
         public void run() 
         {
+            sendMetierAndPartie();
+        }
+        public void updateMap()
+        {
+            sendMetierAndPartie();
+        }
+        public void sendMetierAndPartie()
+        {
             try 
             {
                 OutputStream outputStream = socket.getOutputStream();
+                InputStream  inputStream  = socket.getInputStream();
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
                 objectOutputStream.writeObject(metier);
+                objectOutputStream.writeObject(partie);
                 objectOutputStream.flush();
 
             }
             catch (IOException e){e.printStackTrace();}
         }
-        
-    }
+   }
 }

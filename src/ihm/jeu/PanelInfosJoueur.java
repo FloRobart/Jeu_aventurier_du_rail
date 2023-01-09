@@ -36,26 +36,26 @@ public class PanelInfosJoueur extends JPanel
     private int nbWagons;
     private int nbCartesObjectif;
     private int nbCartesWagon;
-    private int numJoueur;
 
-    public PanelInfosJoueur(Controleur ctrl, int numJoueur)
+    public PanelInfosJoueur(Controleur ctrl, Joueur joueur)
     {
         this.ctrl = ctrl;
-        this.numJoueur = numJoueur;
+        this.joueur = joueur;
 
-
+        //initialisation des composants
         //this.joueur = ctrl.getJoueurCourant();
         this.setLayout(new BorderLayout());
+        this.nbWagons            = this.joueur.getNbJetonsRestant();
+        this.nbCartesObjectif    = this.joueur.getNbCartesObjectif();
+        this.nbCartesWagon       = this.joueur.getNbCartesWagon();
 
-        this.lblNom              = new JLabel("nom " + this.numJoueur); //this.joueur.getNom());
-        this.lblNbJeton          = new JLabel("jetons restants"); //this.joueur.getNbJetonsRestant());
-        this.lblNbCartesWagon    = new JLabel("cartes wagon"); //this.joueur.getNbCartesWagon());
-        this.lblNbCartesObjectif = new JLabel("cartes objectif"); //this.joueur.getNbCartesObjectif());
+        this.lblNom              = new JLabel(this.joueur.getNom());
+        //this.lblNom.setForeground(this.joueur.getCouleur());
+        this.lblNbJeton          = new JLabel(this.nbWagons  + " jetons restants");
+        this.lblNbCartesWagon    = new JLabel(this.nbCartesWagon    + "cartes wagon");
+        this.lblNbCartesObjectif = new JLabel(this.nbCartesObjectif + "cartes objectif");
         this.lblIcon             = new JLabel();
 
-        this.nbWagons            = 0; //this.joueur.getNbJetonsRestant();
-        this.nbCartesObjectif    = 0; //this.joueur.getNbCartesObjectif();
-        this.nbCartesWagon       = 0; //this.joueur.getNbCartesWagon();
 
         this.lblInfos = new JLabel("Infos sur le Joueurs");
 
@@ -66,19 +66,17 @@ public class PanelInfosJoueur extends JPanel
 
 
         /*-----NE PAS SUPPRIMER------ */
-        /*this.lblNom.setText(joueur.getNom());
+        if(this.nbWagons <= 1)
+            this.lblNbJeton.setText(this.nbWagons + " wagon placé");
+        
+        if(this.nbCartesObjectif <= 1)
+            this.lblNbCartesObjectif.setText(this.nbCartesObjectif + " carte objectif");
+
+        if(this.nbCartesWagon <= 1)
+            this.lblNbCartesWagon.setText(this.nbCartesWagon + " carte wagon");
 
         
-        if(joueur.getNbJetonsPosés() <= 1)
-            this.lblNbJeton.setText(joueur.getNbJetonsPosés() + " wagon placé");
-        
-        if(joueur.getNbCartesObjectif() <= 1)
-            this.lblNbCartesObjectif.setText(joueur.getNbCartesObjectif() + " carte objectif");
-
-        if(joueur.getNbCartesWagon() <= 1)
-            this.lblNbCartesWagon.setText(joueur.getNbCartesWagon() + " carte wagon");*/
-
-        
+        //ajout des composants
         GroupLayout layout = new GroupLayout(this.panelIcon);
         this.panelIcon.setLayout(layout);
         layout.setHorizontalGroup(
@@ -113,13 +111,6 @@ public class PanelInfosJoueur extends JPanel
 
         this.appliquerTheme();
     }
-
-    /**
-     * Permet d'obtenir le numero du joueur
-     * @return le numero du joueur qui est affiché sur le frame
-     */
-    public int getNumJoueur() { return this.numJoueur; }
-
 
     /**
      * Applique les couleurs du thème sélectionné à tout les éléments du panel et au panel lui même

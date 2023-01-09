@@ -5,11 +5,12 @@ import java.util.List;
 
 import javax.swing.Icon;
 
+
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.awt.Font;
 import java.io.File;
-import java.io.Serializable;
+import java.io.IOException;
 import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -18,6 +19,7 @@ import ihm.Ihm;
 import metier.*;
 import metier.partie.Partie;
 import metier.partie.CarteWagon;
+import metier.partie.Partie;
 import metier.reseau.Server;
 
 
@@ -28,6 +30,8 @@ public class Controleur
 	private Joueur joueur;
     private Ihm    ihm;
 
+	private ServerControleur serverCtrl;
+	private ClientControleur clientCtrl;
     public Controleur()
     {
         this.metier = new Metier(this);
@@ -36,7 +40,10 @@ public class Controleur
         this.ihm    = new Ihm(this);
 
     }
-
+	public void superMethodeDeDebug() { 
+		this.joueur.ajouterCarteWagon(new CarteWagon(null, getImageVersoCouleur(), getImageRectoLocomotive()));
+		System.out.println(this.joueur.getAlCartesWagons().size());
+	}
 
 	/**
 	 * Permet de lire le fichier xml contenant toutes les informations du plateau.
@@ -65,7 +72,8 @@ public class Controleur
 	 */
 	public void creerPartieMulti()
 	{
-		this.metier.creeServer(true);
+		// this.metier.creeServer(true);
+		this.hostGame();
 		this.ihm.demarrerAttente(true);
 	}
 
@@ -75,6 +83,7 @@ public class Controleur
 	/*          Getters            */
 	/* --------------------------- */
 	public List<Joueur>        getJoueurs             () { return this.metier.getJoueurs         (); }
+	public Joueur              getJoueur              () { return this.joueur                    ; }
 	//public List<CarteWagon>    getCarteWagon          () { return this.metier.getCarteWagon      (); }
 	public List<CarteObjectif> getCarteObjectif       () { return this.metier.getCarteObjectif   (); }
 	public List<Noeud>         getNoeuds              () { return this.metier.getNoeuds          (); }
@@ -142,31 +151,72 @@ public class Controleur
 	 */
 	public void hostGame()
 	{
-		new ServerControleur(metier);
+		this.partie = new Partie(this, this.metier,true);
+		this.serverCtrl = new ServerControleur(this.metier,this.partie);
 	}
 
 
-	/*
+	/**
 	 * 
 	 */
 	public int joinGame(String ip, String password)
 	{
 
-		this.metier.creeClient(ip, true, password);
+		// this.metier.creeClient(ip, true, password);
 
-		return 1;
-		/*try 
+		// return 1;
+		try 
 		{
-			ClientControleur clientCtrl = new ClientControleur(ip);
+			this.clientCtrl = new ClientControleur(ip);
+
 			this.metier = clientCtrl.getMetier();
+			this.partie = clientCtrl.getPartie();
 			this.ihm.demarrerJeu();
 		}
-		catch (ConnectException e){ return 2;}
+		catch (UnknownHostException e)	{ return 2;} 
+		catch (ConnectException e) 		{e.printStackTrace();} 
+		catch (IOException e) 			{e.printStackTrace();}
+
 		if (!password.equals(this.metier.getMotDePasse())) return 3;
-		return 1;*/
+		return 1;
 
 	}
-    public static void main(String[] args)
+	
+    public void creerPartie() 
+	{
+		this.hostGame();
+    }
+
+    public Joueur getJoueurCourant() {
+        return null;
+    }
+
+	/**
+	 * Affiche la carte objectif dans la main du joueur
+	 * @param icon carte objectif
+	 */
+    public void afficherCarteObjectif(Icon icon) 
+	{
+		this.ihm.afficherCarteObjectif(icon);
+    }
+
+	/**
+	 * @Author Duc
+	 * methode qui actualise le IHM de jeu (update Partie) quand y a un changement
+	 */
+	public void updateMapOnline()
+	{
+		if (this.serverCtrl!= null)
+		{
+			this.serverCtrl.updateMap();
+		}
+		if (this.clientCtrl!= null)
+		{
+			this.clientCtrl.updateMap();
+		}
+	}
+
+	public static void main(String[] args)
     {
         new Controleur();
 		//Les commandes pour voir l'IP de la machine
@@ -181,21 +231,4 @@ public class Controleur
             e.printStackTrace();
         }
     }
-	
-    public void creerPartie() 
-	{
-		this.hostGame();
-    }
-
-    public Joueur getJoueurCourant() {
-        return null;
-    }
-
-
-    public void afficherCarteObjectif(Icon icon) 
-	{
-		this.ihm.afficherCarteObjectif(icon);
-    }
-
-
 }
