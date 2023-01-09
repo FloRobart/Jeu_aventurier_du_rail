@@ -101,13 +101,11 @@ public class Partie implements Serializable
 		this.verifierVisible();
 	}
 
-<<<<<<< HEAD
 	public CarteObjectif[] getPiocheObjectif() 
 	{
 		return this.gestionPioche.piocherCartesObjectif();
 	}
 
-=======
 	public void verifierVisible()
 	{
 		int nbJoker = 0;
@@ -128,5 +126,4 @@ public class Partie implements Serializable
 			this.verifierVisible();
 		}
 	}
->>>>>>> b03e8ece818aeac83416de4f48155efda8f2f9db
 }
