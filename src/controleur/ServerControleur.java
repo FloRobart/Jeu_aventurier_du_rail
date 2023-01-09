@@ -4,6 +4,7 @@ import metier.Metier;
 import metier.partie.Partie;
 
 import java.net.*;
+import java.util.List;
 
 
 import java.io.*;
@@ -13,6 +14,8 @@ public class ServerControleur
     private boolean      isWating;
     private Metier       metier;
     private Partie       partie;
+    private List<ClientHandler> lstClientHandler;
+
     public ServerControleur(Metier metier,Partie partie) 
     {
         this.isWating = true;
@@ -31,7 +34,8 @@ public class ServerControleur
      */
     public void updateMap()
     {
-
+        for (ClientHandler clientHandler : this.lstClientHandler)
+            clientHandler.updateMap();
     }
 
 
@@ -44,7 +48,9 @@ public class ServerControleur
                 while (isWating)
                 {
                     Socket s =  ss.accept();
-                    Thread thread = new Thread (new ClientHandler(s));
+                    ClientHandler clientHandler = new ClientHandler(s);
+                    lstClientHandler.add(clientHandler);
+                    Thread thread = new Thread (clientHandler);
                     thread.start();
                 }    
             }
@@ -61,10 +67,20 @@ public class ServerControleur
         @Override
         public void run() 
         {
+            sendMetierAndPartie();
+        }
+        public void updateMap()
+        {
+            sendMetierAndPartie();
+        }
+        public void sendMetierAndPartie()
+        {
             try 
             {
                 OutputStream outputStream = socket.getOutputStream();
+                InputStream  inputStream  = socket.getInputStream();
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+                ObjectInputStream  objectInputStream  = new ObjectInputStream(inputStream);
                 objectOutputStream.writeObject(metier);
                 objectOutputStream.writeObject(partie);
                 objectOutputStream.flush();
@@ -72,6 +88,5 @@ public class ServerControleur
             }
             catch (IOException e){e.printStackTrace();}
         }
-
    }
 }

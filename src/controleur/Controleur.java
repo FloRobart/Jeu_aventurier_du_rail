@@ -5,11 +5,12 @@ import java.util.List;
 
 import javax.swing.Icon;
 
+
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.awt.Font;
 import java.io.File;
-import java.io.Serializable;
+import java.io.IOException;
 import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -29,6 +30,8 @@ public class Controleur
 	private Joueur joueur;
     private Ihm    ihm;
 
+	private ServerControleur serverCtrl;
+	private ClientControleur clientCtrl;
     public Controleur()
     {
         this.metier = new Metier(this);
@@ -144,29 +147,33 @@ public class Controleur
 	public void hostGame()
 	{
 		this.partie = new Partie(this, this.metier,true);
-		new ServerControleur(this.metier,this.partie);
+		this.serverCtrl = new ServerControleur(this.metier,this.partie);
 	}
 
 
-	/*
+	/**
 	 * 
 	 */
 	public int joinGame(String ip, String password)
 	{
 
-		this.metier.creeClient(ip, true, password);
+		// this.metier.creeClient(ip, true, password);
 
-		return 1;
-		/*try 
+		// return 1;
+		try 
 		{
-			ClientControleur clientCtrl = new ClientControleur(ip);
+			this.clientCtrl = new ClientControleur(ip);
+
 			this.metier = clientCtrl.getMetier();
 			this.partie = clientCtrl.getPartie();
 			this.ihm.demarrerJeu();
 		}
-		catch (ConnectException e){ return 2;}
+		catch (UnknownHostException e)	{ return 2;} 
+		catch (ConnectException e) 		{e.printStackTrace();} 
+		catch (IOException e) 			{e.printStackTrace();}
+
 		if (!password.equals(this.metier.getMotDePasse())) return 3;
-		return 1;*/
+		return 1;
 
 	}
     public static void main(String[] args)
@@ -200,5 +207,19 @@ public class Controleur
 		this.ihm.afficherCarteObjectif(icon);
     }
 
-
+	/**
+	 * @Author Duc
+	 * methode qui actualise le IHM de jeu (update Partie) quand y a un changement
+	 */
+	public void updateMapOnline()
+	{
+		if (this.serverCtrl!= null)
+		{
+			this.serverCtrl.updateMap();
+		}
+		if (this.clientCtrl!= null)
+		{
+			this.clientCtrl.updateMap();
+		}
+	}
 }
