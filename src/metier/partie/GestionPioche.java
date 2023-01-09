@@ -35,12 +35,17 @@ public class GestionPioche
 		Collections.shuffle(this.lstCartesWagon);
 
 		// Creation du tableau de cartes visible
+		this.tabCartesVisible = new CarteWagon[5];
 		for ( int cpt = 0 ; cpt < 5 ; cpt++)
 			this.tabCartesVisible[cpt] = this.lstCartesWagon.remove(0);
 		
 		// Creation de la pile de cartes objectif
 		this.lstCartesObjectif = new LinkedList<CarteObjectif>(List.copyOf(metier.getCarteObjectif()));
 		Collections.shuffle(this.lstCartesObjectif);
+
+
+		System.out.println(this.lstCartesWagon.size());
+		System.out.println(this.lstCartesObjectif.size());
 	}
 
 	public CarteWagon[] getTabCartesVisible() { return this.tabCartesVisible;         }
@@ -50,7 +55,7 @@ public class GestionPioche
 	// gestion des cartes wagon
 	public CarteWagon piocherCarteWagon()
 	{
-		if ( this.lstCartesWagon.size() != 0) return null;
+		if ( this.lstCartesWagon.size() == 0) return null;
 
 		CarteWagon carteWagon = this.lstCartesWagon.remove(0);
 		return carteWagon;

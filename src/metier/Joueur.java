@@ -1,5 +1,6 @@
 package metier;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,6 +21,9 @@ public class Joueur implements Serializable
 
     public Joueur(String nom)
     {
+		this.alCartesWagons = new ArrayList<CarteWagon>();
+		this.alCartesObjectif = new ArrayList<CarteObjectif>();
+		this.hashMapCarteWagons = new HashMap<Color,Integer>();
         this.nom = nom;
         this.score = 0;
     }
@@ -48,7 +52,14 @@ public class Joueur implements Serializable
 
     public void ajouterCarteWagon(CarteWagon carteWagon)
     {
-        Color coul = carteWagon.getCouleur();
+		Color coul = null;
+		
+		if (carteWagon.isJoker())
+        	coul = carteWagon.getCouleur();
+
+		if (!this.hashMapCarteWagons.containsKey(coul))
+			this.hashMapCarteWagons.put(coul, 0);
+		
         Integer nbCarte = this.hashMapCarteWagons.get(coul) + 1 ;
         this.hashMapCarteWagons.replace(coul,nbCarte);
         this.alCartesWagons.add(carteWagon);

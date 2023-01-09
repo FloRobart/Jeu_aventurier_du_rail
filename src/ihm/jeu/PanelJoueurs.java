@@ -50,8 +50,8 @@ public class PanelJoueurs extends JPanel implements ActionListener
         this.setBorder( BorderFactory.createLineBorder(Color.black, 2) );
 
         /*panel de chaque joueurs */
-        //this.lstJoueurs = this.ctrl.getJoueurs();
-        this.tabPanels  = new JPanel [4]; //[this.lstJoueurs.size()];
+        this.lstJoueurs = this.ctrl.getJoueurs();
+        this.tabPanels  = new JPanel [this.lstJoueurs.size()];
         this.tabBoutons = new JButton[this.tabPanels.length];
         this.tabLblNom  = new JLabel [this.tabPanels.length];
         this.tabLblScore= new JLabel [this.tabPanels.length];
@@ -67,9 +67,9 @@ public class PanelJoueurs extends JPanel implements ActionListener
             this.tabPanels[cpt].setBorder(BorderFactory.createBevelBorder(1, titleBackColor, titleBackColor));
             this.tabPanels[cpt].setLayout(new BorderLayout());
 
-            this.tabLblNom  [cpt] = new JLabel("nom "   + (cpt+1)); //this.lstJoueurs.get(cpt).getNom());
+            this.tabLblNom  [cpt] = new JLabel(this.lstJoueurs.get(cpt).getNom());
             //this.tabLblNom[cpt].setForeground(this.joueur.getCouleur());
-            this.tabLblScore[cpt] = new JLabel("score :" + (cpt+1)); //this.lstJoueurs.get(cpt).getScore());
+            this.tabLblScore[cpt] = new JLabel("Score : " + this.lstJoueurs.get(cpt).getScore());
 
             this.tabBoutons[cpt] = new JButton();
             this.tabBoutons[cpt].setBorderPainted    (false);
@@ -105,7 +105,7 @@ public class PanelJoueurs extends JPanel implements ActionListener
             if(e.getSource() == this.tabBoutons[cpt])
             {
                 this.dialogInfosJoueur = new JDialog();
-                this.panelInfosJoueur  = new PanelInfosJoueur(this.ctrl, (cpt+1));
+                this.panelInfosJoueur  = new PanelInfosJoueur(this.ctrl, this.lstJoueurs.get(cpt));
 
                 this.dialogInfosJoueur.setSize(400,200);
                 this.dialogInfosJoueur.setLocation(200, 50);
