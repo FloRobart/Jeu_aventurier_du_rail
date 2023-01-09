@@ -48,7 +48,11 @@ public class Joueur implements Serializable
 
     public void ajouterCarteWagon(CarteWagon carteWagon)
     {
-        Color coul = carteWagon.getCouleur();
+		Color coul = null;
+		
+		if (carteWagon.isJoker())
+        	coul = carteWagon.getCouleur();
+		
         Integer nbCarte = this.hashMapCarteWagons.get(coul) + 1 ;
         this.hashMapCarteWagons.replace(coul,nbCarte);
         this.alCartesWagons.add(carteWagon);

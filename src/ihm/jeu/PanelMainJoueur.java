@@ -19,8 +19,10 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
 
 import controleur.Controleur;
+import metier.CarteObjectif;
 import metier.Joueur;
 import metier.partie.CarteWagon;
 
@@ -290,5 +292,10 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         /* lblIcon */
         this.lblIcon.setOpaque(false);
         this.lblIcon.setForeground(labelForeColor);
+    }
+
+    public void afficherCarteObjectif(Icon icon) 
+    {
+        this.btnIconObjectif.setIcon(icon);
     }
 }
