@@ -6,6 +6,7 @@ import controleur.Controleur;
 import ihm.accueil.FrameAccueil;
 import ihm.attente.FrameAttente;
 import ihm.jeu.FrameJeu;
+import metier.CarteObjectif;
 
 /**
  * Classe qui gère l'ensemble des fenêtres de l'application.
@@ -70,5 +71,11 @@ public class Ihm
         if (this.frameJeu     != null) { this.frameJeu    .appliquerTheme(); }
         if (this.frameAccueil != null) { this.frameAccueil.appliquerTheme(); }
         if (this.frameAttente != null) { this.frameAttente.appliquerTheme(); }
+    }
+
+
+    public void setVillesObjectif(CarteObjectif carteObjectif) 
+    {
+        if (this.frameJeu != null) { this.frameJeu.setVillesObjectif(carteObjectif); }
     }
 }

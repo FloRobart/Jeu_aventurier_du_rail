@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 
 import controleur.Controleur;
 import ihm.accueil.MenuBarre;
+import metier.CarteObjectif;
 
 public class FrameJeu extends JFrame
 {
@@ -79,5 +80,10 @@ public class FrameJeu extends JFrame
         this.panelPioche    .appliquerTheme();
         this.panelPlateau   .appliquerTheme();
         this.panelObjectif  .appliquerTheme();
+    }
+
+    public void setVillesObjectif(CarteObjectif carteObjectif) 
+    {
+        this.panelPlateau.setVillesObjectif(carteObjectif);
     }
 }

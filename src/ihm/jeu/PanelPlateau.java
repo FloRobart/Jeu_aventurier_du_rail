@@ -19,6 +19,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.BevelBorder;
 
 import controleur.Controleur;
+import metier.CarteObjectif;
 
 public class PanelPlateau extends JPanel implements ActionListener, MouseWheelListener, MouseListener, MouseMotionListener
 {
@@ -210,5 +211,10 @@ public class PanelPlateau extends JPanel implements ActionListener, MouseWheelLi
 		this.btnCentrer.setForeground(btnForeColor);
         this.btnCentrer.setBackground(btnBackColor);
 		this.btnCentrer.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+    }
+
+    public void setVillesObjectif(CarteObjectif carteObjectif) 
+	{
+		this.panelImage.setVillesObjectif(carteObjectif);
     }
 }
