@@ -143,7 +143,7 @@ public class Metier implements Serializable
 
 	public void creeServer(Boolean demarer)
 	{
-		this.motDePassePartie = "1234";
+		this.motDePassePartie = "0000";
 		this.server = new Server(this);
 		if (demarer)
 			this.server.Start();
