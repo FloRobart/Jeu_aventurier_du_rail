@@ -145,7 +145,7 @@ public class PanelObjectifs extends JPanel implements ActionListener
         g2.setFont(g2.getFont().deriveFont(50f));
 
         g2.setColor(Color.WHITE);
-		g2.fillRect(noeud1.getX() + noeud1.getXNom() - (noeud1.getNom().length() * 3), noeud1.getY() + noeud1.getYNom() -25, width, 50);
+		g2.fillRect(noeud1.getX() + noeud1.getXNom() - (noeud1.getNom().length() * 3), noeud1.getY() + noeud1.getYNom() -25, noeud1.getNom().length()+width, 50);
 				
         g2.setColor(Color.BLACK);
         g2.drawString(noeud1.getNom(), noeud1.getX() + noeud1.getXNom() - (noeud1.getNom().length() * 3), noeud1.getY() + noeud1.getYNom() + 4);
@@ -158,7 +158,7 @@ public class PanelObjectifs extends JPanel implements ActionListener
         g2.fillOval(noeud2.getX(), noeud2.getY(), 30, 30);
 
         g2.setColor(Color.WHITE);
-		g2.fillRect(noeud2.getX() + noeud2.getXNom() - (noeud2.getNom().length() * 3), noeud2.getY() + noeud2.getYNom() -25, width, 50);
+		g2.fillRect(noeud2.getX() + noeud2.getXNom() - (noeud2.getNom().length() * 3), noeud2.getY() + noeud2.getYNom() -25, noeud2.getNom().length()+width, 50);
 				
         g2.setColor(Color.BLACK);
         g2.drawString(noeud2.getNom(), noeud2.getX() + noeud2.getXNom() - (noeud2.getNom().length() * 3), noeud2.getY() + noeud2.getYNom() + 4);
