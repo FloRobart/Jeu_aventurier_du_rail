@@ -13,8 +13,9 @@ import java.io.ObjectOutputStream;
 import java.io.StringReader;
 import java.net.Socket;
 
-
+import controleur.Controleur;
 import metier.Metier;
+import metier.partie.Partie;
 
 
 public class ClientServerHandler implements Runnable
@@ -22,6 +23,7 @@ public class ClientServerHandler implements Runnable
 
     private ObjectInputStream in;
     private ObjectOutputStream out;
+    private Controleur ctrl;
     private Metier metier;
     private String password;
 
@@ -58,9 +60,10 @@ public class ClientServerHandler implements Runnable
         return ret;
     }
 
-    public ClientServerHandler(Metier metier, Socket socket, String password)
+    public ClientServerHandler(Controleur ctrl, Socket socket, String password)
     {
-        this.metier = metier;
+        this.ctrl = ctrl;
+        this.metier = ctrl.getMetier();
         this.password = password;
         try {
             this.out = new ObjectOutputStream(socket.getOutputStream());
@@ -90,35 +93,50 @@ public class ClientServerHandler implements Runnable
             {
                 String message = readonce();
                 System.out.println("ERREUR SERVER : " + message);
+                javax.swing.JOptionPane.showMessageDialog(null, message, "Message du serveur", javax.swing.JOptionPane.INFORMATION_MESSAGE);
             }
 
             if (command.equals("MESSAGE"))
             {
                 String message = readonce();
-                System.out.println("MESSAGE DU SERVER : " + message);
+                System.out.println("MESSAGE SERVER : " + message);
+                javax.swing.JOptionPane.showMessageDialog(null, message, "Message du serveur", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+            }
+
+            if (command.equals("DEMARRER_PARTIE"))
+            {
+                
+            }
+
+            if (command.equals("MISE_A_JOUR_PARTIE"))
+            {
+                try {
+                    Partie nouvelle_partie = (Partie) this.in.readObject();
+
+                    System.out.println("Nouvelle partie");
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
 
 
             if (command.equals("METIER"))
             {
                 try {
-                    try {
-
-                        Metier nouveau_metier = (Metier) this.in.readObject();
-
-                        for (java.lang.reflect.Field f : this.metier.getClass().getDeclaredFields()) {
-                            if (java.lang.reflect.Modifier.isStatic(f.getModifiers())) continue;
-                            f.setAccessible(true);
-                            f.set(this.metier, f.get(nouveau_metier));
-                        }
-
-                        System.out.println("Class metier charger");
-                    } catch (ClassNotFoundException | IllegalArgumentException | IllegalAccessException e) {
-                        e.printStackTrace();
+                    Metier nouveau_metier = (Metier) this.in.readObject();
+                    for (java.lang.reflect.Field f : this.metier.getClass().getDeclaredFields()) {
+                        if (java.lang.reflect.Modifier.isStatic(f.getModifiers())) continue;
+                        f.setAccessible(true);
+                        f.set(this.metier, f.get(nouveau_metier));
                     }
-                    
-
-                } catch (IOException e) {
+                    System.out.println("Class metier charger");
+                } catch (ClassNotFoundException | IllegalArgumentException | IllegalAccessException e) {
+                    e.printStackTrace();
+                }catch (IOException e) {
                     e.printStackTrace();
                 }
             }
