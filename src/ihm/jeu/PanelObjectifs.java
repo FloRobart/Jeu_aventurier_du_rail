@@ -99,10 +99,7 @@ public class PanelObjectifs extends JPanel implements ActionListener
 
 
         g.setColor(titleBackColor);
-        g.fillRect(10, 10, 220, 130);
-
-        g.setColor(titleBackColor);
-        g.drawRect(10, 10, 200, 130);
+        g.fillRect(10, 10, 280, 150);
 
         g.setColor(Color.BLUE);
         g.setFont(g.getFont().deriveFont(20f));
@@ -146,7 +143,7 @@ public class PanelObjectifs extends JPanel implements ActionListener
         {
             if(e.getSource() == this.tabBtnObjectifs[i])
             {
-                System.out.println("Carte objectif " + i + " cliquée");
+                
             }
         }
         

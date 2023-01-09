@@ -13,6 +13,7 @@ import javax.swing.BorderFactory;
 
 import controleur.Controleur;
 import ihm.accueil.MenuBarre;
+import metier.CarteObjectif;
 
 public class FrameJeu extends JFrame
 {
@@ -83,4 +84,5 @@ public class FrameJeu extends JFrame
         this.panelPlateau   .appliquerTheme();
         this.panelObjectif  .appliquerTheme();
     }
+
 }

@@ -20,10 +20,12 @@ import javax.swing.JPanel;
 import javax.swing.BorderFactory;
 
 import controleur.Controleur;
+import metier.Joueur;
 
 public class PanelMainJoueur extends JPanel implements ActionListener
 {
     private Controleur ctrl;
+    private Joueur     joueur;
     private JDialog    dialogObjectifs;
     private HashMap<String, List<Color>> theme;
 
@@ -68,14 +70,16 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         this.lblIcon    = new JLabel(new ImageIcon(pathImage), JLabel.LEFT);
         
         this.panelMainWagon = new JPanel();
-        this.listImageWagon = this.ctrl.getImagesRectoCouleur(); // joueur.getCarteWagon();
+        this.listImageWagon = this.ctrl.getImagesRectoCouleur(); // this.joueur.getCarteWagon().getImageRecto();
         this.listImageWagon.add(this.ctrl.getImageRectoLocomotive());
         int taille = this.listImageWagon.size();
-        this.tabIconWagon   = new JButton[taille];
-        this.tabLblWagon    = new JLabel[taille];
+        this.tabIconWagon   = new JButton[5];
+        this.tabLblWagon    = new JLabel[5];
         
         this.panelMainObjectif = new JPanel();
         this.btnIconObjectif   = new JButton();
+
+        this.joueur = this.ctrl.getJoueurSelect();
 
 
         //panelImgJoueur Joueur
@@ -105,7 +109,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         }   
 
         //panelMainObjectif
-        this.btnIconObjectif.setIcon(new ImageIcon(this.ctrl.getCarteObjectif().get(2).getImageRecto()));
+        this.btnIconObjectif.setIcon(new ImageIcon(this.ctrl.getCarteObjectif().get(0).getImageRecto()));
         this.btnIconObjectif.setBorderPainted(false);
         this.btnIconObjectif.setContentAreaFilled(false);
         this.btnIconObjectif.setFocusPainted(false);

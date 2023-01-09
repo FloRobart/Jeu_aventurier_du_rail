@@ -15,6 +15,8 @@ import java.awt.geom.RoundRectangle2D;
 import java.awt.Font;
 import java.awt.FontMetrics;
 
+
+import java.awt.BasicStroke;
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
 
@@ -200,4 +202,5 @@ public class PanelImage extends JPanel
 
 		return image;
 	}
+
 }
