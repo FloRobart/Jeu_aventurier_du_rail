@@ -20,6 +20,14 @@ public class ServerControleur
 		} 
 		catch (Exception e){e.printStackTrace();}        
     }
+    /*
+     * Method updateMap() notify (to all clients) that the map has been changed
+     */
+    public void updateMap()
+    {
+
+    }
+
 
     class WaitClient implements Runnable
     {
@@ -47,7 +55,6 @@ public class ServerControleur
         @Override
         public void run() 
         {
-            // Send the metier
             try 
             {
                 OutputStream outputStream = socket.getOutputStream();
