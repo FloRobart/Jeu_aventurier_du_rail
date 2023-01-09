@@ -1,8 +1,10 @@
 package controleur;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.OutputStream;
+import java.net.ConnectException;
 import java.net.Socket;
 
 import metier.Metier;
@@ -12,7 +14,7 @@ public class ClientControleur {
     private int port=9999;
     private Socket socket;
     private Metier metier;
-    public ClientControleur(String ip) 
+    public ClientControleur(String ip) throws ConnectException 
     {
         try
         {
@@ -23,7 +25,8 @@ public class ClientControleur {
             ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
             metier = (Metier) objectInputStream.readObject();
         }
-        catch (Exception e) {e.printStackTrace();}
+        catch (ClassNotFoundException e) {e.printStackTrace();}
+        catch (IOException e){e.printStackTrace();}
     }
     
     public Metier getMetier (){return this.metier;}

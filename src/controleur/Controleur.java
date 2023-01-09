@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 import java.awt.Font;
 import java.io.File;
 import java.io.Serializable;
+import java.net.ConnectException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -120,11 +121,22 @@ public class Controleur
 	{
 		new ServerControleur(metier);
 	}
-	public void joinGame(String ip)
+	/*
+	 * 
+	 */
+	public int joinGame(String ip, String password)
 	{		
-		ClientControleur clientCtrl = new ClientControleur(ip);
-		this.metier = clientCtrl.getMetier();
-		this.ihm.demarrerJeu();
+
+		try 
+		{
+			ClientControleur clientCtrl = new ClientControleur(ip);
+			this.metier = clientCtrl.getMetier();
+			this.ihm.demarrerJeu();
+		}
+		catch (ConnectException e){ return 2;}
+		if (!password.equals(this.metier.getMotDePasse())) return 3;
+		return 1;
+
 	}
     public static void main(String[] args)
     {

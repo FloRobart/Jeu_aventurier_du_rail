@@ -622,7 +622,7 @@ public class PanelAccueil extends JPanel implements ActionListener
             /* Test */
             if (e.getSource() == this.btnTestSolo     ) { this.mappeImportee = this.ctrl.ouvrir(new File("./France.xml")); this.ctrl.creerPartieSolo(); }
             if (e.getSource() == this.btnTestMulti    ) { this.ctrl.creerPartieMulti(); }
-            if (e.getSource() == this.btnTestRejoindre) { this.ctrl.joinGame(this.txtIpRejoindre.getText()); /* Mettre ICI l'IP en dure pour aller plus vite pour les tests */}
+            if (e.getSource() == this.btnTestRejoindre) {  /* Mettre ICI l'IP en dure pour aller plus vite pour les tests */}
 
 
 
@@ -650,7 +650,7 @@ public class PanelAccueil extends JPanel implements ActionListener
                         {
                             // Vérifier que le mot de passe colle avec l'adresse IP
 
-                            this.ctrl.joinGame(this.txtIpRejoindre.getText());
+                            this.ctrl.joinGame(this.txtIpRejoindre.getText(), this.txtMdpRejoindre.getText());
                         }
                     }
                 }
