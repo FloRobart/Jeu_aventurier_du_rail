@@ -77,7 +77,7 @@ public class Controleur
 	 */
 	public void creerPartieMulti()
 	{
-		// this.metier.creeServer(true);
+		this.metier.creeServer(true);
 		this.hostGame();
 		this.ihm.demarrerAttente(true);
 	}

@@ -2,6 +2,9 @@ package metier.reseau;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import controleur.Controleur;
@@ -24,6 +27,23 @@ public class Client
         this.ip = ip;
         this.port = 5000;
         this.connecte = false;
+    }
+
+    public boolean passTest(String password) throws IOException
+    {
+        this.socket = new Socket(this.ip, this.port);
+        ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
+        ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+
+        out.writeUTF("PASS_TEST");
+        out.writeUTF(password);
+        out.flush();
+
+        Boolean b = in.readUTF().equals("OK");
+
+        socket.close();
+
+        return b;
     }
 
 

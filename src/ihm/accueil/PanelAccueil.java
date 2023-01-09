@@ -30,6 +30,7 @@ import ihm.customComponent.TextFieldAdresseIP;
 import ihm.customComponent.TextFieldMdp;
 import ihm.customComponent.TextFieldPseudo;
 import ihm.customComponent.TextFieldWithHint;
+import metier.reseau.Client;
 
 
 /**
@@ -712,6 +713,31 @@ public class PanelAccueil extends JPanel implements ActionListener
                 {
                     // TODO : Vérifier que le mot de passe colle avec l'adresse IP
                     // un méthode du controleur permet normlement de le faire
+
+                    Client c = new Client("127.0.0.1", this.ctrl);
+
+                    try {
+                        Boolean ok = c.passTest(txt.getText());
+
+                        if (ok)
+                        {
+                            mdpCorrect = true;
+                            txt.setBorder(null);
+
+                            if (txt.getPlaceholderColor() == disableColor)
+                                txt.setPlaceholderColor(this.theme.get("saisies").get(2));
+                        }
+                        else
+                        {
+                            txt.setHint("Mot de passe incorrect");
+                            txt.setPlaceholderColor(disableColor);
+                            txt.setBorder(BorderFactory.createLineBorder(disableColor, 3));
+                        }
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                 }
                 else
                 {

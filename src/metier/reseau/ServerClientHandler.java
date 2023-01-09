@@ -137,6 +137,21 @@ public class ServerClientHandler implements Runnable
 
             System.out.println("[Server] : " + command.substring(0, Math.min(command.length(), 10)));
             
+            if (command.equals("PASS_TEST"))
+            {
+                String motDePasse = readonce();
+                System.out.println("mot de passe : " + motDePasse + "");
+                if (motDePasse.equals(this.metier.getMotDePasse()))
+                {
+                    writeonce("OK");
+                }
+                else
+                {
+                    writeonce("WRONG");
+                }
+                return;
+            }
+
             if (!this.authentifie)
             {
                 if (command.equals("BONJOUR"))
