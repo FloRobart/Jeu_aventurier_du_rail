@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Scanner;
 
 import metier.Metier;
 import metier.partie.Partie;
@@ -85,11 +86,12 @@ public class ClientControleur {
             {
                 InputStream inputStream = this.socket.getInputStream();
                 ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
- 
+
                     metier = (Metier) objectInputStream.readObject();
                     partie = (Partie) objectInputStream.readObject();
-                
-                System.out.println(metier);
+                System.out.println("Updated");
+
+                System.out.println(metier.getNoeuds());
             }
             catch (ClassNotFoundException e) {e.printStackTrace();}
             catch (IOException e){e.printStackTrace();}
@@ -98,6 +100,11 @@ public class ClientControleur {
     public static void main(String[] args) throws ConnectException, UnknownHostException, IOException {
         ClientControleur clientCtrl = new ClientControleur("127.0.0.1");
         System.out.println(clientCtrl.metier);
-
+        while (true)
+        {
+            clientCtrl.updateMap();
+            Scanner scaner = new Scanner(System.in);
+            scaner.next();
+        }
     }
 }

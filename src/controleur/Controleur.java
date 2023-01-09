@@ -167,6 +167,8 @@ public class Controleur
 	 */
 	public void hostGame()
 	{
+		this.joueur = new Joueur("Joueur 1");
+		this.metier.ajouterJoueur(this.joueur);
 		this.partie = new Partie(this, this.metier,true);
 		this.serverCtrl = new ServerControleur(this.metier,this.partie);
 	}
