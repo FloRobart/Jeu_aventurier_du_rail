@@ -42,9 +42,7 @@ public class PanelObjectifs extends JPanel implements ActionListener
     private JButton[] tabBtnObjectifs;
     private List<CarteObjectif>  listObjectifs;
 
-    private Image imgPlateau;
-
-    
+ 
     public PanelObjectifs(Controleur ctrl)
     {
         this.ctrl = ctrl;
@@ -55,8 +53,6 @@ public class PanelObjectifs extends JPanel implements ActionListener
         List<Joueur> lstJ = this.ctrl.getJoueurs();
         this.joueur = lstJ.get(0); //this.ctrl.getJoueurCourant()
         this.listObjectifs = this.ctrl.getCarteObjectif(); //this.joueur.getAlCartesObjectif();
-
-        this.imgPlateau = this.ctrl.getImagePlateau().getScaledInstance(200, 150, 0);
     
         //int taille = this.joueur.getNbCartesObjectif();
         int taille = 5;
@@ -129,7 +125,7 @@ public class PanelObjectifs extends JPanel implements ActionListener
 	    AffineTransform at = new AffineTransform();
 		at.scale(zoomLargeur, zoomHauteur);
         g2.transform(at);
-        
+
         g2.drawImage(bi, 0, 0, null);
 
        //Ligne
