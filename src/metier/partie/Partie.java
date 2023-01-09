@@ -29,13 +29,13 @@ public class Partie implements Serializable
 		{
 			this.joueurs[i] = metier.getJoueurs().get(i);
 			this.joueurs[i].setNbJetonsRestant(metier.getNbJetonJoueur());
-
+System.out.println("--------------");
 			// attributions des cartes de départ
 			CarteWagon carte;
 			for (int cpt = 0 ; cpt < 4 ; cpt++)
 			{
 				carte = this.gestionPioche.piocherCarteWagon();
-
+System.out.println(carte.getCouleur());
 				if (carte != null)
 					this.joueurs[i].ajouterCarteWagon(carte);
 			}
@@ -70,7 +70,6 @@ public class Partie implements Serializable
 				indJoueur = (cpt++) % this.joueurs.length;
 		
 		this.joueurCourant = this.joueurs[indJoueur];
-
 		if (indJoueur == 0) this.tour++;
 	}
 

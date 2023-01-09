@@ -29,9 +29,6 @@ import metier.partie.CarteWagon;
 public class PanelMainJoueur extends JPanel implements ActionListener
 {
     private Controleur             ctrl;
-    private Joueur                 joueur;
-    private HashMap<Color,Integer> hashMapCarteWagons;
-    private List<CarteWagon>       alCartesWagons;
 
     private JDialog                      dialogObjectifs;
     private HashMap<String, List<Color>> theme;
@@ -44,10 +41,8 @@ public class PanelMainJoueur extends JPanel implements ActionListener
     private JLabel     lblNbJeton;
     private JLabel     lblIcon;
 
-    private JPanel              panelMainWagon;
-    private JButton[]           tabIconWagon;
-    private JLabel[]            tabLblWagon;
-    private List<BufferedImage> listImageWagon;
+    private PanelMain  panelMainWagon;
+    
 
     private JPanel     panelMainObjectif;
     private JButton    btnIconObjectif;
@@ -65,10 +60,6 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 
         //initialisation des composants
         this.panelImgJoueur  = new JPanel();
-        
-        /*this.joueur = this.ctrl.getJoueurCourant();
-        this.hashMapCarteWagons = this.joueur.gethashMapCarteWagons();
-        this.alCartesWagons     = this.joueur.getAlCartesWagons();*/
 
         this.lblNom     = new JLabel("  nom   "); //this.joueur.getNom()
         this.lblNbJeton = new JLabel("  jetons restants   "); //this.joueur.getNbJetons()
@@ -81,18 +72,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 
         this.lblIcon    = new JLabel(new ImageIcon(pathImage), JLabel.LEFT);
         
-        this.panelMainWagon = new JPanel();
-        /*this.listImageWagon = new ArrayList<BufferedImage>();
-        for(CarteWagon carte : this.alCartesWagons)
-        {
-            this.listImageWagon.add(carte.getImageRecto());
-        }*/
-        this.listImageWagon = this.ctrl.getImagesRectoCouleur(); // this.joueur.getAlCartesWagons()
-        this.listImageWagon.add(this.ctrl.getImageRectoLocomotive());//ligne à supprimer
-        int taille = this.listImageWagon.size();
-        this.tabIconWagon   = new JButton[5];
-        this.tabLblWagon    = new JLabel[5];
-        
+        this.panelMainWagon    = new PanelMain(this.ctrl, this.ctrl.getJoueur());
         this.panelMainObjectif = new JPanel();
         this.btnIconObjectif   = new JButton();
 
@@ -107,28 +87,12 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         this.panelImgJoueur.add(this.lblIcon, BorderLayout.NORTH);
         this.panelImgJoueur.add(panelInfoJoueur, BorderLayout.CENTER);
 
-        //panelMainWagon
-        for(int i = 0; i < taille; i++)
-        {
-            this.tabLblWagon[i]  = new JLabel();
-            this.tabLblWagon[i].setText("X"+ i); //this.tabLblWagon[i].setText("X"+ this.hashMapCarteWagons.get(this.alCarteWagon.get(i).getCouleur()));
-
-            this.tabIconWagon[i] = new JButton();
-            this.tabIconWagon[i].setIcon(new ImageIcon(creerCarte(this.listImageWagon.get(i), this.tabLblWagon[i])));
-            this.tabIconWagon[i].setBorderPainted(false);
-            this.tabIconWagon[i].setContentAreaFilled(false);
-            this.tabIconWagon[i].setFocusPainted(false);
-        
-            this.panelMainWagon.add(this.tabIconWagon[i]);
-        }   
-
         //panelMainObjectif
         this.btnIconObjectif.setIcon(new ImageIcon(this.ctrl.getCarteObjectif().get(0).getImageRecto()));
         this.btnIconObjectif.setBorderPainted(false);
         this.btnIconObjectif.setContentAreaFilled(false);
         this.btnIconObjectif.setFocusPainted(false);
         this.panelMainObjectif.add(this.btnIconObjectif);
-
 
         //ajout des composants
         this.add(this.panelImgJoueur, BorderLayout.EAST);
@@ -139,30 +103,6 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 
         this.btnIconObjectif.addActionListener(this);
 
-    }
-
-    /**
-     * Permet de retourner la carte et afficher le nombre de carte de cette couleur
-     * @param bufferedImage image de la carte
-     * @param lbl label contenant le nombre de carte de cette couleur
-     * @return BufferedImage carte retourné avec le nombre de carte de cette couleur
-     */
-    private BufferedImage creerCarte(BufferedImage bufferedImage, JLabel lbl) 
-    {
-        int width = bufferedImage.getWidth();
-        int height = bufferedImage.getHeight();
-
-        int taille = Math.max(width + 30, height);
-        BufferedImage bi = new BufferedImage(taille, taille, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2d = (Graphics2D) bi.getGraphics();
-
-        g2d.rotate(1.57, width / 2, height / 2);
-        g2d.drawImage(bufferedImage, (taille-width)/2, (taille-height)/2-30, width, height, null);
-        g2d.rotate((1.57*3), taille / 2, taille / 2);
-        g2d.setColor(this.theme.get("labels").get(0));
-        g2d.drawString(lbl.getText(), 50, 50);
-
-        return bi;
     }
 
     @Override
@@ -197,6 +137,16 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         }
     }
 
+	public void majIHM()
+	{
+		this.remove(this.panelMainWagon);
+		this.panelMainWagon = new PanelMain(this.ctrl, this.ctrl.getJoueur());
+		this.add(this.panelMainWagon, BorderLayout.CENTER);
+
+		this.revalidate();
+		this.repaint();
+		this.appliquerTheme();
+	}
 
     /**
      * Applique les couleurs du thème sélectionné à tout les éléments du panel et au panel lui même
@@ -211,16 +161,6 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 
         if (this.dialogObjectifs != null) { this.panelObjectifs.appliquerTheme(); }
 
-
-        for (int i = 0; i < this.listImageWagon.size(); i++)
-        {
-            this.tabIconWagon[i].setIcon(new ImageIcon(creerCarte(this.listImageWagon.get(i), this.tabLblWagon[i])));
-            this.tabIconWagon[i].setOpaque(false);
-        }
-    
-        /*========*/
-        /* Panels */
-        /*========*/
         /*----------*/
         /* Ce panel */
         /*----------*/
@@ -266,11 +206,11 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         /* Labels */
         /*========*/
         /* List labels cartes wagons */
-        for (int i = 0; i < this.tabIconWagon.length; i++)
+       /* for (int i = 0; i < this.tabIconWagon.length; i++)
         {
             this.tabLblWagon[i].setOpaque(false);
             this.tabLblWagon[i].setForeground(labelForeColor);
-        }
+        }*/
 
         /* label image joueur */
         String pathImage = "";

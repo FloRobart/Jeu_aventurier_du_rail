@@ -44,8 +44,10 @@ public class GestionPioche
 		Collections.shuffle(this.lstCartesObjectif);
 
 
-		System.out.println(this.lstCartesWagon.size());
-		System.out.println(this.lstCartesObjectif.size());
+		//System.out.println(this.lstCartesWagon.size());
+		//System.out.println(this.lstCartesObjectif.size());
+		for (CarteWagon c : this.lstCartesWagon)
+			System.out.println(c.getCouleur());
 	}
 
 	public CarteWagon[] getTabCartesVisible() { return this.tabCartesVisible;         }

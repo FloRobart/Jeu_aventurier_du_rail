@@ -37,7 +37,10 @@ public class Controleur
         this.ihm    = new Ihm(this);
 
     }
-
+	public void superMethodeDeDebug() { 
+		this.joueur.ajouterCarteWagon(new CarteWagon(null, getImageVersoCouleur(), getImageRectoLocomotive()));
+		System.out.println(this.joueur.getAlCartesWagons().size());
+	}
 
 	/**
 	 * Permet de lire le fichier xml contenant toutes les informations du plateau.
@@ -76,6 +79,7 @@ public class Controleur
 	/*          Getters            */
 	/* --------------------------- */
 	public List<Joueur>        getJoueurs             () { return this.metier.getJoueurs         (); }
+	public Joueur              getJoueur              () { return this.joueur                    ; }
 	//public List<CarteWagon>    getCarteWagon          () { return this.metier.getCarteWagon      (); }
 	public List<CarteObjectif> getCarteObjectif       () { return this.metier.getCarteObjectif   (); }
 	public List<Noeud>         getNoeuds              () { return this.metier.getNoeuds          (); }

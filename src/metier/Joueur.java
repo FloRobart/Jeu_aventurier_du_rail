@@ -13,8 +13,10 @@ public class Joueur implements Serializable
 {
     private String nom;
     private int score;
+
     private List<CarteObjectif> alCartesObjectif;
     private HashMap<Color,Integer> hashMapCarteWagons;
+	private ArrayList<Color> alCouleurs;
     private List<CarteWagon> alCartesWagons;
     private int nbJetonsRestant;
     private Color  couleur;
@@ -23,6 +25,7 @@ public class Joueur implements Serializable
     {
 		this.alCartesWagons = new ArrayList<CarteWagon>();
 		this.alCartesObjectif = new ArrayList<CarteObjectif>();
+		this.alCouleurs = new ArrayList<Color>();
 		this.hashMapCarteWagons = new HashMap<Color,Integer>();
         this.nom = nom;
         this.score = 0;
@@ -34,6 +37,7 @@ public class Joueur implements Serializable
     public int getNbCartesObjectif() { return this.alCartesObjectif.size(); }
     public HashMap<Color,Integer> gethashMapCarteWagons() { return this.hashMapCarteWagons; }
     public List<CarteWagon> getAlCartesWagons() { return this.alCartesWagons; }
+	public List<Color> getAlCouleurs() { return this.alCouleurs; }
     public int getNbCartesWagon() { return this.hashMapCarteWagons.size(); }
     public int getNbJetonsRestant() { return this.nbJetonsRestant; }
     public Color getCouleur() { return this.couleur; }
@@ -54,15 +58,19 @@ public class Joueur implements Serializable
     {
 		Color coul = null;
 		
-		if (carteWagon.isJoker())
+		if (!carteWagon.isJoker())
         	coul = carteWagon.getCouleur();
 
 		if (!this.hashMapCarteWagons.containsKey(coul))
+		{
 			this.hashMapCarteWagons.put(coul, 0);
+			this.alCouleurs.add(coul);
+		}
+
 		
+		this.alCartesWagons.add(carteWagon);
         Integer nbCarte = this.hashMapCarteWagons.get(coul) + 1 ;
         this.hashMapCarteWagons.replace(coul,nbCarte);
-        this.alCartesWagons.add(carteWagon);
     }
 
     public void ajouterScore(int score)
@@ -83,8 +91,15 @@ public class Joueur implements Serializable
     public void retirerCarteWagon(CarteWagon carteWagon)
     {
         Color coul = carteWagon.getCouleur();
-        Integer nbCarte = this.hashMapCarteWagons.get(coul)  -1 ;
+        Integer nbCarte = this.hashMapCarteWagons.get(coul) - 1 ;
         this.hashMapCarteWagons.replace(coul,nbCarte);
+
+		if (nbCarte == 0)
+		{
+			this.hashMapCarteWagons.remove(coul);
+			this.alCouleurs.remove(coul);
+		}
+
         this.alCartesWagons.remove(carteWagon);
     }
 
