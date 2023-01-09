@@ -30,7 +30,7 @@ public class PanelPreviewMappe extends JPanel implements MouseWheelListener, Mou
 	// attributs pour le zoom
 	private double facteurZoom    = 1;
 	private double facteurZoomMax = 2;
-	private double facteurZoomMin = 0.75;
+	private double facteurZoomMin = 0.1;
 
 	// attributs pour le drag
     private boolean cliqueGaucheDrag;
