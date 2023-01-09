@@ -89,8 +89,6 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         this.panelImgJoueur.add(panelInfoJoueur, BorderLayout.CENTER);
 
         //panelMainWagon
-        System.out.println(this.listImageWagon.size());
-
         for(int i = 0; i < taille; i++)
         {
             this.tabLblWagon[i]  = new JLabel();
@@ -106,7 +104,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         }   
 
         //panelMainObjectif
-        this.btnIconObjectif.setIcon(new ImageIcon(creerCarte(this.ctrl.getCarteObjectif().get(2).getImageRecto(), null)));
+        this.btnIconObjectif.setIcon(new ImageIcon(this.ctrl.getCarteObjectif().get(2).getImageRecto()));
         this.btnIconObjectif.setBorderPainted(false);
         this.btnIconObjectif.setContentAreaFilled(false);
         this.btnIconObjectif.setFocusPainted(false);
@@ -142,8 +140,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         g2d.drawImage(bufferedImage, (taille-width)/2, (taille-height)/2-30, width, height, null);
         g2d.rotate((1.57*3), taille / 2, taille / 2);
         g2d.setColor(this.theme.get("labels").get(0));
-        if(lbl != null)
-            g2d.drawString(lbl.getText(), 50, 50);
+        g2d.drawString(lbl.getText(), 50, 50);
 
         return bi;
     }
