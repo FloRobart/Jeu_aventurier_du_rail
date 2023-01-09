@@ -12,21 +12,23 @@ import java.io.Serializable;
 public class Joueur implements Serializable
 {
     private String nom;
-    private int score;
-
-    private List<CarteObjectif> alCartesObjectif;
-    private HashMap<Color,Integer> hashMapCarteWagons;
-	private ArrayList<Color> alCouleurs;
-    private List<CarteWagon> alCartesWagons;
-    private int nbJetonsRestant;
+    private int    score;
+	private int    nbJetonsRestant;
     private Color  couleur;
+
+    private List<CarteObjectif>    alCartesObjectif;
+    private HashMap<Color,Integer> hashMapCarteWagons;
+	private List<Color>            alCouleurs;
+    private List<CarteWagon>       alCartesWagons;
+    
 
     public Joueur(String nom)
     {
-		this.alCartesWagons = new ArrayList<CarteWagon>();
-		this.alCartesObjectif = new ArrayList<CarteObjectif>();
-		this.alCouleurs = new ArrayList<Color>();
+		this.alCartesObjectif   = new ArrayList<CarteObjectif>();
 		this.hashMapCarteWagons = new HashMap<Color,Integer>();
+		this.alCouleurs         = new ArrayList<Color>();
+		this.alCartesWagons     = new ArrayList<CarteWagon>();
+
         this.nom = nom;
         this.score = 0;
     }
@@ -78,11 +80,6 @@ public class Joueur implements Serializable
         this.score += score;
     }
 
-    public void ajouterNbJetonsPosés(int nbJetonsRestant)
-    {
-        this.nbJetonsRestant -= nbJetonsRestant;
-    }
-
     public void retirerCarteObjectif(CarteObjectif carteObjectif)
     {
         this.alCartesObjectif.remove(carteObjectif);
@@ -107,7 +104,4 @@ public class Joueur implements Serializable
     {
         return this.nom + " (" + this.score + " points)" + " : " + this.nbJetonsRestant + " jetons posés" + " -- " + this.alCartesObjectif.size() + " cartes objectif" + " : " + this.hashMapCarteWagons.size() + " cartes wagon";
     }
-
-
-    
 }
