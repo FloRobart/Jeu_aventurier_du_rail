@@ -126,13 +126,30 @@ public class Controleur
 
 	public boolean estPrenable(Arete arete, int couleur)
 	{
-		Color coul = null;
+		try
+		{
+			Color coul = null;
 
-		if (couleur == 1) coul = arete.getCouleur1();
-		else              coul = arete.getCouleur2();
+			if (couleur == 1) coul = arete.getCouleur1();
+			else              coul = arete.getCouleur2();
 
-		if ( this.joueur.getAlCouleurs().contains(coul) && 
-		     this.joueur.gethashMapCarteWagons().get(coul) >= arete.getDistance() ) return true;
+			// if : voix neutre | else : voix couleur
+			if ( coul.equals(this.metier.getCouleurs().get(0)))
+			{
+				for (Color c : this.joueur.getAlCouleurs())
+					if ( this.joueur.gethashMapCarteWagons().get(c) >= arete.getDistance() ) return true;
+			}
+			else
+			{
+				// carte couleur
+				if ( this.joueur.getAlCouleurs().contains(coul) && 
+					 this.joueur.gethashMapCarteWagons().get(coul) >= arete.getDistance() ) return true;
+
+				// carte jocker
+				if ( this.joueur.gethashMapCarteWagons().get(null) >= arete.getDistance() ) return true;
+			}
+		}
+		catch(Exception e) { return false; }
 		
 		return false;
 	}
@@ -194,6 +211,8 @@ public class Controleur
 	 */
 	public void hostGame()
 	{
+		this.joueur = new Joueur("Joueur 1");
+		this.metier.ajouterJoueur(this.joueur);
 		this.partie = new Partie(this, this.metier,true);
 		this.serverCtrl = new ServerControleur(this.metier,this.partie);
 	}

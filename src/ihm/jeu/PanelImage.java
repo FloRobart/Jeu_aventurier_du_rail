@@ -194,10 +194,12 @@ public class PanelImage extends JPanel
 					if (arete.getCouleur2() != null && this.hmArete.get(arete).indexOf(s) >= milieu)
 						indCouleur = 2;
 					
-					this.ctrl.setSelectionnee(arete, indCouleur);
-					this.repaint();
-				}
-					
+					if (this.ctrl.estPrenable(arete, indCouleur))
+					{
+						this.ctrl.setSelectionnee(arete, indCouleur);
+						this.repaint();
+					}
+				}	
 	}
 
 	public BufferedImage getImage()
