@@ -44,9 +44,12 @@ public class PanelObjectifs extends JPanel implements ActionListener
         this.ctrl = ctrl;
         this.theme = this.ctrl.getTheme();
 
-        //this.joueur = this.ctrl.getJoueurCourant();
-        //int taille = this.joueur.getNbCartesObjectif();
-        int taille = 5; // a remplacer par le nombre de carte objectif du joueur
+
+        List<Joueur> lstJ = this.ctrl.getJoueurs();
+        this.joueur = lstJ.get(0); //this.ctrl.getJoueurCourant()
+    
+        int taille = this.joueur.getNbCartesObjectif();
+        
         
         int grid = taille;
         if(taille%2 != 0)
@@ -66,7 +69,7 @@ public class PanelObjectifs extends JPanel implements ActionListener
             this.tabBtnObjectifs[i].setFocusPainted(false);
             this.tabBtnObjectifs[i].setContentAreaFilled(false);
 
-            this.tabBtnObjectifs[i].setIcon(new ImageIcon(creerCarte(this.listObjectifs.get(i)))); //this.joueur.getAlCartesObjectif().get(i)
+            this.tabBtnObjectifs[i].setIcon(new ImageIcon(creerCarte(this.joueur.getAlCartesObjectif().get(i)))); //this.joueur.getAlCartesObjectif().get(i)
 
             this.panelPrincipale.add(this.tabBtnObjectifs[i]);
         }
