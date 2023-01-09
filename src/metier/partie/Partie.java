@@ -92,6 +92,28 @@ public class Partie implements Serializable
 			this.joueurCourant.ajouterCarteWagon(carte);
 		
 		this.gestionPioche.getTabCartesVisible()[ind] = this.gestionPioche.piocherCarteWagon();
+
+		this.verifierVisible();
 	}
 
+	public void verifierVisible()
+	{
+		int nbJoker = 0;
+		CarteWagon[] tabCartes = this.gestionPioche.getTabCartesVisible();
+
+		for (CarteWagon carte : tabCartes)
+			if (carte != null && carte.isJoker()) nbJoker++;
+
+		if (nbJoker >= 3)
+		{
+			for (int i = 0 ; i < 5 ; i++)
+				if (tabCartes[i] != null && tabCartes[i].isJoker()) 
+				{
+					//défausser
+					tabCartes[i] = this.gestionPioche.piocherCarteWagon();
+				}
+
+			this.verifierVisible();
+		}
+	}
 }

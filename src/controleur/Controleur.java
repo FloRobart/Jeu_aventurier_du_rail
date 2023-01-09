@@ -126,7 +126,7 @@ public class Controleur
 
 	public boolean estPrenable(Arete arete, int couleur)
 	{
-		if ( this.partie != null)
+		try
 		{
 			Color coul = null;
 
@@ -149,6 +149,7 @@ public class Controleur
 				if ( this.joueur.gethashMapCarteWagons().get(null) >= arete.getDistance() ) return true;
 			}
 		}
+		catch(Exception e) { return false; }
 		
 		return false;
 	}
