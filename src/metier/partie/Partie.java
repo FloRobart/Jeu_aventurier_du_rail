@@ -1,14 +1,17 @@
 package metier.partie;
 
+import java.io.Serializable;
+
 import controleur.Controleur;
 import metier.Joueur;
 import metier.Metier;
 
-public class Partie 
+public class Partie implements Serializable
 {
-	private Controleur ctrl;
+	private transient Controleur ctrl;
+	private static final long serialVersionUID = 2L;
 
-	private GestionPioche gestionPioche;
+	private transient GestionPioche  gestionPioche;
 	private Joueur[]      joueurs;
 	private Joueur        joueurCourant;
 	private int           nbJetonFin;
@@ -36,6 +39,8 @@ public class Partie
 		this.joueurCourant = this.joueurs[0];
 		this.estMulti      = estMulti;
 
+		// while (!this.estTerminee())
+		// 	this.jouerTour();
 		//while (!this.estTerminee())
 	}
 
@@ -60,4 +65,5 @@ public class Partie
 
 		if (indJoueur == 0) this.tour++;
 	}
+
 }

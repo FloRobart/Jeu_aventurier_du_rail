@@ -2,6 +2,8 @@ package ihm;
 
 import java.awt.image.BufferedImage;
 
+import javax.swing.Icon;
+
 import controleur.Controleur;
 import ihm.accueil.FrameAccueil;
 import ihm.attente.FrameAttente;
@@ -71,6 +73,12 @@ public class Ihm
         if (this.frameJeu     != null) { this.frameJeu    .appliquerTheme(); }
         if (this.frameAccueil != null) { this.frameAccueil.appliquerTheme(); }
         if (this.frameAttente != null) { this.frameAttente.appliquerTheme(); }
+    }
+
+
+    public void afficherCarteObjectif(Icon icon) 
+    {
+        if (this.frameJeu != null) { this.frameJeu.afficherCarteObjectif(icon); }
     }
 
 }

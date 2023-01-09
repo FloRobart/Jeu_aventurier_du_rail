@@ -18,7 +18,7 @@ public class GestionPioche
 	{
 		// Creation de la pile de cartes wagon
 		this.lstCartesWagon = new LinkedList<CarteWagon>();
-
+		this.tabCartesVisible = new CarteWagon[5];
 		for (int cpt = 0; cpt < metier.getNbCarteLocomotive(); cpt++)
 			this.lstCartesWagon.add(new CarteWagon(
 				null, metier.getImageVersoCouleur(), metier.getImageRectoLocomotive()));
