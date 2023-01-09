@@ -15,11 +15,13 @@ import java.net.UnknownHostException;
 import ihm.Ihm;
 import metier.*;
 import metier.partie.CarteWagon;
+import metier.partie.Partie;
 
 
 public class Controleur
 {
     private Metier metier;
+	private Partie partie;
     private Ihm    ihm;
 
     public Controleur()
@@ -119,7 +121,8 @@ public class Controleur
 
 	public void hostGame()
 	{
-		new ServerControleur(metier);
+		this.partie = new Partie(this, this.metier);
+		new ServerControleur(this.metier,this.partie);
 	}
 	/*
 	 * 
@@ -131,12 +134,12 @@ public class Controleur
 		{
 			ClientControleur clientCtrl = new ClientControleur(ip);
 			this.metier = clientCtrl.getMetier();
+			this.partie = clientCtrl.getPartie();
 			this.ihm.demarrerJeu();
 		}
 		catch (ConnectException e){ return 2;}
 		if (!password.equals(this.metier.getMotDePasse())) return 3;
 		return 1;
-
 	}
     public static void main(String[] args)
     {
@@ -158,16 +161,12 @@ public class Controleur
     public Joueur getJoueurSelect() {
 		return null;
     }
-	
+	/*
+	 * La methode sert à tester plus rapidement, elle va être remplacer par la methode creerPartieMulti()
+	 */
     public void creerPartie() 
 	{
 		this.hostGame();
     }
-
-
-
-
-
-
 
 }
