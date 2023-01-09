@@ -84,7 +84,6 @@ public class Controleur
 	/* --------------------------- */
 	public List<Joueur>        getJoueurs             () { return this.metier.getJoueurs         (); }
 	public Joueur              getJoueur              () { return this.joueur                    ; }
-	//public List<CarteWagon>    getCarteWagon          () { return this.metier.getCarteWagon      (); }
 	public List<CarteObjectif> getCarteObjectif       () { return this.metier.getCarteObjectif   (); }
 	public List<Noeud>         getNoeuds              () { return this.metier.getNoeuds          (); }
 	public List<Arete>         getAretes              () { return this.metier.getAretes          (); }
@@ -117,6 +116,23 @@ public class Controleur
 	//public void piocherTabObjectif (boolean[] tabBool, String nomJoueur) {this.metier.piocherTabObjectif(tabBool, nomJoueur);	}
 	public void setImageButton(int indice) 								 { if ( this.ihm != null ) this.ihm.setImageButton(indice);}
     
+	public CarteWagon[] getTabCartesVisible() { return this.partie.getTabCartesVisible(); }
+
+	public void majIHM()
+	{
+		this.ihm.majIHM();
+	}
+
+	public void piocherPioche ()        { this.partie.piocherPioche ();    }
+	public void piocherVisible(int ind) { this.partie.piocherVisible(ind); }
+
+	public boolean peuxJouer()
+	{
+		if ( this.partie != null || this.partie.getJoueurCourant() != null )
+			return this.partie.getJoueurCourant().equals(this.joueur);
+		else
+			return false;
+	}
 	
 	/**
      * Permet d'appliquer le thème à l'ihm

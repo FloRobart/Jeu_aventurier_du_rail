@@ -84,4 +84,9 @@ public class Ihm
         if (this.frameJeu != null) { this.frameJeu.afficherCarteObjectif(icon); }
     }
 
+	public void majIHM()
+	{
+		if ( this.frameJeu != null ) this.frameJeu.majIHM();
+	}
+
 }

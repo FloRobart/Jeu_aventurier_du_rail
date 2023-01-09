@@ -40,11 +40,12 @@ public class PanelAttente extends JPanel implements ActionListener
 
     /* Panel */
     private JPanel panelInfo;
-    private JPanel panelBtn;
+    private JPanel panelJoueurs;
     private PanelPreviewMappe panelPreviewMappe;
 
     /* Boutons */
     private JButton btnChangeMappe;
+    private JButton btnChoisirCouleur;
     private JButton btnLancer;
     
     /* Labels */
@@ -79,11 +80,12 @@ public class PanelAttente extends JPanel implements ActionListener
 
         /* Panel */
         this.panelInfo          = new JPanel();
-        this.panelBtn           = new JPanel();
+        this.panelJoueurs           = new JPanel();
         this.panelPreviewMappe  = new PanelPreviewMappe(this.ctrl);
 
         /* Boutons */
         this.btnChangeMappe     = new JButton();
+        this.btnChoisirCouleur  = new JButton();
         this.btnLancer          = new JButton();
         
         /* Labels */
@@ -132,6 +134,12 @@ public class PanelAttente extends JPanel implements ActionListener
         this.btnChangeMappe.setMinimumSize  (new Dimension(150, 30));
         this.btnChangeMappe.setPreferredSize(new Dimension(150, 30));
         if (!hote) { this.btnChangeMappe.setEnabled(false); }
+
+        this.btnChoisirCouleur.setText("Choisir une couleur");
+        this.btnChoisirCouleur.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+        this.btnChoisirCouleur.setMaximumSize  (new Dimension(150, 30));
+        this.btnChoisirCouleur.setMinimumSize  (new Dimension(150, 30));
+        this.btnChoisirCouleur.setPreferredSize(new Dimension(150, 30));
 
 
         this.panelPreviewMappe.setOpaque(true);
@@ -183,37 +191,37 @@ public class PanelAttente extends JPanel implements ActionListener
         this.lblCoulDispo.setMinimumSize  (new Dimension(150, 18));
         this.lblCoulDispo.setPreferredSize(new Dimension(150, 18));
 
-        this.lblJoueurMinRes.setText(": 2");
+        this.lblJoueurMinRes.setText(": " + this.ctrl.getNbJoueursMin());
         this.lblJoueurMinRes.setMaximumSize  (new Dimension(40, 18));
         this.lblJoueurMinRes.setMinimumSize  (new Dimension(40, 18));
         this.lblJoueurMinRes.setPreferredSize(new Dimension(40, 18));
 
-        this.lblJoueurMaxRes.setText(": 4");
+        this.lblJoueurMaxRes.setText(": " + this.ctrl.getNbJoueursMax());
         this.lblJoueurMaxRes.setMaximumSize  (new Dimension(40, 18));
         this.lblJoueurMaxRes.setMinimumSize  (new Dimension(40, 18));
         this.lblJoueurMaxRes.setPreferredSize(new Dimension(40, 18));
 
-        this.lblCarteCoulRes.setText(": 30");
+        this.lblCarteCoulRes.setText(": " + this.ctrl.getNbCarteCoul());
         this.lblCarteCoulRes.setMaximumSize  (new Dimension(40, 18));
         this.lblCarteCoulRes.setMinimumSize  (new Dimension(40, 18));
         this.lblCarteCoulRes.setPreferredSize(new Dimension(40, 18));
 
-        this.lblCarteLocoRes.setText(": 35");
+        this.lblCarteLocoRes.setText(": " + this.ctrl.getNbCarteLocomotive());
         this.lblCarteLocoRes.setMaximumSize  (new Dimension(40, 18));
         this.lblCarteLocoRes.setMinimumSize  (new Dimension(40, 18));
         this.lblCarteLocoRes.setPreferredSize(new Dimension(40, 18));
 
-        this.lblJetonJoueurRes.setText(": 50");
+        this.lblJetonJoueurRes.setText(": " + this.ctrl.getNbJetonJoueur());
         this.lblJetonJoueurRes.setMaximumSize  (new Dimension(40, 18));
         this.lblJetonJoueurRes.setMinimumSize  (new Dimension(40, 18));
         this.lblJetonJoueurRes.setPreferredSize(new Dimension(40, 18));
 
-        this.lblJetonFinRes.setText(": 2");
+        this.lblJetonFinRes.setText(": " + this.ctrl.getNbJetonFin());
         this.lblJetonFinRes.setMaximumSize  (new Dimension(40, 18));
         this.lblJetonFinRes.setMinimumSize  (new Dimension(40, 18));
         this.lblJetonFinRes.setPreferredSize(new Dimension(40, 18));
 
-        this.lblCoulDispoRes.setText(": 4");
+        this.lblCoulDispoRes.setText(": " + this.ctrl.getCouleurs().size());
         this.lblCoulDispoRes.setMaximumSize  (new Dimension(40, 18));
         this.lblCoulDispoRes.setMinimumSize  (new Dimension(40, 18));
         this.lblCoulDispoRes.setPreferredSize(new Dimension(40, 18));
@@ -308,7 +316,7 @@ public class PanelAttente extends JPanel implements ActionListener
 
 
         /* Boutons des joueurs */
-        Color titleBackColor   = this.theme.get("titles").get(1);
+        Color titleBackColor = this.theme.get("titles").get(1);
         for (int i = 0; i < this.ctrl.getNbJoueursMax(); i++)
         {
             this.lstParticipants.add(new JLabel("Joueur " + (i+1)));
@@ -319,11 +327,11 @@ public class PanelAttente extends JPanel implements ActionListener
             this.lstParticipants.get(i).setBorder(BorderFactory.createBevelBorder(1, titleBackColor, titleBackColor));
         }
 
-        this.panelBtn.setLayout(new GridLayout(this.lstParticipants.size(), 1));
+        this.panelJoueurs.setLayout(new GridLayout(this.lstParticipants.size(), 1));
         for (int i = 0; i < this.lstParticipants.size(); i++)
-            this.panelBtn.add(this.lstParticipants.get(i));
+            this.panelJoueurs.add(this.lstParticipants.get(i));
 
-        this.jspLstParticipants = new JScrollPane(this.panelBtn, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        this.jspLstParticipants = new JScrollPane(this.panelJoueurs, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         this.jspLstParticipants.setMaximumSize  (new Dimension(200, 250));
         this.jspLstParticipants.setMinimumSize  (new Dimension(200, 250));
         this.jspLstParticipants.setPreferredSize(new Dimension(200, 250));
@@ -354,6 +362,7 @@ public class PanelAttente extends JPanel implements ActionListener
                         .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addComponent(this.btnChangeMappe, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addComponent(this.btnChoisirCouleur, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(this.panelPreviewMappe, GroupLayout.PREFERRED_SIZE, 400, GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -380,6 +389,7 @@ public class PanelAttente extends JPanel implements ActionListener
                 .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(this.btnChangeMappe, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(this.btnChoisirCouleur, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                     .addComponent(this.lblLstParticipants))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
@@ -441,6 +451,7 @@ public class PanelAttente extends JPanel implements ActionListener
                             this.panelPreviewMappe.setMappe();
                             this.panelPreviewMappe.repaint();
                             this.panelPreviewMappe.centrer(this.getWidth(), this.getHeight());
+                            this.majInfo();
 						}
                         else
                         {
@@ -453,6 +464,47 @@ public class PanelAttente extends JPanel implements ActionListener
 				}
             }
         }
+    }
+
+
+    /**
+     * Met à jour les informations du panel attente
+     */
+    public void majInfo()
+    {
+        /* Labels d'information */
+        this.lblJoueurMinRes.setText  (": " + this.ctrl.getNbJoueursMin     ());
+        this.lblJoueurMaxRes.setText  (": " + this.ctrl.getNbJoueursMax     ());
+        this.lblCarteCoulRes.setText  (": " + this.ctrl.getNbCarteCoul      ());
+        this.lblCarteLocoRes.setText  (": " + this.ctrl.getNbCarteLocomotive());
+        this.lblJetonJoueurRes.setText(": " + this.ctrl.getNbJetonJoueur    ());
+        this.lblJetonFinRes.setText   (": " + this.ctrl.getNbJetonFin       ());
+        this.lblCoulDispoRes.setText  (": " + this.ctrl.getCouleurs         ().size());
+
+
+        /* Liste des joueurs */
+        Color titleBackColor = this.theme.get("titles").get(1);
+        Color btnForeColor   = this.theme.get("buttons"   ).get(0);
+        Color background     = this.theme.get("background").get(0);
+
+        this.lstParticipants = new ArrayList<JLabel>();
+        for (int i = 0; i < this.ctrl.getNbJoueursMax(); i++)
+        {
+            this.lstParticipants.add(new JLabel("Joueur " + (i+1)));
+            this.lstParticipants.get(i).setFont(new Font("Liberation Sans", 0, 24));
+            this.lstParticipants.get(i).setPreferredSize(new Dimension(200, 40));
+            this.lstParticipants.get(i).setOpaque(true);
+            this.lstParticipants.get(i).setForeground(btnForeColor);
+            this.lstParticipants.get(i).setBackground(background);
+            this.lstParticipants.get(i).setHorizontalAlignment(JLabel.CENTER);
+            this.lstParticipants.get(i).setBorder(BorderFactory.createBevelBorder(1, titleBackColor, titleBackColor));
+        }
+
+        this.panelJoueurs.removeAll();
+        this.panelJoueurs.setLayout(null);
+        this.panelJoueurs.setLayout(new GridLayout(this.lstParticipants.size(), 1));
+        for (int i = 0; i < this.lstParticipants.size(); i++)
+            this.panelJoueurs.add(this.lstParticipants.get(i));
     }
 
 
@@ -487,16 +539,20 @@ public class PanelAttente extends JPanel implements ActionListener
         /* Boutons */
         /*---------*/
         /* Liste de boutons pour chaque joueur */
-        for (JLabel btn : this.lstParticipants)
+        for (JLabel lbl : this.lstParticipants)
         {
-            btn.setForeground(btnForeColor);
-            btn.setBackground(background);
-            btn.setBorder(BorderFactory.createBevelBorder(1, titleBackColor, titleBackColor));
+            lbl.setForeground(btnForeColor);
+            lbl.setBackground(background);
+            lbl.setBorder(BorderFactory.createBevelBorder(1, titleBackColor, titleBackColor));
         }
 
         /* Bouton changer mappe */
         this.btnChangeMappe    .setForeground(btnForeColor);
         this.btnChangeMappe    .setBackground(btnBackColor);
+
+        /* Bouton choisir couleur */
+        this.btnChoisirCouleur .setForeground(btnForeColor);
+        this.btnChoisirCouleur .setBackground(btnBackColor);
         
         /* bouton lancer la partie */
         this.btnLancer         .setForeground(btnForeColor);

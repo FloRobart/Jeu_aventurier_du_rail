@@ -146,6 +146,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 		this.revalidate();
 		this.repaint();
 		this.appliquerTheme();
+		System.out.println("maj main");
 	}
 
     /**

@@ -98,4 +98,8 @@ public class FrameJeu extends JFrame
         this.panelMainJoueur.afficherCarteObjectif(icon);
     }
 
+	public void majIHM()
+	{
+		this.panelMainJoueur.majIHM();
+	}
 }

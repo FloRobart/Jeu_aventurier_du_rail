@@ -117,7 +117,7 @@ public class MenuBarre extends JMenuBar implements ActionListener
 			if (e.getSource() == this.menuiAideMenu)
 			{
 				/* Création du panel */
-				if (this.panelAideMenu == null) { this.panelAideMenu = new PanelAideMenu(); }
+				if (this.panelAideMenu == null) { this.panelAideMenu = new PanelAideMenu(this.ctrl); }
 
 				/* Création du JDialog */
 				if (this.dialogAide == null)
@@ -152,7 +152,7 @@ public class MenuBarre extends JMenuBar implements ActionListener
 			if (e.getSource() == this.menuiAideJeu)
 			{
 				/* Création du panel */
-				if (this.panelAideJeu == null) { this.panelAideJeu = new PanelAideJeu(); }
+				if (this.panelAideJeu == null) { this.panelAideJeu = new PanelAideJeu(this.ctrl); }
 
 				/* Création du JDialog */
 				if (this.dialogAide == null)
@@ -237,5 +237,11 @@ public class MenuBarre extends JMenuBar implements ActionListener
 
 		this.menuiAideJeu.setForeground(foregroundColor);
 		this.menuiAideJeu.setBackground(backgroundColor);
+
+		if (this.panelAideMenu != null)
+            this.panelAideMenu.appliquerTheme();
+
+		if (this.panelAideJeu != null)
+            this.panelAideJeu.appliquerTheme();
 	}
 }

@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.List;
@@ -17,12 +18,14 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import controleur.Controleur;
+import metier.partie.CarteWagon;
 
 public class PanelPioche extends JPanel implements ActionListener
 {
     private static final int TAILLE = 5;
 
-    private Controleur ctrl;
+    private Controleur   ctrl;
+	private CarteWagon[] tabCartesVisible;
 
     private JPanel     panelHaut;
     private JPanel     panelMilieu;
@@ -33,6 +36,7 @@ public class PanelPioche extends JPanel implements ActionListener
     public PanelPioche(Controleur ctrl)
     {
         this.ctrl = ctrl;
+		this.tabCartesVisible = this.ctrl.getTabCartesVisible();
 
         //Parametrage du panel
         this.setLayout(new BorderLayout(3, 3));
@@ -69,54 +73,71 @@ public class PanelPioche extends JPanel implements ActionListener
 
     public void setImageButton(int indice)
     {
+		BufferedImage image = this.tabCartesVisible[indice].getImageRecto();
         BufferedImage resizedImage = new BufferedImage(150, 100, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = resizedImage.createGraphics();
-		//g2d.drawImage(this.ctrl.getTabCarteWagon()[indice].getImageRecto(), 0, 0, 200, 100, null);
+
+		// Calcul du facteur de zoom maximal
+		double zoomLargeur = (double) 150 / image.getWidth();
+		double zoomHauteur = (double) 100 / image.getHeight();
+		double facteurZoom = Math.min(zoomLargeur, zoomHauteur);
+		 
+		AffineTransform at = new AffineTransform();
+		at.scale(facteurZoom, facteurZoom);
+        g2d.transform(at);
+		
+		g2d.drawImage(image, 0, 0, null);
         g2d.dispose();
+
         this.tabCarteWagon[indice].setIcon(new ImageIcon (resizedImage));
     }
 
     public void actionPerformed(ActionEvent e) 
     {
-        if ( e.getSource() == this.deckCarteWagon )
-                    System.out.println("Deck");
+		if ( this.ctrl.peuxJouer())
+		{
+			if ( e.getSource() == this.deckCarteWagon )
+			{
+				this.ctrl.piocherPioche();
+				this.ctrl.piocherPioche();System.out.println("pioche deck");
+			}
 
-        if ( e.getSource() == this.tabCarteWagon[0] )
-        {
-            //this.ctrl.piocherTabWagon (0, this.ctrl.getJoueurSelect().getNom());
-            this.setImageButton(0);
-            System.out.println(1);
-        }
+			for (int i = 0 ; i < this.TAILLE ; i++)
+				if ( e.getSource() == this.tabCarteWagon[i] )
+				{
+					this.tabCartesVisible = this.ctrl.getTabCartesVisible();
 
-        if ( e.getSource() == this.tabCarteWagon[1] )
-        {
-            //this.ctrl.piocherTabWagon (1, this.ctrl.getJoueurSelect().getNom());
-            this.setImageButton(1);
-            System.out.println(2);
-        }
+					if (this.tabCartesVisible[i] != null)
+						if (this.tabCartesVisible[i].isJoker())
+						{
+							this.ctrl.piocherVisible(i);System.out.println("pioche visible jocker");
+						}
+						else
+						{
+							this.ctrl.piocherVisible(i);
+							this.ctrl.piocherPioche();System.out.println("pioche visible couleur");
+						}
 
-        if ( e.getSource() == this.tabCarteWagon[2] )
-        {
-            //this.ctrl.piocherTabWagon (2, this.ctrl.getJoueurSelect().getNom());
-            this.setImageButton(2);
-            System.out.println(3);
-        }
+					this.majIHM();
+				}
 
-        if ( e.getSource() == this.tabCarteWagon[3] )
-        {
-            //this.ctrl.piocherTabWagon (3, this.ctrl.getJoueurSelect().getNom());
-            this.setImageButton(3);
-            System.out.println(4);
-        }
 
-        if ( e.getSource() == this.tabCarteWagon[4] )
-        {
-            //this.ctrl.piocherTabWagon (4, this.ctrl.getJoueurSelect().getNom());
-            this.setImageButton(4);
-            System.out.println(5);
-        }
+			this.ctrl.majIHM();
+		}
+		else
+		{
+			System.out.println("Vous ne pouvez pas jouer");
+		}
     }
 
+	public void majIHM()
+	{
+		for (int cpt=0; cpt<PanelPioche.TAILLE; cpt++)
+        {
+            this.setImageButton(cpt);;
+        }
+		System.out.println("maj pioche");
+	}
 
     /**
      * Applique les couleurs du thème sélectionné à tout les éléments du panel et au panel lui même
