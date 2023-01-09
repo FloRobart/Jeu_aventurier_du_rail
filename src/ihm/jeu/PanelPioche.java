@@ -119,7 +119,7 @@ public class PanelPioche extends JPanel implements ActionListener
 			if ( e.getSource() == this.deckCarteWagon )
 			{
 				this.ctrl.piocherPioche();
-				this.ctrl.piocherPioche();System.out.println("pioche deck");
+				this.ctrl.piocherPioche();
 			}
 
 			for (int i = 0 ; i < this.TAILLE ; i++)
@@ -130,12 +130,12 @@ public class PanelPioche extends JPanel implements ActionListener
 					if (this.tabCartesVisible[i] != null)
 						if (this.tabCartesVisible[i].isJoker())
 						{
-							this.ctrl.piocherVisible(i);System.out.println("pioche visible jocker");
+							this.ctrl.piocherVisible(i);
 						}
 						else
 						{
 							this.ctrl.piocherVisible(i);
-							this.ctrl.piocherPioche();System.out.println("pioche visible couleur");
+							this.ctrl.piocherPioche();
 						}
 				}
 

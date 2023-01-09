@@ -65,12 +65,12 @@ public class Arete implements Serializable
 
 	public void setProprietaire1(Joueur j) 
 	{ 
-		if(this.proprietaire1 != null)
+		if(this.proprietaire1 == null)
 			this.proprietaire1 = j; 
 	}
 	public void setProprietaire2(Joueur j) 
 	{ 
-		if(is2Sens() && this.proprietaire2 != null)
+		if(is2Sens() && this.proprietaire2 == null)
 			this.proprietaire2 = j; 
 	}
 
