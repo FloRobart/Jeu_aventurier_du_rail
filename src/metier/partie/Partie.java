@@ -44,7 +44,7 @@ public class Partie implements Serializable
 
 		this.nbJetonFin    = metier.getNbJetonFin();
 		this.tour          = 1;
-		this.joueurCourant = this.joueurs[0];
+		// this.joueurCourant = this.joueurs[0];
 		this.estMulti      = estMulti;
 
 		// while (!this.estTerminee())
