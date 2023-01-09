@@ -16,6 +16,7 @@ public class Server
     private ArrayList<ServerClientHandler> clients;
     public Server(Metier metier)
     {
+        this.clients = new ArrayList<ServerClientHandler>();
         this.metier = metier;
     }
 
@@ -53,6 +54,14 @@ public class Server
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                if (socket == null)
+                {
+                    System.out.println("Socket null");
+                    return;
+                }else{
+                    System.out.println("Socket not null");
+                                    
+                }
                 while (true)
                 {
                     try {
@@ -65,7 +74,7 @@ public class Server
                     }
                 }
             }
-        });
+        }).start();
     }
 
 

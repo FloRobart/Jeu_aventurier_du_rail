@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.awt.Graphics2D;
@@ -17,14 +18,22 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+import javax.swing.BorderFactory;
+import javax.swing.Icon;
 
 import controleur.Controleur;
+import metier.CarteObjectif;
+import metier.Joueur;
+import metier.partie.CarteWagon;
 
 public class PanelMainJoueur extends JPanel implements ActionListener
 {
-    private Controleur ctrl;
-    private JDialog    dialogObjectifs;
+    private Controleur             ctrl;
+    private Joueur                 joueur;
+    private HashMap<Color,Integer> hashMapCarteWagons;
+    private List<CarteWagon>       alCartesWagons;
+
+    private JDialog                      dialogObjectifs;
     private HashMap<String, List<Color>> theme;
 
     private JPanel         panelImgJoueur;
@@ -52,11 +61,17 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         this.theme           = this.ctrl.getTheme();
 
         this.setLayout(new BorderLayout());
+        this.setBorder( BorderFactory.createLineBorder(Color.black, 3) );
 
         //initialisation des composants
         this.panelImgJoueur  = new JPanel();
-        this.lblNom     = new JLabel("  nom   ");
-        this.lblNbJeton = new JLabel("  jetons restants   ");
+        
+        /*this.joueur = this.ctrl.getJoueurCourant();
+        this.hashMapCarteWagons = this.joueur.gethashMapCarteWagons();
+        this.alCartesWagons     = this.joueur.getAlCartesWagons();*/
+
+        this.lblNom     = new JLabel("  nom   "); //this.joueur.getNom()
+        this.lblNbJeton = new JLabel("  jetons restants   "); //this.joueur.getNbJetons()
 
         String pathImage = "";
         if (this.ctrl.getThemeUsed().equals("dark"))
@@ -67,15 +82,19 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         this.lblIcon    = new JLabel(new ImageIcon(pathImage), JLabel.LEFT);
         
         this.panelMainWagon = new JPanel();
-        this.listImageWagon = this.ctrl.getImagesRectoCouleur(); // joueur.getCarteWagon();
-        this.listImageWagon.add(this.ctrl.getImageRectoLocomotive());
+        /*this.listImageWagon = new ArrayList<BufferedImage>();
+        for(CarteWagon carte : this.alCartesWagons)
+        {
+            this.listImageWagon.add(carte.getImageRecto());
+        }*/
+        this.listImageWagon = this.ctrl.getImagesRectoCouleur(); // this.joueur.getAlCartesWagons()
+        this.listImageWagon.add(this.ctrl.getImageRectoLocomotive());//ligne à supprimer
         int taille = this.listImageWagon.size();
-        this.tabIconWagon   = new JButton[taille];
-        this.tabLblWagon    = new JLabel[taille];
+        this.tabIconWagon   = new JButton[5];
+        this.tabLblWagon    = new JLabel[5];
         
         this.panelMainObjectif = new JPanel();
         this.btnIconObjectif   = new JButton();
-
 
         //panelImgJoueur Joueur
         this.panelInfoJoueur = new JPanel();
@@ -89,12 +108,10 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         this.panelImgJoueur.add(panelInfoJoueur, BorderLayout.CENTER);
 
         //panelMainWagon
-        System.out.println(this.listImageWagon.size());
-
         for(int i = 0; i < taille; i++)
         {
             this.tabLblWagon[i]  = new JLabel();
-            this.tabLblWagon[i].setText("X"+ i);
+            this.tabLblWagon[i].setText("X"+ i); //this.tabLblWagon[i].setText("X"+ this.hashMapCarteWagons.get(this.alCarteWagon.get(i).getCouleur()));
 
             this.tabIconWagon[i] = new JButton();
             this.tabIconWagon[i].setIcon(new ImageIcon(creerCarte(this.listImageWagon.get(i), this.tabLblWagon[i])));
@@ -106,7 +123,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         }   
 
         //panelMainObjectif
-        this.btnIconObjectif.setIcon(new ImageIcon(creerCarte(this.ctrl.getCarteObjectif().get(2).getImageRecto(), null)));
+        this.btnIconObjectif.setIcon(new ImageIcon(this.ctrl.getCarteObjectif().get(0).getImageRecto()));
         this.btnIconObjectif.setBorderPainted(false);
         this.btnIconObjectif.setContentAreaFilled(false);
         this.btnIconObjectif.setFocusPainted(false);
@@ -142,8 +159,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         g2d.drawImage(bufferedImage, (taille-width)/2, (taille-height)/2-30, width, height, null);
         g2d.rotate((1.57*3), taille / 2, taille / 2);
         g2d.setColor(this.theme.get("labels").get(0));
-        if(lbl != null)
-            g2d.drawString(lbl.getText(), 50, 50);
+        g2d.drawString(lbl.getText(), 50, 50);
 
         return bi;
     }
@@ -276,5 +292,10 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         /* lblIcon */
         this.lblIcon.setOpaque(false);
         this.lblIcon.setForeground(labelForeColor);
+    }
+
+    public void afficherCarteObjectif(Icon icon) 
+    {
+        this.btnIconObjectif.setIcon(icon);
     }
 }

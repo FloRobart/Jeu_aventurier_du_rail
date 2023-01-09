@@ -16,8 +16,9 @@ public class Partie implements Serializable
 	private Joueur        joueurCourant;
 	private int           nbJetonFin;
 	private int           tour;
+	private boolean       estMulti; // mettre le serveur au lieu d'un boolean
 
-	public Partie(Controleur ctrl, Metier metier)
+	public Partie(Controleur ctrl, Metier metier, boolean estMulti)
 	{
 		this.ctrl = ctrl;
 		this.gestionPioche = new GestionPioche(metier);
@@ -35,9 +36,12 @@ public class Partie implements Serializable
 
 		this.nbJetonFin = metier.getNbJetonFin();
 		this.tour = 1;
+		this.joueurCourant = this.joueurs[0];
+		this.estMulti = estMulti;
 
 		// while (!this.estTerminee())
 		// 	this.jouerTour();
+		//while (!this.estTerminee())
 	}
 
 	public boolean estTerminee()
@@ -49,14 +53,17 @@ public class Partie implements Serializable
 		return false;
 	}
 
-	public void jouerTour()
+	public void joueurSuivant()
 	{
-		for (Joueur joueur : this.joueurs)
-		{
-			this.joueurCourant = joueur;
-			//this.joueurCourant.jouerTour(this.ctrl, this.gestionPioche);
-			this.tour++;
-		}
+		int indJoueur = 0;
+
+		for (int cpt = 0; cpt < this.joueurs.length; cpt++)
+			if (this.joueurs[cpt] == this.joueurCourant)
+				indJoueur = (cpt++) % this.joueurs.length;
+		
+		this.joueurCourant = this.joueurs[indJoueur];
+
+		if (indJoueur == 0) this.tour++;
 	}
 
 }

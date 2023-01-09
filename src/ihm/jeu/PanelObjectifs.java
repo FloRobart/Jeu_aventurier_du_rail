@@ -20,12 +20,14 @@ import javax.swing.JScrollPane;
 
 import controleur.Controleur;
 import metier.CarteObjectif;
+import metier.Joueur;
 import metier.Noeud;
 
 
 public class PanelObjectifs extends JPanel implements ActionListener
 {
     private Controleur ctrl;
+    private Joueur     joueur;
     private HashMap<String, List<Color>> theme;
 
     /* Panels */
@@ -42,7 +44,8 @@ public class PanelObjectifs extends JPanel implements ActionListener
         this.ctrl = ctrl;
         this.theme = this.ctrl.getTheme();
 
-        //int taille = this.ctrl.getCarteObjectif().size(); 
+        //this.joueur = this.ctrl.getJoueurCourant();
+        //int taille = this.joueur.getNbCartesObjectif();
         int taille = 5; // a remplacer par le nombre de carte objectif du joueur
         
         int grid = taille;
@@ -63,7 +66,7 @@ public class PanelObjectifs extends JPanel implements ActionListener
             this.tabBtnObjectifs[i].setFocusPainted(false);
             this.tabBtnObjectifs[i].setContentAreaFilled(false);
 
-            this.tabBtnObjectifs[i].setIcon(new ImageIcon(creerCarte(this.listObjectifs.get(i))));
+            this.tabBtnObjectifs[i].setIcon(new ImageIcon(creerCarte(this.listObjectifs.get(i)))); //this.joueur.getAlCartesObjectif().get(i)
 
             this.panelPrincipale.add(this.tabBtnObjectifs[i]);
         }
@@ -99,10 +102,7 @@ public class PanelObjectifs extends JPanel implements ActionListener
 
 
         g.setColor(titleBackColor);
-        g.fillRect(10, 10, 220, 130);
-
-        g.setColor(titleBackColor);
-        g.drawRect(10, 10, 200, 130);
+        g.fillRect(10, 10, 280, 150);
 
         g.setColor(Color.BLUE);
         g.setFont(g.getFont().deriveFont(20f));
@@ -146,7 +146,7 @@ public class PanelObjectifs extends JPanel implements ActionListener
         {
             if(e.getSource() == this.tabBtnObjectifs[i])
             {
-                System.out.println("Carte objectif " + i + " cliquée");
+                this.ctrl.afficherCarteObjectif(this.tabBtnObjectifs[i].getIcon());
             }
         }
         

@@ -586,7 +586,7 @@ public class PanelAccueil extends JPanel implements ActionListener
                 boolean pseudoCorrect = this.verifPseudo();
                 boolean mdpCorrect = false;
 
-                if (e.getSource() == this.btnCreerMulti) { mdpCorrect = this.verifMdp(this.txtMdpCreer);this.ctrl.creerPartie();}
+                if (e.getSource() == this.btnCreerMulti) { mdpCorrect = this.verifMdp("creer", this.txtMdpCreer); }
 
 
                 /* Vérification de la mappe */
@@ -632,7 +632,7 @@ public class PanelAccueil extends JPanel implements ActionListener
             if (e.getSource() == this.btnRejoindre)
             {
                 boolean pseudoCorrect = this.verifPseudo();
-                boolean mdpCorrect    = this.verifMdp(this.txtMdpRejoindre);
+                boolean mdpCorrect    = this.verifMdp("rejoindre", this.txtMdpRejoindre);
 
                 /* Vérification de l'adresse IP */
                 if (this.txtIpRejoindre.getText().isEmpty() /*|| !this.ctrl.verifAdresseIP()*/)
@@ -693,25 +693,38 @@ public class PanelAccueil extends JPanel implements ActionListener
      * @param txt : TextFieldMdp --> le TextField à vérifier
      * @return bollean, true si le mot de passe est correct, sinon false
      */
-    private boolean verifMdp(TextFieldWithHint txt)
+    private boolean verifMdp(String type, TextFieldWithHint txt)
     {
         Color disableColor = this.theme.get("disableColor").get(0);
         boolean mdpCorrect = false;
 
-        if (txt.getText().isEmpty())
+        if (type.toLowerCase().equals("rejoindre") || type.toLowerCase().equals("creer"))
         {
-            txt.setBorder(BorderFactory.createLineBorder(disableColor, 3));
-            txt.setHint("Entrez un mot de passe");
-            txt.setPlaceholderColor(disableColor);
+            if (txt.getText().isEmpty())
+            {
+                txt.setHint("Entrez un mot de passe");
+                txt.setPlaceholderColor(disableColor);
+                txt.setBorder(BorderFactory.createLineBorder(disableColor, 3));
+            }
+            else
+            {
+                if (type.toLowerCase().equals("rejoindre"))
+                {
+                    // TODO : Vérifier que le mot de passe colle avec l'adresse IP
+                    // un méthode du controleur permet normlement de le faire
+                }
+                else
+                {
+                    mdpCorrect = true;
+                    txt.setBorder(null);
+    
+                    if (txt.getPlaceholderColor() == disableColor)
+                        txt.setPlaceholderColor(this.theme.get("saisies").get(2));
+                }
+            }
         }
-        else
-        {
-            mdpCorrect = true;
-            txt.setBorder(null);
+        else { System.out.println("Erreur : le bouton n'est pas reconnu."); }
 
-            if (txt.getPlaceholderColor() == disableColor)
-                txt.setPlaceholderColor(this.theme.get("saisies").get(2));
-        }
 
         return mdpCorrect;
     }

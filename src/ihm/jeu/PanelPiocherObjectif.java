@@ -3,6 +3,7 @@ package ihm.jeu;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -17,21 +18,35 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 {
     private static final int TAILLE = 3;
 
-    private Controleur ctrl;
+    private Controleur 	ctrl;
 
-    private JButton[]  tabCarteobjectif;
+	private JPanel		panelBtnPiocher;
 
-	private JLabel     lblInfos;
+    private JButton[]	tabCarteobjectif;
+	private JButton		btnPiocher;
+
+	private JLabel     	lblChoisirCartes;
 
 	public PanelPiocherObjectif(Controleur ctrl)
 	{
 		this.ctrl = ctrl;
 
 		//Parametrage du panel
-		this.setLayout    (new GridLayout(1,3));
-		this.lblInfos = new JLabel("Infos sur le Joueurs");
+		this.setLayout( new BorderLayout() );
+
+		//Creation des composants
+		JPanel panelPrincipal = new JPanel();
+		panelPrincipal.setLayout(new GridLayout(1,3));
+
+		this.panelBtnPiocher = new JPanel();
+		this.panelBtnPiocher.setLayout(new GridLayout(1,5));
+
+		this.lblChoisirCartes = new JLabel("Choisissez les cartes que vous voulez : ");
 
 		//Creation des boutons
+		this.btnPiocher = new JButton("Piocher");
+		this.btnPiocher.setPreferredSize(new Dimension(20,20));
+
 		Color titleBackColor = this.ctrl.getTheme().get("titles").get(1);
 		this.tabCarteobjectif = new JButton[PanelPiocherObjectif.TAILLE];
         for (int cpt = 0; cpt < PanelPiocherObjectif.TAILLE; cpt++)
@@ -41,9 +56,21 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 			
             this.tabCarteobjectif[cpt].setBorder(BorderFactory.createBevelBorder(1, titleBackColor, titleBackColor));
 
-			this.add(this.tabCarteobjectif[cpt]);
+			panelPrincipal.add(this.tabCarteobjectif[cpt]);
 			this.tabCarteobjectif[cpt].addActionListener(this);;
         }
+		this.btnPiocher.addActionListener(this);
+
+		this.panelBtnPiocher.add(new JLabel(""));
+		this.panelBtnPiocher.add(new JLabel(""));
+		this.panelBtnPiocher.add(this.btnPiocher);
+		this.panelBtnPiocher.add(new JLabel(""));
+		this.panelBtnPiocher.add(new JLabel(""));
+
+		this.add(this.lblChoisirCartes	, BorderLayout.NORTH);
+		this.add(panelPrincipal			, BorderLayout.CENTER);
+		this.add(this.panelBtnPiocher	, BorderLayout.SOUTH);
+	
 
 		this.appliquerTheme();
 	}
@@ -73,11 +100,11 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 		/* Ce panel */
 		this.setBackground(background);
 		this.setForeground(labelForeColor);
+		this.panelBtnPiocher.setBackground(background);
 
 		/* Label */
-		this.lblInfos.setOpaque(false);
-		this.lblInfos.setForeground(labelForeColor);
-
+		this.lblChoisirCartes.setOpaque(false);
+		this.lblChoisirCartes.setForeground(labelForeColor);
 
 		/*---------*/
 		/* Boutons */

@@ -9,6 +9,7 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.StringReader;
 import java.net.Socket;
 
@@ -19,15 +20,16 @@ import metier.Metier;
 public class ClientServerHandler implements Runnable
 {
 
-    private BufferedInputStream in;
-    private BufferedOutputStream out;
+    private ObjectInputStream in;
+    private ObjectOutputStream out;
     private Metier metier;
+    private String password;
 
     public void sendCommand(String cmd)
     {
         try
         {
-            this.out.write(cmd.getBytes());
+            this.out.writeUTF(cmd);
             this.out.flush();
         }
         catch(Exception e)
@@ -43,29 +45,33 @@ public class ClientServerHandler implements Runnable
      */
     private String readUntil(String until)
     {
+        String ret = "";
         try
         {
-            String str = "";
-            while (!str.endsWith(until))
+            while (!ret.endsWith(until))
             {
-                str += (char) this.in.read();
+                ret += this.in.readUTF();
+                System.out.println("recu " + ret);
+
             }
-            return str;
         }
         catch(Exception e)
         {
             System.out.println("Erreur lors de la lecture du flux réseau");
         }
-
-        return null;
+        return ret;
     }
 
-    public ClientServerHandler(Metier metier, Socket socket)
+    public ClientServerHandler(Metier metier, Socket socket, String password)
     {
         this.metier = metier;
+        this.password = password;
         try {
-            this.in = new BufferedInputStream(socket.getInputStream());
-            this.out = new BufferedOutputStream(socket.getOutputStream());
+            this.out = new ObjectOutputStream(socket.getOutputStream());
+            this.in = new ObjectInputStream(socket.getInputStream());
+            this.sendCommand("BONJOUR joe\n");
+            this.sendCommand("MOT_DE_PASSE " + this.password + "\n");
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -78,6 +84,8 @@ public class ClientServerHandler implements Runnable
             String command = this.readUntil(" ");          
             if (command == null)
                 break;
+            
+            System.out.println("[Client] " + command.substring(0, Math.min(command.length(), 10)));
 
             if (command.equals("ERREUR "))
             {
@@ -109,11 +117,9 @@ public class ClientServerHandler implements Runnable
             if (command.equals("METIER "))
             {
                 try {
-                    ObjectInputStream ois = new ObjectInputStream(this.in);
                     try {
 
-                        Metier nouveau_metier = (Metier) ois.readObject();
-                        //TODO: Charger le nouveau metier
+                        Metier nouveau_metier = (Metier) this.in.readObject();
 
                         for (java.lang.reflect.Field f : this.metier.getClass().getDeclaredFields()) {
                             if (java.lang.reflect.Modifier.isStatic(f.getModifiers())) continue;

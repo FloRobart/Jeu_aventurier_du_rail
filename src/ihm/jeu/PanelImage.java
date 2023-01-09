@@ -15,7 +15,10 @@ import java.awt.geom.RoundRectangle2D;
 import java.awt.Font;
 import java.awt.FontMetrics;
 
+
+import java.awt.BasicStroke;
 import javax.swing.JPanel;
+import javax.swing.BorderFactory;
 
 import controleur.Controleur;
 import metier.*;
@@ -33,6 +36,7 @@ public class PanelImage extends JPanel
 	{
 		this.ctrl = ctrl;
 		this.taillePlateau = taillePlateau;
+		this.setBorder( BorderFactory.createLineBorder(Color.black, 2) );
 
 		this.setSize(taillePlateau[0], taillePlateau[1]);
 	}
@@ -198,4 +202,5 @@ public class PanelImage extends JPanel
 
 		return image;
 	}
+
 }
