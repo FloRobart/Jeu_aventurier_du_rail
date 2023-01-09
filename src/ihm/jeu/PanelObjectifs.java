@@ -44,12 +44,11 @@ public class PanelObjectifs extends JPanel implements ActionListener
         this.ctrl = ctrl;
         this.theme = this.ctrl.getTheme();
 
-
         List<Joueur> lstJ = this.ctrl.getJoueurs();
         this.joueur = lstJ.get(0); //this.ctrl.getJoueurCourant()
+        this.listObjectifs = this.joueur.getAlCartesObjectif();
     
         int taille = this.joueur.getNbCartesObjectif();
-        
         
         int grid = taille;
         if(taille%2 != 0)
@@ -69,7 +68,7 @@ public class PanelObjectifs extends JPanel implements ActionListener
             this.tabBtnObjectifs[i].setFocusPainted(false);
             this.tabBtnObjectifs[i].setContentAreaFilled(false);
 
-            this.tabBtnObjectifs[i].setIcon(new ImageIcon(creerCarte(this.joueur.getAlCartesObjectif().get(i)))); //this.joueur.getAlCartesObjectif().get(i)
+            this.tabBtnObjectifs[i].setIcon(new ImageIcon(creerCarte(this.listObjectifs.get(i)))); //this.joueur.getAlCartesObjectif().get(i)
 
             this.panelPrincipale.add(this.tabBtnObjectifs[i]);
         }
@@ -95,14 +94,12 @@ public class PanelObjectifs extends JPanel implements ActionListener
         Color titleBackColor   = this.theme.get("titles").get(1);
         Color labelForeColor   = this.theme.get("labels").get(0);
 
-
         Noeud noeud1 = carteObjectif.getNoeud1();
         Noeud noeud2 = carteObjectif.getNoeud2();
         int nbPoints = carteObjectif.getPoints();
 
         BufferedImage img = new BufferedImage(200, 150, BufferedImage.TYPE_INT_ARGB);
         Graphics g = img.getGraphics();
-
 
         g.setColor(titleBackColor);
         g.fillRect(10, 10, 280, 150);
@@ -120,7 +117,6 @@ public class PanelObjectifs extends JPanel implements ActionListener
         str = noeud1.getNom() + " ==> " + noeud2.getNom();
         p = new Point(100 - fm.stringWidth(str)/2, 60);
         g.drawString(str, p.x, p.y);
-
 
         g.setFont(g.getFont().deriveFont(15f));
         fm = g.getFontMetrics();
@@ -151,8 +147,7 @@ public class PanelObjectifs extends JPanel implements ActionListener
             {
                 this.ctrl.afficherCarteObjectif(this.tabBtnObjectifs[i].getIcon());
             }
-        }
-        
+        } 
     }
 
     public void appliquerTheme()
