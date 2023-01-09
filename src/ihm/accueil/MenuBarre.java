@@ -2,53 +2,47 @@ package ihm.accueil;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
 import java.awt.Color;
-import java.io.File;
+import java.awt.event.WindowListener;
+import java.awt.event.WindowEvent;
 
-import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.KeyStroke;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.JDialog;
 
 import controleur.Controleur;
 
+import ihm.aide.PanelAideMenu;
+import ihm.aide.PanelAideJeu;
 
 public class MenuBarre extends JMenuBar implements ActionListener 
 {
 	private Controleur ctrl;
 
-	private JMenu menuFichier;
-	private JMenu menuExporterSous;
+	private PanelAideMenu panelAideMenu;
+	private PanelAideJeu panelAideJeu;
+
 	private JMenu menuPreferences;
 	private JMenu menuAide;
-
-	private JMenuItem menuiFichierNouveau;
-	private JMenuItem menuiFichierOuvrir;
-	private JMenuItem menuiFichierEnregistrer;
-	private JMenuItem menuiFichierEnregistrerSous;
-
-	private JMenuItem menuiFichierExporterSousGif;
-	private JMenuItem menuiFichierExporterSousPng;
-	private JMenuItem menuiFichierExporterSousJpeg;
-	private JMenuItem menuiFichierExporterSousJpg;
-
-	private JMenuItem menuiFichierFermer;
 
 	private JMenuItem menuiPreferencesThemes;
 	private JMenuItem menuiPreferencesThemesClair;
 	private JMenuItem menuiPreferencesThemesSombre;
 	private JMenuItem menuiPreferencesThemesDark;
 
+	private JMenuItem menuiAideMenu;
+	private JMenuItem menuiAideJeu;
+
+	private JDialog dialogAide;
 
 	public MenuBarre(Controleur ctrl) 
 	{
 		this.ctrl = ctrl;
 
+		this.dialogAide    = null;
+        this.panelAideMenu = null;
+		this.panelAideJeu  = null;
 
 		/*=========================*/
 		/* Création des composants */
@@ -74,7 +68,8 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		this.menuAide = new JMenu("Aide");
 		this.menuAide.setMnemonic('A');
 
-
+		this.menuiAideJeu  = new JMenuItem("Tutoriel Menu"  );
+		this.menuiAideMenu = new JMenuItem("Tutoriel Jeu"  );
 
 		/*=======================*/
 		/* Ajouts des composants */
@@ -91,9 +86,9 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		/*------*/
 		/* Aide */
 		/*------*/
+		this.menuAide.add(this.menuiAideMenu);
+		this.menuAide.add(this.menuiAideJeu);
 		this.add(menuAide);
-
-
 
 		/*============================*/
 		/* Activations des composants */
@@ -101,7 +96,8 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		this.menuiPreferencesThemesClair .addActionListener(this);
 		this.menuiPreferencesThemesSombre.addActionListener(this);
 		this.menuiPreferencesThemesDark  .addActionListener(this);
-		this.menuAide                    .addActionListener(this);
+		this.menuiAideMenu               .addActionListener(this);
+		this.menuiAideJeu                .addActionListener(this);
 	}
 
 	public void actionPerformed(ActionEvent e) 
@@ -118,9 +114,74 @@ public class MenuBarre extends JMenuBar implements ActionListener
 				this.ctrl.changerTheme("dark");
 
 
-			if (e.getSource() == this.menuAide)
+			if (e.getSource() == this.menuiAideMenu)
 			{
-				/* TODO : Afficher l'aide */
+				/* Création du panel */
+				if (this.panelAideMenu == null) { this.panelAideMenu = new PanelAideMenu(); }
+
+				/* Création du JDialog */
+				if (this.dialogAide == null)
+				{
+					this.dialogAide = new JDialog();
+
+					this.dialogAide.setSize(750,250);
+					this.dialogAide.setLocation(200, 300);
+					this.dialogAide.setResizable(false);
+					this.dialogAide.add(this.panelAideMenu);
+					this.dialogAide.pack();
+					this.dialogAide.setVisible(true);
+				}
+				else
+				{
+					this.dialogAide.setVisible(true);
+				}
+
+				/* Permet de detecter la fermeture de la fenêtre de dialogue */
+				this.dialogAide.addWindowListener(new WindowListener()
+				{
+					public void windowClosing    (WindowEvent e) {}
+					public void windowOpened     (WindowEvent e) {}
+					public void windowClosed     (WindowEvent e) {}
+					public void windowIconified  (WindowEvent e) {}
+					public void windowDeiconified(WindowEvent e) {}
+					public void windowActivated  (WindowEvent e) {}
+					public void windowDeactivated(WindowEvent e) { dialogAide.dispose(); }
+				});
+			}
+
+			if (e.getSource() == this.menuiAideJeu)
+			{
+				/* Création du panel */
+				if (this.panelAideJeu == null) { this.panelAideJeu = new PanelAideJeu(); }
+
+				/* Création du JDialog */
+				if (this.dialogAide == null)
+				{
+					this.dialogAide = new JDialog();
+
+					this.dialogAide.setSize(750,250);
+					this.dialogAide.setLocation(200, 300);
+					this.dialogAide.setResizable(false);
+					this.dialogAide.add(this.panelAideJeu);
+					this.dialogAide.pack();
+					this.dialogAide.setVisible(true);
+				}
+				else
+				{
+					this.dialogAide.setVisible(true);
+				}
+
+				/* Permet de detecter la fermeture de la fenêtre de dialogue */
+				this.dialogAide.addWindowListener(new WindowListener()
+				{
+					public void windowClosing    (WindowEvent e) {}
+					public void windowOpened     (WindowEvent e) {}
+					public void windowClosed     (WindowEvent e) {}
+					public void windowIconified  (WindowEvent e) {}
+					public void windowDeiconified(WindowEvent e) {}
+					public void windowActivated  (WindowEvent e) {}
+					public void windowDeactivated(WindowEvent e) { dialogAide.dispose(); }
+				});
 			}
 		}
 	}
@@ -139,7 +200,6 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		/*-------------------------*/
 		this.setForeground(foregroundColor);
 		this.setBackground(backgroundColor);
-
 
 		/*------------*/
 		/* Préférence */
@@ -171,5 +231,11 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		/*------*/
 		this.menuAide.setForeground(foregroundColor);
 		this.menuAide.setBackground(backgroundColor);
+
+		this.menuiAideMenu.setForeground(foregroundColor);
+		this.menuiAideMenu.setBackground(backgroundColor);
+
+		this.menuiAideJeu.setForeground(foregroundColor);
+		this.menuiAideJeu.setBackground(backgroundColor);
 	}
 }
