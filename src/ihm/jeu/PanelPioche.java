@@ -36,6 +36,7 @@ public class PanelPioche extends JPanel implements ActionListener
 
         //Parametrage du panel
         this.setLayout(new BorderLayout(3, 3));
+        this.setBorder( BorderFactory.createLineBorder(Color.black, 3) );
 
 		//Creation des panels
 		this.panelHaut   = new JPanel();

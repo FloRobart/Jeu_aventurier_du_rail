@@ -5,9 +5,11 @@ import java.awt.GridLayout;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.awt.Toolkit;
+import java.awt.Color;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.BorderFactory;
 
 import controleur.Controleur;
 import ihm.accueil.MenuBarre;
@@ -45,6 +47,7 @@ public class FrameJeu extends JFrame
         this.panelObjectif   = new PanelObjectif  (this.ctrl);
         this.panelGauche     = new JPanel();
         this.panelGauche.setLayout(new GridLayout(2, 1));
+        this.panelGauche.setBorder( BorderFactory.createLineBorder(Color.black, 2) );
 
         /* Ajout des composants */
         this.setJMenuBar(this.menuBarre);

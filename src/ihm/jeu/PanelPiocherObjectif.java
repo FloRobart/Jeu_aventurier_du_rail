@@ -3,6 +3,7 @@ package ihm.jeu;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -28,8 +29,12 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 		this.ctrl = ctrl;
 
 		//Parametrage du panel
-		this.setLayout    (new GridLayout(1,3));
-		this.lblInfos = new JLabel("Infos sur le Joueurs");
+		this.setLayout( new BorderLayout() );
+
+		//Creation des composants
+		JPanel panelPrincipal = new JPanel();
+		panelPrincipal.setLayout(new GridLayout(1,3));
+		this.lblInfos = new JLabel("Choisissez les cartes que vous voulez : ");
 
 		//Creation des boutons
 		Color titleBackColor = this.ctrl.getTheme().get("titles").get(1);
@@ -41,9 +46,12 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 			
             this.tabCarteobjectif[cpt].setBorder(BorderFactory.createBevelBorder(1, titleBackColor, titleBackColor));
 
-			this.add(this.tabCarteobjectif[cpt]);
+			panelPrincipal.add(this.tabCarteobjectif[cpt]);
 			this.tabCarteobjectif[cpt].addActionListener(this);;
         }
+
+		this.add(this.lblInfos  , BorderLayout.NORTH);
+		this.add(panelPrincipal , BorderLayout.CENTER);
 
 		this.appliquerTheme();
 	}
@@ -77,6 +85,7 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 		/* Label */
 		this.lblInfos.setOpaque(false);
 		this.lblInfos.setForeground(labelForeColor);
+		
 
 
 		/*---------*/
