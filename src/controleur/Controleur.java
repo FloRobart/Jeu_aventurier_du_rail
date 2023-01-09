@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.Icon;
-
+import javax.swing.JButton;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -264,4 +264,12 @@ public class Controleur
             e.printStackTrace();
         }
     }
+    public CarteObjectif[] getPiocheObjectif() 
+	{
+        return this.partie.getPiocheObjectif();
+    }
+	public void ajouterObjectifsJoueurs(CarteObjectif cartesObjectifs) 
+	{
+		this.metier.ajouterObjectifsJoueurs(cartesObjectifs);
+	}
 }

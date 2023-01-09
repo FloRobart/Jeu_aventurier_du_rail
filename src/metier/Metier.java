@@ -503,4 +503,10 @@ public class Metier implements Serializable
 			lstImagesRectoCouleur.add(ImageIO.read(new ByteArrayInputStream((byte[]) in.readObject())));
 		}
 	}
+
+	public void ajouterObjectifsJoueurs(CarteObjectif cartesObjectifs) 
+	{
+		this.lstJoueurs.get(0).ajouterCarteObjectif(cartesObjectifs);
+		this.lstCartesObjectif.remove(cartesObjectifs);
+	}
 }	

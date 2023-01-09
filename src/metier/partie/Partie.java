@@ -91,4 +91,9 @@ public class Partie implements Serializable
 		this.gestionPioche.getTabCartesVisible()[ind] = this.gestionPioche.piocherCarteWagon();
 	}
 
+	public CarteObjectif[] getPiocheObjectif() 
+	{
+		return this.gestionPioche.piocherCartesObjectif();
+	}
+
 }
