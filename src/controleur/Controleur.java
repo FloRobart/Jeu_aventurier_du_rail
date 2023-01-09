@@ -201,7 +201,10 @@ public class Controleur
         return null;
     }
 
-
+	/**
+	 * Affiche la carte objectif dans la main du joueur
+	 * @param icon carte objectif
+	 */
     public void afficherCarteObjectif(Icon icon) 
 	{
 		this.ihm.afficherCarteObjectif(icon);

@@ -86,6 +86,10 @@ public class FrameJeu extends JFrame
         this.panelObjectif  .appliquerTheme();
     }
 
+    /**
+     * Affiche la carte objectif dans la main du joueur
+	 * @param icon carte objectif
+     */
     public void afficherCarteObjectif(Icon icon) 
     {
         this.panelMainJoueur.afficherCarteObjectif(icon);

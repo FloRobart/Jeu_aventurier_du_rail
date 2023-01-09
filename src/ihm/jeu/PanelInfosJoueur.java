@@ -42,7 +42,7 @@ public class PanelInfosJoueur extends JPanel
         this.ctrl = ctrl;
         this.joueur = joueur;
 
-
+        //initialisation des composants
         //this.joueur = ctrl.getJoueurCourant();
         this.setLayout(new BorderLayout());
         this.nbWagons            = this.joueur.getNbJetonsRestant();
@@ -76,6 +76,7 @@ public class PanelInfosJoueur extends JPanel
             this.lblNbCartesWagon.setText(this.nbCartesWagon + " carte wagon");
 
         
+        //ajout des composants
         GroupLayout layout = new GroupLayout(this.panelIcon);
         this.panelIcon.setLayout(layout);
         layout.setHorizontalGroup(

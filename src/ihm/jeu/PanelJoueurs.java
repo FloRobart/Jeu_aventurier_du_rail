@@ -49,6 +49,7 @@ public class PanelJoueurs extends JPanel implements ActionListener
         this.setSize(200, 400);
         this.setBorder( BorderFactory.createLineBorder(Color.black, 2) );
 
+        //initialisation des composants
         /*panel de chaque joueurs */
         this.lstJoueurs = this.ctrl.getJoueurs();
         this.tabPanels  = new JPanel [this.lstJoueurs.size()];
@@ -88,8 +89,10 @@ public class PanelJoueurs extends JPanel implements ActionListener
         this.scrollJoueurs.setPreferredSize(new Dimension(200, 385)); // 400 c'est trop, ça déborder du panel
         this.scrollJoueurs.getVerticalScrollBar().setUnitIncrement(5);
 
+        //ajout des composants
         this.add(scrollJoueurs, BorderLayout.CENTER);
 
+        //ajout des listeners
         /*afficher les infos d'un joueur en fonction du joueur selectionné */
         for(int cpt=0; cpt< tabBoutons.length; cpt++)
         {
