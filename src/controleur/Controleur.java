@@ -166,15 +166,14 @@ public class Controleur
             e.printStackTrace();
         }
     }
-
-	
-    public Joueur getJoueurSelect() {
-		return null;
-    }
 	
     public void creerPartie() 
 	{
 		this.hostGame();
+    }
+
+    public Joueur getJoueurCourant() {
+        return null;
     }
 
 

@@ -21,12 +21,13 @@ import java.util.List;
 import java.awt.BorderLayout;
 
 import controleur.Controleur;
+import metier.Joueur;
 
 
 public class PanelJoueurs extends JPanel implements ActionListener 
 {
     private Controleur ctrl;
-
+    private List<Joueur> lstJoueurs;
     private JPanel      panelJoueurs;
     private JScrollPane scrollJoueurs;
     private JPanel[]    tabPanels;
@@ -49,7 +50,8 @@ public class PanelJoueurs extends JPanel implements ActionListener
         this.setBorder( BorderFactory.createLineBorder(Color.black, 2) );
 
         /*panel de chaque joueurs */
-        this.tabPanels  = new JPanel [4];
+        //this.lstJoueurs = this.ctrl.getJoueurs();
+        this.tabPanels  = new JPanel [4]; //[this.lstJoueurs.size()];
         this.tabBoutons = new JButton[this.tabPanels.length];
         this.tabLblNom  = new JLabel [this.tabPanels.length];
         this.tabLblScore= new JLabel [this.tabPanels.length];
@@ -65,8 +67,8 @@ public class PanelJoueurs extends JPanel implements ActionListener
             this.tabPanels[cpt].setBorder(BorderFactory.createBevelBorder(1, titleBackColor, titleBackColor));
             this.tabPanels[cpt].setLayout(new BorderLayout());
 
-            this.tabLblNom  [cpt] = new JLabel("nom "   + (cpt+1));
-            this.tabLblScore[cpt] = new JLabel("score " + (cpt+1));
+            this.tabLblNom  [cpt] = new JLabel("nom "   + (cpt+1)); //this.lstJoueurs.get(cpt).getNom());
+            this.tabLblScore[cpt] = new JLabel("score :" + (cpt+1)); //this.lstJoueurs.get(cpt).getScore());
 
             this.tabBoutons[cpt] = new JButton();
             this.tabBoutons[cpt].setBorderPainted    (false);

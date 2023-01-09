@@ -65,9 +65,9 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         //initialisation des composants
         this.panelImgJoueur  = new JPanel();
         
-        this.joueur = this.ctrl.getJoueurSelect();
+        /*this.joueur = this.ctrl.getJoueurCourant();
         this.hashMapCarteWagons = this.joueur.gethashMapCarteWagons();
-        this.alCartesWagons     = this.joueur.getAlCartesWagons();
+        this.alCartesWagons     = this.joueur.getAlCartesWagons();*/
 
         this.lblNom     = new JLabel("  nom   "); //this.joueur.getNom()
         this.lblNbJeton = new JLabel("  jetons restants   "); //this.joueur.getNbJetons()

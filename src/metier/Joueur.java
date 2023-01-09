@@ -61,7 +61,7 @@ public class Joueur implements Serializable
 
     public void ajouterNbJetonsPosés(int nbJetonsRestant)
     {
-        this.nbJetonsRestant += nbJetonsRestant;
+        this.nbJetonsRestant -= nbJetonsRestant;
     }
 
     public void retirerCarteObjectif(CarteObjectif carteObjectif)
