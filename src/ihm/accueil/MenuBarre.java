@@ -13,10 +13,15 @@ import javax.swing.JDialog;
 
 import controleur.Controleur;
 
+import ihm.aide.PanelAideMenu;
+import ihm.aide.PanelAideJeu;
 
 public class MenuBarre extends JMenuBar implements ActionListener 
 {
 	private Controleur ctrl;
+
+	private PanelAideMenu panelAideMenu;
+	private PanelAideJeu panelAideJeu;
 
 	private JMenu menuPreferences;
 	private JMenu menuAide;
@@ -35,6 +40,9 @@ public class MenuBarre extends JMenuBar implements ActionListener
 	{
 		this.ctrl = ctrl;
 
+		this.dialogAide    = null;
+        this.panelAideMenu = null;
+		this.panelAideJeu  = null;
 
 		/*=========================*/
 		/* Création des composants */
@@ -108,6 +116,9 @@ public class MenuBarre extends JMenuBar implements ActionListener
 
 			if (e.getSource() == this.menuiAideMenu)
 			{
+				/* Création du panel */
+				if (this.panelAideMenu == null) { this.panelAideMenu = new PanelAideMenu(); }
+
 				/* Création du JDialog */
 				if (this.dialogAide == null)
 				{
@@ -116,7 +127,7 @@ public class MenuBarre extends JMenuBar implements ActionListener
 					this.dialogAide.setSize(750,250);
 					this.dialogAide.setLocation(200, 300);
 					this.dialogAide.setResizable(false);
-					//this.dialogInfosJoueur.add(this.panelAideMenu);
+					this.dialogAide.add(this.panelAideMenu);
 					this.dialogAide.pack();
 					this.dialogAide.setVisible(true);
 				}
@@ -140,6 +151,9 @@ public class MenuBarre extends JMenuBar implements ActionListener
 
 			if (e.getSource() == this.menuiAideJeu)
 			{
+				/* Création du panel */
+				if (this.panelAideJeu == null) { this.panelAideJeu = new PanelAideJeu(); }
+
 				/* Création du JDialog */
 				if (this.dialogAide == null)
 				{
@@ -148,7 +162,7 @@ public class MenuBarre extends JMenuBar implements ActionListener
 					this.dialogAide.setSize(750,250);
 					this.dialogAide.setLocation(200, 300);
 					this.dialogAide.setResizable(false);
-					//this.dialogInfosJoueur.add(this.panelAideJeu);
+					this.dialogAide.add(this.panelAideJeu);
 					this.dialogAide.pack();
 					this.dialogAide.setVisible(true);
 				}
@@ -186,7 +200,6 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		/*-------------------------*/
 		this.setForeground(foregroundColor);
 		this.setBackground(backgroundColor);
-
 
 		/*------------*/
 		/* Préférence */

@@ -32,6 +32,9 @@
 ./src/ihm/jeu/PanelMain.java
 ./src/ihm/jeu/PanelInfoPartie.java
 
+./src/ihm/aide/PanelAideMenu.java
+./src/ihm/aide/PanelAideJeu.java
+
 ./src/ihm/Ihm.java
 
 ./src/metier/reseau/Client.java
