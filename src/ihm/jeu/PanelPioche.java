@@ -15,6 +15,7 @@ import java.awt.Graphics2D;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controleur.Controleur;
@@ -117,8 +118,6 @@ public class PanelPioche extends JPanel implements ActionListener
 							this.ctrl.piocherVisible(i);
 							this.ctrl.piocherPioche();System.out.println("pioche visible couleur");
 						}
-
-					this.majIHM();
 				}
 
 
@@ -126,7 +125,7 @@ public class PanelPioche extends JPanel implements ActionListener
 		}
 		else
 		{
-			System.out.println("Vous ne pouvez pas jouer");
+			JOptionPane.showMessageDialog(this, "Ce n'est pas à votre tour de jouer", "Erreur", JOptionPane.ERROR_MESSAGE);
 		}
     }
 

@@ -32,6 +32,10 @@ public class Controleur
 
 	private ServerControleur serverCtrl;
 	private ClientControleur clientCtrl;
+
+	private Arete areteSelectionnee;
+	private int   couleurSelectionnee;
+
     public Controleur()
     {
         this.metier = new Metier(this);
@@ -111,10 +115,19 @@ public class Controleur
 	public BufferedImage       getImageVersoObjectif() { return this.metier.getImageVersoObjectif(); }
 	public BufferedImage       getImage             () { return this.ihm   .getImage             (); }
 
+	public Arete getAreteSelectionne  () { return this.areteSelectionnee; }
+	public int   getCouleurSelectionne() { return this.couleurSelectionnee; }
+
 	//public void piocherDeck (char typeCarte, String nomJoueur)			 {this.metier.piocherDeck(typeCarte, nomJoueur);		}
 	//public void piocherTabWagon (int indiceTab, String nomJoueur)		 {this.metier.piocherTabWagon(indiceTab, nomJoueur);	}
 	//public void piocherTabObjectif (boolean[] tabBool, String nomJoueur) {this.metier.piocherTabObjectif(tabBool, nomJoueur);	}
 	public void setImageButton(int indice) 								 { if ( this.ihm != null ) this.ihm.setImageButton(indice);}
+
+	public void setSelectionnee(Arete arete, int couleur)
+	{
+		this.areteSelectionnee   = arete;
+		this.couleurSelectionnee = couleur;
+	}
     
 	public CarteWagon[] getTabCartesVisible() { return this.partie.getTabCartesVisible(); }
 
