@@ -14,6 +14,7 @@ import java.net.UnknownHostException;
 
 import ihm.Ihm;
 import metier.*;
+import metier.partie.Partie;
 import metier.partie.CarteWagon;
 import metier.reseau.Server;
 
@@ -21,11 +22,15 @@ import metier.reseau.Server;
 public class Controleur
 {
     private Metier metier;
+	private Partie partie;
+	private Joueur joueur;
     private Ihm    ihm;
 
     public Controleur()
     {
         this.metier = new Metier(this);
+		this.partie = null;
+		this.joueur = null;
         this.ihm    = new Ihm(this);
 
     }
@@ -42,7 +47,15 @@ public class Controleur
 	 * Permet de créer une partie solo.
 	 * Cette méthode lance le jeu directement.
 	 */
-	public void creerPartieSolo() { this.ihm.demarrerJeu(); }
+	public void creerPartieSolo() 
+	{ 
+		this.joueur = new Joueur("Joueur 1");
+		this.metier.ajouterJoueur(this.joueur);
+
+		this.partie = new Partie(this, this.metier, false);
+
+		this.ihm.demarrerJeu(); 
+	}
 
 	/**
 	 * Permet de créer une partie multijoueur mais ne lance pas le jeu.
