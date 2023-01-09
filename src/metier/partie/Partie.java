@@ -3,6 +3,7 @@ package metier.partie;
 import java.io.Serializable;
 
 import controleur.Controleur;
+import metier.CarteObjectif;
 import metier.Joueur;
 import metier.Metier;
 
@@ -30,8 +31,15 @@ public class Partie implements Serializable
 			this.joueurs[i].setNbJetonsRestant(metier.getNbJetonJoueur());
 
 			// attributions des cartes de départ
-			//for (int cpt = 0 ; cpt < 4 ; cpt++)
-				//this.joueurs[i].ajouterCarteWagon(this.gestionPioche.piocherCarteWagon());
+			CarteWagon carte;
+			for (int cpt = 0 ; cpt < 4 ; cpt++)
+			{
+				carte = this.gestionPioche.piocherCarteWagon();
+
+				if (carte != null)
+					this.joueurs[i].ajouterCarteWagon(carte);
+			}
+
 		}
 
 		this.nbJetonFin    = metier.getNbJetonFin();
