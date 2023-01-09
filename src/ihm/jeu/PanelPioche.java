@@ -77,7 +77,7 @@ public class PanelPioche extends JPanel implements ActionListener
         BufferedImage resizedImage = new BufferedImage(150, 100, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = resizedImage.createGraphics();
 
-		// Calcul du facteur de zoom maximal
+		/// Calcul du facteur de zoom maximal
 		double zoomLargeur = (double) 150 / image.getWidth();
 		double zoomHauteur = (double) 100 / image.getHeight();
 		double facteurZoom = Math.min(zoomLargeur, zoomHauteur);

@@ -68,8 +68,8 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		this.menuAide = new JMenu("Aide");
 		this.menuAide.setMnemonic('A');
 
-		this.menuiAideJeu  = new JMenuItem("Tutoriel Menu"  );
-		this.menuiAideMenu = new JMenuItem("Tutoriel Jeu"  );
+		this.menuiAideMenu = new JMenuItem("Tutoriel Menu"  );
+		this.menuiAideJeu  = new JMenuItem("Tutoriel Jeu"  );
 
 		/*=======================*/
 		/* Ajouts des composants */
@@ -128,7 +128,6 @@ public class MenuBarre extends JMenuBar implements ActionListener
 					this.dialogAide.setLocation(200, 300);
 					this.dialogAide.setResizable(false);
 					this.dialogAide.add(this.panelAideMenu);
-					this.dialogAide.pack();
 					this.dialogAide.setVisible(true);
 				}
 				else
@@ -139,13 +138,14 @@ public class MenuBarre extends JMenuBar implements ActionListener
 				/* Permet de detecter la fermeture de la fenêtre de dialogue */
 				this.dialogAide.addWindowListener(new WindowListener()
 				{
-					public void windowClosing    (WindowEvent e) {}
+					private boolean frameClose = false;
+					public void windowClosing    (WindowEvent e) { this.frameClose = true; dialogAide.dispose(); }
 					public void windowOpened     (WindowEvent e) {}
 					public void windowClosed     (WindowEvent e) {}
 					public void windowIconified  (WindowEvent e) {}
 					public void windowDeiconified(WindowEvent e) {}
 					public void windowActivated  (WindowEvent e) {}
-					public void windowDeactivated(WindowEvent e) { dialogAide.dispose(); }
+					public void windowDeactivated(WindowEvent e) { if(!this.frameClose) { dialogAide.setVisible(true);} }
 				});
 			}
 
@@ -159,11 +159,10 @@ public class MenuBarre extends JMenuBar implements ActionListener
 				{
 					this.dialogAide = new JDialog();
 
-					this.dialogAide.setSize(750,250);
+					this.dialogAide.setSize(750,900);
 					this.dialogAide.setLocation(200, 300);
 					this.dialogAide.setResizable(false);
 					this.dialogAide.add(this.panelAideJeu);
-					this.dialogAide.pack();
 					this.dialogAide.setVisible(true);
 				}
 				else
@@ -174,13 +173,14 @@ public class MenuBarre extends JMenuBar implements ActionListener
 				/* Permet de detecter la fermeture de la fenêtre de dialogue */
 				this.dialogAide.addWindowListener(new WindowListener()
 				{
-					public void windowClosing    (WindowEvent e) {}
+					private boolean frameClose = false;
+					public void windowClosing    (WindowEvent e) { this.frameClose = true; dialogAide.dispose(); }
 					public void windowOpened     (WindowEvent e) {}
 					public void windowClosed     (WindowEvent e) {}
 					public void windowIconified  (WindowEvent e) {}
 					public void windowDeiconified(WindowEvent e) {}
 					public void windowActivated  (WindowEvent e) {}
-					public void windowDeactivated(WindowEvent e) { dialogAide.dispose(); }
+					public void windowDeactivated(WindowEvent e) { if(!this.frameClose) { dialogAide.setVisible(true);} }
 				});
 			}
 		}
