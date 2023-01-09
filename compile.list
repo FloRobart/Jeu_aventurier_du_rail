@@ -29,6 +29,7 @@
 ./src/ihm/jeu/PanelPlateau.java
 ./src/ihm/jeu/PanelObjectif.java
 ./src/ihm/jeu/PanelPiocherObjectif.java
+./src/ihm/jeu/PanelInfoPartie.java
 
 ./src/ihm/Ihm.java
 

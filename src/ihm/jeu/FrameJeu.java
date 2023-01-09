@@ -21,7 +21,7 @@ public class FrameJeu extends JFrame
     private Controleur      ctrl;
 
     private MenuBarre       menuBarre;
-
+    private PanelInfoPartie panelInfoPartie;
     private PanelJoueurs    panelJoueurs;
     private PanelMainJoueur panelMainJoueur;
     private PanelPioche     panelPioche;
@@ -47,8 +47,9 @@ public class FrameJeu extends JFrame
         this.panelPioche     = new PanelPioche    (this.ctrl);
         this.panelPlateau    = new PanelPlateau   (this.ctrl);
         this.panelObjectif   = new PanelObjectif  (this.ctrl);
+        this.panelInfoPartie = new PanelInfoPartie  (this.ctrl);
         this.panelGauche     = new JPanel();
-        this.panelGauche.setLayout(new GridLayout(2, 1));
+        this.panelGauche.setLayout(new GridLayout(3, 1));
         this.panelGauche.setBorder( BorderFactory.createLineBorder(Color.black, 2) );
 
         /* Ajout des composants */
@@ -59,6 +60,7 @@ public class FrameJeu extends JFrame
 		this.add(this.panelPlateau   , BorderLayout.CENTER);
         this.panelGauche.add(this.panelJoueurs);
         this.panelGauche.add(this.panelObjectif);
+        this.panelGauche.add(this.panelInfoPartie);
 
 
         this.setVisible(true);
@@ -79,6 +81,7 @@ public class FrameJeu extends JFrame
         this.panelGauche    .setBackground(this.ctrl.getTheme().get("background").get(0));
 
         this.menuBarre      .appliquerTheme();
+        this.panelInfoPartie.appliquerTheme();
         this.panelJoueurs   .appliquerTheme();
         this.panelMainJoueur.appliquerTheme();
         this.panelPioche    .appliquerTheme();
