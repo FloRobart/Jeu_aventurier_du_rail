@@ -165,6 +165,8 @@ public class Controleur
 		// this.metier.creeClient(ip, true, password);
 
 		// return 1;
+		this.joueur = new Joueur("Joueur 1");
+		this.metier.ajouterJoueur(this.joueur);
 		try 
 		{
 			this.clientCtrl = new ClientControleur(ip);
@@ -186,6 +188,7 @@ public class Controleur
 	{
 		this.hostGame();
     }
+	public Metier getMetier(){return this.metier;} // a tester supprimer apres
 
     public Joueur getJoueurCourant() {
         return null;
