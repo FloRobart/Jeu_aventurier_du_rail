@@ -4,6 +4,7 @@ import metier.Metier;
 import metier.partie.Partie;
 
 import java.net.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -21,6 +22,7 @@ public class ServerControleur
         this.isWating = true;
         this.metier = metier;
         this.partie = partie;
+        this.lstClientHandler = new ArrayList<ClientHandler>();
 		try
 		{
 			ss	= new ServerSocket(9999);
@@ -80,7 +82,6 @@ public class ServerControleur
                 OutputStream outputStream = socket.getOutputStream();
                 InputStream  inputStream  = socket.getInputStream();
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-                ObjectInputStream  objectInputStream  = new ObjectInputStream(inputStream);
                 objectOutputStream.writeObject(metier);
                 objectOutputStream.writeObject(partie);
                 objectOutputStream.flush();
