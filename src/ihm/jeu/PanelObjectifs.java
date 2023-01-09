@@ -44,6 +44,8 @@ public class PanelObjectifs extends JPanel implements ActionListener
         this.ctrl = ctrl;
         this.theme = this.ctrl.getTheme();
 
+
+        //initialisation des composants
         List<Joueur> lstJ = this.ctrl.getJoueurs();
         this.joueur = lstJ.get(0); //this.ctrl.getJoueurCourant()
         this.listObjectifs = this.joueur.getAlCartesObjectif();
@@ -80,8 +82,10 @@ public class PanelObjectifs extends JPanel implements ActionListener
         this.scrollPane.setPreferredSize(new Dimension(500,300));
         this.scrollPane.getVerticalScrollBar().setUnitIncrement(5);
 
+        //ajout des composants
         this.add(scrollPane);   
         
+        //ajout des listeners
         for(JButton btn : this.tabBtnObjectifs)
             btn.addActionListener(this);
 
@@ -89,6 +93,11 @@ public class PanelObjectifs extends JPanel implements ActionListener
     }
 
 
+    /**
+     * creer les cartes objectifs
+     * @param carteObjectif carte que l'on souhaite afficher
+     * @return BufferedImage de la carte
+     */
     private BufferedImage creerCarte(CarteObjectif carteObjectif) 
     {
         Color titleBackColor   = this.theme.get("titles").get(1);
