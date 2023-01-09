@@ -128,7 +128,7 @@ public class Controleur
 
 	public boolean peuxJouer()
 	{
-		if ( this.partie != null )
+		if ( this.partie != null || this.partie.getJoueurCourant() != null )
 			return this.partie.getJoueurCourant().equals(this.joueur);
 		else
 			return false;
