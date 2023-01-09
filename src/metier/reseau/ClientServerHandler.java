@@ -25,7 +25,7 @@ public class ClientServerHandler implements Runnable
     private Metier metier;
     private String password;
 
-    public void sendCommand(String cmd)
+    public void writeonce(String cmd)
     {
         try
         {
@@ -43,17 +43,13 @@ public class ClientServerHandler implements Runnable
      * @param until Chaîne à lire
      * @return Chaîne lue
      */
-    private String readUntil(String until)
+    private String readonce()
     {
+        // read until string "until" is read, blocking
         String ret = "";
         try
         {
-            while (!ret.endsWith(until))
-            {
-                ret += this.in.readUTF();
-                System.out.println("recu " + ret);
-
-            }
+            ret = this.in.readUTF();
         }
         catch(Exception e)
         {
@@ -69,8 +65,11 @@ public class ClientServerHandler implements Runnable
         try {
             this.out = new ObjectOutputStream(socket.getOutputStream());
             this.in = new ObjectInputStream(socket.getInputStream());
-            this.sendCommand("BONJOUR joe\n");
-            this.sendCommand("MOT_DE_PASSE " + this.password + "\n");
+            writeonce("BONJOUR");
+            writeonce(this.metier.getNomClient());
+            writeonce("MOT_DE_PASSE");
+            writeonce(this.password);
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -81,40 +80,26 @@ public class ClientServerHandler implements Runnable
     {
         while (true)
         {
-            String command = this.readUntil(" ");          
+            String command = readonce();
             if (command == null)
                 break;
             
             System.out.println("[Client] " + command.substring(0, Math.min(command.length(), 10)));
 
-            if (command.equals("ERREUR "))
+            if (command.equals("ERREUR"))
             {
-                String message = this.readUntil("\n");
+                String message = readonce();
                 System.out.println("ERREUR SERVER : " + message);
             }
 
-            if (command.equals("MESSAGE "))
+            if (command.equals("MESSAGE"))
             {
-                String message = this.readUntil("\n");
+                String message = readonce();
                 System.out.println("MESSAGE DU SERVER : " + message);
             }
-            /*
-            if (command.equals("CHARGER_XML "))
-            {
-                String tailleString = this.readUntil(" ");
-                int taille = Integer.parseInt(tailleString);
-                System.out.println("Taille du XML : " + taille + " octets");
-                byte[] xml = new byte[taille];
-                try {
-                    this.in.read(xml, 0, taille);
-                    this.metier.chargerXML(new StringReader(new String(xml)));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            */
 
-            if (command.equals("METIER "))
+
+            if (command.equals("METIER"))
             {
                 try {
                     try {
