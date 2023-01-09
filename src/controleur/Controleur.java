@@ -3,6 +3,8 @@ package controleur;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.swing.Icon;
+
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.awt.Font;
@@ -174,6 +176,12 @@ public class Controleur
 
     public Joueur getJoueurCourant() {
         return null;
+    }
+
+
+    public void afficherCarteObjectif(Icon icon) 
+	{
+		this.ihm.afficherCarteObjectif(icon);
     }
 
 

@@ -10,6 +10,7 @@ import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
 
 import controleur.Controleur;
 import ihm.accueil.MenuBarre;
@@ -83,6 +84,11 @@ public class FrameJeu extends JFrame
         this.panelPioche    .appliquerTheme();
         this.panelPlateau   .appliquerTheme();
         this.panelObjectif  .appliquerTheme();
+    }
+
+    public void afficherCarteObjectif(Icon icon) 
+    {
+        this.panelMainJoueur.afficherCarteObjectif(icon);
     }
 
 }

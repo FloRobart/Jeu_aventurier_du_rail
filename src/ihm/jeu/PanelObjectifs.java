@@ -146,7 +146,7 @@ public class PanelObjectifs extends JPanel implements ActionListener
         {
             if(e.getSource() == this.tabBtnObjectifs[i])
             {
-                
+                this.ctrl.afficherCarteObjectif(this.tabBtnObjectifs[i].getIcon());
             }
         }
         
