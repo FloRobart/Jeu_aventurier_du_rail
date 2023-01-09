@@ -100,8 +100,10 @@ public class PanelPioche extends JPanel implements ActionListener
 		{
 			g2d.setColor(Color.BLACK);
 			g2d.fillRect(0, 0, 150, 100);
+
 			g2d.setColor(Color.WHITE);
 			g2d.drawString("Pioche vide", 25, 25);
+			
 			this.tabCarteWagon[indice].setEnabled(false);
 		}
 		
