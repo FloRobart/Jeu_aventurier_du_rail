@@ -1,13 +1,15 @@
 package ihm;
 
 import java.awt.image.BufferedImage;
-import java.io.Serializable;
 
 import controleur.Controleur;
 import ihm.accueil.FrameAccueil;
 import ihm.attente.FrameAttente;
 import ihm.jeu.FrameJeu;
 
+/**
+ * Classe qui gère l'ensemble des fenêtres de l'application.
+ */
 public class Ihm
 {
     private Controleur ctrl;
@@ -15,6 +17,7 @@ public class Ihm
     private FrameJeu     frameJeu;
     private FrameAccueil frameAccueil;
     private FrameAttente frameAttente;
+
 
     public Ihm(Controleur ctrl)
     {
@@ -26,6 +29,7 @@ public class Ihm
 
         this.appliquerTheme();
     }
+
 
     /**
      * Permet de démarrer le jeu et de fermer la fenêtre d'accueil.
@@ -42,24 +46,21 @@ public class Ihm
     /**
      * Permet d'ouvrir la fenêtre d'attente et de fermer la fenêtre d'accueil.
      */
-    public void demarrerAttente()
+    public void demarrerAttente(boolean hote)
     {
         this.frameAccueil.dispose();
         this.frameAccueil = null;
-        this.frameAttente = new FrameAttente(this.ctrl);
+        this.frameAttente = new FrameAttente(this.ctrl, hote);
 
         this.appliquerTheme();
     }
 
-    public void setImageButton(int indice) { if ( this.frameJeu != null ) this.frameJeu.setImageButton(indice); }						
-
+    public void setImageButton(int indice) { if ( this.frameJeu != null ) this.frameJeu.setImageButton(indice); }
 
     public int getWidthFrameAccueil() { return this.frameAccueil.getWidth(); }
 
-	public BufferedImage getImage()
-	{
-		return this.frameJeu.getImage();
-	}
+	public BufferedImage getImage() { return this.frameJeu.getImage(); }
+
 
     /**
      * Permet d'appliquer le thème à chaque élément de l'ihm qui en à besoins

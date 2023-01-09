@@ -3,29 +3,30 @@ package ihm.attente;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.imageio.ImageIO;
-import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.LayoutStyle;
-import javax.swing.ListSelectionModel;
 import javax.swing.border.BevelBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controleur.Controleur;
 
@@ -34,9 +35,13 @@ public class PanelAttente extends JPanel implements ActionListener
 {
     private Controleur ctrl;
     private HashMap<String, List<Color>> theme;
+    private boolean mappeImportee;
+    private BufferedImage imgIconPreviewMappe;
 
     /* Panel */
     private JPanel panelInfo;
+    private JPanel panelBtn;
+    private PanelPreviewMappe panelPreviewMappe;
 
     /* Boutons */
     private JButton btnChangeMappe;
@@ -59,22 +64,23 @@ public class PanelAttente extends JPanel implements ActionListener
     private JLabel lblJoueurMinRes;
     private JLabel lblLstParticipants;
     private JLabel lblNombreDe;
-    private JLabel lblPreviewMappe;
     private JLabel lblStatut;
     private JLabel lblTitre;
 
     /* Listes */
-    private JScrollPane   jspLstParticipants;
-    private JList<String> lstParticipants;
+    private JScrollPane  jspLstParticipants;
+    private List<JLabel> lstParticipants;
     
 
-    public PanelAttente(Controleur ctrl)
+    public PanelAttente(Controleur ctrl, boolean hote)
     {
         this.ctrl  = ctrl;
         this.theme = this.ctrl.getTheme();
 
         /* Panel */
         this.panelInfo          = new JPanel();
+        this.panelBtn           = new JPanel();
+        this.panelPreviewMappe  = new PanelPreviewMappe(this.ctrl);
 
         /* Boutons */
         this.btnChangeMappe     = new JButton();
@@ -97,37 +103,44 @@ public class PanelAttente extends JPanel implements ActionListener
         this.lblJoueurMinRes    = new JLabel();
         this.lblLstParticipants = new JLabel();
         this.lblNombreDe        = new JLabel();
-        this.lblPreviewMappe    = new JLabel();
         this.lblStatut          = new JLabel();
         this.lblTitre           = new JLabel();
 
         /* Listes */
-        this.jspLstParticipants = new JScrollPane  ();
-        this.lstParticipants    = new JList<String>();
-        
+        this.jspLstParticipants = new JScrollPane      ();
+        this.lstParticipants    = new ArrayList<JLabel>();
 
 
-        this.lblTitre.setText("this.lblTitre");
+        /* Image de preview de la mappe */
+        this.imgIconPreviewMappe = this.ctrl.getImagePlateau();
+
+
         this.lblTitre.setHorizontalAlignment(JLabel.CENTER);
-        this.lblTitre.setMaximumSize  (new Dimension(43, 80));
-        this.lblTitre.setMinimumSize  (new Dimension(43, 80));
-        this.lblTitre.setPreferredSize(new Dimension(43, 80));
+        this.lblTitre.setSize         (new Dimension(1000, 100));
+        this.lblTitre.setMaximumSize  (new Dimension(1000, 100));
+        this.lblTitre.setMinimumSize  (new Dimension(1000, 100));
+        this.lblTitre.setPreferredSize(new Dimension(1000, 100));
+
+        ImageIcon imgIconTitre = null;
+        try { imgIconTitre = new ImageIcon(ImageIO.read(new File("./bin/donnees/images/Titre_ADR.png")).getScaledInstance((this.lblTitre.getWidth()-100), this.lblTitre.getHeight(), Image.SCALE_SMOOTH)); } catch (IOException e) {}
+        this.lblTitre.setIcon(imgIconTitre);
 
 
-        this.btnChangeMappe.setText("btnChangerMappe");
+        this.btnChangeMappe.setText("Changer de mappe");
         this.btnChangeMappe.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         this.btnChangeMappe.setMaximumSize  (new Dimension(150, 30));
         this.btnChangeMappe.setMinimumSize  (new Dimension(150, 30));
         this.btnChangeMappe.setPreferredSize(new Dimension(150, 30));
+        if (!hote) { this.btnChangeMappe.setEnabled(false); }
 
 
-        this.lblPreviewMappe.setOpaque(true);
-        this.lblPreviewMappe.setText("this.lblPreviewMappe");
-        this.lblPreviewMappe.setHorizontalAlignment(JLabel.CENTER);
-        this.lblPreviewMappe.setMaximumSize  (new Dimension(400, 250));
-        this.lblPreviewMappe.setMinimumSize  (new Dimension(400, 250));
-        this.lblPreviewMappe.setPreferredSize(new Dimension(400, 250));
-
+        this.panelPreviewMappe.setOpaque(true);
+        this.panelPreviewMappe.setSize         (new Dimension(400, 250));
+        this.panelPreviewMappe.setMaximumSize  (new Dimension(400, 250));
+        this.panelPreviewMappe.setMinimumSize  (new Dimension(400, 250));
+        this.panelPreviewMappe.setPreferredSize(new Dimension(400, 250));
+        this.panelPreviewMappe.centrer(this.getWidth(), this.getHeight());
+        
 
         this.panelInfo.setMaximumSize  (new Dimension(250, 200));
         this.panelInfo.setMinimumSize  (new Dimension(250, 200));
@@ -289,34 +302,39 @@ public class PanelAttente extends JPanel implements ActionListener
 
 
 
-        this.lblLstParticipants.setText("this.lblLstParticipants");
+        this.lblLstParticipants.setText("Liste des joueurs");
         this.lblLstParticipants.setHorizontalAlignment(JLabel.CENTER);
         this.lblLstParticipants.setFont(new Font("Liberation Sans", 0, 24));
 
 
+        /* Boutons des joueurs */
+        Color titleBackColor   = this.theme.get("titles").get(1);
+        for (int i = 0; i < this.ctrl.getNbJoueursMax(); i++)
+        {
+            this.lstParticipants.add(new JLabel("Joueur " + (i+1)));
+            this.lstParticipants.get(i).setFont(new Font("Liberation Sans", 0, 24));
+            this.lstParticipants.get(i).setPreferredSize(new Dimension(200, 40));
+            this.lstParticipants.get(i).setOpaque(true);
+            this.lstParticipants.get(i).setHorizontalAlignment(JLabel.CENTER);
+            this.lstParticipants.get(i).setBorder(BorderFactory.createBevelBorder(1, titleBackColor, titleBackColor));
+        }
+
+        this.panelBtn.setLayout(new GridLayout(this.lstParticipants.size(), 1));
+        for (int i = 0; i < this.lstParticipants.size(); i++)
+            this.panelBtn.add(this.lstParticipants.get(i));
+
+        this.jspLstParticipants = new JScrollPane(this.panelBtn, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         this.jspLstParticipants.setMaximumSize  (new Dimension(200, 250));
         this.jspLstParticipants.setMinimumSize  (new Dimension(200, 250));
         this.jspLstParticipants.setPreferredSize(new Dimension(200, 250));
-
-        this.lstParticipants.setModel(new AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6", "Item 7", "Item 8" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        this.jspLstParticipants.setViewportView(this.lstParticipants);
-
-        this.lstParticipants.setVisibleRowCount(6);
-        this.lstParticipants.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        this.lstParticipants.setMaximumSize  (new Dimension(200, 250));
-        this.lstParticipants.setMinimumSize  (new Dimension(200, 250));
-        this.lstParticipants.setPreferredSize(new Dimension(200, 250));
+        this.jspLstParticipants.setBorder(null);
 
 
         this.lblStatut.setText("Statut : en attente de joueur");
         this.lblStatut.setFont(new Font("Liberation Sans", 0, 36));
 
 
-        this.btnLancer.setText("this.btnLancer");
+        this.btnLancer.setText("Lancer la partie");
         this.btnLancer.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         this.btnLancer.setMaximumSize  (new Dimension(150, 40));
         this.btnLancer.setMinimumSize  (new Dimension(150, 40));
@@ -337,7 +355,7 @@ public class PanelAttente extends JPanel implements ActionListener
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addComponent(this.btnChangeMappe, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(this.lblPreviewMappe, GroupLayout.PREFERRED_SIZE, 400, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(this.panelPreviewMappe, GroupLayout.PREFERRED_SIZE, 400, GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(this.panelInfo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
                         .addGap(64, 64, 64)
@@ -353,11 +371,12 @@ public class PanelAttente extends JPanel implements ActionListener
                 .addGap(40, 40, 40))
         );
 
+
         /* Verticale */
         layout.setVerticalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(this.lblTitre, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+                .addComponent(this.lblTitre, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addComponent(this.btnChangeMappe, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
@@ -365,7 +384,7 @@ public class PanelAttente extends JPanel implements ActionListener
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                     .addComponent(this.panelInfo, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                    .addComponent(this.lblPreviewMappe, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(this.panelPreviewMappe, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(this.jspLstParticipants, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(35, 35, 35)
                 .addComponent(this.lblStatut)
@@ -373,14 +392,67 @@ public class PanelAttente extends JPanel implements ActionListener
                 .addComponent(this.btnLancer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40))
         );
+
+
+        /*------------------------*/
+        /* Activation des boutons */
+        /*------------------------*/
+        /* Bouton changer mappe */
+        this.btnChangeMappe.addActionListener(this);
+
+        /* Bouton lancer */
+        this.btnLancer.addActionListener(this);
     }
 
+
+    public void updateStatus(String status)
+    {
+        this.lblStatut.setText(status);
+    }
 
 
     @Override
     public void actionPerformed(ActionEvent e)
     {
-        
+        if (e.getSource() instanceof JButton)
+        {
+            Color disableColor = this.theme.get("disableColor").get(0);
+            Color enableColor  = this.theme.get("enableColor" ).get(0);
+
+            if (e.getSource() == this.btnChangeMappe)
+            {
+                JFileChooser chooser = new JFileChooser(".");
+				chooser.setFileFilter(new FileNameExtensionFilter("Fichier XML", "xml"));
+
+				int res = chooser.showOpenDialog(this);
+				if (res == JFileChooser.APPROVE_OPTION && chooser.getSelectedFile().getPath() != null)
+				{
+					File fichier = chooser.getSelectedFile();
+					String extention = fichier.getName().substring(fichier.getName().lastIndexOf('.') + 1);
+
+					if (extention.equals("xml"))
+                    {
+						this.mappeImportee = this.ctrl.ouvrir(fichier);
+
+						if (this.mappeImportee)
+						{
+                            this.btnChangeMappe.setText(fichier.getName());
+                            this.btnChangeMappe.setBorder(BorderFactory.createLineBorder(enableColor, 3));
+                            this.panelPreviewMappe.setMappe();
+                            this.panelPreviewMappe.repaint();
+                            this.panelPreviewMappe.centrer(this.getWidth(), this.getHeight());
+						}
+                        else
+                        {
+                            this.btnChangeMappe.setText("Changer de mappe");
+                            this.btnChangeMappe.setBorder(BorderFactory.createLineBorder(disableColor, 3));
+                        }
+                    }
+					else
+						JOptionPane.showMessageDialog(this, "Le fichier choisi doit-être au format XML", "Erreur", JOptionPane.ERROR_MESSAGE);
+				}
+            }
+        }
     }
 
 
@@ -389,50 +461,58 @@ public class PanelAttente extends JPanel implements ActionListener
      */
     public void appliquerTheme()
     {
-        Color background = this.theme.get("background"  ).get(0);
-        Color disableColor     = this.theme.get("disableColor").get(0);
-        Color titleForeColor   = this.theme.get("titles"      ).get(0);
+        Color background       = this.theme.get("background"  ).get(0);
         Color titleBackColor   = this.theme.get("titles"      ).get(1);
         Color labelForeColor   = this.theme.get("labels"      ).get(0);
-        Color saisiForeColor   = this.theme.get("saisies"     ).get(0);
-		Color saisiBackColor   = this.theme.get("saisies"     ).get(1);
-        Color placeholderColor = this.theme.get("saisies"     ).get(2);
         Color btnForeColor     = this.theme.get("buttons"     ).get(0);
 		Color btnBackColor     = this.theme.get("buttons"     ).get(1);
-
-
-        /* Ce panel */
-        this.setBackground(background);
-        this.setForeground(labelForeColor);
-
 
 
         /*-------*/
         /* Panel */
         /*-------*/
-        this.panelInfo         .setBackground(background);
+        /* Ce panel */
+        this.setBackground(background);
+        this.setForeground(labelForeColor);
 
+        /* Panel de preview de la mappe */
+        this.panelPreviewMappe.setForeground(labelForeColor);
+        this.panelPreviewMappe.setBackground(titleBackColor);
+
+        /* Panel d'information */
+        this.panelInfo         .setBackground(background);
 
 
         /*---------*/
         /* Boutons */
         /*---------*/
-        /* Background */
+        /* Liste de boutons pour chaque joueur */
+        for (JLabel btn : this.lstParticipants)
+        {
+            btn.setForeground(btnForeColor);
+            btn.setBackground(background);
+            btn.setBorder(BorderFactory.createBevelBorder(1, titleBackColor, titleBackColor));
+        }
+
+        /* Bouton changer mappe */
+        this.btnChangeMappe    .setForeground(btnForeColor);
         this.btnChangeMappe    .setBackground(btnBackColor);
+        
+        /* bouton lancer la partie */
+        this.btnLancer         .setForeground(btnForeColor);
         this.btnLancer         .setBackground(btnBackColor);
 
-        /* Foreground */
-        this.btnChangeMappe    .setForeground(btnForeColor);
-        this.btnLancer         .setForeground(btnForeColor);
 
+        /*------------*/
+        /* ScrollPane */
+        /*------------*/
+        /* ScrollPane de la liste de participants */
+        this.jspLstParticipants.getVerticalScrollBar().setBackground(background);
 
 
         /*--------*/
         /* Labels */
         /*--------*/
-        /* Background */
-        this.lblPreviewMappe   .setBackground(titleBackColor);
-
         /* Foreground */
         this.lblCarteCoul      .setForeground(labelForeColor);
         this.lblCarteCoulRes   .setForeground(labelForeColor);
@@ -450,19 +530,7 @@ public class PanelAttente extends JPanel implements ActionListener
         this.lblJoueurMinRes   .setForeground(labelForeColor);
         this.lblLstParticipants.setForeground(labelForeColor);
         this.lblNombreDe       .setForeground(labelForeColor);
-        this.lblPreviewMappe   .setForeground(labelForeColor);
         this.lblStatut         .setForeground(labelForeColor);
         this.lblTitre          .setForeground(labelForeColor);
-
-
-
-        /*--------*/
-        /* Listes */
-        /*--------*/
-        /* Background */
-        this.lstParticipants   .setBackground(saisiBackColor);
-
-        /* Foreground */
-        this.lstParticipants   .setForeground(saisiForeColor);
     }
 }

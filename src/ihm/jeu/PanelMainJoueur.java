@@ -6,8 +6,11 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
 import java.util.List;
 import java.awt.Graphics2D;
+import java.awt.event.WindowListener;
+import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,8 +24,13 @@ import controleur.Controleur;
 public class PanelMainJoueur extends JPanel implements ActionListener
 {
     private Controleur ctrl;
+    private JDialog    dialogObjectifs;
+    private HashMap<String, List<Color>> theme;
 
-    private JPanel     panelInfo;
+    private JPanel         panelImgJoueur;
+    private JPanel         panelInfoJoueur;
+    private PanelObjectifs panelObjectifs;
+
     private JLabel     lblNom;
     private JLabel     lblNbJeton;
     private JLabel     lblIcon;
@@ -38,15 +46,25 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 
     public PanelMainJoueur(Controleur ctrl)
     {
-        this.ctrl = ctrl;
+        this.ctrl            = ctrl;
+        this.dialogObjectifs = null;
+        this.panelObjectifs  = null;
+        this.theme           = this.ctrl.getTheme();
+
         this.setLayout(new BorderLayout());
-		this.setBackground(Color.BLUE);
 
         //initialisation des composants
-        this.panelInfo  = new JPanel();
+        this.panelImgJoueur  = new JPanel();
         this.lblNom     = new JLabel("  nom   ");
         this.lblNbJeton = new JLabel("  jetons restants   ");
-        this.lblIcon    = new JLabel(new ImageIcon("./donnees/images/IconJoueur.png"), JLabel.LEFT);
+
+        String pathImage = "";
+        if (this.ctrl.getThemeUsed().equals("dark"))
+            pathImage = "./bin/donnees/images/IconJoueurWhite.png";
+        else
+            pathImage = "./bin/donnees/images/IconJoueurBlack.png";
+
+        this.lblIcon    = new JLabel(new ImageIcon(pathImage), JLabel.LEFT);
         
         this.panelMainWagon = new JPanel();
         this.listImageWagon = this.ctrl.getImagesRectoCouleur(); // joueur.getCarteWagon();
@@ -58,24 +76,19 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         this.panelMainObjectif = new JPanel();
         this.btnIconObjectif   = new JButton();
 
-        //panelInfo Joueur
-        JPanel panelLbl = new JPanel();
-        panelLbl.setBackground(null);
-        panelLbl.setLayout(new GridLayout(2,1)); // à modifier en fonction du nombre d'infos à afficher
-        this.panelInfo.setBackground(new Color(68, 71, 90));
-        this.panelInfo.setLayout(new BorderLayout());
-        this.lblNom.setForeground(Color.WHITE);
-        this.lblNbJeton.setForeground(Color.WHITE);
 
-        panelLbl.add(this.lblNom);
-        panelLbl.add(this.lblNbJeton);
+        //panelImgJoueur Joueur
+        this.panelInfoJoueur = new JPanel();
+        this.panelInfoJoueur.setLayout(new GridLayout(2,1)); // à modifier en fonction du nombre d'infos à afficher
+        this.panelImgJoueur.setLayout(new BorderLayout());
 
-        this.panelInfo.add(this.lblIcon, BorderLayout.NORTH);
-        this.panelInfo.add(panelLbl, BorderLayout.CENTER);
+        this.panelInfoJoueur.add(this.lblNom);
+        this.panelInfoJoueur.add(this.lblNbJeton);
+
+        this.panelImgJoueur.add(this.lblIcon, BorderLayout.NORTH);
+        this.panelImgJoueur.add(panelInfoJoueur, BorderLayout.CENTER);
 
         //panelMainWagon
-        this.panelMainWagon.setBackground(new Color(68, 71, 90));
-
         System.out.println(this.listImageWagon.size());
 
         for(int i = 0; i < taille; i++)
@@ -93,7 +106,6 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         }   
 
         //panelMainObjectif
-        this.panelMainObjectif.setBackground(new Color(68, 71, 90));
         this.btnIconObjectif.setIcon(new ImageIcon(creerCarte(this.ctrl.getCarteObjectif().get(2).getImageRecto(), null)));
         this.btnIconObjectif.setBorderPainted(false);
         this.btnIconObjectif.setContentAreaFilled(false);
@@ -102,7 +114,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 
 
         //ajout des composants
-        this.add(this.panelInfo, BorderLayout.EAST);
+        this.add(this.panelImgJoueur, BorderLayout.EAST);
         this.add(this.panelMainWagon, BorderLayout.CENTER);
         this.add(this.panelMainObjectif, BorderLayout.WEST);
 
@@ -129,7 +141,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         g2d.rotate(1.57, width / 2, height / 2);
         g2d.drawImage(bufferedImage, (taille-width)/2, (taille-height)/2-30, width, height, null);
         g2d.rotate((1.57*3), taille / 2, taille / 2);
-        g2d.setColor(Color.WHITE);
+        g2d.setColor(this.theme.get("labels").get(0));
         if(lbl != null)
             g2d.drawString(lbl.getText(), 50, 50);
 
@@ -141,14 +153,31 @@ public class PanelMainJoueur extends JPanel implements ActionListener
     {
         if(e.getSource() == this.btnIconObjectif)
         {
-            JDialog dialog = new JDialog();
-            dialog.setSize(400,200);
-            dialog.setLocation(200, 50);
-            dialog.add(new PanelObjectifs(this.ctrl));
-            dialog.pack();
-            dialog.setVisible(true);
+            /* Création d'un Panel */
+            this.panelObjectifs = new PanelObjectifs(this.ctrl);
+
+            /* Création d'un JDialog */
+            this.dialogObjectifs = new JDialog();
+
+            this.dialogObjectifs.setSize(400,200);
+            this.dialogObjectifs.setLocation(200, 50);
+            this.dialogObjectifs.setResizable(false);
+            this.dialogObjectifs.add(this.panelObjectifs);
+            this.dialogObjectifs.pack();
+            this.dialogObjectifs.setVisible(true);
+
+            /* Permet de detecter la fermeture de la fenêtre de dialogue */
+            this.dialogObjectifs.addWindowListener(new WindowListener()
+            {
+                public void windowClosing    (WindowEvent e) {}
+                public void windowOpened     (WindowEvent e) {}
+                public void windowClosed     (WindowEvent e) {}
+                public void windowIconified  (WindowEvent e) {}
+                public void windowDeiconified(WindowEvent e) {}
+                public void windowActivated  (WindowEvent e) {}
+                public void windowDeactivated(WindowEvent e) { dialogObjectifs.dispose(); }
+            });
         }
-        
     }
 
 
@@ -157,6 +186,95 @@ public class PanelMainJoueur extends JPanel implements ActionListener
      */
     public void appliquerTheme()
     {
-        // TODO A compléter
+        Color background       = this.theme.get("background"  ).get(0);
+        Color labelForeColor   = this.theme.get("labels"      ).get(0);
+        Color btnForeColor     = this.theme.get("buttons"     ).get(0);
+		Color btnBackColor     = this.theme.get("buttons"     ).get(1);
+
+
+        if (this.dialogObjectifs != null) { this.panelObjectifs.appliquerTheme(); }
+
+
+        for (int i = 0; i < this.listImageWagon.size(); i++)
+        {
+            this.tabIconWagon[i].setIcon(new ImageIcon(creerCarte(this.listImageWagon.get(i), this.tabLblWagon[i])));
+            this.tabIconWagon[i].setOpaque(false);
+        }
+    
+        /*========*/
+        /* Panels */
+        /*========*/
+        /*----------*/
+        /* Ce panel */
+        /*----------*/
+        this.repaint();
+        this.setForeground(labelForeColor);
+        this.setBackground(background);
+
+
+        /*----------------*/
+        /* panelImgJoueur */
+        /*----------------*/
+        this.panelImgJoueur.setForeground(labelForeColor);
+        this.panelImgJoueur.setBackground(background    );
+
+        /*-----------------*/
+        /* panelInfoJoueur */
+        /*-----------------*/
+        this.panelInfoJoueur.setForeground(labelForeColor);
+        this.panelInfoJoueur.setBackground(background    );
+
+        /*-------------------*/
+        /* panelMainObjectif */
+        /*-------------------*/
+        this.panelMainObjectif.setForeground(labelForeColor);
+        this.panelMainObjectif.setBackground(background    );
+
+        /*----------------*/
+        /* panelMainWagon */
+        /*----------------*/
+        this.panelMainWagon.setForeground(labelForeColor);
+        this.panelMainWagon.setBackground(background    );
+
+
+        /*=========*/
+        /* Buttons */
+        /*=========*/
+        /* btnIconObjectif */
+        this.btnIconObjectif.setForeground(btnForeColor);
+        this.btnIconObjectif.setBackground(btnBackColor);
+
+
+        /*========*/
+        /* Labels */
+        /*========*/
+        /* List labels cartes wagons */
+        for (int i = 0; i < this.tabIconWagon.length; i++)
+        {
+            this.tabLblWagon[i].setOpaque(false);
+            this.tabLblWagon[i].setForeground(labelForeColor);
+        }
+
+        /* label image joueur */
+        String pathImage = "";
+        if (this.ctrl.getThemeUsed().equals("dark"))
+            pathImage = "./bin/donnees/images/IconJoueurWhite.png";
+        else
+            pathImage = "./bin/donnees/images/IconJoueurBlack.png";
+
+        this.lblIcon.setIcon(new ImageIcon(pathImage));
+
+        
+        /* lblNom */
+        this.lblNom.setOpaque(false);
+        this.lblNom.setForeground(labelForeColor);
+
+        /* lblNbJeton */
+        this.lblNbJeton.setOpaque(false);
+        this.lblNbJeton.setForeground(labelForeColor);
+
+        /* lblIcon */
+        this.lblIcon.setOpaque(false);
+        this.lblIcon.setForeground(labelForeColor);
     }
 }

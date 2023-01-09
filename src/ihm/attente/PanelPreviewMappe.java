@@ -1,4 +1,4 @@
-package ihm.jeu;
+package ihm.attente;
 
 import java.awt.Color;
 import java.awt.MouseInfo;
@@ -19,13 +19,13 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.BevelBorder;
 
 import controleur.Controleur;
+import ihm.jeu.PanelImage;
 
-public class PanelPlateau extends JPanel implements ActionListener, MouseWheelListener, MouseListener, MouseMotionListener
+public class PanelPreviewMappe extends JPanel implements MouseWheelListener, MouseListener, MouseMotionListener
 {
     private Controleur ctrl;
 	private int[]      taillePlateau;
 
-	private JButton btnCentrer;
 
 	// attributs pour le zoom
 	private double facteurZoom    = 1;
@@ -43,7 +43,7 @@ public class PanelPlateau extends JPanel implements ActionListener, MouseWheelLi
 
 	private PanelImage panelImage;
 
-    public PanelPlateau(Controleur ctrl)
+    public PanelPreviewMappe(Controleur ctrl)
     {
         this.ctrl = ctrl;
 		this.taillePlateau = this.ctrl.getTaillePlateau();
@@ -52,27 +52,30 @@ public class PanelPlateau extends JPanel implements ActionListener, MouseWheelLi
 
 		// Création des composants
 		this.panelImage = new PanelImage(ctrl, this.taillePlateau);
-		//this.panelImage.setBounds(0, 0, this.taillePlateau[0], this.taillePlateau[1]);
 
-		this.btnCentrer = new JButton("Centrer Plateau");
-		this.btnCentrer.setBounds(0, 0, 150, 30);
 
 		// Ajout des composants
 		this.add(this.panelImage);
-		this.add(this.btnCentrer);
 
-		// Ajout des listeners
-		this.btnCentrer.addActionListener(this);
 
+		/* Listener sourie */
 		this.addMouseWheelListener (this);
         this.addMouseMotionListener(this);
         this.addMouseListener      (this);
-
     }
+
+
+	public void setMappe()
+	{
+		this.panelImage = new PanelImage(this.ctrl, this.ctrl.getTaillePlateau());
+		this.removeAll();
+		this.add(this.panelImage);
+	}
+
 
 	public void majIHM()
 	{
-		if (cliqueGaucheDrag) 
+		if (cliqueGaucheDrag)
 		{
 			this.panelImage.setBounds( (int) (this.xDecalage + this.xDiff ), 
 			                           (int) (this.yDecalage + this.yDiff ),
@@ -118,15 +121,6 @@ public class PanelPlateau extends JPanel implements ActionListener, MouseWheelLi
 		this.panelImage.majZoom(this.facteurZoom);
 	}
 
-	public BufferedImage getImage()
-	{
-		return this.panelImage.getImage();
-	}
-
-	public void actionPerformed(ActionEvent e) 
-	{
-		this.centrer(this.getWidth(), this.getHeight());
-	}
 
     public void mouseWheelMoved(MouseWheelEvent e) 
 	{
@@ -161,10 +155,7 @@ public class PanelPlateau extends JPanel implements ActionListener, MouseWheelLi
 	{
 		if (SwingUtilities.isLeftMouseButton(e))
 		{
-			Point p = new Point( (int) ((e.getX() - this.xDecalage) * (1 / this.facteurZoom)), 
-			                     (int) ((e.getY() - this.yDecalage) * (1 / this.facteurZoom)) );
-
-			this.panelImage.checkArete(p);
+			this.centrer(this.getWidth(), this.getHeight());
 		}
 	}
 
@@ -198,17 +189,10 @@ public class PanelPlateau extends JPanel implements ActionListener, MouseWheelLi
     {
 		Color background       = this.ctrl.getTheme().get("background"  ).get(0);
         Color labelForeColor   = this.ctrl.getTheme().get("labels"      ).get(0);
-        Color btnForeColor     = this.ctrl.getTheme().get("buttons"     ).get(0);
-		Color btnBackColor     = this.ctrl.getTheme().get("buttons"     ).get(1);
 
 
 		/* Ce panel */
 		this.setForeground(labelForeColor);
 		this.setBackground(background    );
-
-		/* Bouton pour centrer l'image */
-		this.btnCentrer.setForeground(btnForeColor);
-        this.btnCentrer.setBackground(btnBackColor);
-		this.btnCentrer.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
     }
 }

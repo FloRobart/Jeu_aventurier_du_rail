@@ -10,10 +10,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import controleur.Controleur;
+import ihm.accueil.MenuBarre;
 
 public class FrameJeu extends JFrame
 {
-    private Controleur ctrl;
+    private Controleur      ctrl;
+
+    private MenuBarre       menuBarre;
 
     private PanelJoueurs    panelJoueurs;
     private PanelMainJoueur panelMainJoueur;
@@ -34,15 +37,17 @@ public class FrameJeu extends JFrame
 		this.setLayout(new BorderLayout());
 
         /* Creation des composants */
+        this.menuBarre       = new MenuBarre      (this.ctrl);
         this.panelJoueurs    = new PanelJoueurs   (this.ctrl);
         this.panelMainJoueur = new PanelMainJoueur(this.ctrl);
         this.panelPioche     = new PanelPioche    (this.ctrl);
         this.panelPlateau    = new PanelPlateau   (this.ctrl);
         this.panelObjectif   = new PanelObjectif  (this.ctrl);
         this.panelGauche     = new JPanel();
-        this.panelGauche.setLayout(new GridLayout(2,1));
+        this.panelGauche.setLayout(new GridLayout(2, 1));
 
         /* Ajout des composants */
+        this.setJMenuBar(this.menuBarre);
 		this.add(this.panelGauche    , BorderLayout.WEST);
 		this.add(this.panelMainJoueur, BorderLayout.SOUTH);
 		this.add(this.panelPioche    , BorderLayout.EAST);
@@ -57,20 +62,22 @@ public class FrameJeu extends JFrame
 
     public void setImageButton(int indice) { this.panelPioche.setImageButton(indice); }	
 
-	public BufferedImage getImage()
-	{
-		return this.panelPlateau.getImage();
-	}
+	public BufferedImage getImage() { return this.panelPlateau.getImage(); }
 
+
+    /**
+     * Permet d'appliquer le thème à l'ensemble de l'IHM (tout les panels existant)
+     */
     public void appliquerTheme()
     {
+        this.panelGauche    .setForeground(this.ctrl.getTheme().get("labels"    ).get(0));
+        this.panelGauche    .setBackground(this.ctrl.getTheme().get("background").get(0));
+
+        this.menuBarre      .appliquerTheme();
         this.panelJoueurs   .appliquerTheme();
         this.panelMainJoueur.appliquerTheme();
         this.panelPioche    .appliquerTheme();
         this.panelPlateau   .appliquerTheme();
         this.panelObjectif  .appliquerTheme();
-
-        this.panelGauche    .setForeground(this.ctrl.getTheme().get("labels"    ).get(0));
-        this.panelGauche    .setBackground(this.ctrl.getTheme().get("background").get(0));
     }
 }

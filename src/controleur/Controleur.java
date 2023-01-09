@@ -14,8 +14,6 @@ import java.net.UnknownHostException;
 import ihm.Ihm;
 import metier.*;
 import metier.partie.CarteWagon;
-import metier.reseau.Client;
-import metier.reseau.Server;
 
 
 public class Controleur
@@ -29,6 +27,7 @@ public class Controleur
         this.ihm    = new Ihm(this);
 
     }
+
 
 	/**
 	 * Permet de lire le fichier xml contenant toutes les informations du plateau.
@@ -47,7 +46,7 @@ public class Controleur
 	 * Permet de créer une partie multijoueur mais ne lance pas le jeu.
 	 * Le jeu pourra être lancé par le créateur de la partie à l'intérieur de la fenêtre d'attente.
 	 */
-	public void creerPartieMulti() { this.ihm.demarrerAttente(); }
+	public void creerPartieMulti() { this.ihm.demarrerAttente(true); }
 
 
 
@@ -100,6 +99,13 @@ public class Controleur
      */
     public HashMap<String, List<Color>> getTheme() { return this.metier.getTheme(); }
 
+	/**
+	 * Permet de récupérer le nom du thème utilisé
+	 * @return Nom du thème utilisé
+	 */
+	public String getThemeUsed() { return this.metier.getThemeUsed(); }
+
+
     /**
      * Change le thème à utilisé dans le fichier de sauvegarde.
      * Charge en mémoire le nouveau thème.
@@ -136,12 +142,20 @@ public class Controleur
         }
     }
 
+	
     public Joueur getJoueurSelect() {
-        return null;
+		return null;
     }
-
+	
     public void creerPartie() 
 	{
 		this.hostGame();
     }
+
+
+
+
+
+
+
 }
