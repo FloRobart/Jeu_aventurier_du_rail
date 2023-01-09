@@ -29,13 +29,13 @@ public class Partie implements Serializable
 		{
 			this.joueurs[i] = metier.getJoueurs().get(i);
 			this.joueurs[i].setNbJetonsRestant(metier.getNbJetonJoueur());
-System.out.println("--------------");
+
 			// attributions des cartes de départ
 			CarteWagon carte;
 			for (int cpt = 0 ; cpt < 4 ; cpt++)
 			{
 				carte = this.gestionPioche.piocherCarteWagon();
-System.out.println(carte.getCouleur());
+
 				if (carte != null)
 					this.joueurs[i].ajouterCarteWagon(carte);
 			}
@@ -46,10 +46,6 @@ System.out.println(carte.getCouleur());
 		this.tour          = 1;
 		this.joueurCourant = this.joueurs[0];
 		this.estMulti      = estMulti;
-
-		// while (!this.estTerminee())
-		// 	this.jouerTour();
-		//while (!this.estTerminee())
 	}
 
 	public boolean estTerminee()
@@ -71,6 +67,20 @@ System.out.println(carte.getCouleur());
 		
 		this.joueurCourant = this.joueurs[indJoueur];
 		if (indJoueur == 0) this.tour++;
+	}
+
+	public Joueur getJoueurCourant() { return this.joueurCourant; }
+	public CarteWagon[] getTabCartesVisible() { return this.gestionPioche.getTabCartesVisible(); }
+
+	public void piocherPioche()
+	{
+		this.joueurCourant.ajouterCarteWagon(this.gestionPioche.piocherCarteWagon());
+	}
+
+	public void piocherVisible(int ind)
+	{
+		this.joueurCourant.ajouterCarteWagon(this.gestionPioche.getCarteVisible(ind));
+		this.gestionPioche.getTabCartesVisible()[ind] = this.gestionPioche.piocherCarteWagon();
 	}
 
 }

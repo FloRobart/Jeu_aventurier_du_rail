@@ -72,7 +72,8 @@ public class Controleur
 	 */
 	public void creerPartieMulti()
 	{
-		this.metier.creeServer(true);
+		// this.metier.creeServer(true);
+		this.hostGame();
 		this.ihm.demarrerAttente(true);
 	}
 
@@ -83,7 +84,6 @@ public class Controleur
 	/* --------------------------- */
 	public List<Joueur>        getJoueurs             () { return this.metier.getJoueurs         (); }
 	public Joueur              getJoueur              () { return this.joueur                    ; }
-	//public List<CarteWagon>    getCarteWagon          () { return this.metier.getCarteWagon      (); }
 	public List<CarteObjectif> getCarteObjectif       () { return this.metier.getCarteObjectif   (); }
 	public List<Noeud>         getNoeuds              () { return this.metier.getNoeuds          (); }
 	public List<Arete>         getAretes              () { return this.metier.getAretes          (); }
@@ -116,6 +116,23 @@ public class Controleur
 	//public void piocherTabObjectif (boolean[] tabBool, String nomJoueur) {this.metier.piocherTabObjectif(tabBool, nomJoueur);	}
 	public void setImageButton(int indice) 								 { if ( this.ihm != null ) this.ihm.setImageButton(indice);}
     
+	public CarteWagon[] getTabCartesVisible() { return this.partie.getTabCartesVisible(); }
+
+	public void majIHM()
+	{
+		this.ihm.majIHM();
+	}
+
+	public void piocherPioche ()        { this.partie.piocherPioche ();    }
+	public void piocherVisible(int ind) { this.partie.piocherVisible(ind); }
+
+	public boolean peuxJouer()
+	{
+		if ( this.partie != null || this.partie.getJoueurCourant() != null )
+			return this.partie.getJoueurCourant().equals(this.joueur);
+		else
+			return false;
+	}
 	
 	/**
      * Permet d'appliquer le thème à l'ihm
@@ -164,6 +181,8 @@ public class Controleur
 		// this.metier.creeClient(ip, true, password);
 
 		// return 1;
+		this.joueur = new Joueur("Joueur 1");
+		this.metier.ajouterJoueur(this.joueur);
 		try 
 		{
 			this.clientCtrl = new ClientControleur(ip);
@@ -180,26 +199,12 @@ public class Controleur
 		return 1;
 
 	}
-    public static void main(String[] args)
-    {
-        new Controleur();
-		//Les commandes pour voir l'IP de la machine
-		InetAddress ip;
-        String hostname;
-        try {
-            ip = InetAddress.getLocalHost();
-            hostname = ip.getHostName();
-            System.out.println("Your current IP address : " + ip);
-            System.out.println("Your current Hostname : " + hostname);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-    }
 	
     public void creerPartie() 
 	{
 		this.hostGame();
     }
+	public Metier getMetier(){return this.metier;} // a tester supprimer apres
 
     public Joueur getJoueurCourant() {
         return null;
@@ -229,4 +234,20 @@ public class Controleur
 			this.clientCtrl.updateMap();
 		}
 	}
+
+	public static void main(String[] args)
+    {
+        new Controleur();
+		//Les commandes pour voir l'IP de la machine
+		InetAddress ip;
+        String hostname;
+        try {
+            ip = InetAddress.getLocalHost();
+            hostname = ip.getHostName();
+            System.out.println("Your current IP address : " + ip);
+            System.out.println("Your current Hostname : " + hostname);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+    }
 }

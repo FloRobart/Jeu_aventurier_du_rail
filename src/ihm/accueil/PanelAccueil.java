@@ -621,7 +621,7 @@ public class PanelAccueil extends JPanel implements ActionListener
 
             /* Test */
             if (e.getSource() == this.btnTestSolo     ) { this.mappeImportee = this.ctrl.ouvrir(new File("./France.xml")); this.ctrl.creerPartieSolo(); }
-            if (e.getSource() == this.btnTestMulti    ) { this.ctrl.creerPartieMulti(); }
+            if (e.getSource() == this.btnTestMulti    ) { this.mappeImportee = this.ctrl.ouvrir(new File("./France.xml")); this.ctrl.creerPartieMulti(); }
             if (e.getSource() == this.btnTestRejoindre) { this.ctrl.joinGame("127.0.0.1", "0000");}
 
 
