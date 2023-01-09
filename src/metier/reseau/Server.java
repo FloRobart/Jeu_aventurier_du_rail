@@ -16,6 +16,7 @@ public class Server
     private ArrayList<ServerClientHandler> clients;
     public Server(Metier metier)
     {
+        this.clients = new ArrayList<ServerClientHandler>();
         this.metier = metier;
     }
 
