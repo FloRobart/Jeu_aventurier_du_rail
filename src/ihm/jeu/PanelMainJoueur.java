@@ -6,7 +6,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -65,9 +64,9 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         //initialisation des composants
         this.panelImgJoueur  = new JPanel();
         
-        this.joueur = this.ctrl.getJoueurSelect();
+        /*this.joueur = this.ctrl.getJoueurCourant();
         this.hashMapCarteWagons = this.joueur.gethashMapCarteWagons();
-        this.alCartesWagons     = this.joueur.getAlCartesWagons();
+        this.alCartesWagons     = this.joueur.getAlCartesWagons();*/
 
         this.lblNom     = new JLabel("  nom   "); //this.joueur.getNom()
         this.lblNbJeton = new JLabel("  jetons restants   "); //this.joueur.getNbJetons()
