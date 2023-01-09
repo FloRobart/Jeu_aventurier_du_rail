@@ -16,11 +16,11 @@ public class Client
     private Socket socket;
     private boolean connecte;
 
-    private Metier metier;
+    private Controleur ctrl;
     
-    public Client(String ip, Metier metier)
+    public Client(String ip, Controleur ctrl)
     {
-        this.metier = metier;
+        this.ctrl = ctrl;
         this.ip = ip;
         this.port = 5000;
         this.connecte = false;
@@ -38,7 +38,7 @@ public class Client
             this.socket = new Socket(this.ip, this.port);
             this.connecte = true;
 
-            new Thread(new ClientServerHandler(this.metier, this.socket, password)).start();
+            new Thread(new ClientServerHandler(this.ctrl, this.socket, password)).start();
             
         }
         catch(Exception e)

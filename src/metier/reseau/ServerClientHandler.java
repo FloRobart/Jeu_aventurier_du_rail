@@ -29,7 +29,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import controleur.Controleur;
 import metier.Metier;
+import metier.partie.Partie;
 
 
 public class ServerClientHandler implements Runnable
@@ -37,9 +39,25 @@ public class ServerClientHandler implements Runnable
 
     private ObjectInputStream in;
     private ObjectOutputStream out;
+    private Controleur ctrl;
     private Metier metier;
     private String nomJoueur;
     private Boolean authentifie;
+
+    public void majPartie(Partie partie)
+    {
+        try
+        {
+            this.out.writeUTF("MISE_A_JOUR_PARTIE");
+            this.out.flush();
+            this.out.writeObject(partie);
+            this.out.flush();
+        }
+        catch(Exception e)
+        {
+            System.out.println("Erreur lors de l'envoi de la partie");
+        }
+    }
 
     public void writeonce(String cmd)
     {
@@ -74,9 +92,10 @@ public class ServerClientHandler implements Runnable
         return ret;
     }
 
-    public ServerClientHandler(Metier metier, Socket socket)
+    public ServerClientHandler(Controleur ctrl, Socket socket)
     {
-        this.metier = metier;
+        this.ctrl = ctrl;
+        this.metier = ctrl.getMetier();
         this.authentifie = false;
         try {
             this.out = new ObjectOutputStream(socket.getOutputStream());
@@ -138,6 +157,8 @@ public class ServerClientHandler implements Runnable
                     if (motDePasse.equals(this.metier.getMotDePasse()))
                     {
                         initialLoading();
+                        writeonce("MESSAGE");
+                        writeonce("Bienvenue " + this.nomJoueur + " !");
                     }
                     else
                     {

@@ -87,6 +87,8 @@ public class PanelPlateau extends JPanel implements ActionListener, MouseWheelLi
 				this.cliqueGaucheDrag = false;
 			}
 		}
+
+		this.panelImage.majIHM();
 	}
 
 	public void centrer(int largeur, int hauteur)

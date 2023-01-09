@@ -101,5 +101,7 @@ public class FrameJeu extends JFrame
 	public void majIHM()
 	{
 		this.panelMainJoueur.majIHM();
+		this.panelPioche.majIHM();
+		this.panelPlateau.majIHM();
 	}
 }

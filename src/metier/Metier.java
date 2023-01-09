@@ -143,8 +143,8 @@ public class Metier implements Serializable
 
 	public void creeServer(Boolean demarer)
 	{
-		this.motDePassePartie = "1234";
-		this.server = new Server(this);
+		this.motDePassePartie = "0000";
+		this.server = new Server(this.ctrl);
 		if (demarer)
 			this.server.Start();
 	}
@@ -152,7 +152,7 @@ public class Metier implements Serializable
 	public void creeClient(String ip, Boolean demarer, String password)
 	{
 		this.nomClient = "Joueur " + Math.round(Math.random()*100);
-		this.client = new Client(ip, this);
+		this.client = new Client(ip, this.ctrl);
 		if (demarer)
 			this.client.Connect(password);
 	}

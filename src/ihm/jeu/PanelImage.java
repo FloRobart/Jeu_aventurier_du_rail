@@ -93,7 +93,7 @@ public class PanelImage extends JPanel
 			{
 				n1 = new Point(arete.getNoeud1().getX(), arete.getNoeud1().getY());
 				n2 = new Point(arete.getNoeud2().getX(), arete.getNoeud2().getY());
-				this.paintArete(g2, n1, n2, arete.getDistance(), arete.getCouleur1(), angle, arete);
+				this.paintArete(g2, n1, n2, arete.getDistance(), arete.getCouleur1(), angle, arete, 1);
 			}
 			else
 			{
@@ -102,11 +102,11 @@ public class PanelImage extends JPanel
 
 				n1 = new Point(arete.getNoeud1().getX() + adj, arete.getNoeud1().getY() + opp);
 				n2 = new Point(arete.getNoeud2().getX() + adj, arete.getNoeud2().getY() + opp);
-				this.paintArete(g2, n1, n2, arete.getDistance(), arete.getCouleur1(), angle, arete);
+				this.paintArete(g2, n1, n2, arete.getDistance(), arete.getCouleur1(), angle, arete, 1);
 
 				n1 = new Point(arete.getNoeud1().getX() - adj, arete.getNoeud1().getY() - opp);
 				n2 = new Point(arete.getNoeud2().getX() - adj, arete.getNoeud2().getY() - opp);
-				this.paintArete(g2, n1, n2, arete.getDistance(), arete.getCouleur2(), angle, arete);
+				this.paintArete(g2, n1, n2, arete.getDistance(), arete.getCouleur2(), angle, arete, 2);
 			}
 		}
 
@@ -141,7 +141,7 @@ public class PanelImage extends JPanel
 		}
 	}
 
-	private void paintArete(Graphics2D g2, Point n1, Point n2, int d, Color c, double angle, Arete arete)
+	private void paintArete(Graphics2D g2, Point n1, Point n2, int d, Color c, double angle, Arete arete, int couleur)
 	{
 		for (double cpt = 1 ; cpt < d + 1 ; cpt++)
 		{
@@ -157,10 +157,17 @@ public class PanelImage extends JPanel
 			t.rotate(angle, fig1.getX()+25, fig1.getY()+10);
 			Shape fig2 = t.createTransformedShape(fig1);
 
-			// on dessine notre troncon
-			g2.setColor(c);
+			// on dessine notre troncon*
+			if (this.ctrl.estPrenable(arete, couleur)) g2.setColor(c);
+			else                                       g2.setColor(c.darker().darker());
 			g2.fill(fig2);
-			g2.setColor(Color.BLACK);
+
+			if ( arete.equals(this.ctrl.getAreteSelectionne()) && couleur == this.ctrl.getCouleurSelectionne() )
+			{
+				g2.setColor(Color.RED);
+			}
+			else
+				g2.setColor(Color.BLACK);
 			g2.draw(fig2);
 
 			this.hmArete.get(arete).add(fig2);
@@ -187,10 +194,12 @@ public class PanelImage extends JPanel
 					if (arete.getCouleur2() != null && this.hmArete.get(arete).indexOf(s) >= milieu)
 						indCouleur = 2;
 					
-					// à changer plus tard pour récuperer l'arete
-					System.out.println(arete + " | Couleur " + indCouleur);
-				}
-					
+					if (this.ctrl.estPrenable(arete, indCouleur))
+					{
+						this.ctrl.setSelectionnee(arete, indCouleur);
+						this.repaint();
+					}
+				}	
 	}
 
 	public BufferedImage getImage()
@@ -201,6 +210,11 @@ public class PanelImage extends JPanel
 		this.print(g2d);
 
 		return image;
+	}
+
+	public void majIHM()
+	{
+		this.repaint();
 	}
 
 }
