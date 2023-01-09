@@ -61,7 +61,7 @@ public class ClientControleur {
     public Partie getPartie() {return this.partie;}
 
     /**
-     * Class which will wait indefintely for the update of the map
+     * Thread which will wait indefintely for the update of the map
      */
     class ServerHandler implements Runnable
     {
@@ -83,17 +83,21 @@ public class ClientControleur {
         {
             try
             {
-
                 InputStream inputStream = this.socket.getInputStream();
                 ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-
-                metier = (Metier) objectInputStream.readObject();
-                partie = (Partie) objectInputStream.readObject();
-
-                System.out.print(metier);
+ 
+                    metier = (Metier) objectInputStream.readObject();
+                    partie = (Partie) objectInputStream.readObject();
+                
+                System.out.println(metier);
             }
             catch (ClassNotFoundException e) {e.printStackTrace();}
             catch (IOException e){e.printStackTrace();}
         }
+    }
+    public static void main(String[] args) throws ConnectException, UnknownHostException, IOException {
+        ClientControleur clientCtrl = new ClientControleur("127.0.0.1");
+        System.out.println(clientCtrl.metier);
+
     }
 }
