@@ -75,7 +75,10 @@ public class Ihm
         if (this.frameAttente != null) { this.frameAttente.appliquerTheme(); }
     }
 
-
+    /**
+     * Affiche la carte objectif dans la main du joueur
+	 * @param icon carte objectif
+     */
     public void afficherCarteObjectif(Icon icon) 
     {
         if (this.frameJeu != null) { this.frameJeu.afficherCarteObjectif(icon); }

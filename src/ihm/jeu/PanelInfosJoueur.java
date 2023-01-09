@@ -42,20 +42,20 @@ public class PanelInfosJoueur extends JPanel
         this.ctrl = ctrl;
         this.joueur = joueur;
 
-
+        //initialisation des composants
         //this.joueur = ctrl.getJoueurCourant();
         this.setLayout(new BorderLayout());
-
-        this.lblNom              = new JLabel(this.joueur.getNom());
-        //this.lblNom.setForeground(this.joueur.getCouleur());
-        this.lblNbJeton          = new JLabel(this.joueur.getNbJetonsRestant()  + " jetons restants");
-        this.lblNbCartesWagon    = new JLabel(this.joueur.getNbCartesWagon()    + "cartes wagon");
-        this.lblNbCartesObjectif = new JLabel(this.joueur.getNbCartesObjectif() + "cartes objectif");
-        this.lblIcon             = new JLabel();
-
         this.nbWagons            = this.joueur.getNbJetonsRestant();
         this.nbCartesObjectif    = this.joueur.getNbCartesObjectif();
         this.nbCartesWagon       = this.joueur.getNbCartesWagon();
+
+        this.lblNom              = new JLabel(this.joueur.getNom());
+        //this.lblNom.setForeground(this.joueur.getCouleur());
+        this.lblNbJeton          = new JLabel(this.nbWagons  + " jetons restants");
+        this.lblNbCartesWagon    = new JLabel(this.nbCartesWagon    + "cartes wagon");
+        this.lblNbCartesObjectif = new JLabel(this.nbCartesObjectif + "cartes objectif");
+        this.lblIcon             = new JLabel();
+
 
         this.lblInfos = new JLabel("Infos sur le Joueurs");
 
@@ -66,16 +66,17 @@ public class PanelInfosJoueur extends JPanel
 
 
         /*-----NE PAS SUPPRIMER------ */
-        if(joueur.getNbJetonsRestant() <= 1)
-            this.lblNbJeton.setText(joueur.getNbJetonsRestant() + " wagon placé");
+        if(this.nbWagons <= 1)
+            this.lblNbJeton.setText(this.nbWagons + " wagon placé");
         
-        if(joueur.getNbCartesObjectif() <= 1)
-            this.lblNbCartesObjectif.setText(joueur.getNbCartesObjectif() + " carte objectif");
+        if(this.nbCartesObjectif <= 1)
+            this.lblNbCartesObjectif.setText(this.nbCartesObjectif + " carte objectif");
 
-        if(joueur.getNbCartesWagon() <= 1)
-            this.lblNbCartesWagon.setText(joueur.getNbCartesWagon() + " carte wagon");
+        if(this.nbCartesWagon <= 1)
+            this.lblNbCartesWagon.setText(this.nbCartesWagon + " carte wagon");
 
         
+        //ajout des composants
         GroupLayout layout = new GroupLayout(this.panelIcon);
         this.panelIcon.setLayout(layout);
         layout.setHorizontalGroup(
