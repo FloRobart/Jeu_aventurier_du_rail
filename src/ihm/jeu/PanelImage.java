@@ -157,8 +157,9 @@ public class PanelImage extends JPanel
 			t.rotate(angle, fig1.getX()+25, fig1.getY()+10);
 			Shape fig2 = t.createTransformedShape(fig1);
 
-			// on dessine notre troncon
-			g2.setColor(c);
+			// on dessine notre troncon*
+			if (this.ctrl.estPrenable(arete, couleur)) g2.setColor(c);
+			else                                       g2.setColor(c.darker().darker());
 			g2.fill(fig2);
 
 			if ( arete.equals(this.ctrl.getAreteSelectionne()) && couleur == this.ctrl.getCouleurSelectionne() )
@@ -193,10 +194,12 @@ public class PanelImage extends JPanel
 					if (arete.getCouleur2() != null && this.hmArete.get(arete).indexOf(s) >= milieu)
 						indCouleur = 2;
 					
-					this.ctrl.setSelectionnee(arete, indCouleur);
-					this.repaint();
-				}
-					
+					if (this.ctrl.estPrenable(arete, indCouleur))
+					{
+						this.ctrl.setSelectionnee(arete, indCouleur);
+						this.repaint();
+					}
+				}	
 	}
 
 	public BufferedImage getImage()
@@ -207,6 +210,11 @@ public class PanelImage extends JPanel
 		this.print(g2d);
 
 		return image;
+	}
+
+	public void majIHM()
+	{
+		this.repaint();
 	}
 
 }

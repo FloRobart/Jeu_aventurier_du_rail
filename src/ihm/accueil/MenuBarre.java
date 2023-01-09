@@ -34,15 +34,18 @@ public class MenuBarre extends JMenuBar implements ActionListener
 	private JMenuItem menuiAideMenu;
 	private JMenuItem menuiAideJeu;
 
-	private JDialog dialogAide;
+	private JDialog dialogAideMenu;
+	private JDialog dialogAideJeu;
 
 	public MenuBarre(Controleur ctrl) 
 	{
 		this.ctrl = ctrl;
 
-		this.dialogAide    = null;
-        this.panelAideMenu = null;
-		this.panelAideJeu  = null;
+		this.dialogAideMenu = null;
+		this.dialogAideJeu  = null;
+
+        this.panelAideMenu  = null;
+		this.panelAideJeu   = null;
 
 		/*=========================*/
 		/* Création des composants */
@@ -68,8 +71,8 @@ public class MenuBarre extends JMenuBar implements ActionListener
 		this.menuAide = new JMenu("Aide");
 		this.menuAide.setMnemonic('A');
 
-		this.menuiAideJeu  = new JMenuItem("Tutoriel Menu"  );
-		this.menuiAideMenu = new JMenuItem("Tutoriel Jeu"  );
+		this.menuiAideMenu = new JMenuItem("Tutoriel Menu"  );
+		this.menuiAideJeu  = new JMenuItem("Tutoriel Jeu"  );
 
 		/*=======================*/
 		/* Ajouts des composants */
@@ -120,32 +123,33 @@ public class MenuBarre extends JMenuBar implements ActionListener
 				if (this.panelAideMenu == null) { this.panelAideMenu = new PanelAideMenu(this.ctrl); }
 
 				/* Création du JDialog */
-				if (this.dialogAide == null)
+				if (this.dialogAideMenu == null || this.dialogAideMenu.getTitle().toLowerCase().contains("jeu"))
 				{
-					this.dialogAide = new JDialog();
+					this.dialogAideMenu = new JDialog();
 
-					this.dialogAide.setSize(750,250);
-					this.dialogAide.setLocation(200, 300);
-					this.dialogAide.setResizable(false);
-					this.dialogAide.add(this.panelAideMenu);
-					this.dialogAide.pack();
-					this.dialogAide.setVisible(true);
+					this.dialogAideMenu.setSize(750,250);
+					this.dialogAideMenu.setTitle("Aide menu");
+					this.dialogAideMenu.setLocation(200, 300);
+					this.dialogAideMenu.setResizable(false);
+					this.dialogAideMenu.add(this.panelAideMenu);
+					this.dialogAideMenu.setVisible(true);
 				}
 				else
 				{
-					this.dialogAide.setVisible(true);
+					this.dialogAideMenu.setVisible(true);
 				}
 
 				/* Permet de detecter la fermeture de la fenêtre de dialogue */
-				this.dialogAide.addWindowListener(new WindowListener()
+				this.dialogAideMenu.addWindowListener(new WindowListener()
 				{
-					public void windowClosing    (WindowEvent e) {}
-					public void windowOpened     (WindowEvent e) {}
+					private boolean frameClose = false;
+					public void windowClosing    (WindowEvent e) { this.frameClose = true; dialogAideMenu.dispose(); }
+					public void windowOpened     (WindowEvent e) { dialogAideMenu.dispose(); }
 					public void windowClosed     (WindowEvent e) {}
 					public void windowIconified  (WindowEvent e) {}
 					public void windowDeiconified(WindowEvent e) {}
 					public void windowActivated  (WindowEvent e) {}
-					public void windowDeactivated(WindowEvent e) { dialogAide.dispose(); }
+					public void windowDeactivated(WindowEvent e) { if(!this.frameClose) { dialogAideMenu.setVisible(true);} }
 				});
 			}
 
@@ -155,32 +159,33 @@ public class MenuBarre extends JMenuBar implements ActionListener
 				if (this.panelAideJeu == null) { this.panelAideJeu = new PanelAideJeu(this.ctrl); }
 
 				/* Création du JDialog */
-				if (this.dialogAide == null)
+				if (this.dialogAideJeu == null || this.dialogAideJeu.getTitle().toLowerCase().contains("menu"))
 				{
-					this.dialogAide = new JDialog();
+					this.dialogAideJeu = new JDialog();
 
-					this.dialogAide.setSize(750,250);
-					this.dialogAide.setLocation(200, 300);
-					this.dialogAide.setResizable(false);
-					this.dialogAide.add(this.panelAideJeu);
-					this.dialogAide.pack();
-					this.dialogAide.setVisible(true);
+					this.dialogAideJeu.setSize(750,900);
+					this.dialogAideJeu.setTitle("Aide jeu");
+					this.dialogAideJeu.setLocation(200, 300);
+					this.dialogAideJeu.setResizable(false);
+					this.dialogAideJeu.add(this.panelAideJeu);
+					this.dialogAideJeu.setVisible(true);
 				}
 				else
 				{
-					this.dialogAide.setVisible(true);
+					this.dialogAideJeu.setVisible(true);
 				}
 
 				/* Permet de detecter la fermeture de la fenêtre de dialogue */
-				this.dialogAide.addWindowListener(new WindowListener()
+				this.dialogAideJeu.addWindowListener(new WindowListener()
 				{
-					public void windowClosing    (WindowEvent e) {}
-					public void windowOpened     (WindowEvent e) {}
+					private boolean frameClose = false;
+					public void windowClosing    (WindowEvent e) { this.frameClose = true; dialogAideJeu.dispose(); }
+					public void windowOpened     (WindowEvent e) { dialogAideJeu.dispose(); }
 					public void windowClosed     (WindowEvent e) {}
 					public void windowIconified  (WindowEvent e) {}
 					public void windowDeiconified(WindowEvent e) {}
 					public void windowActivated  (WindowEvent e) {}
-					public void windowDeactivated(WindowEvent e) { dialogAide.dispose(); }
+					public void windowDeactivated(WindowEvent e) { if(!this.frameClose) { dialogAideJeu.setVisible(true);} }
 				});
 			}
 		}

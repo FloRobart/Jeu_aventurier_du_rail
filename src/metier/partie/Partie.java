@@ -44,7 +44,10 @@ public class Partie implements Serializable
 
 		this.nbJetonFin    = metier.getNbJetonFin();
 		this.tour          = 1;
-		//this.joueurCourant = this.joueurs[0];
+
+		if (this.joueurs[0] != null) this.joueurCourant = this.joueurs[0];
+		else 					     this.joueurCourant = null;
+
 		this.estMulti      = estMulti;
 	}
 
@@ -89,11 +92,36 @@ public class Partie implements Serializable
 			this.joueurCourant.ajouterCarteWagon(carte);
 		
 		this.gestionPioche.getTabCartesVisible()[ind] = this.gestionPioche.piocherCarteWagon();
+
+		this.verifierVisible();
 	}
 
+<<<<<<< HEAD
 	public CarteObjectif[] getPiocheObjectif() 
 	{
 		return this.gestionPioche.piocherCartesObjectif();
 	}
 
+=======
+	public void verifierVisible()
+	{
+		int nbJoker = 0;
+		CarteWagon[] tabCartes = this.gestionPioche.getTabCartesVisible();
+
+		for (CarteWagon carte : tabCartes)
+			if (carte != null && carte.isJoker()) nbJoker++;
+
+		if (nbJoker >= 3)
+		{
+			for (int i = 0 ; i < 5 ; i++)
+				if (tabCartes[i] != null && tabCartes[i].isJoker()) 
+				{
+					//défausser
+					tabCartes[i] = this.gestionPioche.piocherCarteWagon();
+				}
+
+			this.verifierVisible();
+		}
+	}
+>>>>>>> b03e8ece818aeac83416de4f48155efda8f2f9db
 }

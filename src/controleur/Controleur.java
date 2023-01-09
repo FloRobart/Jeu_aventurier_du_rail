@@ -63,6 +63,7 @@ public class Controleur
 	public void creerPartieSolo() 
 	{ 
 		this.joueur = new Joueur("Joueur 1");
+		this.joueur.setCouleur(Color.PINK);
 		this.metier.ajouterJoueur(this.joueur);
 
 		this.partie = new Partie(this, this.metier, false);
@@ -119,10 +120,39 @@ public class Controleur
 	public Arete getAreteSelectionne  () { return this.areteSelectionnee;     }
 	public int   getCouleurSelectionne() { return this.couleurSelectionnee;   }
 
-	//public void piocherDeck (char typeCarte, String nomJoueur)			 {this.metier.piocherDeck(typeCarte, nomJoueur);		}
-	//public void piocherTabWagon (int indiceTab, String nomJoueur)		 {this.metier.piocherTabWagon(indiceTab, nomJoueur);	}
-	//public void piocherTabObjectif (boolean[] tabBool, String nomJoueur) {this.metier.piocherTabObjectif(tabBool, nomJoueur);	}
-	public void setImageButton(int indice) 								 { if ( this.ihm != null ) this.ihm.setImageButton(indice);}
+
+	// Méthodes
+	public void setImageButton(int indice) { if ( this.ihm != null ) this.ihm.setImageButton(indice); }
+
+	public boolean estPrenable(Arete arete, int couleur)
+	{
+		try
+		{
+			Color coul = null;
+
+			if (couleur == 1) coul = arete.getCouleur1();
+			else              coul = arete.getCouleur2();
+
+			// if : voix neutre | else : voix couleur
+			if ( coul.equals(this.metier.getCouleurs().get(0)))
+			{
+				for (Color c : this.joueur.getAlCouleurs())
+					if ( this.joueur.gethashMapCarteWagons().get(c) >= arete.getDistance() ) return true;
+			}
+			else
+			{
+				// carte couleur
+				if ( this.joueur.getAlCouleurs().contains(coul) && 
+					 this.joueur.gethashMapCarteWagons().get(coul) >= arete.getDistance() ) return true;
+
+				// carte jocker
+				if ( this.joueur.gethashMapCarteWagons().get(null) >= arete.getDistance() ) return true;
+			}
+		}
+		catch(Exception e) { return false; }
+		
+		return false;
+	}
 
 	public void setSelectionnee(Arete arete, int couleur)
 	{
@@ -181,6 +211,8 @@ public class Controleur
 	 */
 	public void hostGame()
 	{
+		this.joueur = new Joueur("Joueur 1");
+		this.metier.ajouterJoueur(this.joueur);
 		this.partie = new Partie(this, this.metier,true);
 		this.serverCtrl = new ServerControleur(this.metier,this.partie);
 	}

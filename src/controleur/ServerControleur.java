@@ -69,6 +69,8 @@ public class ServerControleur
         public void run() 
         {
             sendMetierAndPartie();
+            Thread waitUpdateClient = new Thread (new WaitUpdateClient());
+            waitUpdateClient.start();
         }
         public void updateMap()
         {
@@ -88,18 +90,59 @@ public class ServerControleur
             }
             catch (IOException e){e.printStackTrace();}
         }
+        /**
+         * Thread that wait unlimitedly for the response of Client
+         */
+        class WaitUpdateClient implements Runnable
+        {
+            public void run()
+            {
+    
+                while (true)
+                {
+                    receiveMetierAndPartie();
+                }
+            }
+    
+            private void receiveMetierAndPartie()
+            {
+                try
+                {
+                    InputStream inputStream = socket.getInputStream();
+                    ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+
+                        metier = (Metier) objectInputStream.readObject();
+                        partie = (Partie) objectInputStream.readObject();
+                    System.out.println("Updated");
+                    System.out.println(metier.getNoeuds());
+                }
+                catch (ClassNotFoundException e) {e.printStackTrace();}
+                catch (IOException e){e.printStackTrace();}
+            }
+        }
    }
+   private void setMetier(Metier metier) {this.metier = metier;}
    public static void main(String[] args) {
     
-    Controleur ctrl = new Controleur();
-    ctrl.ouvrir(new File("../../France.xml"));
-    ServerControleur serverCtrl = new ServerControleur(ctrl.getMetier(), null);
-    ctrl.ouvrir(new File("../../exemple.xml"));
+
+    Metier metierE = new Metier(null);
+    Metier metierF = new Metier(null);
+    metierF.lireFichier(new File ("./France.xml"));
+    metierF.lireFichier(new File ("./exemple.xml"));
+
+    System.out.println(metierF.getNoeuds());
+    System.out.println(metierE.getNoeuds());
+
+    ServerControleur serverCtrl = new ServerControleur(metierE, null);
+    int cpt =1;
     while (true)
     {
+        if (cpt ==1) serverCtrl.setMetier(metierF);
+        else serverCtrl.setMetier(metierE);
         serverCtrl.updateMap();
         Scanner scaner = new Scanner(System.in);
         scaner.next();
+        cpt = 3-cpt;
     }
 
    }
