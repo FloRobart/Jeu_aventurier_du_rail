@@ -117,16 +117,20 @@ public class Controleur
 
 
 
+	/**
+	 * permet d'éberger une partie
+	 */
 	public void hostGame()
 	{
 		new ServerControleur(metier);
 	}
+
+
 	/*
 	 * 
 	 */
 	public int joinGame(String ip, String password)
-	{		
-
+	{
 		try 
 		{
 			ClientControleur clientCtrl = new ClientControleur(ip);
