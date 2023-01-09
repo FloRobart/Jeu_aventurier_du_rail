@@ -42,9 +42,7 @@ public class PanelObjectifs extends JPanel implements ActionListener
     private JButton[] tabBtnObjectifs;
     private List<CarteObjectif>  listObjectifs;
 
-    private Image imgPlateau;
-
-    
+ 
     public PanelObjectifs(Controleur ctrl)
     {
         this.ctrl = ctrl;
@@ -54,12 +52,10 @@ public class PanelObjectifs extends JPanel implements ActionListener
         //initialisation des composants
         List<Joueur> lstJ = this.ctrl.getJoueurs();
         this.joueur = lstJ.get(0); //this.ctrl.getJoueurCourant()
-        this.listObjectifs = this.ctrl.getCarteObjectif(); //this.joueur.getAlCartesObjectif();
-
-        this.imgPlateau = this.ctrl.getImagePlateau().getScaledInstance(200, 150, 0);
+        this.listObjectifs = this.joueur.getAlCartesObjectif();
     
-        //int taille = this.joueur.getNbCartesObjectif();
-        int taille = 5;
+        int taille = this.joueur.getNbCartesObjectif();
+        //int taille = 5;
         
         int grid = taille;
         if(taille%2 != 0)
@@ -79,7 +75,7 @@ public class PanelObjectifs extends JPanel implements ActionListener
             this.tabBtnObjectifs[i].setFocusPainted(false);
             this.tabBtnObjectifs[i].setContentAreaFilled(false);
 
-            this.tabBtnObjectifs[i].setIcon(new ImageIcon(creerCarte(this.listObjectifs.get(i)))); //this.joueur.getAlCartesObjectif().get(i)
+            this.tabBtnObjectifs[i].setIcon(new ImageIcon(creerCarte(this.joueur.getAlCartesObjectif().get(i))));
             this.tabBtnObjectifs[i].setPreferredSize(new Dimension(200, 150));
             this.panelPrincipale.add(this.tabBtnObjectifs[i]);
         }
@@ -109,7 +105,6 @@ public class PanelObjectifs extends JPanel implements ActionListener
      */
     private BufferedImage creerCarte(CarteObjectif carteObjectif) 
     {
-        Color titleBackColor   = this.theme.get("titles").get(1);
         Color labelForeColor   = this.theme.get("labels").get(0);
 
         Noeud noeud1 = carteObjectif.getNoeud1();
@@ -124,12 +119,13 @@ public class PanelObjectifs extends JPanel implements ActionListener
 
 		BufferedImage bi = this.ctrl.getImagePlateau();
         Graphics2D g2 = (Graphics2D) g;
+        //zoom de l'image du plateau
 		double zoomLargeur = (double) 150 / bi.getWidth ();
 		double zoomHauteur = (double) 150 / bi.getHeight();
-		double facteurZoom = Math.min(zoomLargeur, zoomHauteur);
 	    AffineTransform at = new AffineTransform();
 		at.scale(zoomLargeur, zoomHauteur);
         g2.transform(at);
+
         g2.drawImage(bi, 0, 0, null);
 
        //Ligne
@@ -145,7 +141,7 @@ public class PanelObjectifs extends JPanel implements ActionListener
         g2.setFont(g2.getFont().deriveFont(50f));
 
         g2.setColor(Color.WHITE);
-		g2.fillRect(noeud1.getX() + noeud1.getXNom() - (noeud1.getNom().length() * 3), noeud1.getY() + noeud1.getYNom() -25, width, 50);
+		g2.fillRect(noeud1.getX() + noeud1.getXNom() - (noeud1.getNom().length() * 3), noeud1.getY() + noeud1.getYNom() -25, noeud1.getNom().length()+width, 50);
 				
         g2.setColor(Color.BLACK);
         g2.drawString(noeud1.getNom(), noeud1.getX() + noeud1.getXNom() - (noeud1.getNom().length() * 3), noeud1.getY() + noeud1.getYNom() + 4);
@@ -158,13 +154,12 @@ public class PanelObjectifs extends JPanel implements ActionListener
         g2.fillOval(noeud2.getX(), noeud2.getY(), 30, 30);
 
         g2.setColor(Color.WHITE);
-		g2.fillRect(noeud2.getX() + noeud2.getXNom() - (noeud2.getNom().length() * 3), noeud2.getY() + noeud2.getYNom() -25, width, 50);
+		g2.fillRect(noeud2.getX() + noeud2.getXNom() - (noeud2.getNom().length() * 3), noeud2.getY() + noeud2.getYNom() -25, noeud2.getNom().length()+width, 50);
 				
         g2.setColor(Color.BLACK);
         g2.drawString(noeud2.getNom(), noeud2.getX() + noeud2.getXNom() - (noeud2.getNom().length() * 3), noeud2.getY() + noeud2.getYNom() + 4);
 
 
-        
         //Nombre de points
         at.scale(35, 35);
         g2.transform(at);
@@ -172,39 +167,6 @@ public class PanelObjectifs extends JPanel implements ActionListener
         g2.setColor(labelForeColor);
         g2.setFont(g2.getFont().deriveFont(10f));
         g2.drawString(nbPoints + " points", 0, 10);
-
-        
-
-        /*g2.drawImage(bi, bi.getWidth()/2, bi.getHeight()/2-150, null);
-
-        
-        
-
-        at.scale(60, 60);
-        g2.transform(at);
-
-        g.setColor(new Color(255, 255, 255, 150));
-        g.fillRect(10, 10, 280, 150);
-
-        g.setColor(Color.BLUE);
-        g.setFont(g.getFont().deriveFont(20f));
-        FontMetrics fm = g.getFontMetrics();
-        String str = "Objectif";
-        Point p = new Point(100 - fm.stringWidth(str)/2, 30);
-        g.drawString(str, p.x, p.y);
-
-        g.setColor(Color.BLACK);
-        g.setFont(g.getFont().deriveFont(15f));
-        fm = g.getFontMetrics();
-        str = noeud1.getNom() + " ==> " + noeud2.getNom();
-        p = new Point(100 - fm.stringWidth(str)/2, 60);
-        g.drawString(str, p.x, p.y);
-
-        g.setFont(g.getFont().deriveFont(15f));
-        fm = g.getFontMetrics();
-        str = nbPoints + " points";
-        p = new Point(100 - fm.stringWidth(str)/2, 90);
-        g.drawString(str, p.x, p.y);*/
 
         return img;
     }
