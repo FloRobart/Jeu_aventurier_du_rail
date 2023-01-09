@@ -7,10 +7,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Image;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -53,8 +56,12 @@ public class PanelPioche extends JPanel implements ActionListener
         for (int cpt=0; cpt<PanelPioche.TAILLE; cpt++)
         {
             this.tabCarteWagon[cpt] = new JButton();
+			this.tabCarteWagon[cpt].setSize(new Dimension(200, 100));
             this.tabCarteWagon[cpt].setPreferredSize(new Dimension(200, 100));
-            this.setImageButton(cpt);
+
+			ImageIcon imgIcon = null;
+			imgIcon = new ImageIcon(this.tabCartesVisible[cpt].getImageRecto().getScaledInstance((this.tabCarteWagon[cpt].getWidth()), this.tabCarteWagon[cpt].getHeight(), Image.SCALE_SMOOTH));
+			this.tabCarteWagon[cpt].setIcon(imgIcon);
         }
 
         this.deckCarteWagon = new JButton(new ImageIcon(this.ctrl.getImageVersoCouleur()));
@@ -66,9 +73,9 @@ public class PanelPioche extends JPanel implements ActionListener
         panelHaut.add(this.deckCarteWagon);
 		panelHaut.add(this.lblPioche);
 
-		this.add(panelMilieu, BorderLayout.CENTER);
+		this.add(this.panelMilieu, BorderLayout.CENTER);
 		for (int cpt=0; cpt<PanelPioche.TAILLE; cpt++)
-            panelMilieu.add(this.tabCarteWagon[cpt]);
+            this.panelMilieu.add(this.tabCarteWagon[cpt]);
 
 		//Activation des composants
 		this.deckCarteWagon.addActionListener(this);
@@ -76,40 +83,22 @@ public class PanelPioche extends JPanel implements ActionListener
 			this.tabCarteWagon[cpt].addActionListener(this);
     }
 
-    public void setImageButton(int indice)
+    public void setImageButton(int ind)
     {
-		BufferedImage resizedImage = new BufferedImage(150, 100, BufferedImage.TYPE_INT_RGB);
-		Graphics2D g2d = resizedImage.createGraphics();
-
-		if ( this.tabCartesVisible[indice] != null )
+		if ( this.tabCartesVisible[ind] != null )
 		{
-			BufferedImage image = this.tabCartesVisible[indice].getImageRecto();
-
-			// Calcul du facteur de zoom maximal
-			double zoomLargeur = (double) 150 / image.getWidth();
-			double zoomHauteur = (double) 100 / image.getHeight();
+			BufferedImage bfImg = this.tabCartesVisible[ind].getImageRecto();
+			double zoomLargeur = (double) this.tabCarteWagon[0].getWidth()  / bfImg.getWidth();
+			double zoomHauteur = (double) this.tabCarteWagon[0].getHeight() / bfImg.getHeight();
 			double facteurZoom = Math.min(zoomLargeur, zoomHauteur);
-			
-			AffineTransform at = new AffineTransform();
-			at.scale(facteurZoom, facteurZoom);
-			g2d.transform(at);
-			
-			g2d.drawImage(image, 0, 0, null);
+
+			ImageIcon imgIcon = new ImageIcon(bfImg.getScaledInstance((this.tabCarteWagon[ind].getWidth()), this.tabCarteWagon[ind].getHeight(), Image.SCALE_SMOOTH));
+			this.tabCarteWagon[ind].setIcon(imgIcon);
 		}
 		else
 		{
-			g2d.setColor(Color.BLACK);
-			g2d.fillRect(0, 0, 150, 100);
-
-			g2d.setColor(Color.WHITE);
-			g2d.drawString("Pioche vide", 25, 25);
-			
-			this.tabCarteWagon[indice].setEnabled(false);
+			this.tabCarteWagon[ind].setEnabled(false);
 		}
-		
-        g2d.dispose();
-
-        this.tabCarteWagon[indice].setIcon(new ImageIcon (resizedImage));
     }
 
     public void actionPerformed(ActionEvent e) 
@@ -122,12 +111,14 @@ public class PanelPioche extends JPanel implements ActionListener
 				this.ctrl.piocherPioche();System.out.println("pioche deck");
 			}
 
-			for (int i = 0 ; i < this.TAILLE ; i++)
+			for (int i = 0 ; i < PanelPioche.TAILLE ; i++)
+			{
 				if ( e.getSource() == this.tabCarteWagon[i] )
 				{
 					this.tabCartesVisible = this.ctrl.getTabCartesVisible();
 
 					if (this.tabCartesVisible[i] != null)
+					{
 						if (this.tabCartesVisible[i].isJoker())
 						{
 							this.ctrl.piocherVisible(i);System.out.println("pioche visible jocker");
@@ -137,7 +128,9 @@ public class PanelPioche extends JPanel implements ActionListener
 							this.ctrl.piocherVisible(i);
 							this.ctrl.piocherPioche();System.out.println("pioche visible couleur");
 						}
+					}
 				}
+			}
 
 
 			this.ctrl.majIHM();
