@@ -115,8 +115,9 @@ public class Controleur
 	public BufferedImage       getImageVersoObjectif() { return this.metier.getImageVersoObjectif(); }
 	public BufferedImage       getImage             () { return this.ihm   .getImage             (); }
 
-	public Arete getAreteSelectionne  () { return this.areteSelectionnee; }
-	public int   getCouleurSelectionne() { return this.couleurSelectionnee; }
+	public int   getSizeWagon         () { return this.partie.getSizeWagon(); }
+	public Arete getAreteSelectionne  () { return this.areteSelectionnee;     }
+	public int   getCouleurSelectionne() { return this.couleurSelectionnee;   }
 
 	//public void piocherDeck (char typeCarte, String nomJoueur)			 {this.metier.piocherDeck(typeCarte, nomJoueur);		}
 	//public void piocherTabWagon (int indiceTab, String nomJoueur)		 {this.metier.piocherTabWagon(indiceTab, nomJoueur);	}

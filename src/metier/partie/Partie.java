@@ -71,15 +71,23 @@ public class Partie implements Serializable
 
 	public Joueur getJoueurCourant() { return this.joueurCourant; }
 	public CarteWagon[] getTabCartesVisible() { return this.gestionPioche.getTabCartesVisible(); }
+	public int          getSizeWagon       () { return this.gestionPioche.getSizeWagon(); }
 
 	public void piocherPioche()
 	{
-		this.joueurCourant.ajouterCarteWagon(this.gestionPioche.piocherCarteWagon());
+		CarteWagon carte = this.gestionPioche.piocherCarteWagon();
+
+		if (carte != null)
+			this.joueurCourant.ajouterCarteWagon(carte);
 	}
 
 	public void piocherVisible(int ind)
 	{
-		this.joueurCourant.ajouterCarteWagon(this.gestionPioche.getCarteVisible(ind));
+		CarteWagon carte = this.gestionPioche.getCarteVisible(ind);
+
+		if (carte != null)
+			this.joueurCourant.ajouterCarteWagon(carte);
+		
 		this.gestionPioche.getTabCartesVisible()[ind] = this.gestionPioche.piocherCarteWagon();
 	}
 

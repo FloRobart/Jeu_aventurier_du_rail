@@ -15,6 +15,7 @@ import java.awt.Graphics2D;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -33,6 +34,7 @@ public class PanelPioche extends JPanel implements ActionListener
 
     private JButton[]  tabCarteWagon;
     private JButton    deckCarteWagon; 
+	private JLabel     lblPioche;
 
     public PanelPioche(Controleur ctrl)
     {
@@ -57,10 +59,12 @@ public class PanelPioche extends JPanel implements ActionListener
 
         this.deckCarteWagon = new JButton(new ImageIcon(this.ctrl.getImageVersoCouleur()));
         this.deckCarteWagon.setPreferredSize(new Dimension(200, 150));
+		this.lblPioche = new JLabel("" + this.ctrl.getSizeWagon() + "/" + (this.ctrl.getSizeWagon()+5));
 
         //Ajout des composants
 		this.add(panelHaut, BorderLayout.NORTH);
         panelHaut.add(this.deckCarteWagon);
+		panelHaut.add(this.lblPioche);
 
 		this.add(panelMilieu, BorderLayout.CENTER);
 		for (int cpt=0; cpt<PanelPioche.TAILLE; cpt++)
@@ -74,20 +78,33 @@ public class PanelPioche extends JPanel implements ActionListener
 
     public void setImageButton(int indice)
     {
-		BufferedImage image = this.tabCartesVisible[indice].getImageRecto();
-        BufferedImage resizedImage = new BufferedImage(150, 100, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g2d = resizedImage.createGraphics();
+		BufferedImage resizedImage = new BufferedImage(150, 100, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g2d = resizedImage.createGraphics();
 
-		// Calcul du facteur de zoom maximal
-		double zoomLargeur = (double) 150 / image.getWidth();
-		double zoomHauteur = (double) 100 / image.getHeight();
-		double facteurZoom = Math.min(zoomLargeur, zoomHauteur);
-		 
-		AffineTransform at = new AffineTransform();
-		at.scale(facteurZoom, facteurZoom);
-        g2d.transform(at);
+		if ( this.tabCartesVisible[indice] != null )
+		{
+			BufferedImage image = this.tabCartesVisible[indice].getImageRecto();
+
+			// Calcul du facteur de zoom maximal
+			double zoomLargeur = (double) 150 / image.getWidth();
+			double zoomHauteur = (double) 100 / image.getHeight();
+			double facteurZoom = Math.min(zoomLargeur, zoomHauteur);
+			
+			AffineTransform at = new AffineTransform();
+			at.scale(facteurZoom, facteurZoom);
+			g2d.transform(at);
+			
+			g2d.drawImage(image, 0, 0, null);
+		}
+		else
+		{
+			g2d.setColor(Color.BLACK);
+			g2d.fillRect(0, 0, 150, 100);
+			g2d.setColor(Color.WHITE);
+			g2d.drawString("Pioche vide", 25, 25);
+			this.tabCarteWagon[indice].setEnabled(false);
+		}
 		
-		g2d.drawImage(image, 0, 0, null);
         g2d.dispose();
 
         this.tabCarteWagon[indice].setIcon(new ImageIcon (resizedImage));
@@ -135,7 +152,12 @@ public class PanelPioche extends JPanel implements ActionListener
         {
             this.setImageButton(cpt);;
         }
-		System.out.println("maj pioche");
+		
+		String text = this.lblPioche.getText();
+		this.lblPioche.setText("" + this.ctrl.getSizeWagon() + text.substring(text.indexOf("/")));
+
+		if (this.ctrl.getSizeWagon() == 0)
+			this.deckCarteWagon.setEnabled(false);
 	}
 
     /**
@@ -181,5 +203,7 @@ public class PanelPioche extends JPanel implements ActionListener
         /* Bouton deck */
         this.deckCarteWagon.setForeground(btnForeColor);
         this.deckCarteWagon.setBackground(background);
+
+		this.lblPioche.setForeground(labelForeColor);
     }
 }
