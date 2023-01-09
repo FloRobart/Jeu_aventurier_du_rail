@@ -42,9 +42,7 @@ public class PanelObjectifs extends JPanel implements ActionListener
     private JButton[] tabBtnObjectifs;
     private List<CarteObjectif>  listObjectifs;
 
-    private Image imgPlateau;
-
-    
+ 
     public PanelObjectifs(Controleur ctrl)
     {
         this.ctrl = ctrl;
@@ -54,12 +52,10 @@ public class PanelObjectifs extends JPanel implements ActionListener
         //initialisation des composants
         List<Joueur> lstJ = this.ctrl.getJoueurs();
         this.joueur = lstJ.get(0); //this.ctrl.getJoueurCourant()
-        this.listObjectifs = this.ctrl.getCarteObjectif(); //this.joueur.getAlCartesObjectif();
-
-        this.imgPlateau = this.ctrl.getImagePlateau().getScaledInstance(200, 150, 0);
+        this.listObjectifs = this.joueur.getAlCartesObjectif();
     
-        //int taille = this.joueur.getNbCartesObjectif();
-        int taille = 5;
+        int taille = this.joueur.getNbCartesObjectif();
+        //int taille = 5;
         
         int grid = taille;
         if(taille%2 != 0)
@@ -79,7 +75,7 @@ public class PanelObjectifs extends JPanel implements ActionListener
             this.tabBtnObjectifs[i].setFocusPainted(false);
             this.tabBtnObjectifs[i].setContentAreaFilled(false);
 
-            this.tabBtnObjectifs[i].setIcon(new ImageIcon(creerCarte(this.listObjectifs.get(i)))); //this.joueur.getAlCartesObjectif().get(i)
+            this.tabBtnObjectifs[i].setIcon(new ImageIcon(creerCarte(this.joueur.getAlCartesObjectif().get(i))));
             this.tabBtnObjectifs[i].setPreferredSize(new Dimension(200, 150));
             this.panelPrincipale.add(this.tabBtnObjectifs[i]);
         }
@@ -129,7 +125,7 @@ public class PanelObjectifs extends JPanel implements ActionListener
 	    AffineTransform at = new AffineTransform();
 		at.scale(zoomLargeur, zoomHauteur);
         g2.transform(at);
-        
+
         g2.drawImage(bi, 0, 0, null);
 
        //Ligne
