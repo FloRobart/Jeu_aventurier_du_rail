@@ -53,6 +53,7 @@ public class Server
 
     public void lancerPartie()
     {
+        majPartie(this.ctrl.getPartie());
         writeonce("LANCER_PARTIE");
     }
 
