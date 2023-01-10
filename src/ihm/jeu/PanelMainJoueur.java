@@ -174,6 +174,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 
 
         if (this.dialogObjectifs != null) { this.panelObjectifs.appliquerTheme(); }
+        if (this.panelMainWagon  != null) { this.panelMainWagon.appliquerTheme(); }
 
         /*----------*/
         /* Ce panel */
@@ -256,6 +257,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         this.lblObjectif.setOpaque(false);
         this.lblObjectif.setForeground(labelForeColor);
     }
+
 
     /**
      * Affiche la carte sélectionné dans la main du joueur
