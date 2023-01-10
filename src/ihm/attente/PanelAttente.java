@@ -134,7 +134,7 @@ public class PanelAttente extends JPanel implements ActionListener
         this.btnChangeMappe.setMaximumSize  (new Dimension(150, 30));
         this.btnChangeMappe.setMinimumSize  (new Dimension(150, 30));
         this.btnChangeMappe.setPreferredSize(new Dimension(150, 30));
-        if (!hote) { this.btnChangeMappe.setVisible(false); }
+        if (!hote) { this.btnChangeMappe.setEnabled(false); }
 
         this.btnChoisirCouleur.setText("Choisir une couleur");
         this.btnChoisirCouleur.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
@@ -365,7 +365,7 @@ public class PanelAttente extends JPanel implements ActionListener
         this.btnLancer.setMaximumSize  (new Dimension(150, 40));
         this.btnLancer.setMinimumSize  (new Dimension(150, 40));
         this.btnLancer.setPreferredSize(new Dimension(150, 40));
-        if (!hote) { this.btnChangeMappe.setVisible(false); }
+        if (!hote) { this.btnChangeMappe.setEnabled(false); }
 
 
         /* Horizontale */
@@ -507,6 +507,7 @@ public class PanelAttente extends JPanel implements ActionListener
                     {
                         // Lancer la partie
                         this.ctrl.lancerPartieMulti();
+                        this.ctrl.getMetier().getServer().lancerPartie();
                     }
                     else
                         JOptionPane.showMessageDialog(this, "Il manque " + (this.ctrl.getNbJoueursMin() - this.ctrl.getJoueurs().size()) + " joueurs pour lancer la partie", "Erreur", JOptionPane.ERROR_MESSAGE);
@@ -514,6 +515,10 @@ public class PanelAttente extends JPanel implements ActionListener
         }
     }
 
+    public void majIHM()
+    {
+
+    }
 
     /**
      * Met à jour les informations du panel attente
@@ -535,18 +540,10 @@ public class PanelAttente extends JPanel implements ActionListener
         Color btnForeColor   = this.theme.get("buttons"   ).get(0);
         Color background     = this.theme.get("background").get(0);
 
-        //transfert du contenue de l'ancienne List dans la nouvelle
-        // TODO à complété
-
-        // Création de la nouvelle List avec la bonne taille
         this.lstParticipants = new ArrayList<JLabel>();
-        List<Joueur> lstJoueurs    = this.ctrl.getJoueurs();
-
         for (int i = 0; i < this.ctrl.getNbJoueursMax(); i++)
         {
-            String txt=" ";
-            if (i<lstJoueurs.size()) txt = lstJoueurs.get(i).getNom();            
-            this.lstParticipants.add(new JLabel(txt));
+            this.lstParticipants.add(new JLabel(" "));
             this.lstParticipants.get(i).setFont(new Font("Liberation Sans", 0, 24));
             this.lstParticipants.get(i).setPreferredSize(new Dimension(200, 40));
             this.lstParticipants.get(i).setOpaque(true);

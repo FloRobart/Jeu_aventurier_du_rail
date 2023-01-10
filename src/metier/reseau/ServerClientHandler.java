@@ -126,14 +126,7 @@ public class ServerClientHandler implements Runnable
 
     private void initialLoading()
     {
-        Server s = this.metier.getServer();
-        s.writeonce("NOUVEAU_JOUEUR");
-        s.writeonce(this.nomJoueur);
-        this.metier.ajouterJoueur(new Joueur(this.nomJoueur));
-        s.writeonce("PARTIE");
-        s.writeonce("nb_joueurs");
-        s.writeonce("" + s.getNbJoeurs());
-        
+        this.metier.ajouterJoueur(new Joueur(this.nomJoueur));     
 
         this.authentifie = true;
         majMetier(this.metier);
@@ -175,7 +168,7 @@ public class ServerClientHandler implements Runnable
                     writeonce("WRONG");
                 }
                 this.metier.getServer().RemoveClient(this);
-
+                return;
             }
 
             if (!this.authentifie)
@@ -184,7 +177,7 @@ public class ServerClientHandler implements Runnable
                 {
                     this.nomJoueur = readonce();
 
-                    for (Joueur j : this.ctrl.getPartie().getJoueurs())
+                    for (Joueur j : this.ctrl.getJoueurs())
                     {
                         if (j.getNom().equals(this.nomJoueur))
                         {

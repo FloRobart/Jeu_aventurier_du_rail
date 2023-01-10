@@ -36,6 +36,10 @@ public class FrameAttente extends JFrame
 		this.setVisible(true);
 	}
 
+	public void majIHM()
+	{
+		this.panelAttente.majIHM();
+	}
 
 	public void appliquerTheme()
 	{
