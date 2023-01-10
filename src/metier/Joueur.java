@@ -130,6 +130,11 @@ public class Joueur implements Serializable
 		}
 	}
 
+    public Boolean equels(Joueur j)
+    {
+        return j.nom.equals(this.nom);
+    }
+
     public String toString()
     {
         return this.nom + " (" + this.score + " points)" + " : " + this.nbJetonsRestant + " jetons posés" + " -- " + this.alCartesObjectif.size() + " cartes objectif" + " : " + this.hashMapCarteWagons.size() + " cartes wagon";

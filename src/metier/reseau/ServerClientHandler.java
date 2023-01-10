@@ -129,7 +129,9 @@ public class ServerClientHandler implements Runnable
         this.metier.ajouterJoueur(new Joueur(this.ctrl, this.nomJoueur));     
 
         this.authentifie = true;
-        majMetier(this.metier);
+        this.metier.getServer().majMetier();
+        this.metier.getServer().writeonce("NOUVEAU_JOUEUR");
+        this.metier.getServer().writeonce(this.nomJoueur);
 
     }
 
@@ -190,7 +192,6 @@ public class ServerClientHandler implements Runnable
 
                     System.out.println("nom joueur : " + this.nomJoueur + "");
 
-                    this.majPartie(this.ctrl.getPartie());
                 }
 
                 if (command.equals("MOT_DE_PASSE"))
