@@ -124,4 +124,10 @@ public class Ihm
 		return false;
 	}
 
+
+    public void validerObjectif(CarteObjectif co) 
+    {
+        if (this.frameJeu != null) { this.frameJeu.validerObjectif(co); }
+    }
+
 }

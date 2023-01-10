@@ -267,4 +267,10 @@ public class PanelMainJoueur extends JPanel implements ActionListener
     {
         this.btnIconObjectif.setIcon(icon);
     }
+
+    public void validerObjectif(CarteObjectif co) 
+    {
+        this.panelObjectifs.validerObjectif(co);
+        this.majIHM();
+    }
 }

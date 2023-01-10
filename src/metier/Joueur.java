@@ -19,6 +19,7 @@ public class Joueur implements Serializable
     private int    score;
 	private int    nbJetonsRestant;
     private Color  couleur;
+    private int    nbCartesObjectif;
 
     private List<CarteObjectif>    alCartesObjectif;
 	private List<CarteObjectif>    alObjectifsFinis;
@@ -39,12 +40,13 @@ public class Joueur implements Serializable
 
         this.nom = nom;
         this.score = 0;
+        this.nbCartesObjectif = 0;
     }
 
     public String getNom() { return this.nom; }
     public int getScore() { return this.score; }
     public List<CarteObjectif> getAlCartesObjectif() { return this.alCartesObjectif; }
-    public int getNbCartesObjectif() { return this.alCartesObjectif.size(); }
+    public int getNbCartesObjectif() { return this.nbCartesObjectif; }
     public HashMap<Color,Integer> gethashMapCarteWagons() { return this.hashMapCarteWagons; }
     public List<CarteWagon> getAlCartesWagons() { return this.alCartesWagons; }
 	public List<Color> getAlCouleurs() { return this.alCouleurs; }
@@ -52,6 +54,7 @@ public class Joueur implements Serializable
     public int getNbJetonsRestant() { return this.nbJetonsRestant; }
     public Color getCouleur() { return this.couleur; }
 	public Controleur getControleur() { return this.ctrl; }
+    public List<CarteObjectif> getAlObjectifsFinis() { return this.alObjectifsFinis; }
 
     public void setNom(String nom) { this.nom = nom; }
     public void setScore(int score) { this.score = score; }
@@ -63,6 +66,7 @@ public class Joueur implements Serializable
     public void ajouterCarteObjectif(CarteObjectif carteObjectif)
     {
         this.alCartesObjectif.add(carteObjectif);
+        this.nbCartesObjectif++;
     }
 
     public void ajouterCarteWagon(CarteWagon carteWagon)
@@ -125,7 +129,9 @@ public class Joueur implements Serializable
 			{
 				this.alObjectifsFinis.add(co);
 				this.ajouterScore(co.getPoints());
-				it.remove();
+				//it.remove();
+                this.ctrl.validerObjectif(co);
+                this.nbCartesObjectif--;
 			}
 		}
 	}
