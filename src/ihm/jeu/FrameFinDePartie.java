@@ -1,63 +1,79 @@
 package ihm.jeu;
 
-import java.awt.Color;
-
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import java.awt.event.WindowListener;
-import java.awt.event.WindowEvent;
-
-import java.awt.Dimension;
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
+
 import java.util.List;
-import java.awt.BorderLayout;
+import java.util.HashMap;
 
-import controleur.Controleur;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import javax.swing.JPanel;
+import javax.swing.JFrame;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+
 import metier.Joueur;
+import controleur.Controleur;
 
-
-public class PanelJoueurs extends JPanel implements ActionListener 
+public class FrameFinDePartie extends JFrame implements ActionListener
 {
-    private Controleur  ctrl;
+    private Controleur ctrl;
+
+    private JLabel     lblFinDePartie;
+
     private List<Joueur> lstJoueurs;
     private JPanel      panelJoueurs;
+    private JPanel      panelHaut;
+    private JPanel      panelCentral;
+    private JPanel      panelBas;
     private JScrollPane scrollJoueurs;
     private JPanel[]    tabPanels;
-    private JButton[]   tabBoutons;
+    private JLabel[]    tabLblIconJoueur;
     private JLabel[]    tabLblNom;
     private JLabel[]    tabLblScore;
 
-    private PanelInfosJoueur panelInfosJoueur;
-    private JDialog          dialogInfosJoueur;
+    private JButton    btnQuitter;
 
-
-    public PanelJoueurs(Controleur ctrl)
+    public FrameFinDePartie(Controleur ctrl)
     {
         this.ctrl = ctrl;
-        this.dialogInfosJoueur = null;
-        this.panelInfosJoueur  = null;
+
+        //Parametrage de la frame
+        Dimension dimEcran = Toolkit.getDefaultToolkit().getScreenSize();
+        this.setSize(dimEcran.width/2, dimEcran.height/2); // Définition d'une taille minimum (obligatoire)
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocation(dimEcran.width/4, dimEcran.height/4);
+        this.setTitle("Frame Fin De Partie");
         this.setLayout(new BorderLayout());
 
-        this.setSize(200, 400);
-        this.setBorder( BorderFactory.createLineBorder(this.ctrl.getTheme().get("titles").get(1), 2) );
+        //Creation des composants
+        this.lblFinDePartie = new JLabel("  FIN DE LA PARTIE ");;
+        
+        this.btnQuitter = new JButton("Quitter");
 
-        //initialisation des composants
-        /*panel de chaque joueurs */
+        this.panelHaut = new JPanel();
+        this.panelHaut.setLayout(new BorderLayout());
+
+        this.panelCentral = new JPanel();
+        this.panelCentral.setLayout(new GridLayout(1,3));
+
+        this.panelBas = new JPanel();
+        this.panelBas.setLayout(new GridLayout(1,5));
+
         this.lstJoueurs = this.ctrl.getJoueurs();
         this.tabPanels  = new JPanel [this.lstJoueurs.size()];
-        this.tabBoutons = new JButton[this.tabPanels.length];
+        this.tabLblIconJoueur = new JLabel[this.tabPanels.length];
         this.tabLblNom  = new JLabel [this.tabPanels.length];
         this.tabLblScore= new JLabel [this.tabPanels.length];
 
-        /*panel joueurs */
         this.panelJoueurs = new JPanel();
         this.panelJoueurs.setLayout(new GridLayout(this.tabPanels.length, 1));
 
@@ -69,16 +85,12 @@ public class PanelJoueurs extends JPanel implements ActionListener
             this.tabPanels[cpt].setLayout(new BorderLayout());
 
             this.tabLblNom  [cpt] = new JLabel(" " + this.lstJoueurs.get(cpt).getNom());
-            //this.tabLblNom[cpt].setForeground(this.joueur.getCouleur());
             this.tabLblScore[cpt] = new JLabel("Score : " + this.lstJoueurs.get(cpt).getScore());
 
-            this.tabBoutons[cpt] = new JButton();
-            this.tabBoutons[cpt].setBorderPainted    (false);
-            this.tabBoutons[cpt].setFocusPainted     (false);
-            this.tabBoutons[cpt].setContentAreaFilled(false);
+            this.tabLblIconJoueur[cpt] = new JLabel();
             
             this.tabPanels[cpt].add(this.tabLblNom  [cpt], BorderLayout.NORTH );
-            this.tabPanels[cpt].add(this.tabBoutons [cpt], BorderLayout.WEST  );
+            this.tabPanels[cpt].add(this.tabLblIconJoueur [cpt], BorderLayout.WEST  );
             this.tabPanels[cpt].add(this.tabLblScore[cpt], BorderLayout.CENTER);
 
             this.panelJoueurs.add(tabPanels[cpt]);
@@ -89,59 +101,39 @@ public class PanelJoueurs extends JPanel implements ActionListener
         this.scrollJoueurs.setPreferredSize(new Dimension(200, 385)); // 400 c'est trop, ça déborder du panel
         this.scrollJoueurs.getVerticalScrollBar().setUnitIncrement(5);
 
-        //ajout des composants
-        this.add(scrollJoueurs, BorderLayout.CENTER);
+        //Ajout des composants à la frame
+        this.add(this.panelHaut, BorderLayout.NORTH);
+        this.add(this.panelCentral, BorderLayout.CENTER);
+        this.add(this.panelBas, BorderLayout.SOUTH);
 
-        //ajout des listeners
-        /*afficher les infos d'un joueur en fonction du joueur selectionné */
-        for(int cpt=0; cpt< tabBoutons.length; cpt++)
-        {
-            this.tabBoutons[cpt].addActionListener(this);
-        }
+        //Ajout des composants aux panels
+        this.panelHaut.add(this.lblFinDePartie, BorderLayout.CENTER);
+
+        this.panelCentral.add(new JLabel(""));
+        this.panelCentral.add(this.scrollJoueurs);
+        this.panelCentral.add(new JLabel(""));
+
+        this.panelBas.add(new JLabel(""));
+        this.panelBas.add(new JLabel(""));
+        this.panelBas.add(this.btnQuitter);
+        this.panelBas.add(new JLabel(""));
+        this.panelBas.add(new JLabel(""));
+
+        //Ajout des composants au action listener
+        this.btnQuitter.addActionListener(this);    
+
+        this.setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) 
     {
-        for(int cpt=0; cpt< tabBoutons.length; cpt++)
-        {
-            if(e.getSource() == this.tabBoutons[cpt])
-            {
-                this.dialogInfosJoueur = new JDialog();
-                this.panelInfosJoueur  = new PanelInfosJoueur(this.ctrl, this.lstJoueurs.get(cpt));
-
-                this.dialogInfosJoueur.setSize(400,200);
-                this.dialogInfosJoueur.setLocation(200, 50);
-                this.dialogInfosJoueur.setResizable(false);
-                this.dialogInfosJoueur.add(this.panelInfosJoueur);
-                this.dialogInfosJoueur.pack();
-                this.dialogInfosJoueur.setVisible(true);
-
-
-                /* Permet de detecter la fermeture de la fenêtre de dialogue */
-                this.dialogInfosJoueur.addWindowListener(new WindowListener()
-                {
-                    public void windowClosing    (WindowEvent e) {}
-                    public void windowOpened     (WindowEvent e) {}
-                    public void windowClosed     (WindowEvent e) {}
-                    public void windowIconified  (WindowEvent e) {}
-                    public void windowDeiconified(WindowEvent e) {}
-                    public void windowActivated  (WindowEvent e) {}
-                    public void windowDeactivated(WindowEvent e) { dialogInfosJoueur.dispose(); }
-                });
-            }
-        }
+        if ( e.getSource() == this.btnQuitter )
+            this.dispose();
+        
     }
 
-    public void setScore( ) 
-    { 
-        for ( int cpt=0; cpt < this.lstJoueurs.size(); cpt++)
-        {
-            this.tabLblScore[cpt].setText("Score : " + this.lstJoueurs.get(cpt).getScore());
-        }
-    }
-
-    /**
+        /**
      * Applique les couleurs du thème sélectionné à tout les éléments du panel et au panel lui même
      */
     public void appliquerTheme()
@@ -153,9 +145,9 @@ public class PanelJoueurs extends JPanel implements ActionListener
         Color btnForeColor     = theme.get("buttons"     ).get(0);
 		Color btnBackColor     = theme.get("buttons"     ).get(1);
 
-        if (this.panelInfosJoueur != null) { this.panelInfosJoueur.appliquerTheme(); }
 
         this.setBackground(background);
+        this.panelCentral.setBackground(background);
 
         this.scrollJoueurs.getVerticalScrollBar().setBackground(background);
 
@@ -175,10 +167,10 @@ public class PanelJoueurs extends JPanel implements ActionListener
             /* Boutons */
             /*---------*/
             /* Foreground */
-            this.tabBoutons[i].setForeground(btnForeColor);
+            this.btnQuitter.setForeground(btnForeColor);
 
             /* Background */
-            this.tabBoutons[i].setBackground(btnBackColor);
+            this.btnQuitter.setBackground(btnBackColor);
 
             /* Images */
             String pathImage = "";
@@ -187,7 +179,7 @@ public class PanelJoueurs extends JPanel implements ActionListener
             else
                 pathImage = "./bin/donnees/images/IconJoueurBlack.png";
             
-            this.tabBoutons[i].setIcon(new ImageIcon(pathImage));
+            this.tabLblIconJoueur[i].setIcon(new ImageIcon(pathImage));
 
 
             /*--------*/
@@ -196,6 +188,9 @@ public class PanelJoueurs extends JPanel implements ActionListener
             /* Lables Nom */
             this.tabLblNom  [i].setOpaque(false);
             this.tabLblNom  [i].setForeground(labelForeColor);
+
+            this.tabLblIconJoueur[i].setBackground(btnBackColor);
+            this.tabLblIconJoueur[i].setForeground(labelForeColor);
 
             /* Lables Score */
             this.tabLblScore[i].setOpaque(false);
