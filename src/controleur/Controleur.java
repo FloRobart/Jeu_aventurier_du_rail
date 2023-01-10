@@ -181,7 +181,7 @@ public class Controleur
 						int nbJoker = 0;
 
 						if (c != null) 
-							nbCoul = this.joueur.gethashMapCarteWagons().get(c);
+							nbCoul  = this.joueur.gethashMapCarteWagons().get(c);
 
 						if (this.joueur.getAlCouleurs().contains(null))
 							nbJoker = this.joueur.gethashMapCarteWagons().get(null);
@@ -195,7 +195,7 @@ public class Controleur
 					int nbJoker = 0;
 
 					if (this.joueur.getAlCouleurs().contains(coul))
-						nbCoul = this.joueur.gethashMapCarteWagons().get(coul);
+						nbCoul  = this.joueur.gethashMapCarteWagons().get(coul);
 
 					if (this.joueur.getAlCouleurs().contains(null))
 						nbJoker = this.joueur.gethashMapCarteWagons().get(null);
