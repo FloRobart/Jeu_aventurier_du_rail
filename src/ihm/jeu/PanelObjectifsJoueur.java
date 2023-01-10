@@ -99,7 +99,6 @@ public class PanelObjectifsJoueur extends JPanel implements ActionListener
     /**
      * creer les cartes objectifs
      * @param carteObjectif carte que l'on souhaite afficher
-     * @param b
      * @return BufferedImage de la carte
      */
     private BufferedImage creerCarte(CarteObjectif carteObjectif) 
