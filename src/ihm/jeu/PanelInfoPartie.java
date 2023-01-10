@@ -17,7 +17,6 @@ public class PanelInfoPartie extends JPanel implements ActionListener
     private Controleur 	ctrl;
 
     private JButton     btnArreterPartie;
-    private JButton     btnRedemarrerPartie;
     private JButton     btnPause;
 
     private JLabel      lblNbTours;
@@ -32,20 +31,18 @@ public class PanelInfoPartie extends JPanel implements ActionListener
 		this.setLayout( new GridLayout(5,1) );
 
         this.btnArreterPartie = new JButton("Arrêter la partie");
-        this.btnRedemarrerPartie = new JButton("Redémarrer la partie");;
         this.btnPause = new JButton("Pause");;
 
         this.lblNbTours = new JLabel("  Tours : ");
         this.lblTimer = new JLabel("  Temps de la partie : ");
 
         this.add(this.btnArreterPartie);
-        this.add(this.btnRedemarrerPartie);
         this.add(this.btnPause);
+        this.add(new JLabel(""));
         this.add(this.lblTimer);
         this.add(this.lblNbTours);
 
         this.btnArreterPartie.addActionListener(this);
-        this.btnRedemarrerPartie.addActionListener(this);
         this.btnPause.addActionListener(this);
     }
 
@@ -54,11 +51,6 @@ public class PanelInfoPartie extends JPanel implements ActionListener
         if ( e.getSource() == this.btnArreterPartie )
         {
 
-        }
-
-        if ( e.getSource() == this.btnRedemarrerPartie )
-        {
-            
         }
 
         if ( e.getSource() == this.btnPause )
@@ -91,8 +83,6 @@ public class PanelInfoPartie extends JPanel implements ActionListener
         /*---------*/
         this.btnArreterPartie.setForeground(btnForeColor);
         this.btnArreterPartie.setBackground(btnBackColor);
-        this.btnRedemarrerPartie.setForeground(btnForeColor);
-        this.btnRedemarrerPartie.setBackground(btnBackColor);
         this.btnPause.setForeground(btnForeColor);
         this.btnPause.setBackground(btnBackColor);
 
