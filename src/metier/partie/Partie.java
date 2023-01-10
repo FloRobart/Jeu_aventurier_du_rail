@@ -19,7 +19,7 @@ public class Partie implements Serializable
 	private GestionPioche  gestionPioche;
 	private List<Arete>   alArete;
 	private Joueur[]      joueurs;
-	private Joueur        joueurCourant;
+	private int           joueurCourrantId;
 	private int           nbJetonFin;
 	private int           tour;
 	private boolean       estMulti; // mettre le serveur au lieu d'un boolean
@@ -28,12 +28,24 @@ public class Partie implements Serializable
 
 	public void setJoueurCourrant(Joueur j)
 	{
-		this.joueurCourant = j;
+		for (int i = 0; i < this.joueurs.length; i++)
+		{
+			if (this.joueurs[i].equals(j))
+			{
+				this.joueurCourrantId = i;
+				break;
+			}
+		}
 	}
 
 	public Joueur[] getJoueurs()
 	{
 		return this.joueurs;
+	}
+
+	public List<Joueur> getJoueursList()
+	{
+		return new ArrayList<Joueur>(java.util.Arrays.asList(this.joueurs));
 	}
 
 	public Partie(Controleur ctrl, Metier metier, boolean estMulti, String nomPartie)
@@ -66,8 +78,7 @@ public class Partie implements Serializable
 		this.nbJetonFin    = metier.getNbJetonFin();
 		this.tour          = 0;
 
-		if (this.joueurs[0] != null) this.joueurCourant = this.joueurs[0];
-		else 					     this.joueurCourant = null;
+		this.joueurCourrantId = 0;
 
 		this.estMulti = estMulti;
 		this.joueurFin = null;
@@ -83,26 +94,26 @@ public class Partie implements Serializable
 		int indJoueur = 0;
 
 		// si un joueur n'a plus assez de jeton, alors la partie se terminera à son prochain tour
-		if (this.joueurFin == null & this.joueurCourant.getNbJetonsRestant() <= this.nbJetonFin)
-			this.joueurFin = this.joueurCourant;
+		if (this.joueurFin == null & this.getJoueurCourant().getNbJetonsRestant() <= this.nbJetonFin)
+			this.joueurFin = this.getJoueurCourant();
 
 		for (int cpt = 0; cpt < this.joueurs.length; cpt++)
-			if (this.joueurs[cpt] == this.joueurCourant)
+			if (this.joueurs[cpt] == this.getJoueurCourant())
 				indJoueur = (cpt++) % this.joueurs.length;
 		
-		this.joueurCourant = this.joueurs[indJoueur];
+		this.joueurCourrantId = indJoueur;
 
-		if (this.joueurCourant == this.joueurFin)
+		if (this.getJoueurCourant() == this.joueurFin)
 			System.out.println("fin de partie");//this.arreterPartie();
 		
 		if (indJoueur == 0)
 		{
 			this.tour++;
 			this.ctrl.setNbTours(this.tour);
-		} 
+		}
 	}
 
-	public Joueur 		getJoueurCourant()	  { return this.joueurCourant; }
+	public Joueur 		getJoueurCourant()	  { return this.joueurs[this.joueurCourrantId]; }
 	public CarteWagon[] getTabCartesVisible() { return this.gestionPioche.getTabCartesVisible(); }
 	public int          getSizeWagon       () { return this.gestionPioche.getSizeWagon(); }
 	public int			getTours()			  { return this.tour;}
@@ -112,7 +123,7 @@ public class Partie implements Serializable
 		CarteWagon carte = this.gestionPioche.piocherCarteWagon();
 
 		if (carte != null)
-			this.joueurCourant.ajouterCarteWagon(carte);
+			this.getJoueurCourant().ajouterCarteWagon(carte);
 
 		if (this.gestionPioche.getSizeWagon() == 0)
 		{
@@ -126,7 +137,7 @@ public class Partie implements Serializable
 		CarteWagon carte = this.gestionPioche.getCarteVisible(ind);
 
 		if (carte != null)
-			this.joueurCourant.ajouterCarteWagon(carte);
+			this.getJoueurCourant().ajouterCarteWagon(carte);
 		
 		this.gestionPioche.getTabCartesVisible()[ind] = this.gestionPioche.piocherCarteWagon();
 

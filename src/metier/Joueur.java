@@ -137,7 +137,8 @@ public class Joueur implements Serializable
 		}
 	}
 
-    public Boolean equels(Joueur j)
+    
+    public Boolean equals(Joueur j)
     {
         return j.nom.equals(this.nom);
     }

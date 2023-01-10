@@ -520,7 +520,7 @@ public class Metier implements Serializable
 
 	public void ajouterObjectifsJoueurs(CarteObjectif cartesObjectifs) 
 	{
-		this.lstJoueurs.get(0).ajouterCarteObjectif(cartesObjectifs);
+		this.ctrl.getPartie().getJoueurCourant().ajouterCarteObjectif(cartesObjectifs);
 		this.lstCartesObjectif.remove(cartesObjectifs);
 	}
 }	

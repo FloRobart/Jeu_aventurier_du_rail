@@ -113,7 +113,6 @@ public class Controleur
 	public void setPartie(Partie partie)
 	{
 		this.partie = partie;
-		partie.setJoueurCourrant(this.joueur);
 		partie.setCtrl(this);
 	}
 

@@ -133,6 +133,10 @@ public class ClientServerHandler implements Runnable
                     Partie nouvelle_partie = (Partie) this.in.readObject();
 
                     this.ctrl.setPartie(nouvelle_partie);
+
+                    for (Joueur j : this.ctrl.getPartie().getJoueurs())
+                        System.out.println("Joueur : " + j.getNom() + " : " + j.getScore() + " ! " + j.getAlCartesWagons().size());
+
                     this.ctrl.majIHM();
 
                     System.out.println("Nouvelle partie");
