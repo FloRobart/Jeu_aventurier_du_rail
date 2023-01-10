@@ -171,13 +171,14 @@ public class Partie implements Serializable
 	public void arreterPartie()
 	{
 		//Recuperer les points, les noms
-		String tabNom;
+		String[] tabNom = new String[this.joueurs.length];
 		for ( int cpt=0; cpt< this.joueurs.length; cpt++)
 		{
 			this.scoreFinal[cpt] = this.joueurs[cpt].getScore();
-			tabNom = this.joueurs[cpt].getNom();
+			tabNom[cpt] = this.joueurs[cpt].getNom();
 		}
 
 		//methode qui envoie les infos vers une frame de fin de partie
+		//machin.afficherFinDePartie(tabNom, this.scoreFinal)
 	}
 }

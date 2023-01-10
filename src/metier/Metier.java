@@ -2,7 +2,6 @@ package metier;
 
 import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -12,8 +11,6 @@ import javax.imageio.ImageIO;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
-import org.jdom2.output.Format;
-import org.jdom2.output.XMLOutputter;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -25,7 +22,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
@@ -39,8 +35,6 @@ import metier.reseau.Server;
 
 public class Metier implements Serializable
 {
-	private static final int TAILLE_TAB_WAGON = 5;
-	private static final int TAILLE_TAB_OBJECTIF = 3;
 	private static final long serialVersionUID = 1L;
 
     private transient Controleur          ctrl;
@@ -88,7 +82,6 @@ public class Metier implements Serializable
         this.ctrl = ctrl;
 		this.lstJoueurs = new ArrayList<Joueur>();
 		this.lireFichier(new File("./bin/donnees/France.xml"));
-		//this.initCartes();
 		this.hmColorThemes = new HashMap<String, List<Color>>();
 		this.chargerThemes(getThemeUsed());
     }
