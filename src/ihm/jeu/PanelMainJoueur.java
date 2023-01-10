@@ -245,6 +245,10 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         this.lblIcon.setForeground(labelForeColor);
     }
 
+    /**
+     * Affiche la carte sélectionné dans la main du joueur
+     * @param icon : image de la carte
+     */
     public void afficherCarteObjectif(Icon icon) 
     {
         this.btnIconObjectif.setIcon(icon);
