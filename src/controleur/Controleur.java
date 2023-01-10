@@ -353,4 +353,8 @@ public class Controleur
 	{
 		this.metier.ajouterObjectifsJoueurs(cartesObjectifs);
 	}
+	public void remettreCarteObjectif(CarteObjectif carteObjectif) 
+	{
+		this.partie.remettreCarteObjectif(carteObjectif);
+	}
 }

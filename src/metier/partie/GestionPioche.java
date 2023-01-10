@@ -65,13 +65,13 @@ public class GestionPioche
 
 		for ( int cpt = 0 ; cpt < 3 ; cpt++)
 		{
-			if ( this.lstCartesObjectif.size() == 0 )
-				tabCartesObjectif[cpt] = null;
-			else
+			//if ( this.lstCartesObjectif.size() == 0 )
+				//tabCartesObjectif[cpt] = null;
+			//else
 				tabCartesObjectif[cpt] = this.lstCartesObjectif.remove(0);
 		}
 
-		if ( this.lstCartesObjectif.size() == 0) return null;
+		//if ( this.lstCartesObjectif.size() == 0) return null;
 		
 		if(this.lstCartesObjectif.size() < 3)
 		{
@@ -85,5 +85,10 @@ public class GestionPioche
 	public void remettreCarteWagon(CarteWagon carteWagon)
 	{
 		this.lstCartesWagon.add(carteWagon);
+	}
+
+	public void remettreCarteObjectif(CarteObjectif carteObjectif) 
+	{
+		this.lstCartesObjectif.add(carteObjectif);
 	}
 }
