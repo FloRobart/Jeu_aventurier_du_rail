@@ -126,4 +126,9 @@ public class Partie implements Serializable
 			this.verifierVisible();
 		}
 	}
+
+	public void remettreCarteObjectif(CarteObjectif carteObjectif) 
+	{
+		this.gestionPioche.remettreCarteObjectif(carteObjectif);
+	}
 }

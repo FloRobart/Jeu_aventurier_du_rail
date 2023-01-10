@@ -106,6 +106,8 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 				{
 					this.ctrl.ajouterObjectifsJoueurs(this.cartesObjectifs[i]);
 				}
+				else if(this.cartesObjectifs[i] != null)
+					this.ctrl.remettreCarteObjectif(this.cartesObjectifs[i]);
 			}
 			this.initCarteObjectifs();
 		}
@@ -137,9 +139,19 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 		this.cartesObjectifs = this.ctrl.getPiocheObjectif();
 		for (int cpt = 0; cpt < PanelPiocherObjectif.TAILLE; cpt++)
 		{
-			this.tabCarteobjectif[cpt].setIcon(new ImageIcon(creerCarte(this.cartesObjectifs[cpt])));
-			this.tabCarteobjectif[cpt].setBackground(this.theme.get("buttons").get(1));
-			this.tabChoixCarte[cpt] = false;
+			if(this.cartesObjectifs[cpt] != null)
+			{
+				this.tabCarteobjectif[cpt].setIcon(new ImageIcon(creerCarte(this.cartesObjectifs[cpt])));
+				this.tabCarteobjectif[cpt].setBackground(this.theme.get("buttons").get(1));
+				this.tabChoixCarte[cpt] = false;
+			}
+			else
+			{
+				this.tabCarteobjectif[cpt].setIcon(null);
+				this.tabCarteobjectif[cpt].setBackground(this.theme.get("buttons").get(1));
+				this.tabChoixCarte[cpt] = false;
+			}
+			
 		}
 	}
 
