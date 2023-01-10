@@ -157,6 +157,7 @@ public class Controleur
 	public Arete   getAreteSelectionne  () { return this.areteSelectionnee;     }
 	public int     getCouleurSelectionne() { return this.couleurSelectionnee;   }
 	public boolean getEnTrainDePiocher  () { return this.enTrainDePiocher;      }
+    public void    disposeFrameJeu		() { this.ihm.disposeFrameJeu(); 		}
 
 	// Méthodes
 	public void setImageButton(int indice)  { if ( this.ihm != null ) this.ihm.setImageButton(indice); }
@@ -241,7 +242,8 @@ public class Controleur
 
 	public void prendreArete(int indMain)
 	{
-		if (this.areteSelectionnee != null && this.areteSelectionnee.getDistance() <= joueur.getNbJetonsRestant())
+		if (this.peuxJouer() && this.areteSelectionnee != null && 
+		    this.areteSelectionnee.getDistance() <= joueur.getNbJetonsRestant())
 		{
 			if ((this.couleurSelectionnee == 1 && this.areteSelectionnee.getProprietaire1() != null) ||
 				(this.couleurSelectionnee == 2 && this.areteSelectionnee.getProprietaire2() != null)   )
