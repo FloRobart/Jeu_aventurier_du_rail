@@ -258,25 +258,25 @@ public class Controleur
 	public int joinGame(String ip, String password)
 	{
 
-		// this.metier.creeClient(ip, true, password);
+		this.metier.creeClient(ip, true, password);
 
-		// return 1;
-		this.joueur = new Joueur("Joueur 1");
-		this.metier.ajouterJoueur(this.joueur);
-		try 
-		{
-			this.clientCtrl = new ClientControleur(ip);
-
-			this.metier = clientCtrl.getMetier();
-			this.partie = clientCtrl.getPartie();
-			this.ihm.demarrerJeu();
-		}
-		catch (UnknownHostException e)	{ return 2;} 
-		catch (ConnectException e) 		{e.printStackTrace();} 
-		catch (IOException e) 			{e.printStackTrace();}
-
-		if (!password.equals(this.metier.getMotDePasse())) return 3;
 		return 1;
+		// this.joueur = new Joueur("Joueur 1");
+		// this.metier.ajouterJoueur(this.joueur);
+		// try 
+		// {
+		// 	this.clientCtrl = new ClientControleur(ip);
+
+		// 	this.metier = clientCtrl.getMetier();
+		// 	this.partie = clientCtrl.getPartie();
+		// 	this.ihm.demarrerJeu();
+		// }
+		// catch (UnknownHostException e)	{ return 2;} 
+		// catch (ConnectException e) 		{e.printStackTrace();} 
+		// catch (IOException e) 			{e.printStackTrace();}
+
+		// if (!password.equals(this.metier.getMotDePasse())) return 3;
+		// return 1;
 
 	}
 	
