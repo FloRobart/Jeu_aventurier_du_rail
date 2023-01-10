@@ -124,14 +124,13 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 				{	
 					if(this.tabChoixCarte[i] == false)
 					{
-						this.tabChoixCarte[i] = true;
 						this.tabCarteobjectif[i].setBackground(Color.GREEN);
 					}
 					else
 					{
-						this.tabChoixCarte[i] = false;
 						this.tabCarteobjectif[i].setBackground(this.theme.get("buttons").get(1));
 					}
+					this.tabChoixCarte[i] = !this.tabChoixCarte[i];
 				}
 			}
 		}
@@ -139,7 +138,7 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 
 	
 	/**
-	 * repioche les 3 cartes objectifs après la pioche du joueur
+	 * repioche les cartes objectifs après la pioche du joueur
 	 */
 	private void initCarteObjectifs() 
 	{
@@ -150,16 +149,15 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 		{
 			if(this.cartesObjectifs[cpt] != null)
 			{
-				this.tabCarteobjectif[cpt].setIcon(new ImageIcon(creerCarte(this.cartesObjectifs[cpt])));
-				this.tabCarteobjectif[cpt].setBackground(this.theme.get("buttons").get(1));
-				this.tabChoixCarte[cpt] = false;
+				this.tabCarteobjectif[cpt].setIcon(new ImageIcon(creerCarte(this.cartesObjectifs[cpt])));				
 			}
 			else
 			{
 				this.tabCarteobjectif[cpt].setIcon(null);
-				this.tabCarteobjectif[cpt].setBackground(this.theme.get("buttons").get(1));
-				this.tabChoixCarte[cpt] = false;
 			}
+
+			this.tabCarteobjectif[cpt].setBackground(this.theme.get("buttons").get(1));
+			this.tabChoixCarte[cpt] = false;
 			
 		}
 	}
