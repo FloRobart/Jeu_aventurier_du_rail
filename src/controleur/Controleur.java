@@ -94,6 +94,17 @@ public class Controleur
 		this.ihm.demarrerAttente(true);
 	}
 
+	public Partie getPartie()
+	{
+		return this.partie;
+	}
+
+	public void setPartie(Partie partie)
+	{
+		this.partie = partie;
+		partie.setJoueurCourrant(this.joueur);
+	}
+
 
 
 	/* --------------------------- */

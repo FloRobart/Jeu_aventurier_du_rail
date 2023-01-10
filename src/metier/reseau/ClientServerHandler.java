@@ -114,6 +114,9 @@ public class ClientServerHandler implements Runnable
                 try {
                     Partie nouvelle_partie = (Partie) this.in.readObject();
 
+                    this.ctrl.setPartie(nouvelle_partie);
+                    this.ctrl.majIHM();
+
                     System.out.println("Nouvelle partie");
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
