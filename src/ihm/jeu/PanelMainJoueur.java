@@ -155,6 +155,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 		this.panelMainWagon = new PanelMain(this.ctrl, this.ctrl.getJoueur());
 		this.add(this.panelMainWagon, BorderLayout.CENTER);
         this.lblObjectif.setText("  " + this.joueur.getNbCartesObjectif() + " objectifs restants");
+		this.lblNbJeton .setText(this.joueur.getNbJetonsRestant() +"  jetons restants   "); 
 
 		this.revalidate();
 		this.repaint();
