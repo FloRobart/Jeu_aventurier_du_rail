@@ -6,11 +6,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.FlowLayout;
 import java.awt.image.BufferedImage;
 import java.awt.FontMetrics;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -119,6 +117,15 @@ public class PanelObjectifsJoueur extends JPanel implements ActionListener
 
 		BufferedImage bi = this.ctrl.getImagePlateau();
         Graphics2D g2 = (Graphics2D) g;
+
+        if(carteObjectif.estValide(this.joueur))
+        {
+            g2.setColor(Color.GREEN);
+            g2.fillRect(0, 0, 200, 150);
+        }
+            
+
+
         //zoom de l'image du plateau
 		double zoomLargeur = (double) 150 / bi.getWidth ();
 		double zoomHauteur = (double) 150 / bi.getHeight();
@@ -181,6 +188,7 @@ public class PanelObjectifsJoueur extends JPanel implements ActionListener
             {
                 this.ctrl.afficherCarteObjectif(this.tabBtnObjectifs[i].getIcon());
             }
+            
         } 
     }
 
@@ -221,6 +229,16 @@ public class PanelObjectifsJoueur extends JPanel implements ActionListener
         {
             this.tabBtnObjectifs[i].setForeground(btnForeColor);
             this.tabBtnObjectifs[i].setBackground(btnBackColor);
+        }
+    }
+
+
+    public void validerObjectif(CarteObjectif co) 
+    {
+        for(int i=0; i<this.tabBtnObjectifs.length; i++)
+        {
+            this.tabBtnObjectifs[i].setIcon(new ImageIcon(creerCarte(co)));
+            this.ctrl.afficherCarteObjectif(new ImageIcon(this.ctrl.getCarteObjectif().get(i).getImageRecto()));
         }
     }
 }

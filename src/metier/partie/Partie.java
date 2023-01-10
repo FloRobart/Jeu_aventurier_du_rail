@@ -16,7 +16,7 @@ public class Partie implements Serializable
 	private static final long serialVersionUID = 2L;
 
 	private String nomPartie;
-	private GestionPioche gestionPioche;
+	private GestionPioche  gestionPioche;
 	private List<Arete>   alArete;
 	private Joueur[]      joueurs;
 	private transient Joueur        joueurCourant;
@@ -174,11 +174,18 @@ public class Partie implements Serializable
 		String[] tabNom = new String[this.joueurs.length];
 		for ( int cpt=0; cpt< this.joueurs.length; cpt++)
 		{
-			this.scoreFinal[cpt] = this.joueurs[cpt].getScore();
-			tabNom[cpt] = this.joueurs[cpt].getNom();
+			alCarteObjectif = this.joueurs[cptJoueur].getAlCartesObjectif();
+			for ( int cpt = 0; cpt < alCarteObjectif.size(); cpt++ )
+			{
+				scoreRetirer -= alCarteObjectif.get(cpt).getPoints();
+			}
+			this.joueurs[cptJoueur].ajouterScore(scoreRetirer);
+			
+			this.scoreFinal[cptJoueur] = this.joueurs[cptJoueur].getScore();
+			tabNom[cptJoueur] = this.joueurs[cptJoueur].getNom();
 		}
 
 		//methode qui envoie les infos vers une frame de fin de partie
-		//machin.afficherFinDePartie(tabNom, this.scoreFinal)
+		//machin.afficherFinDePartie(tabNom, this.scoreFinal);
 	}
 }

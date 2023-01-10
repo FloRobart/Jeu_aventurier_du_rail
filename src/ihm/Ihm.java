@@ -65,6 +65,8 @@ public class Ihm
 
     public int getWidthFrameAccueil() { return this.frameAccueil.getWidth(); }
 
+    public void disposeFrameJeu	() { this.frameJeu.dispose(); }
+
 	public BufferedImage getImage() { return this.frameJeu.getImage(); }
 
 
@@ -123,5 +125,11 @@ public class Ihm
 
 		return false;
 	}
+
+
+    public void validerObjectif(CarteObjectif co) 
+    {
+        if (this.frameJeu != null) { this.frameJeu.validerObjectif(co); }
+    }
 
 }

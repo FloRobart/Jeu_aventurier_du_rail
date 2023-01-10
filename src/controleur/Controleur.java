@@ -157,6 +157,7 @@ public class Controleur
 	public Arete   getAreteSelectionne  () { return this.areteSelectionnee;     }
 	public int     getCouleurSelectionne() { return this.couleurSelectionnee;   }
 	public boolean getEnTrainDePiocher  () { return this.enTrainDePiocher;      }
+    public void    disposeFrameJeu		() { this.ihm.disposeFrameJeu(); 		}
 
 	// Méthodes
 	public void setImageButton(int indice)  { if ( this.ihm != null ) this.ihm.setImageButton(indice); }
@@ -515,6 +516,11 @@ public class Controleur
 			this.clientCtrl.updateMap();
 		}
 	}
+
+	public void validerObjectif(CarteObjectif co) 
+	{
+		this.ihm.validerObjectif(co);
+    }
 
 	public static void main(String[] args)
     {
