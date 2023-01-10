@@ -30,6 +30,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import controleur.Controleur;
+import metier.Joueur;
 import metier.Metier;
 import metier.partie.Partie;
 
@@ -111,7 +112,7 @@ public class ServerClientHandler implements Runnable
         Server s = this.metier.getServer();
         s.writeonce("NOUVEAU_JOUEUR");
         s.writeonce(this.nomJoueur);
-
+        this.metier.ajouterJoueur(new Joueur(this.nomJoueur));
         s.writeonce("PARTIE");
         s.writeonce("nb_joueurs");
         s.writeonce("" + s.getNbJoeurs());
