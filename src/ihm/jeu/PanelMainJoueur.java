@@ -5,11 +5,8 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.awt.Graphics2D;
 import java.awt.event.WindowListener;
 import java.awt.event.WindowEvent;
 
@@ -24,7 +21,7 @@ import javax.swing.Icon;
 import controleur.Controleur;
 import metier.CarteObjectif;
 import metier.Joueur;
-import metier.partie.CarteWagon;
+
 
 public class PanelMainJoueur extends JPanel implements ActionListener
 {
