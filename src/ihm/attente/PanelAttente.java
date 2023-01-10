@@ -134,7 +134,7 @@ public class PanelAttente extends JPanel implements ActionListener
         this.btnChangeMappe.setMaximumSize  (new Dimension(150, 30));
         this.btnChangeMappe.setMinimumSize  (new Dimension(150, 30));
         this.btnChangeMappe.setPreferredSize(new Dimension(150, 30));
-        if (!hote) { this.btnChangeMappe.setEnabled(false); }
+        if (!hote) { this.btnChangeMappe.setVisible(false); }
 
         this.btnChoisirCouleur.setText("Choisir une couleur");
         this.btnChoisirCouleur.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
@@ -365,7 +365,7 @@ public class PanelAttente extends JPanel implements ActionListener
         this.btnLancer.setMaximumSize  (new Dimension(150, 40));
         this.btnLancer.setMinimumSize  (new Dimension(150, 40));
         this.btnLancer.setPreferredSize(new Dimension(150, 40));
-        if (!hote) { this.btnChangeMappe.setEnabled(false); }
+        if (!hote) { this.btnChangeMappe.setVisible(false); }
 
 
         /* Horizontale */
