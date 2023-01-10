@@ -129,7 +129,7 @@ public class ServerClientHandler implements Runnable
         Server s = this.metier.getServer();
         s.writeonce("NOUVEAU_JOUEUR");
         s.writeonce(this.nomJoueur);
-        this.metier.ajouterJoueur(new Joueur(this.nomJoueur));
+        this.metier.ajouterJoueur(new Joueur(this.ctrl, this.nomJoueur));
         s.writeonce("PARTIE");
         s.writeonce("nb_joueurs");
         s.writeonce("" + s.getNbJoeurs());
