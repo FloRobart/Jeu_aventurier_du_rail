@@ -109,6 +109,11 @@ public class Controleur
 		partie.setJoueurCourrant(this.joueur);
 	}
 
+	public void setPartieLancer(Boolean b)
+	{
+		this.ihm.basculerEnJeu(b);
+	}
+
 
 
 	/* --------------------------- */

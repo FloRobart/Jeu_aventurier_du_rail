@@ -90,7 +90,16 @@ public class Ihm
 	public void majIHM()
 	{
 		if ( this.frameJeu != null ) this.frameJeu.majIHM();
+        if ( this.frameAttente != null ) this.frameAttente.majIHM();
 	}
+
+    public void basculerEnJeu(Boolean b)
+    {
+        System.out.println("Demarage du jeu");
+        if (b)
+            this.demarrerJeu();
+
+    }
 
 	public void afficherErreur(String message)
 	{

@@ -51,6 +51,11 @@ public class Server
         }
     }
 
+    public void lancerPartie()
+    {
+        writeonce("LANCER_PARTIE");
+    }
+
     public int getNbJoeurs()
     {
         return clients.size();

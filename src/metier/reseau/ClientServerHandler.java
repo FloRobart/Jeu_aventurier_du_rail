@@ -66,6 +66,7 @@ public class ClientServerHandler implements Runnable
     public void Disconnect()
     {
         this.shouldStop = true;
+        //this.ctrl.getJoueurs().remove();
     }
 
     public void majPartie()
@@ -125,11 +126,6 @@ public class ClientServerHandler implements Runnable
 
             }
 
-            if (command.equals("DEMARRER_PARTIE"))
-            {
-                
-            }
-
             if (command.equals("MISE_A_JOUR_PARTIE"))
             {
                 try {
@@ -158,6 +154,7 @@ public class ClientServerHandler implements Runnable
                         f.set(this.metier, f.get(nouveau_metier));
                     }
                     System.out.println("Class metier charger");
+                    this.ctrl.majIHM();
                 } catch (ClassNotFoundException | IllegalArgumentException | IllegalAccessException e) {
                     e.printStackTrace();
                 }catch (IOException e) {
@@ -165,6 +162,10 @@ public class ClientServerHandler implements Runnable
                 }
             }
 
+            if (command.equals("LANCER_PARTIE"))
+            {
+                this.ctrl.setPartieLancer(true);
+            }
             
 
                     
