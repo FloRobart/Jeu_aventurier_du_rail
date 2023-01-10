@@ -716,7 +716,8 @@ public class PanelAccueil extends JPanel implements ActionListener
 
                     Client c = new Client("127.0.0.1", this.ctrl);
 
-                    try {
+                    try
+                    {
                         Boolean ok = c.passTest(txt.getText());
 
                         if (ok)
@@ -729,14 +730,12 @@ public class PanelAccueil extends JPanel implements ActionListener
                         }
                         else
                         {
-                            txt.setHint("Mot de passe incorrect");
-                            txt.setPlaceholderColor(disableColor);
+                            txt.setText("");
+                            txt.setForeground(disableColor);
                             txt.setBorder(BorderFactory.createLineBorder(disableColor, 3));
                         }
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    } catch (IOException e) { e.printStackTrace(); }
 
                 }
                 else
