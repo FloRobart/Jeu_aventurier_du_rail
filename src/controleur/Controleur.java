@@ -64,10 +64,9 @@ public class Controleur
 	 * Cette méthode lance le jeu directement.
 	 */
 	public void creerPartieSolo()
-	{ 
-		this.joueur = new Joueur("Joueur 1");
+	{
+		this.joueur = this.metier.getJoueurs().get(0);
 		this.joueur.setCouleur(Color.PINK);
-		this.metier.ajouterJoueur(this.joueur);
 
 		this.partie = new Partie(this, this.metier, false, "Partie local");
 
@@ -92,8 +91,8 @@ public class Controleur
 	 */
 	public void creerPartieMulti(String password)
 	{
+		this.joueur = this.metier.getJoueurs().get(0);
 		this.metier.creeServer(true, password);
-		this.hostGame();
 		this.ihm.demarrerAttente(true);
 	}
 
@@ -165,34 +164,44 @@ public class Controleur
 	{
 		try
 		{
-			Color coul = null;
-
-			if (couleur == 1) coul = arete.getCouleur1();
-			else              coul = arete.getCouleur2();
-			
-			// if : voix neutre | else : voix couleur
-			if ( coul.equals(this.metier.getCouleurs().get(0)))
+			if ((couleur == 1 && arete.getProprietaire1() == null) ||
+		        (couleur == 2 && arete.getProprietaire2() == null)   )
 			{
-				for (Color c : this.joueur.getAlCouleurs())
+				Color coul = null;
+
+				if (couleur == 1) coul = arete.getCouleur1();
+				else              coul = arete.getCouleur2();
+				
+				// if : voix neutre | else : voix couleur
+				if ( coul.equals(this.metier.getCouleurs().get(0)))
 				{
-					// carte couleur
-					if ( c != null && (this.joueur.gethashMapCarteWagons().get(c) +
-					                   this.joueur.gethashMapCarteWagons().get(null) >= arete.getDistance())) 
-						return true;
+					for (Color c : this.joueur.getAlCouleurs())
+					{
+						int nbCoul  = 0;
+						int nbJoker = 0;
 
-					// carte jocker
-					if ( this.joueur.gethashMapCarteWagons().get(null) >= arete.getDistance() ) return true;
+						if (c != null) 
+							nbCoul = this.joueur.gethashMapCarteWagons().get(c);
+
+						if (this.joueur.getAlCouleurs().contains(null))
+							nbJoker = this.joueur.gethashMapCarteWagons().get(null);
+
+						if (nbCoul + nbJoker >= arete.getDistance()) return true;
+					}
 				}
-			}
-			else
-			{
-				// carte couleur
-				if ( this.joueur.getAlCouleurs().contains(coul) && 
-					 this.joueur.gethashMapCarteWagons().get(coul) +
-					 this.joueur.gethashMapCarteWagons().get(null) >= arete.getDistance() ) return true;
+				else
+				{
+					int nbCoul  = 0;
+					int nbJoker = 0;
 
-				// carte jocker
-				if ( this.joueur.gethashMapCarteWagons().get(null) >= arete.getDistance() ) return true;
+					if (this.joueur.getAlCouleurs().contains(coul))
+						nbCoul = this.joueur.gethashMapCarteWagons().get(coul);
+
+					if (this.joueur.getAlCouleurs().contains(null))
+						nbJoker = this.joueur.gethashMapCarteWagons().get(null);
+
+					if (nbCoul + nbJoker >= arete.getDistance()) return true;
+				}
 			}
 		}
 		catch(Exception e) { return false; }
@@ -220,7 +229,7 @@ public class Controleur
 
 	public void prendreArete(int indMain)
 	{
-		if (this.areteSelectionnee != null)
+		if (this.areteSelectionnee != null && this.areteSelectionnee.getDistance() <= joueur.getNbJetonsRestant())
 		{
 			if ((this.couleurSelectionnee == 1 && this.areteSelectionnee.getProprietaire1() != null) ||
 				(this.couleurSelectionnee == 2 && this.areteSelectionnee.getProprietaire2() != null)   )
@@ -243,6 +252,19 @@ public class Controleur
 			{
 				this.joueur.gethashMapCarteWagons().put(c, nbCarte - this.areteSelectionnee.getDistance());
 				estValide = true;
+
+				int nbEnl = 0;
+				Iterator<CarteWagon> it = this.joueur.getAlCartesWagons().iterator();
+				while (it.hasNext() && nbEnl < this.areteSelectionnee.getDistance()) 
+				{
+					CarteWagon cw = it.next();
+					if (cw.getCouleur() == null)
+					{
+						this.partie.ajouterCarteDefausse(cw);
+						it.remove();
+						nbEnl++;
+					}
+				}
 			}
 			// Utilisation de carte couleur sur une voie de la même couleur ou neutre
 			else if (c != null && (c.equals(cVoie) || cVoie.equals(this.getCouleurs().get(0))) &&
@@ -250,6 +272,19 @@ public class Controleur
 			{
 				this.joueur.gethashMapCarteWagons().put(c, nbCarte - this.areteSelectionnee.getDistance());
 				estValide = true;
+
+				int nbEnl = 0;
+				Iterator<CarteWagon> it = this.joueur.getAlCartesWagons().iterator();
+				while (it.hasNext() && nbEnl < this.areteSelectionnee.getDistance()) 
+				{
+					CarteWagon cw = it.next();
+					if (cw.getCouleur() == c)
+					{
+						this.partie.ajouterCarteDefausse(cw);
+						it.remove();
+						nbEnl++;
+					}
+				}
 			}
 			// Utilisation de carte couleur et joker sur une voie de la même couleur ou neutre
 			else if (c != null && (c.equals(cVoie) || cVoie.equals(this.getCouleurs().get(0))) &&
@@ -264,6 +299,37 @@ public class Controleur
 					this.joueur.gethashMapCarteWagons().put(c, 0);
 					this.joueur.gethashMapCarteWagons().put(null, nbJoker - nbJokerNeccessaire);
 					estValide = true;
+
+					Iterator<CarteWagon> it = this.joueur.getAlCartesWagons().iterator();
+					while (it.hasNext()) 
+					{
+						CarteWagon cw = it.next();
+						if (cw.getCouleur() == c)
+						{
+							this.partie.ajouterCarteDefausse(cw);
+							it.remove();
+						}
+					}
+
+					int nbEnl = 0;
+					it = this.joueur.getAlCartesWagons().iterator();
+					while (it.hasNext() && nbEnl < nbJoker - nbJokerNeccessaire) 
+					{
+						CarteWagon cw = it.next();
+						if (cw.getCouleur() == null)
+						{
+							this.partie.ajouterCarteDefausse(cw);
+							it.remove();
+							nbEnl++;
+						}
+					}
+				}
+				else
+				{
+					if (this.areteSelectionnee != null)
+						this.ihm.afficherErreur("Aucune arête selectionné");
+					else
+						this.ihm.afficherErreur("Nombre de jeton insuffisant");
 				}
 			}
 
@@ -285,6 +351,7 @@ public class Controleur
 						this.joueur.gethashMapCarteWagons().remove(coul);
 					}
 				}
+				this.joueur.retirerJeton(this.areteSelectionnee.getDistance());
 
 				this.areteSelectionnee = null;
 				this.couleurSelectionnee = 0;
@@ -341,7 +408,6 @@ public class Controleur
 		this.joueur = new Joueur("Joueur 1");
 		this.metier.ajouterJoueur(this.joueur);
 		this.partie = new Partie(this, this.metier, true, "Partie multi-joueur");
-		this.serverCtrl = new ServerControleur(this.metier,this.partie);
 	}
 
 

@@ -100,6 +100,11 @@ public class Joueur implements Serializable
         this.alCartesWagons.remove(carteWagon);
     }
 
+	public void retirerJeton(int nb)
+	{
+		this.nbJetonsRestant -= nb;
+	}
+
     public String toString()
     {
         return this.nom + " (" + this.score + " points)" + " : " + this.nbJetonsRestant + " jetons posés" + " -- " + this.alCartesObjectif.size() + " cartes objectif" + " : " + this.hashMapCarteWagons.size() + " cartes wagon";

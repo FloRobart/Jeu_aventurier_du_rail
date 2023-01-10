@@ -107,6 +107,12 @@ public class Partie implements Serializable
 
 		if (carte != null)
 			this.joueurCourant.ajouterCarteWagon(carte);
+
+		if (this.gestionPioche.getSizeWagon() == 0)
+		{
+			this.gestionPioche.transfertPioche();
+			this.ctrl.majIHM();
+		}
 	}
 
 	public void piocherVisible(int ind)
@@ -119,6 +125,16 @@ public class Partie implements Serializable
 		this.gestionPioche.getTabCartesVisible()[ind] = this.gestionPioche.piocherCarteWagon();
 
 		this.verifierVisible();
+		if (this.gestionPioche.getSizeWagon() == 0)
+		{
+			this.gestionPioche.transfertPioche();
+			this.ctrl.majIHM();
+		}
+	}
+
+	public void ajouterCarteDefausse(CarteWagon carte)
+	{
+		this.gestionPioche.ajouterCarteDefausse(carte);
 	}
 
 	public CarteObjectif getPiocheObjectif() 
