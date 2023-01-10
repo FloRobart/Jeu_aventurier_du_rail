@@ -121,6 +121,7 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 				this.btnPiocher.setEnabled(false);
 				this.initCarteObjectifs();
 				this.panelObjectif.disposePioche();
+				this.ctrl.joueurSuivant();
 			}
 		}
 

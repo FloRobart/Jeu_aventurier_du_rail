@@ -50,9 +50,10 @@ public class Controleur
 
 		this.enTrainDePiocher = false;
     }
-	public void superMethodeDeDebug() { 
-		this.joueur.ajouterCarteWagon(new CarteWagon(null, getImageVersoCouleur(), getImageRectoLocomotive()));
-		System.out.println(this.joueur.getAlCartesWagons().size());
+	public void joueurSuivant()
+	{
+		if (!this.enTrainDePiocher)
+			this.partie.joueurSuivant();
 	}
 
 	/**
@@ -376,6 +377,7 @@ public class Controleur
 
 				this.ihm.majIHM();
 				this.joueur.verifierObjectifs();
+				this.partie.joueurSuivant();
 			}
 		}
 	}
@@ -441,7 +443,6 @@ public class Controleur
 
 		this.joueur = new Joueur(this, nom);
 
-		this.ihm.demarrerAttente(false);
 		return 1;
 		// this.joueur = new Joueur("Joueur 1");
 		// this.metier.ajouterJoueur(this.joueur);
@@ -468,6 +469,11 @@ public class Controleur
     public Joueur getJoueurCourant() {
         return null;
     }
+
+	public void connexionAccepter()
+	{
+		this.ihm.demarrerAttente(false);
+	}
 
 	/**
 	 * Affiche la carte objectif dans la main du joueur

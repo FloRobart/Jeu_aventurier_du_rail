@@ -23,6 +23,7 @@ public class Partie implements Serializable
 	private int           nbJetonFin;
 	private int           tour;
 	private boolean       estMulti; // mettre le serveur au lieu d'un boolean
+	private Joueur        joueurFin;
 	private Integer[] 		  scoreFinal;
 
 	public void setJoueurCourrant(Joueur j)
@@ -69,26 +70,26 @@ public class Partie implements Serializable
 		else 					     this.joueurCourant = null;
 
 		this.estMulti = estMulti;
-	}
-
-	public boolean estTerminee()
-	{
-		for (Joueur joueur : this.joueurs)
-			if (joueur.getNbJetonsRestant() <= this.nbJetonFin)
-				return true;
-
-		return false;
+		this.joueurFin = null;
 	}
 
 	public void joueurSuivant()
 	{
 		int indJoueur = 0;
 
+		// si un joueur n'a plus assez de jeton, alors la partie se terminera à son prochain tour
+		if (this.joueurFin == null & this.joueurCourant.getNbJetonsRestant() <= this.nbJetonFin)
+			this.joueurFin = this.joueurCourant;
+
 		for (int cpt = 0; cpt < this.joueurs.length; cpt++)
 			if (this.joueurs[cpt] == this.joueurCourant)
 				indJoueur = (cpt++) % this.joueurs.length;
 		
 		this.joueurCourant = this.joueurs[indJoueur];
+
+		if (this.joueurCourant == this.joueurFin)
+			System.out.println("fin de partie");//this.arreterPartie();
+		
 		if (indJoueur == 0)
 		{
 			this.tour++;
