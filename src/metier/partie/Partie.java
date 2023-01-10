@@ -48,7 +48,7 @@ public class Partie implements Serializable
 		}
 
 		this.nbJetonFin    = metier.getNbJetonFin();
-		this.tour          = 1;
+		this.tour          = 0;
 
 		if (this.joueurs[0] != null) this.joueurCourant = this.joueurs[0];
 		else 					     this.joueurCourant = null;
@@ -74,12 +74,17 @@ public class Partie implements Serializable
 				indJoueur = (cpt++) % this.joueurs.length;
 		
 		this.joueurCourant = this.joueurs[indJoueur];
-		if (indJoueur == 0) this.tour++;
+		if (indJoueur == 0)
+		{
+			this.tour++;
+			this.ctrl.setNbTours(this.tour);
+		} 
 	}
 
-	public Joueur getJoueurCourant() { return this.joueurCourant; }
+	public Joueur 		getJoueurCourant()	  { return this.joueurCourant; }
 	public CarteWagon[] getTabCartesVisible() { return this.gestionPioche.getTabCartesVisible(); }
 	public int          getSizeWagon       () { return this.gestionPioche.getSizeWagon(); }
+	public int			getTours()			  { return this.tour;}
 
 	public void piocherPioche()
 	{

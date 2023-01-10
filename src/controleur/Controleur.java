@@ -132,9 +132,9 @@ public class Controleur
 	public Arete getAreteSelectionne  () { return this.areteSelectionnee;     }
 	public int   getCouleurSelectionne() { return this.couleurSelectionnee;   }
 
-
 	// Méthodes
-	public void setImageButton(int indice) { if ( this.ihm != null ) this.ihm.setImageButton(indice); }
+	public void setImageButton(int indice)  { if ( this.ihm != null ) this.ihm.setImageButton(indice); }
+	public void	setNbTours	  (int nbTours) { this.ihm.setNbTours(nbTours);}
 
 	public boolean estPrenable(Arete arete, int couleur)
 	{
