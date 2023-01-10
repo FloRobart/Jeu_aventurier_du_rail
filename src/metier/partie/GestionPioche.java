@@ -11,6 +11,7 @@ import metier.Metier;
 public class GestionPioche 
 {
 	private LinkedList<CarteWagon>    lstCartesWagon;
+	private LinkedList<CarteWagon>    lstCartesDefausse;
 	private CarteWagon[]              tabCartesVisible;
     private LinkedList<CarteObjectif> lstCartesObjectif;
 
@@ -34,6 +35,9 @@ public class GestionPioche
 
 		Collections.shuffle(this.lstCartesWagon);
 
+		// Creation de la pile de carte defaussé
+		this.lstCartesDefausse = new LinkedList<CarteWagon>();
+
 		// Creation du tableau de cartes visible
 		this.tabCartesVisible = new CarteWagon[5];
 		for ( int cpt = 0 ; cpt < 5 ; cpt++)
@@ -55,7 +59,19 @@ public class GestionPioche
 		if ( this.lstCartesWagon.size() == 0) return null;
 
 		CarteWagon carteWagon = this.lstCartesWagon.remove(0);
+
 		return carteWagon;
+	}
+
+	public void ajouterCarteDefausse(CarteWagon carteWagon)
+	{System.out.println("ajout defausse");
+		this.lstCartesDefausse.add(carteWagon);
+	}
+
+	public void transfertPioche()
+	{
+		this.lstCartesWagon.addAll(this.lstCartesDefausse);
+		this.lstCartesDefausse.clear();
 	}
 
 	/**
