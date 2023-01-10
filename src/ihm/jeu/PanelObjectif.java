@@ -65,6 +65,7 @@ public class PanelObjectif extends JPanel implements ActionListener
                 this.dialogInfosJoueur.setSize(750,250);
                 this.dialogInfosJoueur.setLocation(200, 300);
                 this.dialogInfosJoueur.setResizable(false);
+				this.dialogInfosJoueur.setModalityType(JDialog.ModalityType.APPLICATION_MODAL);
                 this.dialogInfosJoueur.add(this.panelPiocherObjectif);
                 this.dialogInfosJoueur.pack();
                 this.dialogInfosJoueur.setVisible(true);
@@ -77,13 +78,20 @@ public class PanelObjectif extends JPanel implements ActionListener
             /* Permet de detecter la fermeture de la fenêtre de dialogue */
             this.dialogInfosJoueur.addWindowListener(new WindowListener()
             {
+				private boolean fermetureForce = true;
+
                 public void windowClosing    (WindowEvent e) {}
                 public void windowOpened     (WindowEvent e) {}
-                public void windowClosed     (WindowEvent e) {}
+                public void windowClosed     (WindowEvent e) { 
+					fermetureForce = false; 
+					dialogInfosJoueur.dispose();
+				}
                 public void windowIconified  (WindowEvent e) {}
                 public void windowDeiconified(WindowEvent e) {}
                 public void windowActivated  (WindowEvent e) {}
-                public void windowDeactivated(WindowEvent e) {  }
+                public void windowDeactivated(WindowEvent e) { 
+					if (fermetureForce) dialogInfosJoueur.setVisible(true);
+				}
             });
         }
 		else
