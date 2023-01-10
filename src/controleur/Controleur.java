@@ -332,7 +332,7 @@ public class Controleur
 	 * Permet de récupérer la pioche de cartes objectifs
 	 * @return un tableau de Carte Objectif
 	 */
-    public CarteObjectif[] getPiocheObjectif() 
+    public CarteObjectif getPiocheObjectif() 
 	{
         return this.partie.getPiocheObjectif();
     }

@@ -113,7 +113,7 @@ public class Partie implements Serializable
 		this.verifierVisible();
 	}
 
-	public CarteObjectif[] getPiocheObjectif() 
+	public CarteObjectif getPiocheObjectif() 
 	{
 		return this.gestionPioche.piocherCartesObjectif();
 	}
