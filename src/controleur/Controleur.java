@@ -508,6 +508,11 @@ public class Controleur
 		}
 	}
 
+	public void validerObjectif(CarteObjectif co) 
+	{
+		this.ihm.validerObjectif(co);
+    }
+
 	public static void main(String[] args)
     {
         new Controleur();
