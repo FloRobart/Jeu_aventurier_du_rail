@@ -60,10 +60,7 @@ public class Controleur
 	 * Permet de créer une partie solo.
 	 * Cette méthode lance le jeu directement.
 	 */
-	public void creerPartieSolo() 
-	{
-		this.partie = new Partie(this, this.metier, false);
-		this.joueur = this.metier.getJoueurs().get(0);
+	public void creerPartieSolo()
 	{ 
 		this.joueur = new Joueur("Joueur 1");
 		this.joueur.setCouleur(Color.PINK);
