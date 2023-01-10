@@ -61,12 +61,9 @@ public class Controleur
 	 * Cette méthode lance le jeu directement.
 	 */
 	public void creerPartieSolo() 
-	{ 
-		this.joueur = new Joueur("Joueur 1");
-		this.joueur.setCouleur(Color.PINK);
-		this.metier.ajouterJoueur(this.joueur);
-
+	{
 		this.partie = new Partie(this, this.metier, false);
+		this.joueur = this.metier.getJoueurs().get(0);
 
 		this.ihm.demarrerJeu(); 
 	}
@@ -135,6 +132,12 @@ public class Controleur
 
 	// Méthodes
 	public void setImageButton(int indice) { if ( this.ihm != null ) this.ihm.setImageButton(indice); }
+
+
+	public boolean ajouterJoueur(Joueur joueur)
+	{
+		return this.metier.ajouterJoueur(joueur);
+	}
 
 	public boolean estPrenable(Arete arete, int couleur)
 	{
@@ -295,10 +298,7 @@ public class Controleur
 
 	}
 	
-    public void creerPartie() 
-	{
-		this.hostGame();
-    }
+
 	public Metier getMetier(){return this.metier;} // a tester supprimer apres
 
     public Joueur getJoueurCourant() {
