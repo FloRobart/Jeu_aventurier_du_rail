@@ -1,6 +1,7 @@
 package metier.partie;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
 import metier.CarteObjectif;
 import metier.Metier;
 
-public class GestionPioche 
+public class GestionPioche implements Serializable
 {
 	private LinkedList<CarteWagon>    lstCartesWagon;
 	private LinkedList<CarteWagon>    lstCartesDefausse;
@@ -100,4 +101,6 @@ public class GestionPioche
 	{
 		this.lstCartesObjectif.add(carteObjectif);
 	}
+
+	
 }

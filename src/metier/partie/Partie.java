@@ -16,7 +16,7 @@ public class Partie implements Serializable
 	private static final long serialVersionUID = 2L;
 
 	private String nomPartie;
-	private transient GestionPioche  gestionPioche;
+	private GestionPioche gestionPioche;
 	private List<Arete>   alArete;
 	private Joueur[]      joueurs;
 	private transient Joueur        joueurCourant;
