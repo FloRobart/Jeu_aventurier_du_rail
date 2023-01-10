@@ -59,7 +59,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         this.theme           = this.ctrl.getTheme();
 
         this.setLayout(new BorderLayout());
-        this.setBorder( BorderFactory.createLineBorder(Color.black, 3) );
+        this.setBorder( BorderFactory.createLineBorder(this.ctrl.getTheme().get("titles").get(1), 3) );
 
         //initialisation des composants
         this.joueur = this.ctrl.getJoueur();
@@ -147,6 +147,8 @@ public class PanelMainJoueur extends JPanel implements ActionListener
             });
         }
     }
+
+    public void setScore( ) { this.lblScore.setText("Score : " + this.joueur.getScore()); }
 
 	public void majIHM()
 	{

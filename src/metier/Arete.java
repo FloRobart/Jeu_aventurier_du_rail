@@ -74,11 +74,6 @@ public class Arete implements Serializable
 			this.proprietaire2 = j; 
 	}
 
-	public void genererTroncon()
-	{
-		
-	}
-
 	public String toString()
 	{
 		return this.noeud1.getNom() + " - " + this.noeud2.getNom();

@@ -91,8 +91,8 @@ public class Controleur
 	 */
 	public void creerPartieMulti(String password)
 	{
+		this.joueur = this.metier.getJoueurs().get(0);
 		this.metier.creeServer(true, password);
-		this.hostGame();
 		this.ihm.demarrerAttente(true);
 	}
 
@@ -338,6 +338,9 @@ public class Controleur
 				if (this.couleurSelectionnee == 1) this.areteSelectionnee.setProprietaire1(joueur);
 				else                               this.areteSelectionnee.setProprietaire2(joueur);
 
+				this.joueur.ajouterScore(this.areteSelectionnee.getDistance());
+				this.ihm.setScore();
+
 				Iterator<Color> it = this.joueur.getAlCouleurs().iterator();
 				while (it.hasNext()) 
 				{
@@ -405,7 +408,6 @@ public class Controleur
 		this.joueur = new Joueur("Joueur 1");
 		this.metier.ajouterJoueur(this.joueur);
 		this.partie = new Partie(this, this.metier, true, "Partie multi-joueur");
-		this.serverCtrl = new ServerControleur(this.metier,this.partie);
 	}
 
 

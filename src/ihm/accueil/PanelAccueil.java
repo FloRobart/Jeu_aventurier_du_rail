@@ -614,6 +614,7 @@ public class PanelAccueil extends JPanel implements ActionListener
                             if (mdpCorrect)
                             {
                                 /* Emmène le joueur qui créée la partie dans la salle d'attente */
+                                this.ctrl.ajouterJoueur(new Joueur(this.txtPseudo.getText()));
                                 this.ctrl.creerPartieMulti(this.txtMdpCreer.getText());
                             }
                         }

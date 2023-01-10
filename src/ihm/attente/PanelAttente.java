@@ -535,10 +535,18 @@ public class PanelAttente extends JPanel implements ActionListener
         Color btnForeColor   = this.theme.get("buttons"   ).get(0);
         Color background     = this.theme.get("background").get(0);
 
+        //transfert du contenue de l'ancienne List dans la nouvelle
+        // TODO à complété
+
+        // Création de la nouvelle List avec la bonne taille
         this.lstParticipants = new ArrayList<JLabel>();
+        List<Joueur> lstJoueurs    = this.ctrl.getJoueurs();
+
         for (int i = 0; i < this.ctrl.getNbJoueursMax(); i++)
         {
-            this.lstParticipants.add(new JLabel(" "));
+            String txt=" ";
+            if (i<lstJoueurs.size()) txt = lstJoueurs.get(i).getNom();            
+            this.lstParticipants.add(new JLabel(txt));
             this.lstParticipants.get(i).setFont(new Font("Liberation Sans", 0, 24));
             this.lstParticipants.get(i).setPreferredSize(new Dimension(200, 40));
             this.lstParticipants.get(i).setOpaque(true);

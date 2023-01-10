@@ -47,7 +47,7 @@ public class PanelJoueurs extends JPanel implements ActionListener
         this.setLayout(new BorderLayout());
 
         this.setSize(200, 400);
-        this.setBorder( BorderFactory.createLineBorder(Color.black, 2) );
+        this.setBorder( BorderFactory.createLineBorder(this.ctrl.getTheme().get("titles").get(1), 2) );
 
         //initialisation des composants
         /*panel de chaque joueurs */
@@ -133,6 +133,13 @@ public class PanelJoueurs extends JPanel implements ActionListener
         }
     }
 
+    public void setScore( ) 
+    { 
+        for ( int cpt=0; cpt < this.lstJoueurs.size(); cpt++)
+        {
+            this.tabLblScore[cpt].setText("Score : " + this.lstJoueurs.get(cpt).getScore());
+        }
+    }
 
     /**
      * Applique les couleurs du thème sélectionné à tout les éléments du panel et au panel lui même
