@@ -242,6 +242,19 @@ public class Controleur
 			{
 				this.joueur.gethashMapCarteWagons().put(c, nbCarte - this.areteSelectionnee.getDistance());
 				estValide = true;
+
+				int nbEnl = 0;
+				Iterator<CarteWagon> it = this.joueur.getAlCartesWagons().iterator();
+				while (it.hasNext() && nbEnl < this.areteSelectionnee.getDistance()) 
+				{
+					CarteWagon cw = it.next();
+					if (cw.getCouleur() == null)
+					{
+						this.partie.ajouterCarteDefausse(cw);
+						it.remove();
+						nbEnl++;
+					}
+				}
 			}
 			// Utilisation de carte couleur sur une voie de la même couleur ou neutre
 			else if (c != null && (c.equals(cVoie) || cVoie.equals(this.getCouleurs().get(0))) &&
@@ -249,6 +262,19 @@ public class Controleur
 			{
 				this.joueur.gethashMapCarteWagons().put(c, nbCarte - this.areteSelectionnee.getDistance());
 				estValide = true;
+
+				int nbEnl = 0;
+				Iterator<CarteWagon> it = this.joueur.getAlCartesWagons().iterator();
+				while (it.hasNext() && nbEnl < this.areteSelectionnee.getDistance()) 
+				{
+					CarteWagon cw = it.next();
+					if (cw.getCouleur() == c)
+					{
+						this.partie.ajouterCarteDefausse(cw);
+						it.remove();
+						nbEnl++;
+					}
+				}
 			}
 			// Utilisation de carte couleur et joker sur une voie de la même couleur ou neutre
 			else if (c != null && (c.equals(cVoie) || cVoie.equals(this.getCouleurs().get(0))) &&
@@ -263,6 +289,30 @@ public class Controleur
 					this.joueur.gethashMapCarteWagons().put(c, 0);
 					this.joueur.gethashMapCarteWagons().put(null, nbJoker - nbJokerNeccessaire);
 					estValide = true;
+
+					Iterator<CarteWagon> it = this.joueur.getAlCartesWagons().iterator();
+					while (it.hasNext()) 
+					{
+						CarteWagon cw = it.next();
+						if (cw.getCouleur() == c)
+						{
+							this.partie.ajouterCarteDefausse(cw);
+							it.remove();
+						}
+					}
+
+					int nbEnl = 0;
+					it = this.joueur.getAlCartesWagons().iterator();
+					while (it.hasNext() && nbEnl < nbJoker - nbJokerNeccessaire) 
+					{
+						CarteWagon cw = it.next();
+						if (cw.getCouleur() == null)
+						{
+							this.partie.ajouterCarteDefausse(cw);
+							it.remove();
+							nbEnl++;
+						}
+					}
 				}
 			}
 

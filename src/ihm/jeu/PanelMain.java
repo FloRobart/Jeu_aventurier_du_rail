@@ -63,13 +63,13 @@ public class PanelMain extends JPanel implements ActionListener
             this.tabIconWagon[i].setBorderPainted(false);
             this.tabIconWagon[i].setContentAreaFilled(false);
             this.tabIconWagon[i].setFocusPainted(false);
+
+			if(!this.ctrl.getEnTrainDePiocher())
+				this.tabIconWagon[i].addActionListener(this);
         
             this.add(this.tabIconWagon[i]);
 			i++;
         }
-
-		for (JButton btn : this.tabIconWagon)
-			btn.addActionListener(this);
 
 		this.setVisible(true);
 	}
