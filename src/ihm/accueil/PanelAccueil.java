@@ -30,6 +30,7 @@ import ihm.customComponent.TextFieldAdresseIP;
 import ihm.customComponent.TextFieldMdp;
 import ihm.customComponent.TextFieldPseudo;
 import ihm.customComponent.TextFieldWithHint;
+import metier.Joueur;
 import metier.reseau.Client;
 
 
@@ -604,6 +605,7 @@ public class PanelAccueil extends JPanel implements ActionListener
                     {
                         if (e.getSource() == this.btnCreerSolo)
                         {
+                            this.ctrl.ajouterJoueur(new Joueur(this.txtPseudo.getText()));
                             this.ctrl.creerPartieSolo();
                         }
                         else
@@ -677,11 +679,25 @@ public class PanelAccueil extends JPanel implements ActionListener
         }
         else
         {
-            pseudoCorrect = true;
-            this.txtPseudo.setBorder(null);
+            boolean onlySpace = true;
+            for (int i = 0; i < this.txtPseudo.getText().length(); i++)
+                if (this.txtPseudo.getText().charAt(i) != ' ')
+                    onlySpace = false;
 
-            if (this.txtPseudo.getPlaceholderColor() == disableColor)
-                this.txtPseudo.setPlaceholderColor(this.theme.get("saisies").get(2));
+            if (!onlySpace)
+            {
+                pseudoCorrect = true;
+                this.txtPseudo.setBorder(null);
+
+                if (this.txtPseudo.getPlaceholderColor() == disableColor)
+                    this.txtPseudo.setPlaceholderColor(this.theme.get("saisies").get(2));
+            }
+            else
+            {
+                this.txtPseudo.setText("");
+                this.txtPseudo.setPlaceholderColor(disableColor);
+                this.txtPseudo.setBorder(BorderFactory.createLineBorder(disableColor, 3));
+            }
         }
 
         return pseudoCorrect;

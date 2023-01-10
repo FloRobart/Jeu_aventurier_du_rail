@@ -60,13 +60,13 @@ public class Controleur
 	 * Permet de créer une partie solo.
 	 * Cette méthode lance le jeu directement.
 	 */
-	public void creerPartieSolo() 
+	public void creerPartieSolo()
 	{ 
 		this.joueur = new Joueur("Joueur 1");
 		this.joueur.setCouleur(Color.PINK);
 		this.metier.ajouterJoueur(this.joueur);
 
-		this.partie = new Partie(this, this.metier, false);
+		this.partie = new Partie(this, this.metier, false, "Partie local");
 
 		this.ihm.demarrerJeu(); 
 	}
@@ -78,7 +78,7 @@ public class Controleur
 	 */
 	public void lancerPartieMulti()
 	{
-		this.partie = new Partie(this, this.metier, true);
+		this.partie = new Partie(this, this.metier, true, "Partie multi-joueurs");
 
 		this.ihm.demarrerJeu();
 	}
@@ -143,9 +143,15 @@ public class Controleur
 	public Arete getAreteSelectionne  () { return this.areteSelectionnee;     }
 	public int   getCouleurSelectionne() { return this.couleurSelectionnee;   }
 
-
 	// Méthodes
-	public void setImageButton(int indice) { if ( this.ihm != null ) this.ihm.setImageButton(indice); }
+	public void setImageButton(int indice)  { if ( this.ihm != null ) this.ihm.setImageButton(indice); }
+	public void	setNbTours	  (int nbTours) { this.ihm.setNbTours(nbTours);}
+
+
+	public boolean ajouterJoueur(Joueur joueur)
+	{
+		return this.metier.ajouterJoueur(joueur);
+	}
 
 	public boolean estPrenable(Arete arete, int couleur)
 	{
@@ -273,7 +279,7 @@ public class Controleur
 	{
 		this.joueur = new Joueur("Joueur 1");
 		this.metier.ajouterJoueur(this.joueur);
-		this.partie = new Partie(this, this.metier,true);
+		this.partie = new Partie(this, this.metier, true, "Partie multi-joueur");
 		this.serverCtrl = new ServerControleur(this.metier,this.partie);
 	}
 
@@ -306,10 +312,7 @@ public class Controleur
 
 	}
 	
-    public void creerPartie() 
-	{
-		this.hostGame();
-    }
+
 	public Metier getMetier(){return this.metier;} // a tester supprimer apres
 
     public Joueur getJoueurCourant() {
