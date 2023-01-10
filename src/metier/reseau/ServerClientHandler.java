@@ -126,7 +126,7 @@ public class ServerClientHandler implements Runnable
 
     private void initialLoading()
     {
-        this.metier.ajouterJoueur(new Joueur(this.nomJoueur));     
+        this.metier.ajouterJoueur(new Joueur(this.ctrl, this.nomJoueur));     
 
         this.authentifie = true;
         majMetier(this.metier);
