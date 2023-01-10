@@ -51,13 +51,13 @@ public class PanelInfosJoueur extends JPanel
 
         this.lblNom              = new JLabel(this.joueur.getNom());
         //this.lblNom.setForeground(this.joueur.getCouleur());
-        this.lblNbJeton          = new JLabel(this.nbWagons  + " jetons restants");
-        this.lblNbCartesWagon    = new JLabel(this.nbCartesWagon    + "cartes wagon");
-        this.lblNbCartesObjectif = new JLabel(this.nbCartesObjectif + "cartes objectif");
+        this.lblNbJeton          = new JLabel(this.nbWagons  + " jetons restants ");
+        this.lblNbCartesWagon    = new JLabel(this.nbCartesWagon    + " cartes wagon ");
+        this.lblNbCartesObjectif = new JLabel(this.nbCartesObjectif + " cartes objectif ");
         this.lblIcon             = new JLabel();
 
 
-        this.lblInfos = new JLabel("Infos sur le Joueurs");
+        this.lblInfos = new JLabel(" Infos sur le Joueurs");
 
         this.panelInfos = new JPanel();
         this.panelInfos.setLayout(new GridLayout(3,1));
@@ -67,13 +67,13 @@ public class PanelInfosJoueur extends JPanel
 
         /*-----NE PAS SUPPRIMER------ */
         if(this.nbWagons <= 1)
-            this.lblNbJeton.setText(this.nbWagons + " wagon placé");
+            this.lblNbJeton.setText(this.nbWagons + " wagon placé ");
         
         if(this.nbCartesObjectif <= 1)
-            this.lblNbCartesObjectif.setText(this.nbCartesObjectif + " carte objectif");
+            this.lblNbCartesObjectif.setText(this.nbCartesObjectif + " carte objectif ");
 
         if(this.nbCartesWagon <= 1)
-            this.lblNbCartesWagon.setText(this.nbCartesWagon + " carte wagon");
+            this.lblNbCartesWagon.setText(this.nbCartesWagon + " carte wagon ");
 
         
         //ajout des composants

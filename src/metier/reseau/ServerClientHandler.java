@@ -187,6 +187,17 @@ public class ServerClientHandler implements Runnable
 
             // Joueur authentifié
 
+            if (command.equals("MISE_A_JOUR_PARTIE"))
+            {
+                try {
+                    Partie partie = (Partie) in.readObject();
+                    this.ctrl.setPartie(partie);
+                    this.ctrl.majIHM();
+                } catch (ClassNotFoundException | IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
             
                     
             

@@ -87,11 +87,22 @@ public class Controleur
 	 * Permet de créer une partie multijoueur mais ne lance pas le jeu.
 	 * Le jeu pourra être lancé par le créateur de la partie à l'intérieur de la fenêtre d'attente.
 	 */
-	public void creerPartieMulti()
+	public void creerPartieMulti(String password)
 	{
-		this.metier.creeServer(true);
+		this.metier.creeServer(true, password);
 		this.hostGame();
 		this.ihm.demarrerAttente(true);
+	}
+
+	public Partie getPartie()
+	{
+		return this.partie;
+	}
+
+	public void setPartie(Partie partie)
+	{
+		this.partie = partie;
+		partie.setJoueurCourrant(this.joueur);
 	}
 
 
@@ -315,6 +326,34 @@ public class Controleur
     }
 
 	/**
+	 * Permet de récupérer la pioche de cartes objectifs
+	 * @return un tableau de Carte Objectif
+	 */
+    public CarteObjectif[] getPiocheObjectif() 
+	{
+        return this.partie.getPiocheObjectif();
+    }
+
+	/**
+	 * Ajouter une carte objectif dans la main du joueur
+	 * @param cartesObjectifs : carte que l'on veut ajouter
+	 */
+	public void ajouterObjectifsJoueurs(CarteObjectif cartesObjectifs) 
+	{
+		this.metier.ajouterObjectifsJoueurs(cartesObjectifs);
+		this.ihm.majIHM();
+	}
+
+	/**
+	 * Permet de remettre les cartes non piochés par le joueur dans la pioche
+	 * @param carteObjectif 
+	 */
+	public void remettreCarteObjectif(CarteObjectif carteObjectif) 
+	{
+		this.partie.remettreCarteObjectif(carteObjectif);
+	}
+
+	/**
 	 * @Author Duc
 	 * methode qui actualise le IHM de jeu (update Partie) quand y a un changement
 	 */
@@ -345,12 +384,5 @@ public class Controleur
             e.printStackTrace();
         }
     }
-    public CarteObjectif[] getPiocheObjectif() 
-	{
-        return this.partie.getPiocheObjectif();
-    }
-	public void ajouterObjectifsJoueurs(CarteObjectif cartesObjectifs) 
-	{
-		this.metier.ajouterObjectifsJoueurs(cartesObjectifs);
-	}
+
 }

@@ -19,6 +19,7 @@ public class Client
     private Socket socket;
     private boolean connecte;
 
+    private ClientServerHandler csh;
     private Controleur ctrl;
     
     public Client(String ip, Controleur ctrl)
@@ -27,6 +28,11 @@ public class Client
         this.ip = ip;
         this.port = 5000;
         this.connecte = false;
+    }
+
+    public void majPartie()
+    {
+        this.csh.majPartie();
     }
 
     public boolean passTest(String password) throws IOException
@@ -57,8 +63,8 @@ public class Client
         {
             this.socket = new Socket(this.ip, this.port);
             this.connecte = true;
-
-            new Thread(new ClientServerHandler(this.ctrl, this.socket, password)).start();
+            csh = new ClientServerHandler(this.ctrl, this.socket, password);
+            new Thread(csh).start();
             
         }
         catch(Exception e)

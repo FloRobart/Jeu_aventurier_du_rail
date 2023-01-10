@@ -58,20 +58,23 @@ public class GestionPioche
 		return carteWagon;
 	}
 
-	// gestion des cartes objectif
+	/**
+	 * Pioche 3 cartes objectif et les retourne
+	 * @return tableau de 3 cartes objectif
+	 */
 	public CarteObjectif[] piocherCartesObjectif()
 	{
 		CarteObjectif[] tabCartesObjectif = new CarteObjectif[3];
 
 		for ( int cpt = 0 ; cpt < 3 ; cpt++)
 		{
-			if ( this.lstCartesObjectif.size() == 0 )
-				tabCartesObjectif[cpt] = null;
-			else
+			//if ( this.lstCartesObjectif.size() == 0 )
+				//tabCartesObjectif[cpt] = null;
+			//else
 				tabCartesObjectif[cpt] = this.lstCartesObjectif.remove(0);
 		}
 
-		if ( this.lstCartesObjectif.size() == 0) return null;
+		//if ( this.lstCartesObjectif.size() == 0) return null;
 		
 		if(this.lstCartesObjectif.size() < 3)
 		{
@@ -85,5 +88,14 @@ public class GestionPioche
 	public void remettreCarteWagon(CarteWagon carteWagon)
 	{
 		this.lstCartesWagon.add(carteWagon);
+	}
+
+	/**
+	 * Remet une carte objectif dans la pioche
+	 * @param carteObjectif
+	 */
+	public void remettreCarteObjectif(CarteObjectif carteObjectif) 
+	{
+		this.lstCartesObjectif.add(carteObjectif);
 	}
 }
