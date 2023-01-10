@@ -177,6 +177,18 @@ public class ServerClientHandler implements Runnable
                 if (command.equals("BONJOUR"))
                 {
                     this.nomJoueur = readonce();
+
+                    for (Joueur j : this.ctrl.getPartie().getJoueurs())
+                    {
+                        if (j.getNom().equals(this.nomJoueur))
+                        {
+                            writeonce("ERREUR");
+                            writeonce("Ce nom est déjà utilisé");
+                            this.metier.getServer().RemoveClient(this);
+                            return;
+                        }
+                    }
+
                     System.out.println("nom joueur : " + this.nomJoueur + "");
 
                     this.majPartie(this.ctrl.getPartie());

@@ -29,6 +29,11 @@ public class Partie implements Serializable
 		this.joueurCourant = j;
 	}
 
+	public Joueur[] getJoueurs()
+	{
+		return this.joueurs;
+	}
+
 	public Partie(Controleur ctrl, Metier metier, boolean estMulti, String nomPartie)
 	{
 		this.ctrl          = ctrl;

@@ -287,10 +287,12 @@ public class Controleur
 	/**
 	 * 
 	 */
-	public int joinGame(String ip, String password)
+	public int joinGame(String ip, String nom, String password)
 	{
 
-		this.metier.creeClient(ip, true, password);
+		this.metier.creeClient(ip, nom, true, password);
+
+		//TODO: ouvrir panelattente
 
 		return 1;
 		// this.joueur = new Joueur("Joueur 1");
