@@ -177,6 +177,11 @@ public class ClientServerHandler implements Runnable
                 this.ctrl.setPartieLancer(true);
             }
 
+            if (command.equals("CONNEXION_ACCEPTER"))
+            {
+                this.ctrl.connexionAccepter();
+            }
+
             if (command.equals("NOUVEAU_JOUEUR"))
             {
                 String nom = readonce();

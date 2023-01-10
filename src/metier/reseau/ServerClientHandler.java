@@ -133,6 +133,8 @@ public class ServerClientHandler implements Runnable
         this.metier.getServer().writeonce("NOUVEAU_JOUEUR");
         this.metier.getServer().writeonce(this.nomJoueur);
 
+        writeonce("CONNEXION_ACCEPTER");
+
     }
 
     public void Disconnect()
