@@ -127,9 +127,9 @@ public class Ihm
 	}
 
 
-    public void validerObjectif(CarteObjectif co) 
+    public void validerObjectif() 
     {
-        if (this.frameJeu != null) { this.frameJeu.validerObjectif(co); }
+        if (this.frameJeu != null) { this.frameJeu.validerObjectif(); }
     }
 
 }
