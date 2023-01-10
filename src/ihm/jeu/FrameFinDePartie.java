@@ -30,12 +30,10 @@ public class FrameFinDePartie extends JFrame implements ActionListener
     private JLabel     lblFinDePartie;
 
     private List<Joueur> lstJoueurs;
-    private JPanel      panelJoueurs;
+    private JPanel      panelResumePartie;
     private JPanel      panelHaut;
     private JPanel      panelCentral;
     private JPanel      panelBas;
-    private JScrollPane scrollJoueurs;
-    private JPanel[]    tabPanels;
     private JLabel[]    tabLblIconJoueur;
     private JLabel[]    tabLblNom;
     private JLabel[]    tabLblScore;
@@ -60,46 +58,21 @@ public class FrameFinDePartie extends JFrame implements ActionListener
         this.btnQuitter = new JButton("Quitter");
 
         this.panelHaut = new JPanel();
-        this.panelHaut.setLayout(new BorderLayout());
+        this.panelHaut.setLayout(new GridLayout(1,3));
 
         this.panelCentral = new JPanel();
-        this.panelCentral.setLayout(new GridLayout(1,3));
 
         this.panelBas = new JPanel();
         this.panelBas.setLayout(new GridLayout(1,5));
 
         this.lstJoueurs = this.ctrl.getJoueurs();
-        this.tabPanels  = new JPanel [this.lstJoueurs.size()];
-        this.tabLblIconJoueur = new JLabel[this.tabPanels.length];
-        this.tabLblNom  = new JLabel [this.tabPanels.length];
-        this.tabLblScore= new JLabel [this.tabPanels.length];
 
-        this.panelJoueurs = new JPanel();
-        this.panelJoueurs.setLayout(new GridLayout(this.tabPanels.length, 1));
+        this.tabLblIconJoueur = new JLabel[this.lstJoueurs.size()];
+        this.tabLblNom  = new JLabel [this.lstJoueurs.size()];
+        this.tabLblScore= new JLabel [this.lstJoueurs.size()];
 
-        for(int cpt=0; cpt< this.tabPanels.length; cpt++)
-        {
-            this.tabPanels[cpt] = new JPanel();
-            Color titleBackColor = this.ctrl.getTheme().get("titles").get(1);
-            this.tabPanels[cpt].setBorder(BorderFactory.createBevelBorder(1, titleBackColor, titleBackColor));
-            this.tabPanels[cpt].setLayout(new BorderLayout());
-
-            this.tabLblNom  [cpt] = new JLabel(" " + this.lstJoueurs.get(cpt).getNom());
-            this.tabLblScore[cpt] = new JLabel("Score : " + this.lstJoueurs.get(cpt).getScore());
-
-            this.tabLblIconJoueur[cpt] = new JLabel();
-            
-            this.tabPanels[cpt].add(this.tabLblNom  [cpt], BorderLayout.NORTH );
-            this.tabPanels[cpt].add(this.tabLblIconJoueur [cpt], BorderLayout.WEST  );
-            this.tabPanels[cpt].add(this.tabLblScore[cpt], BorderLayout.CENTER);
-
-            this.panelJoueurs.add(tabPanels[cpt]);
-        }
-
-        /*JScrollPane */
-        this.scrollJoueurs = new JScrollPane(this.panelJoueurs, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        this.scrollJoueurs.setPreferredSize(new Dimension(200, 385)); // 400 c'est trop, ça déborder du panel
-        this.scrollJoueurs.getVerticalScrollBar().setUnitIncrement(5);
+        this.panelResumePartie = new JPanel();
+        this.panelResumePartie.setLayout(new GridLayout(this.lstJoueurs.size(), 1));
 
         //Ajout des composants à la frame
         this.add(this.panelHaut, BorderLayout.NORTH);
@@ -107,11 +80,13 @@ public class FrameFinDePartie extends JFrame implements ActionListener
         this.add(this.panelBas, BorderLayout.SOUTH);
 
         //Ajout des composants aux panels
-        this.panelHaut.add(this.lblFinDePartie, BorderLayout.CENTER);
+        //this.panelResumePartie.add();
 
-        this.panelCentral.add(new JLabel(""));
-        this.panelCentral.add(this.scrollJoueurs);
-        this.panelCentral.add(new JLabel(""));
+        this.panelHaut.add(new JLabel(""));
+        this.panelHaut.add(this.lblFinDePartie);
+        this.panelHaut.add(new JLabel(""));
+
+        this.panelCentral.add(this.panelResumePartie);
 
         this.panelBas.add(new JLabel(""));
         this.panelBas.add(new JLabel(""));
@@ -129,8 +104,10 @@ public class FrameFinDePartie extends JFrame implements ActionListener
     public void actionPerformed(ActionEvent e) 
     {
         if ( e.getSource() == this.btnQuitter )
+        {
             this.dispose();
-        
+            this.ctrl.disposeFrameJeu();
+        }
     }
 
         /**
@@ -138,39 +115,29 @@ public class FrameFinDePartie extends JFrame implements ActionListener
      */
     public void appliquerTheme()
     {
-        HashMap<String, List<Color>> theme = this.ctrl.getTheme();
-
-        Color background       = theme.get("background"  ).get(0);
-        Color labelForeColor   = theme.get("labels"      ).get(0);
-        Color btnForeColor     = theme.get("buttons"     ).get(0);
-		Color btnBackColor     = theme.get("buttons"     ).get(1);
-
+        Color background       = this.ctrl.getTheme().get("background"  ).get(0);
+        Color labelForeColor   = this.ctrl.getTheme().get("labels"      ).get(0);
+        Color btnForeColor     = this.ctrl.getTheme().get("buttons"     ).get(0);
+		Color btnBackColor     = this.ctrl.getTheme().get("buttons"     ).get(1);
 
         this.setBackground(background);
         this.panelCentral.setBackground(background);
+;
 
-        this.scrollJoueurs.getVerticalScrollBar().setBackground(background);
+        /*---------*/
+        /* Boutons */
+        /*---------*/
+        /* Foreground */
+        this.btnQuitter.setForeground(btnForeColor);
 
-        for (int i = 0; i < this.tabPanels.length; i++)
+        /* Background */
+        this.btnQuitter.setBackground(btnBackColor);
+
+        for (int i = 0; i < this.lstJoueurs.size(); i++)
         {
             /*--------*/
             /* Panels */
             /*--------*/
-            /* Foreground */
-            this.tabPanels[i].setForeground(background);
-
-            /* Background */
-            this.tabPanels[i].setBackground(background);
-
-
-            /*---------*/
-            /* Boutons */
-            /*---------*/
-            /* Foreground */
-            this.btnQuitter.setForeground(btnForeColor);
-
-            /* Background */
-            this.btnQuitter.setBackground(btnBackColor);
 
             /* Images */
             String pathImage = "";
