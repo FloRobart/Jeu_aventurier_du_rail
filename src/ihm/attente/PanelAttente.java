@@ -553,6 +553,8 @@ public class PanelAttente extends JPanel implements ActionListener
         this.panelJoueurs.setLayout(new GridLayout(this.lstParticipants.size(), 1));
         for (int i = 0; i < this.lstParticipants.size(); i++)
             this.panelJoueurs.add(this.lstParticipants.get(i));
+        
+        this.ctrl.getMetier().getServer().majMetier();
     }
 
 

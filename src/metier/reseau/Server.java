@@ -43,6 +43,14 @@ public class Server
         }
     }
 
+    public void majMetier()
+    {
+        for (ServerClientHandler sch : clients)
+        {
+            sch.majMetier(this.ctrl.getMetier());
+        }
+    }
+
     public int getNbJoeurs()
     {
         return clients.size();
