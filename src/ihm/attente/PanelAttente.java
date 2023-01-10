@@ -422,6 +422,10 @@ public class PanelAttente extends JPanel implements ActionListener
     }
 
 
+    /**
+     * Met à jour le statut. Cette méthode est appelé par le réseaux quand le nombre de joueur maximum est atteint.
+     * @param status Nouveau statut
+     */
     public void updateStatus(String status)
     {
         this.lblStatut.setText(status);
@@ -436,6 +440,7 @@ public class PanelAttente extends JPanel implements ActionListener
             Color disableColor = this.theme.get("disableColor").get(0);
             Color enableColor  = this.theme.get("enableColor" ).get(0);
 
+            /* Boutons de changement de la mappe */
             if (e.getSource() == this.btnChangeMappe)
             {
                 JFileChooser chooser = new JFileChooser(".");
@@ -471,11 +476,13 @@ public class PanelAttente extends JPanel implements ActionListener
 				}
             }
 
+            /* Bouton de choix de la couleur */
             if (e.getSource() == this.btnChoisirCouleur)
             {
 
             }
 
+            /* Boutons de lancement de la partie */
             if (e.getSource() == this.btnLancer)
             {
                     if (this.ctrl.getJoueurs().size() >= this.ctrl.getNbJoueursMin())

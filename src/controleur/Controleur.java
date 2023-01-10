@@ -72,8 +72,9 @@ public class Controleur
 	}
 
 	/**
-	 * Permet de lancer la partie multijoueur quand on est dans la salle d'attente
-	 * cette méthode peux être appeler uniquement par l'hote de la partie
+	 * Permet de lancer la partie multijoueur quand on est dans la salle d'attente.
+	 * Elle peux être appeler uniquement par l'hote de la partie.
+	 * C'est elle qui s'occupe de fermer la salle d'attente.
 	 */
 	public void lancerPartieMulti()
 	{
