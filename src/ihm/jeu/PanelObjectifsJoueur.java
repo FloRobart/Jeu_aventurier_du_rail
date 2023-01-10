@@ -235,10 +235,7 @@ public class PanelObjectifsJoueur extends JPanel implements ActionListener
 
     public void validerObjectif(CarteObjectif co) 
     {
-        for(int i=0; i<this.tabBtnObjectifs.length; i++)
-        {
-            this.tabBtnObjectifs[i].setIcon(new ImageIcon(creerCarte(co)));
-            this.ctrl.afficherCarteObjectif(new ImageIcon(this.ctrl.getCarteObjectif().get(i).getImageRecto()));
-        }
+        this.tabBtnObjectifs[this.joueur.getNbCartesObjectif()].setIcon(new ImageIcon(creerCarte(co)));
+        this.ctrl.afficherCarteObjectif(new ImageIcon(this.ctrl.getImageVersoObjectif()));
     }
 }
