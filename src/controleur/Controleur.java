@@ -293,7 +293,7 @@ public class Controleur
 		this.metier.creeClient(ip, nom, true, password);
 
 		//TODO: ouvrir panelattente
-
+		this.ihm.demarrerAttente(false);
 		return 1;
 		// this.joueur = new Joueur("Joueur 1");
 		// this.metier.ajouterJoueur(this.joueur);
