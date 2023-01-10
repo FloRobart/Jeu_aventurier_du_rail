@@ -64,7 +64,7 @@ public class GestionPioche
 	}
 
 	public void ajouterCarteDefausse(CarteWagon carteWagon)
-	{System.out.println("ajout defausse");
+	{
 		this.lstCartesDefausse.add(carteWagon);
 	}
 

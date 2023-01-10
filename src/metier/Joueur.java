@@ -2,8 +2,10 @@ package metier;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
+import controleur.Controleur;
 import metier.partie.CarteWagon;
 
 import java.awt.Color;
@@ -11,20 +13,26 @@ import java.io.Serializable;
 
 public class Joueur implements Serializable
 {
+	private Controleur ctrl;
+
     private String nom;
     private int    score;
 	private int    nbJetonsRestant;
     private Color  couleur;
 
     private List<CarteObjectif>    alCartesObjectif;
+	private List<CarteObjectif>    alObjectifsFinis;
     private HashMap<Color,Integer> hashMapCarteWagons;
 	private List<Color>            alCouleurs;
     private List<CarteWagon>       alCartesWagons;
     
 
-    public Joueur(String nom)
+    public Joueur(Controleur ctrl, String nom)
     {
+		this.ctrl = ctrl;
+
 		this.alCartesObjectif   = new ArrayList<CarteObjectif>();
+		this.alObjectifsFinis   = new ArrayList<CarteObjectif>();
 		this.hashMapCarteWagons = new HashMap<Color,Integer>();
 		this.alCouleurs         = new ArrayList<Color>();
 		this.alCartesWagons     = new ArrayList<CarteWagon>();
@@ -43,6 +51,7 @@ public class Joueur implements Serializable
     public int getNbCartesWagon() { return this.alCartesWagons.size(); }
     public int getNbJetonsRestant() { return this.nbJetonsRestant; }
     public Color getCouleur() { return this.couleur; }
+	public Controleur getControleur() { return this.ctrl; }
 
     public void setNom(String nom) { this.nom = nom; }
     public void setScore(int score) { this.score = score; }
@@ -103,6 +112,22 @@ public class Joueur implements Serializable
 	public void retirerJeton(int nb)
 	{
 		this.nbJetonsRestant -= nb;
+	}
+
+	public void verifierObjectifs()
+	{
+		Iterator<CarteObjectif> it = this.alCartesObjectif.iterator();
+		while (it.hasNext()) 
+		{
+			CarteObjectif co = it.next();
+			
+			if (co.estValide(this)) 
+			{
+				this.alObjectifsFinis.add(co);
+				this.ajouterScore(co.getPoints());
+				it.remove();
+			}
+		}
 	}
 
     public String toString()
