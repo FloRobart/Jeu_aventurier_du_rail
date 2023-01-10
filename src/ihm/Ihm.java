@@ -87,6 +87,17 @@ public class Ihm
         if (this.frameJeu != null) { this.frameJeu.afficherCarteObjectif(icon); }
     }
 
+    public void RetourALaceuille()
+    {
+        if ( this.frameJeu != null ) this.frameJeu.dispose();
+        if ( this.frameAttente != null ) this.frameAttente.dispose();
+        if ( this.frameAccueil == null )
+        {
+            this.frameAccueil = new FrameAccueil(this.ctrl);
+            this.appliquerTheme();
+        }
+    }
+
 	public void majIHM()
 	{
 		if ( this.frameJeu != null ) this.frameJeu.majIHM();

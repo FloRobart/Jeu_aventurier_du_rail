@@ -13,7 +13,7 @@ import java.io.Serializable;
 
 public class Joueur implements Serializable
 {
-	private Controleur ctrl;
+	private transient Controleur ctrl;
 
     private String nom;
     private int    score;
