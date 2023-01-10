@@ -72,6 +72,12 @@ public class GestionPioche
 		}
 
 		if ( this.lstCartesObjectif.size() == 0) return null;
+		
+		if(this.lstCartesObjectif.size() < 3)
+		{
+			for(int cpt=0; cpt<this.lstCartesObjectif.size(); cpt++)
+				tabCartesObjectif[cpt] = this.lstCartesObjectif.remove(0);
+		}
 
 		return tabCartesObjectif;
 	}
