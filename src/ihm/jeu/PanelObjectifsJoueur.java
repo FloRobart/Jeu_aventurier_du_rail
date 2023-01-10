@@ -52,7 +52,7 @@ public class PanelObjectifsJoueur extends JPanel implements ActionListener
         this.joueur = lstJ.get(0); //this.ctrl.getJoueurCourant()
         this.listObjectifs = this.joueur.getAlCartesObjectif();
     
-        int taille = this.joueur.getNbCartesObjectif();
+        int taille = this.joueur.getAlCartesObjectif().size();
         //int taille = 5;
         
         int grid = taille;

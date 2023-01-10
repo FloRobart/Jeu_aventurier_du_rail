@@ -266,6 +266,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
     public void afficherCarteObjectif(Icon icon) 
     {
         this.btnIconObjectif.setIcon(icon);
+        this.dialogObjectifs.dispose();
     }
 
     public void validerObjectif(CarteObjectif co) 
