@@ -183,7 +183,11 @@ public class ClientServerHandler implements Runnable
                     this.metier.ajouterJoueur(new Joueur(this.ctrl, nom));
             }
             
-
+            if (command.equals("FINIR_TOUR"))
+            {
+                System.out.println("YAY !!");
+                this.ctrl.majIHM();
+            }
                     
             
         }

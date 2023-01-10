@@ -73,6 +73,11 @@ public class Partie implements Serializable
 		this.joueurFin = null;
 	}
 
+	public void setCtrl(Controleur ctrl)
+	{
+		this.ctrl = ctrl;
+	}
+
 	public void joueurSuivant()
 	{
 		int indJoueur = 0;

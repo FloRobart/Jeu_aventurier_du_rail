@@ -63,6 +63,12 @@ public class Server
         return clients.size();
     }
 
+    public void finirTour()
+    {
+        majPartie(this.ctrl.getPartie());
+        writeonce("FINIR_TOUR");
+    }
+
     public void Stop()
     {
         try {

@@ -53,7 +53,10 @@ public class Controleur
 	public void joueurSuivant()
 	{
 		if (!this.enTrainDePiocher)
+		{
 			this.partie.joueurSuivant();
+			this.metier.joueurSuivant();
+		}
 	}
 
 	/**
@@ -111,6 +114,7 @@ public class Controleur
 	{
 		this.partie = partie;
 		partie.setJoueurCourrant(this.joueur);
+		partie.setCtrl(this);
 	}
 
 	public void setPartieLancer(Boolean b)

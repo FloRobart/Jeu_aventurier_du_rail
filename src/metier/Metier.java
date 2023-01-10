@@ -169,6 +169,18 @@ public class Metier implements Serializable
 		} catch (FileNotFoundException e) { return false; }
 	}
 
+	public void joueurSuivant()
+	{
+		if (this.client != null)
+		{
+			this.client.finirTour();
+		}
+		if (this.server != null)
+		{
+			this.server.finirTour();
+		}
+		System.out.println("Imagine finir son tour LOLXD !!");
+	}
 
     public boolean chargerXML(Reader cs)
 	{

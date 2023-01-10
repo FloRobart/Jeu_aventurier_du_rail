@@ -235,6 +235,8 @@ public class ServerClientHandler implements Runnable
             {
                 this.ctrl.getPartie().joueurSuivant();
                 this.ctrl.getMetier().getServer().majPartie(this.ctrl.getPartie());
+                this.ctrl.getMetier().getServer().writeonce("FINIR_TOUR");
+                this.ctrl.majIHM();
             }
 
             
