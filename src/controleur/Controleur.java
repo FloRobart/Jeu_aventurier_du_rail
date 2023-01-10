@@ -72,6 +72,17 @@ public class Controleur
 	}
 
 	/**
+	 * Permet de lancer la partie multijoueur quand on est dans la salle d'attente
+	 * cette méthode peux être appeler uniquement par l'hote de la partie
+	 */
+	public void lancerPartieMulti()
+	{
+		this.partie = new Partie(this, this.metier, true);
+
+		this.ihm.demarrerJeu();
+	}
+
+	/**
 	 * Permet de créer une partie multijoueur mais ne lance pas le jeu.
 	 * Le jeu pourra être lancé par le créateur de la partie à l'intérieur de la fenêtre d'attente.
 	 */
@@ -88,7 +99,7 @@ public class Controleur
 	/*          Getters            */
 	/* --------------------------- */
 	public List<Joueur>        getJoueurs             () { return this.metier.getJoueurs         (); }
-	public Joueur              getJoueur              () { return this.joueur                    ; }
+	public Joueur              getJoueur              () { return this.joueur                      ; }
 	public List<CarteObjectif> getCarteObjectif       () { return this.metier.getCarteObjectif   (); }
 	public List<Noeud>         getNoeuds              () { return this.metier.getNoeuds          (); }
 	public List<Arete>         getAretes              () { return this.metier.getAretes          (); }

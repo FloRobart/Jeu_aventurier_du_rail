@@ -39,9 +39,10 @@ public class Ihm
      */
 	public void demarrerJeu()
 	{
-		this.frameAccueil.dispose();
-        this.frameAccueil = null;
-		this.frameJeu     = new FrameJeu(this.ctrl);
+		if (this.frameAccueil != null ) { this.frameAccueil.dispose(); this.frameAccueil = null; }
+        if (this.frameAttente != null ) { this.frameAttente.dispose(); this.frameAttente = null; }
+
+		this.frameJeu = new FrameJeu(this.ctrl);
 
         this.appliquerTheme();
 	}
