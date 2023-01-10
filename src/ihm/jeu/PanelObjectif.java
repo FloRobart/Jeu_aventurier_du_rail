@@ -32,7 +32,7 @@ public class PanelObjectif extends JPanel implements ActionListener
         this.ctrl = ctrl;
         this.dialogInfosJoueur    = null;
         this.panelPiocherObjectif = null;
-        this.setBorder( BorderFactory.createLineBorder(Color.black, 2) );
+        this.setBorder( BorderFactory.createLineBorder(this.ctrl.getTheme().get("titles").get(1), 2) );
         this.setLayout(new BorderLayout());
 
 		//Creation des composants

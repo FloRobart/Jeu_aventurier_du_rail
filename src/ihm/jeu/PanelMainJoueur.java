@@ -59,7 +59,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         this.theme           = this.ctrl.getTheme();
 
         this.setLayout(new BorderLayout());
-        this.setBorder( BorderFactory.createLineBorder(Color.black, 3) );
+        this.setBorder( BorderFactory.createLineBorder(this.ctrl.getTheme().get("titles").get(1), 3) );
 
         //initialisation des composants
         this.joueur = this.ctrl.getJoueur();
@@ -114,7 +114,6 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 		this.setVisible(true);
 
         this.btnIconObjectif.addActionListener(this);
-
     }
 
     @Override
@@ -149,6 +148,8 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         }
     }
 
+    public void setScore( ) { this.lblScore.setText("Score : " + this.joueur.getScore()); }
+
 	public void majIHM()
 	{
 		this.remove(this.panelMainWagon);
@@ -174,7 +175,6 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 
 
         if (this.dialogObjectifs != null) { this.panelObjectifs.appliquerTheme(); }
-        if (this.panelMainWagon  != null) { this.panelMainWagon.appliquerTheme(); }
 
         /*----------*/
         /* Ce panel */
@@ -257,7 +257,6 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         this.lblObjectif.setOpaque(false);
         this.lblObjectif.setForeground(labelForeColor);
     }
-
 
     /**
      * Affiche la carte sélectionné dans la main du joueur

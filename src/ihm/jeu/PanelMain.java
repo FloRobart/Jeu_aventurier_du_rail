@@ -2,6 +2,7 @@ package ihm.jeu;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 
@@ -30,16 +32,27 @@ import metier.partie.CarteWagon;
 public class PanelMain extends JPanel implements ActionListener
 {
 	private Controleur ctrl;
-	private Joueur joueur;
+	private Joueur     joueur;
 
-	private JButton[]              tabIconWagon;
-    private List<BufferedImage>    listImageWagon;
+	private JButton[]           tabIconWagon;
+    private List<BufferedImage> listImageWagon;
+	private JPanel              panelBtn;
+	private JScrollPane         spBtn;
 
 	public PanelMain(Controleur ctrl, Joueur joueur)
 	{
-		this.ctrl = ctrl;
+		this.ctrl   = ctrl;
 		this.joueur = joueur;
 
+		this.panelBtn = new JPanel();
+
+		Dimension tailleEcran = java.awt.Toolkit.getDefaultToolkit().getScreenSize(); 
+		int largeur = (int)tailleEcran.getWidth();
+		this.spBtn = new JScrollPane(panelBtn, JScrollPane.VERTICAL_SCROLLBAR_NEVER, 
+		                                              JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+		this.spBtn.setPreferredSize(new Dimension((int) (largeur * ((double) 75/100)), this.ctrl.getImageVersoCouleur().getWidth()+50));
+	
 		this.listImageWagon = new ArrayList<BufferedImage>();
         for(Color c : this.ctrl.getJoueur().getAlCouleurs())
         {
@@ -67,11 +80,15 @@ public class PanelMain extends JPanel implements ActionListener
 			if(!this.ctrl.getEnTrainDePiocher())
 				this.tabIconWagon[i].addActionListener(this);
         
-            this.add(this.tabIconWagon[i]);
+			this.panelBtn.add(this.tabIconWagon[i]);
+			this.panelBtn.add(new JLabel("ergergergergerg"));
 			i++;
         }
 
+		this.add(spBtn);
+
 		this.setVisible(true);
+		this.appliquerTheme();
 	}
 
 	
@@ -121,9 +138,11 @@ public class PanelMain extends JPanel implements ActionListener
 
             this.tabIconWagon[i].setIcon(new ImageIcon(this.creerCarte(this.listImageWagon.get(i), val)));
         
-            this.add(this.tabIconWagon[i]);
-
+            this.panelBtn.add(this.tabIconWagon[i]);
             i++;
         }
+
+		this.spBtn.setBackground(this.ctrl.getTheme().get("background").get(0));
+		this.panelBtn.setBackground(this.ctrl.getTheme().get("background").get(0));
     }
 }

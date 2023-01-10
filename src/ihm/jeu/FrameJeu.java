@@ -68,6 +68,7 @@ public class FrameJeu extends JFrame
 		this.panelPlateau.centrer(this.panelPlateau.getWidth(), this.panelPlateau.getHeight());
     }
 
+    public void setScore      ( ) { this.panelMainJoueur.setScore(); this.panelJoueurs.setScore(); }
     public void setImageButton(int indice) { this.panelPioche.setImageButton(indice); }	
     public void setNbTours    (int nbTours){ this.panelInfoPartie.setNbTours(nbTours); }
 

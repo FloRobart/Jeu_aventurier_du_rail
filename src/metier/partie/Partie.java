@@ -23,6 +23,7 @@ public class Partie implements Serializable
 	private int           nbJetonFin;
 	private int           tour;
 	private boolean       estMulti; // mettre le serveur au lieu d'un boolean
+	private Integer[] 		  scoreFinal;
 
 	public void setJoueurCourrant(Joueur j)
 	{
@@ -58,6 +59,8 @@ public class Partie implements Serializable
 			}
 
 		}
+
+		this.scoreFinal	   = new Integer[this.joueurs.length];
 
 		this.nbJetonFin    = metier.getNbJetonFin();
 		this.tour          = 0;
@@ -163,5 +166,19 @@ public class Partie implements Serializable
 	public void remettreCarteObjectif(CarteObjectif carteObjectif) 
 	{
 		this.gestionPioche.remettreCarteObjectif(carteObjectif);
+	}
+
+	public void arreterPartie()
+	{
+		//Recuperer les points, les noms
+		String[] tabNom = new String[this.joueurs.length];
+		for ( int cpt=0; cpt< this.joueurs.length; cpt++)
+		{
+			this.scoreFinal[cpt] = this.joueurs[cpt].getScore();
+			tabNom[cpt] = this.joueurs[cpt].getNom();
+		}
+
+		//methode qui envoie les infos vers une frame de fin de partie
+		//machin.afficherFinDePartie(tabNom, this.scoreFinal)
 	}
 }
