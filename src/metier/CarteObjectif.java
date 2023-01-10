@@ -2,6 +2,9 @@ package metier;
 
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 import javax.imageio.ImageIO;
 
@@ -36,10 +39,41 @@ public class CarteObjectif implements Serializable
 	public void setPoints(int   points) { this.points = points; }
 	public void setImageRecto(BufferedImage imageRecto) { this.imageRecto = imageRecto; }
 
+	public boolean estValide(Joueur j)
+	{
+		List<Noeud> alNoeuds = j.getControleur().getNoeuds();
+		List<Arete> alAretes = j.getControleur().getAretes();
+
+		// algorithme de parcours en profondeur du noeud 1 au noeud 2
+		List<Noeud> alNoeudsVisites = new ArrayList<Noeud>();
+		Stack<Noeud> pile = new Stack<Noeud>();
+		pile.push(this.noeud1);
+
+		while (!pile.empty())
+		{
+			Noeud n = pile.pop();
+			if (n == this.noeud2)
+				return true;
+			alNoeudsVisites.add(n);
+			for (Arete a : alAretes)
+			{
+				if (a.getNoeud1() == n && !alNoeudsVisites.contains(a.getNoeud2()) && 
+				    (a.getProprietaire1() == j || a.getProprietaire2() == j))
+					pile.push(a.getNoeud2());
+				if (a.getNoeud2() == n && !alNoeudsVisites.contains(a.getNoeud1()) && 
+				    (a.getProprietaire1() == j || a.getProprietaire2() == j))
+					pile.push(a.getNoeud1());
+			}
+		}
+
+		return false;
+	}
+
 	public String toString()
 	{
 		return this.noeud1.getNom() + " - " + this.noeud2.getNom();
 	}
+
 	private void writeObject(ObjectOutputStream out) throws IOException 
 	{
 		ByteArrayOutputStream baos;

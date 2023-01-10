@@ -92,6 +92,8 @@ public class Controleur
 	public void creerPartieMulti(String password)
 	{
 		this.joueur = this.metier.getJoueurs().get(0);
+		this.partie = new Partie(this, this.metier, true, "Partie local");
+
 		this.metier.creeServer(true, password);
 		this.ihm.demarrerAttente(true);
 	}
@@ -357,6 +359,7 @@ public class Controleur
 				this.couleurSelectionnee = 0;
 
 				this.ihm.majIHM();
+				this.joueur.verifierObjectifs();
 			}
 		}
 	}
@@ -405,7 +408,7 @@ public class Controleur
 	 */
 	public void hostGame()
 	{
-		this.joueur = new Joueur("Joueur 1");
+		this.joueur = new Joueur(this, "Joueur 1");
 		this.metier.ajouterJoueur(this.joueur);
 		this.partie = new Partie(this, this.metier, true, "Partie multi-joueur");
 	}
