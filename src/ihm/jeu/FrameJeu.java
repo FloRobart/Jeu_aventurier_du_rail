@@ -47,7 +47,7 @@ public class FrameJeu extends JFrame
         this.panelPioche     = new PanelPioche    (this.ctrl);
         this.panelPlateau    = new PanelPlateau   (this.ctrl);
         this.panelObjectif   = new PanelObjectif  (this.ctrl);
-        this.panelInfoPartie = new PanelInfoPartie  (this.ctrl);
+        this.panelInfoPartie = new PanelInfoPartie(this.ctrl);
         this.panelGauche     = new JPanel();
         this.panelGauche.setLayout(new GridLayout(3, 1));
         this.panelGauche.setBorder( BorderFactory.createLineBorder(Color.black, 2) );
