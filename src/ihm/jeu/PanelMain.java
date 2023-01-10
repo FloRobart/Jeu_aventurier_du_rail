@@ -81,7 +81,6 @@ public class PanelMain extends JPanel implements ActionListener
 				this.tabIconWagon[i].addActionListener(this);
         
 			this.panelBtn.add(this.tabIconWagon[i]);
-			this.panelBtn.add(new JLabel("ergergergergerg"));
 			i++;
         }
 
@@ -107,11 +106,13 @@ public class PanelMain extends JPanel implements ActionListener
         BufferedImage bi = new BufferedImage(taille, taille, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = (Graphics2D) bi.getGraphics();
 
-        g2d.rotate(1.57, width / 2, height / 2);
+        
+        //g2d.rotate(1.57, width / 2, height / 2);
         g2d.drawImage(bufferedImage, (taille-width), (taille-height)/2-30, width, height, null);
-        g2d.rotate((1.57*3), taille / 2, taille / 2);
         g2d.setColor(this.ctrl.getTheme().get("labels").get(0));
-        g2d.drawString(val, 110, 200);
+        g2d.drawString(val, (taille-width) + (width/2)-((val.length()+2)/2), ((taille-height)/2-30)+height+20);
+        g2d.rotate(1.57, taille / 2, taille / 2);
+        
 
         return bi;
     }
@@ -130,6 +131,8 @@ public class PanelMain extends JPanel implements ActionListener
     {
         Color labelForeColor = this.ctrl.getTheme().get("labels").get(0);
 
+        
+        this.spBtn.getHorizontalScrollBar().setBackground(this.ctrl.getTheme().get("background").get(0));
 
         int i = 0;
         for(Color c : this.ctrl.getJoueur().getAlCouleurs())
