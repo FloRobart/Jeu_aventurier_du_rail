@@ -119,6 +119,11 @@ public class Controleur
 		this.ihm.RetourALaceuille();
 	}
 
+	public void setMetier(Metier m)
+	{
+		this.metier = m;
+	}
+
 
 
 	/* --------------------------- */
