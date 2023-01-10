@@ -175,6 +175,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 
 
         if (this.dialogObjectifs != null) { this.panelObjectifs.appliquerTheme(); }
+        if (this.panelMainWagon  != null) { this.panelMainWagon.appliquerTheme(); }
 
         /*----------*/
         /* Ce panel */
