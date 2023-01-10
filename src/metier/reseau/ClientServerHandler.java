@@ -14,6 +14,7 @@ import java.io.StringReader;
 import java.net.Socket;
 
 import controleur.Controleur;
+import metier.Joueur;
 import metier.Metier;
 import metier.partie.Partie;
 
@@ -150,9 +151,18 @@ public class ClientServerHandler implements Runnable
                     Metier nouveau_metier = (Metier) this.in.readObject();
                     for (java.lang.reflect.Field f : this.metier.getClass().getDeclaredFields()) {
                         if (java.lang.reflect.Modifier.isStatic(f.getModifiers())) continue;
+                        if (java.lang.reflect.Modifier.isTransient(f.getModifiers())) continue;
+
                         f.setAccessible(true);
                         f.set(this.metier, f.get(nouveau_metier));
                     }
+
+                    for (Joueur j : this.metier.getJoueurs())
+                        System.out.println(j.getNom());
+                    
+                    for (Joueur j : nouveau_metier.getJoueurs())
+                        System.out.println(j.getNom());
+
                     System.out.println("Class metier charger");
                     this.ctrl.majIHM();
                 } catch (ClassNotFoundException | IllegalArgumentException | IllegalAccessException e) {
@@ -165,6 +175,20 @@ public class ClientServerHandler implements Runnable
             if (command.equals("LANCER_PARTIE"))
             {
                 this.ctrl.setPartieLancer(true);
+            }
+
+            if (command.equals("NOUVEAU_JOUEUR"))
+            {
+                String nom = readonce();
+                System.out.println("Nouveau joueur : " + nom);
+
+                Boolean aAjotuer = true;
+                for (Joueur j : this.metier.getJoueurs())
+                    if (j.getNom().equals(nom))
+                        aAjotuer = false;
+
+                if (aAjotuer)
+                    this.metier.ajouterJoueur(new Joueur(this.ctrl, nom));
             }
             
 

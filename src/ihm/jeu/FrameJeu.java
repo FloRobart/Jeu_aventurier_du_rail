@@ -120,4 +120,9 @@ public class FrameJeu extends JFrame
 
 		return choix == JOptionPane.YES_OPTION;
 	}
+
+    public void validerObjectif(CarteObjectif co) 
+    {
+        this.panelMainJoueur.validerObjectif(co);
+    }
 }
