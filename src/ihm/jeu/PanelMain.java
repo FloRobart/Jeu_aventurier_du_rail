@@ -85,14 +85,14 @@ public class PanelMain extends JPanel implements ActionListener
         int width = bufferedImage.getWidth();
         int height = bufferedImage.getHeight();
 
-        int taille = Math.max(width + 30, height);
+        int taille = Math.max(width +30, height);
         BufferedImage bi = new BufferedImage(taille, taille, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = (Graphics2D) bi.getGraphics();
 
         g2d.rotate(1.57, width / 2, height / 2);
-        g2d.drawImage(bufferedImage, (taille-width)/2, (taille-height)/2-30, width, height, null);
+        g2d.drawImage(bufferedImage, (taille-width), (taille-height)/2-30, width, height, null);
         g2d.rotate((1.57*3), taille / 2, taille / 2);
-        g2d.drawString(val, 50, 50);
+        g2d.drawString(val, 110, 200);
 
         return bi;
     }

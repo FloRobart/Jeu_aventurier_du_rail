@@ -55,7 +55,7 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 		this.panelBtnPiocher = new JPanel();
 		this.panelBtnPiocher.setLayout(new GridLayout(1,5));
 
-		this.lblChoisirCartes = new JLabel(" Choisissez les cartes que vous voulez : ");
+		this.lblChoisirCartes = new JLabel(" Choisissez les cartes objectif que vous voulez : ");
 
 		this.cartesObjectifs = this.ctrl.getPiocheObjectif();
 		this.tabChoixCarte = new boolean[PanelPiocherObjectif.TAILLE];
