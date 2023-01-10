@@ -171,11 +171,20 @@ public class Partie implements Serializable
 	public void arreterPartie()
 	{
 		//Recuperer les points, les noms
-		String[] tabNom = new String[this.joueurs.length];
-		for ( int cpt=0; cpt< this.joueurs.length; cpt++)
+		String[] tabNom  = new String[this.joueurs.length];
+		int scoreRetirer = 0;
+		List<CarteObjectif> alCarteObjectif;
+		for ( int cptJoueur=0; cptJoueur< this.joueurs.length; cptJoueur++)
 		{
-			this.scoreFinal[cpt] = this.joueurs[cpt].getScore();
-			tabNom[cpt] = this.joueurs[cpt].getNom();
+			this.scoreFinal[cptJoueur] = this.joueurs[cptJoueur].getScore();
+			alCarteObjectif = this.joueurs[cptJoueur].getAlCartesObjectif();
+			for ( int cpt = 0; cpt < alCarteObjectif.size(); cpt++ )
+			{
+				scoreRetirer -= alCarteObjectif.get(cpt).getPoints();
+			}
+			
+			this.joueurs[cptJoueur].ajouterScore(scoreRetirer);
+			tabNom[cptJoueur] = this.joueurs[cptJoueur].getNom();
 		}
 
 		//methode qui envoie les infos vers une frame de fin de partie
