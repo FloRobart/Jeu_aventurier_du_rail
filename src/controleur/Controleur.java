@@ -38,18 +38,25 @@ public class Controleur
 	private int     couleurSelectionnee;
 	private boolean enTrainDePiocher;
 
+	private BufferedImage imageVersoCouleur;
+
     public Controleur()
     {
         this.metier = new Metier(this);
 		this.partie = null;
 		this.joueur = null;
         this.ihm    = new Ihm(this);
+		this.setImageVersoCouleur();
 
 		this.enTrainDePiocher = false;
     }
-	public void superMethodeDeDebug() { 
-		this.joueur.ajouterCarteWagon(new CarteWagon(null, getImageVersoCouleur(), getImageRectoLocomotive()));
-		System.out.println(this.joueur.getAlCartesWagons().size());
+	public void joueurSuivant()
+	{
+		if (!this.enTrainDePiocher)
+		{
+			this.partie.joueurSuivant();
+			this.metier.joueurSuivant();
+		}
 	}
 
 	/**
@@ -106,7 +113,7 @@ public class Controleur
 	public void setPartie(Partie partie)
 	{
 		this.partie = partie;
-		partie.setJoueurCourrant(this.joueur);
+		partie.setCtrl(this);
 	}
 
 	public void setPartieLancer(Boolean b)
@@ -119,13 +126,19 @@ public class Controleur
 		this.ihm.RetourALaceuille();
 	}
 
+	public void setMetier(Metier m)
+	{
+		m.setCtrl(this);
+		this.metier = m;
+	}
+
 
 
 	/* --------------------------- */
 	/*          Getters            */
 	/* --------------------------- */
 	public List<Joueur>        getJoueurs             () { return this.metier.getJoueurs         (); }
-	public Joueur              getJoueur              () { return this.joueur                      ; }
+	public Joueur              getJoueur              () { return this.partie.getJoueurCourant   (); }
 	public List<CarteObjectif> getCarteObjectif       () { return this.metier.getCarteObjectif   (); }
 	public List<Noeud>         getNoeuds              () { return this.metier.getNoeuds          (); }
 	public List<Arete>         getAretes              () { return this.metier.getAretes          (); }
@@ -161,6 +174,7 @@ public class Controleur
 	public void    disposeFrameFinPartie() { this.ihm.disposeFrameFinPartie(); }
 
 	// Méthodes
+	public void setImageVersoCouleur    () { this.imageVersoCouleur = this.metier.getImageVersoCouleur(); }
 	public void setImageButton(int indice)  { if ( this.ihm != null ) this.ihm.setImageButton(indice); }
 	public void	setNbTours	  (int nbTours) { this.ihm.setNbTours(nbTours);}
 
@@ -234,6 +248,11 @@ public class Controleur
 	public void majIHM()
 	{
 		this.ihm.majIHM();
+	}
+
+	public void afficherErreur(String message)
+	{
+		this.ihm.afficherErreur(message);
 	}
 
 	public void verifierVisible()
@@ -373,6 +392,7 @@ public class Controleur
 
 				this.ihm.majIHM();
 				this.joueur.verifierObjectifs();
+				this.partie.joueurSuivant();
 			}
 		}
 	}
@@ -438,7 +458,6 @@ public class Controleur
 
 		this.joueur = new Joueur(this, nom);
 
-		this.ihm.demarrerAttente(false);
 		return 1;
 		// this.joueur = new Joueur("Joueur 1");
 		// this.metier.ajouterJoueur(this.joueur);
@@ -465,6 +484,11 @@ public class Controleur
     public Joueur getJoueurCourant() {
         return null;
     }
+
+	public void connexionAccepter()
+	{
+		this.ihm.demarrerAttente(false);
+	}
 
 	/**
 	 * Affiche la carte objectif dans la main du joueur

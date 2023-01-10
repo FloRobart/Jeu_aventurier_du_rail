@@ -72,6 +72,12 @@ public class Client
         this.ctrl.Deconnecter();
     }
 
+    public void finirTour()
+    {
+        majPartie();
+        writeonce("FINIR_TOUR");
+    }
+
 
     /*
      * Connexion au serveur

@@ -169,6 +169,24 @@ public class Metier implements Serializable
 		} catch (FileNotFoundException e) { return false; }
 	}
 
+	public void setCtrl(Controleur ctrl)
+	{
+		this.ctrl = ctrl;
+	}
+
+	public void joueurSuivant()
+	{
+		this.ctrl.getPartie().joueurSuivant();
+		if (this.client != null)
+		{
+			this.client.finirTour();
+		}
+		if (this.server != null)
+		{
+			this.server.finirTour();
+		}
+		System.out.println("Imagine finir son tour LOLXD !!");
+	}
 
     public boolean chargerXML(Reader cs)
 	{
@@ -502,7 +520,7 @@ public class Metier implements Serializable
 
 	public void ajouterObjectifsJoueurs(CarteObjectif cartesObjectifs) 
 	{
-		this.lstJoueurs.get(0).ajouterCarteObjectif(cartesObjectifs);
+		this.ctrl.getPartie().getJoueurCourant().ajouterCarteObjectif(cartesObjectifs);
 		this.lstCartesObjectif.remove(cartesObjectifs);
 	}
 }	

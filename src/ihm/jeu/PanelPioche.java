@@ -124,7 +124,9 @@ public class PanelPioche extends JPanel implements ActionListener
 				this.ctrl.switchEnTrainDePiocher();
 
 				if (this.ctrl.getSizeWagon() == 0 && this.ctrl.getEnTrainDePiocher())
+				{
 					this.ctrl.switchEnTrainDePiocher();
+				}
 			}
 
 			for (int i = 0 ; i < PanelPioche.TAILLE ; i++)
@@ -145,9 +147,13 @@ public class PanelPioche extends JPanel implements ActionListener
 							this.ctrl.switchEnTrainDePiocher();
 
 							if (this.ctrl.getSizeWagon() == 0 && this.ctrl.getEnTrainDePiocher())
+							{
 								this.ctrl.switchEnTrainDePiocher();
+							}
 						}
 					}
+
+					this.ctrl.joueurSuivant();
 				}
 			}
 
@@ -155,9 +161,7 @@ public class PanelPioche extends JPanel implements ActionListener
 			this.ctrl.majIHM();
 		}
 		else
-		{
-			JOptionPane.showMessageDialog(this, "Ce n'est pas à votre tour de jouer", "Erreur", JOptionPane.ERROR_MESSAGE);
-		}
+			this.ctrl.afficherErreur("Ce n'est à pas votre tour de jouer");
     }
 
 	public void majIHM()

@@ -133,6 +133,10 @@ public class ClientServerHandler implements Runnable
                     Partie nouvelle_partie = (Partie) this.in.readObject();
 
                     this.ctrl.setPartie(nouvelle_partie);
+
+                    for (Joueur j : this.ctrl.getPartie().getJoueurs())
+                        System.out.println("Joueur : " + j.getNom() + " : " + j.getScore() + " ! " + j.getAlCartesWagons().size());
+
                     this.ctrl.majIHM();
 
                     System.out.println("Nouvelle partie");
@@ -147,34 +151,26 @@ public class ClientServerHandler implements Runnable
 
             if (command.equals("METIER"))
             {
-                try {
-                    Metier nouveau_metier = (Metier) this.in.readObject();
-                    for (java.lang.reflect.Field f : this.metier.getClass().getDeclaredFields()) {
-                        if (java.lang.reflect.Modifier.isStatic(f.getModifiers())) continue;
-                        if (java.lang.reflect.Modifier.isTransient(f.getModifiers())) continue;
-
-                        f.setAccessible(true);
-                        f.set(this.metier, f.get(nouveau_metier));
+                    try {
+                        Metier nouveau_metier = (Metier) this.in.readObject();
+                        this.ctrl.setMetier(nouveau_metier);
+                        System.out.println("Class metier charger");
+                        this.ctrl.majIHM();
+                    } catch (ClassNotFoundException | IOException e) {
+                        e.printStackTrace();
                     }
 
-                    for (Joueur j : this.metier.getJoueurs())
-                        System.out.println(j.getNom());
                     
-                    for (Joueur j : nouveau_metier.getJoueurs())
-                        System.out.println(j.getNom());
-
-                    System.out.println("Class metier charger");
-                    this.ctrl.majIHM();
-                } catch (ClassNotFoundException | IllegalArgumentException | IllegalAccessException e) {
-                    e.printStackTrace();
-                }catch (IOException e) {
-                    e.printStackTrace();
-                }
             }
 
             if (command.equals("LANCER_PARTIE"))
             {
                 this.ctrl.setPartieLancer(true);
+            }
+
+            if (command.equals("CONNEXION_ACCEPTER"))
+            {
+                this.ctrl.connexionAccepter();
             }
 
             if (command.equals("NOUVEAU_JOUEUR"))
@@ -191,7 +187,12 @@ public class ClientServerHandler implements Runnable
                     this.metier.ajouterJoueur(new Joueur(this.ctrl, nom));
             }
             
-
+            if (command.equals("FINIR_TOUR"))
+            {
+                System.out.println("YAY !!");
+                this.ctrl.getPartie().joueurSuivant();
+                this.ctrl.majIHM();
+            }
                     
             
         }

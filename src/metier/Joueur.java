@@ -56,6 +56,26 @@ public class Joueur implements Serializable
 	public Controleur getControleur() { return this.ctrl; }
     public List<CarteObjectif> getAlObjectifsFinis() { return this.alObjectifsFinis; }
 	public int getNbObjectifRestant() { return this.alCartesObjectif.size() - this.alObjectifsFinis.size(); }
+	public int getNbArete() 
+	{
+		int res = 0;
+
+		for (Arete a : this.ctrl.getAretes())
+			if (this.equals(a.getProprietaire1()) || this.equals(a.getProprietaire2()))
+				res++;
+
+		return res;
+	}
+	public int getMalus()
+	{
+		int res = 0;
+
+		for (CarteObjectif co : this.alCartesObjectif)
+			if (!this.alObjectifsFinis.contains(co))
+				res += co.getPoints();
+
+		return res;
+	}
 
     public void setNom(String nom) { this.nom = nom; }
     public void setScore(int score) { this.score = score; }
@@ -92,11 +112,6 @@ public class Joueur implements Serializable
     public void ajouterScore(int score)
     {
         this.score += score;
-    }
-
-    public void retirerCarteObjectif(CarteObjectif carteObjectif)
-    {
-        this.alCartesObjectif.remove(carteObjectif);
     }
 
     public void retirerCarteWagon(CarteWagon carteWagon)
@@ -137,7 +152,8 @@ public class Joueur implements Serializable
 		}
 	}
 
-    public Boolean equels(Joueur j)
+    
+    public Boolean equals(Joueur j)
     {
         return j.nom.equals(this.nom);
     }
