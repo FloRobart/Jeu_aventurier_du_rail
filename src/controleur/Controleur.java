@@ -61,12 +61,9 @@ public class Controleur
 	 * Cette méthode lance le jeu directement.
 	 */
 	public void creerPartieSolo() 
-	{ 
-		this.joueur = new Joueur("Joueur 1");
-		this.joueur.setCouleur(Color.PINK);
-		this.metier.ajouterJoueur(this.joueur);
-
+	{
 		this.partie = new Partie(this, this.metier, false);
+		this.joueur = this.metier.getJoueurs().get(0);
 
 		this.ihm.demarrerJeu(); 
 	}
@@ -87,11 +84,22 @@ public class Controleur
 	 * Permet de créer une partie multijoueur mais ne lance pas le jeu.
 	 * Le jeu pourra être lancé par le créateur de la partie à l'intérieur de la fenêtre d'attente.
 	 */
-	public void creerPartieMulti()
+	public void creerPartieMulti(String password)
 	{
-		this.metier.creeServer(true);
+		this.metier.creeServer(true, password);
 		this.hostGame();
 		this.ihm.demarrerAttente(true);
+	}
+
+	public Partie getPartie()
+	{
+		return this.partie;
+	}
+
+	public void setPartie(Partie partie)
+	{
+		this.partie = partie;
+		partie.setJoueurCourrant(this.joueur);
 	}
 
 
@@ -135,6 +143,12 @@ public class Controleur
 	// Méthodes
 	public void setImageButton(int indice)  { if ( this.ihm != null ) this.ihm.setImageButton(indice); }
 	public void	setNbTours	  (int nbTours) { this.ihm.setNbTours(nbTours);}
+
+
+	public boolean ajouterJoueur(Joueur joueur)
+	{
+		return this.metier.ajouterJoueur(joueur);
+	}
 
 	public boolean estPrenable(Arete arete, int couleur)
 	{
@@ -295,10 +309,7 @@ public class Controleur
 
 	}
 	
-    public void creerPartie() 
-	{
-		this.hostGame();
-    }
+
 	public Metier getMetier(){return this.metier;} // a tester supprimer apres
 
     public Joueur getJoueurCourant() {
@@ -313,6 +324,34 @@ public class Controleur
 	{
 		this.ihm.afficherCarteObjectif(icon);
     }
+
+	/**
+	 * Permet de récupérer la pioche de cartes objectifs
+	 * @return un tableau de Carte Objectif
+	 */
+    public CarteObjectif[] getPiocheObjectif() 
+	{
+        return this.partie.getPiocheObjectif();
+    }
+
+	/**
+	 * Ajouter une carte objectif dans la main du joueur
+	 * @param cartesObjectifs : carte que l'on veut ajouter
+	 */
+	public void ajouterObjectifsJoueurs(CarteObjectif cartesObjectifs) 
+	{
+		this.metier.ajouterObjectifsJoueurs(cartesObjectifs);
+		this.ihm.majIHM();
+	}
+
+	/**
+	 * Permet de remettre les cartes non piochés par le joueur dans la pioche
+	 * @param carteObjectif 
+	 */
+	public void remettreCarteObjectif(CarteObjectif carteObjectif) 
+	{
+		this.partie.remettreCarteObjectif(carteObjectif);
+	}
 
 	/**
 	 * @Author Duc
@@ -345,16 +384,5 @@ public class Controleur
             e.printStackTrace();
         }
     }
-    public CarteObjectif[] getPiocheObjectif() 
-	{
-        return this.partie.getPiocheObjectif();
-    }
-	public void ajouterObjectifsJoueurs(CarteObjectif cartesObjectifs) 
-	{
-		this.metier.ajouterObjectifsJoueurs(cartesObjectifs);
-	}
-	public void remettreCarteObjectif(CarteObjectif carteObjectif) 
-	{
-		this.partie.remettreCarteObjectif(carteObjectif);
-	}
+
 }

@@ -141,9 +141,9 @@ public class Metier implements Serializable
 	public Client 			   getClient              () { return this.client;               }
 	public String 			   getNomClient           () { return this.nomClient;            }
 
-	public void creeServer(Boolean demarer)
+	public void creeServer(Boolean demarer, String password)
 	{
-		this.motDePassePartie = "0000";
+		this.motDePassePartie = password;
 		this.server = new Server(this.ctrl);
 		if (demarer)
 			this.server.Start();

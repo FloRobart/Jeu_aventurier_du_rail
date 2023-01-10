@@ -18,10 +18,15 @@ public class Partie implements Serializable
 	private transient GestionPioche  gestionPioche;
 	private List<Arete>   alArete;
 	private Joueur[]      joueurs;
-	private Joueur        joueurCourant;
+	private transient Joueur        joueurCourant;
 	private int           nbJetonFin;
 	private int           tour;
 	private boolean       estMulti; // mettre le serveur au lieu d'un boolean
+
+	public void setJoueurCourrant(Joueur j)
+	{
+		this.joueurCourant = j;
+	}
 
 	public Partie(Controleur ctrl, Metier metier, boolean estMulti)
 	{
