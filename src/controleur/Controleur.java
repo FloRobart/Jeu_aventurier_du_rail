@@ -139,7 +139,7 @@ public class Controleur
 	/*          Getters            */
 	/* --------------------------- */
 	public List<Joueur>        getJoueurs             () { return this.metier.getJoueurs         (); }
-	public Joueur              getJoueur              () { return this.joueur                      ; }
+	public Joueur              getJoueur              () { return this.partie.getJoueurCourant   (); }
 	public List<CarteObjectif> getCarteObjectif       () { return this.metier.getCarteObjectif   (); }
 	public List<Noeud>         getNoeuds              () { return this.metier.getNoeuds          (); }
 	public List<Arete>         getAretes              () { return this.metier.getAretes          (); }
