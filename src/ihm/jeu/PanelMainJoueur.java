@@ -48,6 +48,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 
     private JPanel     panelMainObjectif;
     private JButton    btnIconObjectif;
+    private JLabel     lblObjectif;
        
 
     public PanelMainJoueur(Controleur ctrl)
@@ -77,8 +78,6 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         this.lblIcon    = new JLabel(new ImageIcon(pathImage), JLabel.LEFT);
         
         this.panelMainWagon    = new PanelMain(this.ctrl, this.ctrl.getJoueur());
-        this.panelMainObjectif = new JPanel();
-        this.btnIconObjectif   = new JButton();
 
         //panelImgJoueur Joueur
         this.panelInfoJoueur = new JPanel();
@@ -93,11 +92,19 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         this.panelImgJoueur.add(this.panelInfoJoueur, BorderLayout.CENTER);
 
         //panelMainObjectif
+        this.panelMainObjectif = new JPanel();
+        this.panelMainObjectif.setLayout(new BorderLayout());
+
+        this.btnIconObjectif   = new JButton();
         this.btnIconObjectif.setIcon(new ImageIcon(this.ctrl.getCarteObjectif().get(0).getImageRecto()));
         this.btnIconObjectif.setBorderPainted(false);
         this.btnIconObjectif.setContentAreaFilled(false);
         this.btnIconObjectif.setFocusPainted(false);
-        this.panelMainObjectif.add(this.btnIconObjectif);
+
+        this.lblObjectif = new JLabel(this.joueur.getNbCartesObjectif() + " objectifs restants");
+
+        this.panelMainObjectif.add(this.btnIconObjectif, BorderLayout.CENTER);
+        this.panelMainObjectif.add(this.lblObjectif, BorderLayout.SOUTH);
 
         //ajout des composants
         this.add(this.panelImgJoueur, BorderLayout.EAST);
@@ -147,6 +154,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 		this.remove(this.panelMainWagon);
 		this.panelMainWagon = new PanelMain(this.ctrl, this.ctrl.getJoueur());
 		this.add(this.panelMainWagon, BorderLayout.CENTER);
+        this.lblObjectif.setText(this.joueur.getNbCartesObjectif() + " objectifs restants");
 
 		this.revalidate();
 		this.repaint();
@@ -243,6 +251,10 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         /* lblIcon */
         this.lblIcon.setOpaque(false);
         this.lblIcon.setForeground(labelForeColor);
+
+        /* lblObjectif */
+        this.lblObjectif.setOpaque(false);
+        this.lblObjectif.setForeground(labelForeColor);
     }
 
     /**

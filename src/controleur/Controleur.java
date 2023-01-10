@@ -341,6 +341,7 @@ public class Controleur
 	public void ajouterObjectifsJoueurs(CarteObjectif cartesObjectifs) 
 	{
 		this.metier.ajouterObjectifsJoueurs(cartesObjectifs);
+		this.ihm.majIHM();
 	}
 
 	/**
