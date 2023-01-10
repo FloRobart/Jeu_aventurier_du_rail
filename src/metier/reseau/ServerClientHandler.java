@@ -47,6 +47,17 @@ public class ServerClientHandler implements Runnable
     private String nomJoueur;
     private Boolean authentifie;
 
+    public void majMetier(Metier m)
+    {
+        writeonce("METIER");
+        try {
+            out.writeObject(this.metier);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void majPartie(Partie partie)
     {
         try
@@ -125,13 +136,8 @@ public class ServerClientHandler implements Runnable
         
 
         this.authentifie = true;
-        writeonce("METIER");
-        try {
-            out.writeObject(this.metier);
-            out.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        majMetier(this.metier);
+
     }
 
     public void Disconnect()
@@ -177,6 +183,18 @@ public class ServerClientHandler implements Runnable
                 if (command.equals("BONJOUR"))
                 {
                     this.nomJoueur = readonce();
+
+                    for (Joueur j : this.ctrl.getPartie().getJoueurs())
+                    {
+                        if (j.getNom().equals(this.nomJoueur))
+                        {
+                            writeonce("ERREUR");
+                            writeonce("Ce nom est déjà utilisé");
+                            this.metier.getServer().RemoveClient(this);
+                            return;
+                        }
+                    }
+
                     System.out.println("nom joueur : " + this.nomJoueur + "");
 
                     this.majPartie(this.ctrl.getPartie());

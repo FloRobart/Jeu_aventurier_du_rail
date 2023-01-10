@@ -147,9 +147,9 @@ public class Metier implements Serializable
 			this.server.Start();
 	}
 
-	public void creeClient(String ip, Boolean demarer, String password)
+	public void creeClient(String ip, String nom, Boolean demarer, String password)
 	{
-		this.nomClient = "Joueur " + Math.round(Math.random()*100);
+		this.nomClient = nom;
 		this.client = new Client(ip, this.ctrl);
 		if (demarer)
 			this.client.Connect(password);

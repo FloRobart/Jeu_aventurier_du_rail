@@ -11,6 +11,7 @@ import metier.Metier;
 public class GestionPioche 
 {
 	private LinkedList<CarteWagon>    lstCartesWagon;
+	private LinkedList<CarteWagon>    lstCartesDefausse;
 	private CarteWagon[]              tabCartesVisible;
     private LinkedList<CarteObjectif> lstCartesObjectif;
 
@@ -34,6 +35,9 @@ public class GestionPioche
 
 		Collections.shuffle(this.lstCartesWagon);
 
+		// Creation de la pile de carte defaussé
+		this.lstCartesDefausse = new LinkedList<CarteWagon>();
+
 		// Creation du tableau de cartes visible
 		this.tabCartesVisible = new CarteWagon[5];
 		for ( int cpt = 0 ; cpt < 5 ; cpt++)
@@ -55,34 +59,32 @@ public class GestionPioche
 		if ( this.lstCartesWagon.size() == 0) return null;
 
 		CarteWagon carteWagon = this.lstCartesWagon.remove(0);
+
 		return carteWagon;
+	}
+
+	public void ajouterCarteDefausse(CarteWagon carteWagon)
+	{System.out.println("ajout defausse");
+		this.lstCartesDefausse.add(carteWagon);
+	}
+
+	public void transfertPioche()
+	{
+		this.lstCartesWagon.addAll(this.lstCartesDefausse);
+		this.lstCartesDefausse.clear();
 	}
 
 	/**
 	 * Pioche 3 cartes objectif et les retourne
 	 * @return tableau de 3 cartes objectif
 	 */
-	public CarteObjectif[] piocherCartesObjectif()
+	public CarteObjectif piocherCartesObjectif()
 	{
-		CarteObjectif[] tabCartesObjectif = new CarteObjectif[3];
 
-		for ( int cpt = 0 ; cpt < 3 ; cpt++)
-		{
-			//if ( this.lstCartesObjectif.size() == 0 )
-				//tabCartesObjectif[cpt] = null;
-			//else
-				tabCartesObjectif[cpt] = this.lstCartesObjectif.remove(0);
-		}
-
-		//if ( this.lstCartesObjectif.size() == 0) return null;
+		if ( this.lstCartesObjectif.size() == 0 )
+			return null;
 		
-		if(this.lstCartesObjectif.size() < 3)
-		{
-			for(int cpt=0; cpt<this.lstCartesObjectif.size(); cpt++)
-				tabCartesObjectif[cpt] = this.lstCartesObjectif.remove(0);
-		}
-
-		return tabCartesObjectif;
+		return this.lstCartesObjectif.remove(0);
 	}
 
 	public void remettreCarteWagon(CarteWagon carteWagon)

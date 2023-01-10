@@ -18,6 +18,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controleur.Controleur;
@@ -57,12 +58,17 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 
 		this.lblChoisirCartes = new JLabel(" Choisissez les cartes objectif que vous voulez : ");
 
-		this.cartesObjectifs = this.ctrl.getPiocheObjectif();
+		this.cartesObjectifs = new CarteObjectif[PanelPiocherObjectif.TAILLE];
+
+		for(int cpt = 0; cpt < PanelPiocherObjectif.TAILLE; cpt++)
+			this.cartesObjectifs[cpt] = this.ctrl.getPiocheObjectif();
+
 		this.tabChoixCarte = new boolean[PanelPiocherObjectif.TAILLE];
 
 		//Creation des boutons
 		this.btnPiocher = new JButton("Piocher");
 		this.btnPiocher.setPreferredSize(new Dimension(20,20));
+		this.btnPiocher.setEnabled(false);
 
 		Color titleBackColor = this.ctrl.getTheme().get("titles").get(1);
 		this.tabCarteobjectif = new JButton[PanelPiocherObjectif.TAILLE];
@@ -100,8 +106,11 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
     {
 		if(e.getSource() == this.btnPiocher)
 		{
+			if(this.getnbSelection() == 0)
+					JOptionPane.showMessageDialog(this, "Il faut selectionner au moins 1 carte", "Erreur", JOptionPane.ERROR_MESSAGE);
+					
 			for(int i=0; i<PanelPiocherObjectif.TAILLE; i++)
-			{
+			{	
 				if(this.tabChoixCarte[i] == true)
 				{
 					this.ctrl.ajouterObjectifsJoueurs(this.cartesObjectifs[i]);
@@ -109,48 +118,66 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 				else if(this.cartesObjectifs[i] != null)
 					this.ctrl.remettreCarteObjectif(this.cartesObjectifs[i]);
 			}
+			this.btnPiocher.setEnabled(false);
 			this.initCarteObjectifs();
 		}
 
 		for (int i = 0; i < PanelPiocherObjectif.TAILLE; i++)
-		{
+		{	
 			if (e.getSource() == this.tabCarteobjectif[i])
 			{
-				if(this.tabChoixCarte[i] == false)
-				{
-					this.tabChoixCarte[i] = true;
-					this.tabCarteobjectif[i].setBackground(Color.GREEN);
-				}
-				else
-				{
-					this.tabChoixCarte[i] = false;
-					this.tabCarteobjectif[i].setBackground(this.theme.get("buttons").get(1));
+				this.btnPiocher.setEnabled(true);
+				if(this.cartesObjectifs[i] != null)
+				{	
+					if(this.tabChoixCarte[i] == false)
+					{
+						this.tabCarteobjectif[i].setBackground(Color.GREEN);
+						
+					}
+					else
+					{
+						this.tabCarteobjectif[i].setBackground(this.theme.get("buttons").get(1));
+
+					}
+					this.tabChoixCarte[i] = !this.tabChoixCarte[i];
 				}
 			}
 		}
 	}
 
 	
+	private int getnbSelection() 
+	{
+		int nbSelection = 0;
+		for(int i=0; i<PanelPiocherObjectif.TAILLE; i++)
+		{
+			if(this.tabChoixCarte[i] == true)
+				nbSelection++;
+		}
+		return nbSelection;
+	}
+
 	/**
-	 * repioche les 3 cartes objectifs après la pioche du joueur
+	 * repioche les cartes objectifs après la pioche du joueur
 	 */
 	private void initCarteObjectifs() 
 	{
-		this.cartesObjectifs = this.ctrl.getPiocheObjectif();
+		for(int cpt = 0; cpt < PanelPiocherObjectif.TAILLE; cpt++)
+			this.cartesObjectifs[cpt] = this.ctrl.getPiocheObjectif();
+
 		for (int cpt = 0; cpt < PanelPiocherObjectif.TAILLE; cpt++)
 		{
 			if(this.cartesObjectifs[cpt] != null)
 			{
-				this.tabCarteobjectif[cpt].setIcon(new ImageIcon(creerCarte(this.cartesObjectifs[cpt])));
-				this.tabCarteobjectif[cpt].setBackground(this.theme.get("buttons").get(1));
-				this.tabChoixCarte[cpt] = false;
+				this.tabCarteobjectif[cpt].setIcon(new ImageIcon(creerCarte(this.cartesObjectifs[cpt])));				
 			}
 			else
 			{
 				this.tabCarteobjectif[cpt].setIcon(null);
-				this.tabCarteobjectif[cpt].setBackground(this.theme.get("buttons").get(1));
-				this.tabChoixCarte[cpt] = false;
 			}
+
+			this.tabCarteobjectif[cpt].setBackground(this.theme.get("buttons").get(1));
+			this.tabChoixCarte[cpt] = false;
 			
 		}
 	}

@@ -43,6 +43,14 @@ public class Server
         }
     }
 
+    public void majMetier()
+    {
+        for (ServerClientHandler sch : clients)
+        {
+            sch.majMetier(this.ctrl.getMetier());
+        }
+    }
+
     public int getNbJoeurs()
     {
         return clients.size();
@@ -60,9 +68,9 @@ public class Server
 
     public void RemoveClient(ServerClientHandler sch)
     {
-
         sch.Disconnect();
         this.clients.remove(sch);
+        this.ctrl.majIHM();
     }
 
     public void Start()

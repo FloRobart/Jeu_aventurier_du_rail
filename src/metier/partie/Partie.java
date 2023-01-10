@@ -29,6 +29,11 @@ public class Partie implements Serializable
 		this.joueurCourant = j;
 	}
 
+	public Joueur[] getJoueurs()
+	{
+		return this.joueurs;
+	}
+
 	public Partie(Controleur ctrl, Metier metier, boolean estMulti, String nomPartie)
 	{
 		this.ctrl          = ctrl;
@@ -60,7 +65,7 @@ public class Partie implements Serializable
 		if (this.joueurs[0] != null) this.joueurCourant = this.joueurs[0];
 		else 					     this.joueurCourant = null;
 
-		this.estMulti      = estMulti;
+		this.estMulti = estMulti;
 	}
 
 	public boolean estTerminee()
@@ -99,6 +104,12 @@ public class Partie implements Serializable
 
 		if (carte != null)
 			this.joueurCourant.ajouterCarteWagon(carte);
+
+		if (this.gestionPioche.getSizeWagon() == 0)
+		{
+			this.gestionPioche.transfertPioche();
+			this.ctrl.majIHM();
+		}
 	}
 
 	public void piocherVisible(int ind)
@@ -111,9 +122,19 @@ public class Partie implements Serializable
 		this.gestionPioche.getTabCartesVisible()[ind] = this.gestionPioche.piocherCarteWagon();
 
 		this.verifierVisible();
+		if (this.gestionPioche.getSizeWagon() == 0)
+		{
+			this.gestionPioche.transfertPioche();
+			this.ctrl.majIHM();
+		}
 	}
 
-	public CarteObjectif[] getPiocheObjectif() 
+	public void ajouterCarteDefausse(CarteWagon carte)
+	{
+		this.gestionPioche.ajouterCarteDefausse(carte);
+	}
+
+	public CarteObjectif getPiocheObjectif() 
 	{
 		return this.gestionPioche.piocherCartesObjectif();
 	}

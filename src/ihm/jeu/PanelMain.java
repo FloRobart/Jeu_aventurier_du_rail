@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,17 +59,17 @@ public class PanelMain extends JPanel implements ActionListener
             String val = "X" + this.joueur.gethashMapCarteWagons().get(c);
             
             this.tabIconWagon[i] = new JButton();
-            this.tabIconWagon[i].setIcon(new ImageIcon(creerCarte(this.listImageWagon.get(i), val)));
+            this.tabIconWagon[i].setIcon(new ImageIcon(this.creerCarte(this.listImageWagon.get(i), val)));
             this.tabIconWagon[i].setBorderPainted(false);
             this.tabIconWagon[i].setContentAreaFilled(false);
             this.tabIconWagon[i].setFocusPainted(false);
+
+			if(!this.ctrl.getEnTrainDePiocher())
+				this.tabIconWagon[i].addActionListener(this);
         
             this.add(this.tabIconWagon[i]);
 			i++;
-        } 
-
-		for (JButton btn : this.tabIconWagon)
-			btn.addActionListener(this);
+        }
 
 		this.setVisible(true);
 	}
@@ -92,10 +93,12 @@ public class PanelMain extends JPanel implements ActionListener
         g2d.rotate(1.57, width / 2, height / 2);
         g2d.drawImage(bufferedImage, (taille-width), (taille-height)/2-30, width, height, null);
         g2d.rotate((1.57*3), taille / 2, taille / 2);
+        g2d.setColor(this.ctrl.getTheme().get("labels").get(0));
         g2d.drawString(val, 110, 200);
 
         return bi;
     }
+
 
 	public void actionPerformed(ActionEvent e) 
 	{
@@ -104,4 +107,23 @@ public class PanelMain extends JPanel implements ActionListener
 				if (e.getSource() == this.tabIconWagon[i])
 					this.ctrl.prendreArete(i);
 	}
+
+
+    public void appliquerTheme()
+    {
+        Color labelForeColor = this.ctrl.getTheme().get("labels").get(0);
+
+
+        int i = 0;
+        for(Color c : this.ctrl.getJoueur().getAlCouleurs())
+        {
+            String val = "X " + this.joueur.gethashMapCarteWagons().get(c);
+
+            this.tabIconWagon[i].setIcon(new ImageIcon(this.creerCarte(this.listImageWagon.get(i), val)));
+        
+            this.add(this.tabIconWagon[i]);
+
+            i++;
+        }
+    }
 }

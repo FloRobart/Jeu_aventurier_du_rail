@@ -624,9 +624,9 @@ public class PanelAccueil extends JPanel implements ActionListener
 
 
             /* Test */
-            if (e.getSource() == this.btnTestSolo     ) { this.mappeImportee = this.ctrl.ouvrir(new File("./France.xml")); this.ctrl.creerPartieSolo(); }
-            if (e.getSource() == this.btnTestMulti    ) { this.mappeImportee = this.ctrl.ouvrir(new File("./France.xml"));  this.ctrl.ajouterJoueur(new Joueur("Test rapide")); this.ctrl.creerPartieMulti("0000"); }
-            if (e.getSource() == this.btnTestRejoindre) { this.ctrl.joinGame("127.0.0.1", "0000");}
+            if (e.getSource() == this.btnTestSolo     ) { this.mappeImportee = this.ctrl.ouvrir(new File("./France.xml")); this.ctrl.ajouterJoueur(new Joueur(this.txtPseudo.getText())); this.ctrl.creerPartieSolo(); }
+            if (e.getSource() == this.btnTestMulti    ) { this.mappeImportee = this.ctrl.ouvrir(new File("./France.xml")); this.ctrl.creerPartieMulti("0000"); }
+            if (e.getSource() == this.btnTestRejoindre) { if(this.txtPseudo.getText().isBlank()) this.txtPseudo.setText("Joe"); this.ctrl.joinGame("127.0.0.1", this.txtPseudo.getText(), "0000");}
 
 
 
@@ -654,7 +654,7 @@ public class PanelAccueil extends JPanel implements ActionListener
                         {
                             // Vérifier que le mot de passe colle avec l'adresse IP
 
-                            this.ctrl.joinGame(this.txtIpRejoindre.getText(), this.txtMdpRejoindre.getText());
+                            this.ctrl.joinGame(this.txtIpRejoindre.getText(), this.txtPseudo.getText(), this.txtMdpRejoindre.getText());
                         }
                     }
                 }

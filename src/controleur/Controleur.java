@@ -1,6 +1,7 @@
 package controleur;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.Icon;
@@ -33,8 +34,9 @@ public class Controleur
 	private ServerControleur serverCtrl;
 	private ClientControleur clientCtrl;
 
-	private Arete areteSelectionnee;
-	private int   couleurSelectionnee;
+	private Arete   areteSelectionnee;
+	private int     couleurSelectionnee;
+	private boolean enTrainDePiocher;
 
     public Controleur()
     {
@@ -43,6 +45,7 @@ public class Controleur
 		this.joueur = null;
         this.ihm    = new Ihm(this);
 
+		this.enTrainDePiocher = false;
     }
 	public void superMethodeDeDebug() { 
 		this.joueur.ajouterCarteWagon(new CarteWagon(null, getImageVersoCouleur(), getImageRectoLocomotive()));
@@ -61,10 +64,9 @@ public class Controleur
 	 * Cette méthode lance le jeu directement.
 	 */
 	public void creerPartieSolo()
-	{ 
-		this.joueur = new Joueur("Joueur 1");
+	{
+		this.joueur = this.metier.getJoueurs().get(0);
 		this.joueur.setCouleur(Color.PINK);
-		this.metier.ajouterJoueur(this.joueur);
 
 		this.partie = new Partie(this, this.metier, false, "Partie local");
 
@@ -139,14 +141,19 @@ public class Controleur
 	public BufferedImage       getImageVersoObjectif() { return this.metier.getImageVersoObjectif(); }
 	public BufferedImage       getImage             () { return this.ihm   .getImage             (); }
 
-	public int   getSizeWagon         () { return this.partie.getSizeWagon(); }
-	public Arete getAreteSelectionne  () { return this.areteSelectionnee;     }
-	public int   getCouleurSelectionne() { return this.couleurSelectionnee;   }
+	public int     getSizeWagon         () { return this.partie.getSizeWagon(); }
+	public Arete   getAreteSelectionne  () { return this.areteSelectionnee;     }
+	public int     getCouleurSelectionne() { return this.couleurSelectionnee;   }
+	public boolean getEnTrainDePiocher  () { return this.enTrainDePiocher;      }
 
 	// Méthodes
 	public void setImageButton(int indice)  { if ( this.ihm != null ) this.ihm.setImageButton(indice); }
 	public void	setNbTours	  (int nbTours) { this.ihm.setNbTours(nbTours);}
 
+	public void switchEnTrainDePiocher()
+	{
+		this.enTrainDePiocher = !this.enTrainDePiocher;
+	}
 
 	public boolean ajouterJoueur(Joueur joueur)
 	{
@@ -157,25 +164,44 @@ public class Controleur
 	{
 		try
 		{
-			Color coul = null;
-
-			if (couleur == 1) coul = arete.getCouleur1();
-			else              coul = arete.getCouleur2();
-			
-			// if : voix neutre | else : voix couleur
-			if ( coul.equals(this.metier.getCouleurs().get(0)))
+			if ((couleur == 1 && arete.getProprietaire1() == null) ||
+		        (couleur == 2 && arete.getProprietaire2() == null)   )
 			{
-				for (Color c : this.joueur.getAlCouleurs())
-					if ( this.joueur.gethashMapCarteWagons().get(c) >= arete.getDistance() ) return true;
-			}
-			else
-			{
-				// carte couleur
-				if ( this.joueur.getAlCouleurs().contains(coul) && 
-					 this.joueur.gethashMapCarteWagons().get(coul) >= arete.getDistance() ) return true;
+				Color coul = null;
 
-				// carte jocker
-				if ( this.joueur.gethashMapCarteWagons().get(null) >= arete.getDistance() ) return true;
+				if (couleur == 1) coul = arete.getCouleur1();
+				else              coul = arete.getCouleur2();
+				
+				// if : voix neutre | else : voix couleur
+				if ( coul.equals(this.metier.getCouleurs().get(0)))
+				{
+					for (Color c : this.joueur.getAlCouleurs())
+					{
+						int nbCoul  = 0;
+						int nbJoker = 0;
+
+						if (c != null) 
+							nbCoul = this.joueur.gethashMapCarteWagons().get(c);
+
+						if (this.joueur.getAlCouleurs().contains(null))
+							nbJoker = this.joueur.gethashMapCarteWagons().get(null);
+
+						if (nbCoul + nbJoker >= arete.getDistance()) return true;
+					}
+				}
+				else
+				{
+					int nbCoul  = 0;
+					int nbJoker = 0;
+
+					if (this.joueur.getAlCouleurs().contains(coul))
+						nbCoul = this.joueur.gethashMapCarteWagons().get(coul);
+
+					if (this.joueur.getAlCouleurs().contains(null))
+						nbJoker = this.joueur.gethashMapCarteWagons().get(null);
+
+					if (nbCoul + nbJoker >= arete.getDistance()) return true;
+				}
 			}
 		}
 		catch(Exception e) { return false; }
@@ -196,40 +222,139 @@ public class Controleur
 		this.ihm.majIHM();
 	}
 
+	public void verifierVisible()
+	{
+		this.partie.verifierVisible();
+	}
+
 	public void prendreArete(int indMain)
 	{
-		if (this.areteSelectionnee != null)
+		if (this.areteSelectionnee != null && this.areteSelectionnee.getDistance() <= joueur.getNbJetonsRestant())
 		{
+			if ((this.couleurSelectionnee == 1 && this.areteSelectionnee.getProprietaire1() != null) ||
+				(this.couleurSelectionnee == 2 && this.areteSelectionnee.getProprietaire2() != null)   )
+			{
+				this.ihm.afficherErreur("Cette voie est déjà prise !");
+				return;
+			}
+
+			boolean estValide = false;
 			Color c = this.joueur.getAlCouleurs().get(indMain);
 			int nbCarte = this.joueur.gethashMapCarteWagons().get(c);
+			int nbJoker = this.joueur.gethashMapCarteWagons().get(null);
 
 			Color cVoie;
 			if (this.couleurSelectionnee == 1) cVoie = this.areteSelectionnee.getCouleur1();
 			else                               cVoie = this.areteSelectionnee.getCouleur2();
 
-			if ( ( c == null || c.equals(cVoie) || cVoie.equals(this.getCouleurs().get(0))) && 
-			       nbCarte >= this.areteSelectionnee.getDistance()                             )
+			// Utilisation de carte joker uniquement
+			if (c == null && nbCarte >= this.areteSelectionnee.getDistance())
 			{
-
-				if      ( this.couleurSelectionnee == 1 && this.areteSelectionnee.getProprietaire1() == null)
-					this.areteSelectionnee.setProprietaire1(joueur);
-				else if ( this.couleurSelectionnee == 2 && this.areteSelectionnee.getProprietaire2() == null)	
-					this.areteSelectionnee.setProprietaire2(joueur);
-				else
-					return;
-
 				this.joueur.gethashMapCarteWagons().put(c, nbCarte - this.areteSelectionnee.getDistance());
+				estValide = true;
 
-				if (this.joueur.gethashMapCarteWagons().get(c) == 0)
+				int nbEnl = 0;
+				Iterator<CarteWagon> it = this.joueur.getAlCartesWagons().iterator();
+				while (it.hasNext() && nbEnl < this.areteSelectionnee.getDistance()) 
 				{
-					this.joueur.getAlCouleurs().remove(c);
-					this.joueur.gethashMapCarteWagons().remove(c);
+					CarteWagon cw = it.next();
+					if (cw.getCouleur() == null)
+					{
+						this.partie.ajouterCarteDefausse(cw);
+						it.remove();
+						nbEnl++;
+					}
 				}
+			}
+			// Utilisation de carte couleur sur une voie de la même couleur ou neutre
+			else if (c != null && (c.equals(cVoie) || cVoie.equals(this.getCouleurs().get(0))) &&
+				     nbCarte >= this.areteSelectionnee.getDistance()                             )
+			{
+				this.joueur.gethashMapCarteWagons().put(c, nbCarte - this.areteSelectionnee.getDistance());
+				estValide = true;
+
+				int nbEnl = 0;
+				Iterator<CarteWagon> it = this.joueur.getAlCartesWagons().iterator();
+				while (it.hasNext() && nbEnl < this.areteSelectionnee.getDistance()) 
+				{
+					CarteWagon cw = it.next();
+					if (cw.getCouleur() == c)
+					{
+						this.partie.ajouterCarteDefausse(cw);
+						it.remove();
+						nbEnl++;
+					}
+				}
+			}
+			// Utilisation de carte couleur et joker sur une voie de la même couleur ou neutre
+			else if (c != null && (c.equals(cVoie) || cVoie.equals(this.getCouleurs().get(0))) &&
+				     nbCarte + nbJoker >= this.areteSelectionnee.getDistance()                   )
+			{
+				int nbJokerNeccessaire = this.areteSelectionnee.getDistance() - nbCarte;
+				boolean confirmation = this.ihm.poserQuestion(
+					"Voulez-vous utiliser " + nbJokerNeccessaire + " carte joker ?");
+
+				if (confirmation)
+				{
+					this.joueur.gethashMapCarteWagons().put(c, 0);
+					this.joueur.gethashMapCarteWagons().put(null, nbJoker - nbJokerNeccessaire);
+					estValide = true;
+
+					Iterator<CarteWagon> it = this.joueur.getAlCartesWagons().iterator();
+					while (it.hasNext()) 
+					{
+						CarteWagon cw = it.next();
+						if (cw.getCouleur() == c)
+						{
+							this.partie.ajouterCarteDefausse(cw);
+							it.remove();
+						}
+					}
+
+					int nbEnl = 0;
+					it = this.joueur.getAlCartesWagons().iterator();
+					while (it.hasNext() && nbEnl < nbJoker - nbJokerNeccessaire) 
+					{
+						CarteWagon cw = it.next();
+						if (cw.getCouleur() == null)
+						{
+							this.partie.ajouterCarteDefausse(cw);
+							it.remove();
+							nbEnl++;
+						}
+					}
+				}
+				else
+				{
+					if (this.areteSelectionnee != null)
+						this.ihm.afficherErreur("Aucune arête selectionné");
+					else
+						this.ihm.afficherErreur("Nombre de jeton insuffisant");
+				}
+			}
+
+			if (estValide)
+			{
+				if (this.couleurSelectionnee == 1) this.areteSelectionnee.setProprietaire1(joueur);
+				else                               this.areteSelectionnee.setProprietaire2(joueur);
+
+				Iterator<Color> it = this.joueur.getAlCouleurs().iterator();
+				while (it.hasNext()) 
+				{
+					Color coul = it.next();
+					if (this.joueur.gethashMapCarteWagons().get(coul) == 0) 
+					{
+						it.remove();
+						this.joueur.gethashMapCarteWagons().remove(coul);
+					}
+				}
+				this.joueur.retirerJeton(this.areteSelectionnee.getDistance());
+
+				this.areteSelectionnee = null;
+				this.couleurSelectionnee = 0;
 
 				this.ihm.majIHM();
 			}
-			
-			
 		}
 	}
 
@@ -286,10 +411,11 @@ public class Controleur
 	/**
 	 * 
 	 */
-	public int joinGame(String ip, String password)
+	public int joinGame(String ip, String nom, String password)
 	{
 
-		this.metier.creeClient(ip, true, password);
+		this.metier.creeClient(ip, nom, true, password);
+
 		this.ihm.demarrerAttente(false);
 		return 1;
 		// this.joueur = new Joueur("Joueur 1");
@@ -331,7 +457,7 @@ public class Controleur
 	 * Permet de récupérer la pioche de cartes objectifs
 	 * @return un tableau de Carte Objectif
 	 */
-    public CarteObjectif[] getPiocheObjectif() 
+    public CarteObjectif getPiocheObjectif() 
 	{
         return this.partie.getPiocheObjectif();
     }
