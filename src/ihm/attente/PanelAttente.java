@@ -365,7 +365,7 @@ public class PanelAttente extends JPanel implements ActionListener
         this.btnLancer.setMaximumSize  (new Dimension(150, 40));
         this.btnLancer.setMinimumSize  (new Dimension(150, 40));
         this.btnLancer.setPreferredSize(new Dimension(150, 40));
-        if (!hote) { this.btnChangeMappe.setEnabled(false); }
+        if (!hote) { this.btnLancer.setEnabled(false); }
 
 
         /* Horizontale */
