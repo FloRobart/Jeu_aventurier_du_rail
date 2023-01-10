@@ -114,6 +114,11 @@ public class Controleur
 		this.ihm.basculerEnJeu(b);
 	}
 
+	public void Deconnecter()
+	{
+		this.ihm.RetourALaceuille();
+	}
+
 
 
 	/* --------------------------- */
