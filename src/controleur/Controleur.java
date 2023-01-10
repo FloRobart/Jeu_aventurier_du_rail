@@ -38,18 +38,22 @@ public class Controleur
 	private int     couleurSelectionnee;
 	private boolean enTrainDePiocher;
 
+	private BufferedImage imageVersoCouleur;
+
     public Controleur()
     {
         this.metier = new Metier(this);
 		this.partie = null;
 		this.joueur = null;
         this.ihm    = new Ihm(this);
+		this.setImageVersoCouleur();
 
 		this.enTrainDePiocher = false;
     }
-	public void superMethodeDeDebug() { 
-		this.joueur.ajouterCarteWagon(new CarteWagon(null, getImageVersoCouleur(), getImageRectoLocomotive()));
-		System.out.println(this.joueur.getAlCartesWagons().size());
+	public void joueurSuivant()
+	{
+		if (!this.enTrainDePiocher)
+			this.partie.joueurSuivant();
 	}
 
 	/**
@@ -165,6 +169,7 @@ public class Controleur
     public void    disposeFrameJeu		() { this.ihm.disposeFrameJeu(); 		}
 
 	// Méthodes
+	public void setImageVersoCouleur    () { this.imageVersoCouleur = this.metier.getImageVersoCouleur(); }
 	public void setImageButton(int indice)  { if ( this.ihm != null ) this.ihm.setImageButton(indice); }
 	public void	setNbTours	  (int nbTours) { this.ihm.setNbTours(nbTours);}
 
@@ -238,6 +243,11 @@ public class Controleur
 	public void majIHM()
 	{
 		this.ihm.majIHM();
+	}
+
+	public void afficherErreur(String message)
+	{
+		this.ihm.afficherErreur(message);
 	}
 
 	public void verifierVisible()
@@ -377,6 +387,7 @@ public class Controleur
 
 				this.ihm.majIHM();
 				this.joueur.verifierObjectifs();
+				this.partie.joueurSuivant();
 			}
 		}
 	}
