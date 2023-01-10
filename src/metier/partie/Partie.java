@@ -60,7 +60,7 @@ public class Partie implements Serializable
 		}
 
 		this.nbJetonFin    = metier.getNbJetonFin();
-		this.tour          = 1;
+		this.tour          = 0;
 
 		if (this.joueurs[0] != null) this.joueurCourant = this.joueurs[0];
 		else 					     this.joueurCourant = null;
