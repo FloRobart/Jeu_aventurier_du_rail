@@ -91,4 +91,16 @@ public class Ihm
 		if ( this.frameJeu != null ) this.frameJeu.majIHM();
 	}
 
+	public void afficherErreur(String message)
+	{
+		if ( this.frameJeu != null ) this.frameJeu.afficherErreur(message);
+	}
+
+	public boolean poserQuestion(String message)
+	{
+		if ( this.frameJeu != null ) return this.frameJeu.poserQuestion(message);
+
+		return false;
+	}
+
 }

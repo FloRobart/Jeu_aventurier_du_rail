@@ -65,7 +65,7 @@ public class Partie implements Serializable
 		if (this.joueurs[0] != null) this.joueurCourant = this.joueurs[0];
 		else 					     this.joueurCourant = null;
 
-		this.estMulti      = estMulti;
+		this.estMulti = estMulti;
 	}
 
 	public boolean estTerminee()
@@ -118,7 +118,7 @@ public class Partie implements Serializable
 		this.verifierVisible();
 	}
 
-	public CarteObjectif[] getPiocheObjectif() 
+	public CarteObjectif getPiocheObjectif() 
 	{
 		return this.gestionPioche.piocherCartesObjectif();
 	}
