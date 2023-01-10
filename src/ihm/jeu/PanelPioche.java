@@ -124,7 +124,9 @@ public class PanelPioche extends JPanel implements ActionListener
 				this.ctrl.switchEnTrainDePiocher();
 
 				if (this.ctrl.getSizeWagon() == 0 && this.ctrl.getEnTrainDePiocher())
+				{
 					this.ctrl.switchEnTrainDePiocher();
+				}
 			}
 
 			for (int i = 0 ; i < PanelPioche.TAILLE ; i++)
@@ -145,9 +147,13 @@ public class PanelPioche extends JPanel implements ActionListener
 							this.ctrl.switchEnTrainDePiocher();
 
 							if (this.ctrl.getSizeWagon() == 0 && this.ctrl.getEnTrainDePiocher())
+							{
 								this.ctrl.switchEnTrainDePiocher();
+							}
 						}
 					}
+
+					this.ctrl.joueurSuivant();
 				}
 			}
 

@@ -47,9 +47,10 @@ public class Controleur
 
 		this.enTrainDePiocher = false;
     }
-	public void superMethodeDeDebug() { 
-		this.joueur.ajouterCarteWagon(new CarteWagon(null, getImageVersoCouleur(), getImageRectoLocomotive()));
-		System.out.println(this.joueur.getAlCartesWagons().size());
+	public void joueurSuivant()
+	{
+		if (!this.enTrainDePiocher)
+			this.partie.joueurSuivant();
 	}
 
 	/**
@@ -372,6 +373,7 @@ public class Controleur
 
 				this.ihm.majIHM();
 				this.joueur.verifierObjectifs();
+				this.partie.joueurSuivant();
 			}
 		}
 	}
