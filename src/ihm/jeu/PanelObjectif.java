@@ -52,7 +52,7 @@ public class PanelObjectif extends JPanel implements ActionListener
 
 	public void actionPerformed(ActionEvent e) 
     {
-        if(e.getSource() == this.btnCarteObjectif && this.ctrl.peuxJouer())
+        if(this.ctrl.peuxJouer())
         {
             /* Création du panel */
             if (this.panelPiocherObjectif == null) { this.panelPiocherObjectif = new PanelPiocherObjectif(this.ctrl, this); }
@@ -86,6 +86,8 @@ public class PanelObjectif extends JPanel implements ActionListener
                 public void windowDeactivated(WindowEvent e) {  }
             });
         }
+		else
+			this.ctrl.afficherErreur("Ce n'est à pas votre tour de jouer");
     }
 
 	public void disposePioche()

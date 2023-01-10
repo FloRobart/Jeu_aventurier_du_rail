@@ -161,9 +161,7 @@ public class PanelPioche extends JPanel implements ActionListener
 			this.ctrl.majIHM();
 		}
 		else
-		{
-			JOptionPane.showMessageDialog(this, "Ce n'est pas à votre tour de jouer", "Erreur", JOptionPane.ERROR_MESSAGE);
-		}
+			this.ctrl.afficherErreur("Ce n'est à pas votre tour de jouer");
     }
 
 	public void majIHM()

@@ -236,6 +236,11 @@ public class Controleur
 		this.ihm.majIHM();
 	}
 
+	public void afficherErreur(String message)
+	{
+		this.ihm.afficherErreur(message);
+	}
+
 	public void verifierVisible()
 	{
 		this.partie.verifierVisible();

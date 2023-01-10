@@ -67,8 +67,7 @@ public class PanelMain extends JPanel implements ActionListener
             this.tabIconWagon[i].setContentAreaFilled(false);
             this.tabIconWagon[i].setFocusPainted(false);
 
-			if(!this.ctrl.getEnTrainDePiocher())
-				this.tabIconWagon[i].addActionListener(this);
+			this.tabIconWagon[i].addActionListener(this);
         
 			this.panelBtn.add(this.tabIconWagon[i]);
 			i++;
@@ -111,9 +110,18 @@ public class PanelMain extends JPanel implements ActionListener
 	public void actionPerformed(ActionEvent e) 
 	{
 		if (this.ctrl.peuxJouer())
-			for (int i = 0; i < this.tabIconWagon.length; i++)
-				if (e.getSource() == this.tabIconWagon[i])
-					this.ctrl.prendreArete(i);
+		{
+			if (!this.ctrl.getEnTrainDePiocher())
+			{
+				for (int i = 0; i < this.tabIconWagon.length; i++)
+					if (e.getSource() == this.tabIconWagon[i])
+						this.ctrl.prendreArete(i);
+			}
+			else
+				this.ctrl.afficherErreur("Veillez terminer de piocher avant de faire une autre action");
+		}
+		else
+			this.ctrl.afficherErreur("Ce n'est à pas votre tour de jouer");
 	}
 
 
