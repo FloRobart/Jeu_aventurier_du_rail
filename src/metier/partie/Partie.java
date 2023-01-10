@@ -19,12 +19,12 @@ public class Partie implements Serializable
 	private GestionPioche  gestionPioche;
 	private List<Arete>   alArete;
 	private Joueur[]      joueurs;
-	private transient Joueur        joueurCourant;
+	private Joueur        joueurCourant;
 	private int           nbJetonFin;
 	private int           tour;
 	private boolean       estMulti; // mettre le serveur au lieu d'un boolean
 	private Joueur        joueurFin;
-	private Integer[] 		  scoreFinal;
+	private Integer[]     scoreFinal;
 
 	public void setJoueurCourrant(Joueur j)
 	{

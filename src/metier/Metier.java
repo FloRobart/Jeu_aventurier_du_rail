@@ -169,8 +169,14 @@ public class Metier implements Serializable
 		} catch (FileNotFoundException e) { return false; }
 	}
 
+	public void setCtrl(Controleur ctrl)
+	{
+		this.ctrl = ctrl;
+	}
+
 	public void joueurSuivant()
 	{
+		this.ctrl.getPartie().joueurSuivant();
 		if (this.client != null)
 		{
 			this.client.finirTour();

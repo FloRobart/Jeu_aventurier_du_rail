@@ -186,6 +186,7 @@ public class ClientServerHandler implements Runnable
             if (command.equals("FINIR_TOUR"))
             {
                 System.out.println("YAY !!");
+                this.ctrl.getPartie().joueurSuivant();
                 this.ctrl.majIHM();
             }
                     

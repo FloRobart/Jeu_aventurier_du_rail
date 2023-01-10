@@ -129,6 +129,7 @@ public class Controleur
 
 	public void setMetier(Metier m)
 	{
+		m.setCtrl(this);
 		this.metier = m;
 	}
 
