@@ -384,6 +384,7 @@ public class Controleur
 		else
 			return false;
 	}
+
 	
 	/**
      * Permet d'appliquer le thème à l'ihm

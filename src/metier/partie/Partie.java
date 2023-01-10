@@ -174,7 +174,7 @@ public class Partie implements Serializable
 		String[] tabNom = new String[this.joueurs.length];
 		for ( int cpt=0; cpt< this.joueurs.length; cpt++)
 		{
-			alCarteObjectif = this.joueurs[cptJoueur].getAlCartesObjectif();
+			/*alCarteObjectif = this.joueurs[cptJoueur].getAlCartesObjectif();
 			for ( int cpt = 0; cpt < alCarteObjectif.size(); cpt++ )
 			{
 				scoreRetirer -= alCarteObjectif.get(cpt).getPoints();
@@ -182,7 +182,7 @@ public class Partie implements Serializable
 			this.joueurs[cptJoueur].ajouterScore(scoreRetirer);
 			
 			this.scoreFinal[cptJoueur] = this.joueurs[cptJoueur].getScore();
-			tabNom[cptJoueur] = this.joueurs[cptJoueur].getNom();
+			tabNom[cptJoueur] = this.joueurs[cptJoueur].getNom();*/
 		}
 
 		//methode qui envoie les infos vers une frame de fin de partie

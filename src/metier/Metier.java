@@ -97,6 +97,11 @@ public class Metier implements Serializable
 		return false;
     }
 
+	public void finirTour()
+	{
+		if (this.client != null) this.client.writeonce("FINIR_TOUR");
+	}
+
 	/* --------------------------- */
 	/*          Getters            */
 	/* --------------------------- */
