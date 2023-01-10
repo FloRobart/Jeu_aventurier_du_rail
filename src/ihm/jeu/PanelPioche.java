@@ -7,10 +7,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.Image;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -43,22 +46,33 @@ public class PanelPioche extends JPanel implements ActionListener
 
         //Parametrage du panel
         this.setLayout(new BorderLayout(3, 3));
-        this.setBorder( BorderFactory.createLineBorder(Color.black, 3) );
+        this.setBorder( BorderFactory.createLineBorder(this.ctrl.getTheme().get("titles").get(1), 3) );
 
 		//Creation des panels
 		this.panelHaut   = new JPanel();
-		this.panelMilieu = new JPanel(new GridLayout(5,1));
+		this.panelMilieu = new JPanel(new GridLayout(PanelPioche.TAILLE,1));
 
         this.tabCarteWagon = new JButton[PanelPioche.TAILLE];
         for (int cpt=0; cpt<PanelPioche.TAILLE; cpt++)
         {
             this.tabCarteWagon[cpt] = new JButton();
             this.tabCarteWagon[cpt].setPreferredSize(new Dimension(200, 100));
-            this.setImageButton(cpt);
+			this.setImageButton(cpt);
         }
 
-        this.deckCarteWagon = new JButton(new ImageIcon(this.ctrl.getImageVersoCouleur()));
+
+		/* Image du deck */
+        this.deckCarteWagon = new JButton();
+		this.deckCarteWagon.setSize(new Dimension(200, 150));
         this.deckCarteWagon.setPreferredSize(new Dimension(200, 150));
+
+		BufferedImage bfImg = this.ctrl.getImageVersoCouleur();
+		double zoomLargeur = (double) this.tabCarteWagon[0].getWidth()  / bfImg.getWidth();
+		double zoomHauteur = (double) this.tabCarteWagon[0].getHeight() / bfImg.getHeight();
+		double facteurZoom = Math.min(zoomLargeur, zoomHauteur)-0.1;
+		ImageIcon imgIcon = new ImageIcon(bfImg.getScaledInstance(((int)(this.deckCarteWagon.getWidth()*facteurZoom)), ((int)(this.deckCarteWagon.getHeight()*facteurZoom)), Image.SCALE_SMOOTH));
+		this.deckCarteWagon.setIcon(imgIcon);
+
 		this.lblPioche = new JLabel("" + this.ctrl.getSizeWagon() + "/" + (this.ctrl.getSizeWagon()+5));
 
         //Ajout des composants
@@ -66,9 +80,9 @@ public class PanelPioche extends JPanel implements ActionListener
         panelHaut.add(this.deckCarteWagon);
 		panelHaut.add(this.lblPioche);
 
-		this.add(panelMilieu, BorderLayout.CENTER);
+		this.add(this.panelMilieu, BorderLayout.CENTER);
 		for (int cpt=0; cpt<PanelPioche.TAILLE; cpt++)
-            panelMilieu.add(this.tabCarteWagon[cpt]);
+            this.panelMilieu.add(this.tabCarteWagon[cpt]);
 
 		//Activation des composants
 		this.deckCarteWagon.addActionListener(this);
@@ -76,40 +90,22 @@ public class PanelPioche extends JPanel implements ActionListener
 			this.tabCarteWagon[cpt].addActionListener(this);
     }
 
-    public void setImageButton(int indice)
+    public void setImageButton(int ind)
     {
-		BufferedImage resizedImage = new BufferedImage(150, 100, BufferedImage.TYPE_INT_RGB);
-		Graphics2D g2d = resizedImage.createGraphics();
-
-		if ( this.tabCartesVisible[indice] != null )
+		if ( this.tabCartesVisible[ind] != null )
 		{
-			BufferedImage image = this.tabCartesVisible[indice].getImageRecto();
+			BufferedImage bfImg = this.tabCartesVisible[ind].getImageRecto();
+			double zoomLargeur = 200  / bfImg.getWidth();
+			double zoomHauteur = 100 / bfImg.getHeight();
+			double facteurZoom = Math.min(zoomLargeur, zoomHauteur)-0.1;
 
-			// Calcul du facteur de zoom maximal
-			double zoomLargeur = (double) 150 / image.getWidth();
-			double zoomHauteur = (double) 100 / image.getHeight();
-			double facteurZoom = Math.min(zoomLargeur, zoomHauteur);
-			
-			AffineTransform at = new AffineTransform();
-			at.scale(facteurZoom, facteurZoom);
-			g2d.transform(at);
-			
-			g2d.drawImage(image, 0, 0, null);
+			ImageIcon imgIcon = new ImageIcon(bfImg.getScaledInstance(((int)(200*facteurZoom)), ((int)(100*facteurZoom)), Image.SCALE_SMOOTH));
+			this.tabCarteWagon[ind].setIcon(imgIcon);
 		}
 		else
 		{
-			g2d.setColor(Color.BLACK);
-			g2d.fillRect(0, 0, 150, 100);
-
-			g2d.setColor(Color.WHITE);
-			g2d.drawString("Pioche vide", 25, 25);
-			
-			this.tabCarteWagon[indice].setEnabled(false);
+			this.tabCarteWagon[ind].setEnabled(false);
 		}
-		
-        g2d.dispose();
-
-        this.tabCarteWagon[indice].setIcon(new ImageIcon (resizedImage));
     }
 
     public void actionPerformed(ActionEvent e) 
@@ -119,25 +115,29 @@ public class PanelPioche extends JPanel implements ActionListener
 			if ( e.getSource() == this.deckCarteWagon )
 			{
 				this.ctrl.piocherPioche();
-				this.ctrl.piocherPioche();System.out.println("pioche deck");
+				this.ctrl.piocherPioche();
 			}
 
-			for (int i = 0 ; i < this.TAILLE ; i++)
+			for (int i = 0 ; i < PanelPioche.TAILLE ; i++)
+			{
 				if ( e.getSource() == this.tabCarteWagon[i] )
 				{
 					this.tabCartesVisible = this.ctrl.getTabCartesVisible();
 
 					if (this.tabCartesVisible[i] != null)
+					{
 						if (this.tabCartesVisible[i].isJoker())
 						{
-							this.ctrl.piocherVisible(i);System.out.println("pioche visible jocker");
+							this.ctrl.piocherVisible(i);
 						}
 						else
 						{
 							this.ctrl.piocherVisible(i);
-							this.ctrl.piocherPioche();System.out.println("pioche visible couleur");
+							this.ctrl.piocherPioche();
 						}
+					}
 				}
+			}
 
 
 			this.ctrl.majIHM();
@@ -152,7 +152,7 @@ public class PanelPioche extends JPanel implements ActionListener
 	{
 		for (int cpt=0; cpt<PanelPioche.TAILLE; cpt++)
         {
-            this.setImageButton(cpt);;
+            this.setImageButton(cpt);
         }
 		
 		String text = this.lblPioche.getText();
@@ -161,6 +161,7 @@ public class PanelPioche extends JPanel implements ActionListener
 		if (this.ctrl.getSizeWagon() == 0)
 			this.deckCarteWagon.setEnabled(false);
 	}
+
 
     /**
      * Applique les couleurs du thème sélectionné à tout les éléments du panel et au panel lui même

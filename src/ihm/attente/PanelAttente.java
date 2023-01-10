@@ -347,7 +347,7 @@ public class PanelAttente extends JPanel implements ActionListener
         this.btnLancer.setMaximumSize  (new Dimension(150, 40));
         this.btnLancer.setMinimumSize  (new Dimension(150, 40));
         this.btnLancer.setPreferredSize(new Dimension(150, 40));
-
+        if (!hote) { this.btnChangeMappe.setEnabled(false); }
 
 
         /* Horizontale */
@@ -361,8 +361,10 @@ public class PanelAttente extends JPanel implements ActionListener
                     .addGroup(layout.createSequentialGroup()
                         .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                            .addComponent(this.btnChangeMappe, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addComponent(this.btnChoisirCouleur, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(this.btnChangeMappe, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(this.btnChoisirCouleur, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(this.panelPreviewMappe, GroupLayout.PREFERRED_SIZE, 400, GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -388,8 +390,9 @@ public class PanelAttente extends JPanel implements ActionListener
                 .addComponent(this.lblTitre, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                    .addComponent(this.btnChangeMappe, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(this.btnChoisirCouleur, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(this.btnChangeMappe, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(this.btnChoisirCouleur, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
                     .addComponent(this.lblLstParticipants))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
@@ -404,17 +407,25 @@ public class PanelAttente extends JPanel implements ActionListener
         );
 
 
+
         /*------------------------*/
         /* Activation des boutons */
         /*------------------------*/
         /* Bouton changer mappe */
         this.btnChangeMappe.addActionListener(this);
 
+        /* Bouton choisir couleur */
+        this.btnChoisirCouleur.addActionListener(this);
+
         /* Bouton lancer */
         this.btnLancer.addActionListener(this);
     }
 
 
+    /**
+     * Met à jour le statut. Cette méthode est appelé par le réseaux quand le nombre de joueur maximum est atteint.
+     * @param status Nouveau statut
+     */
     public void updateStatus(String status)
     {
         this.lblStatut.setText(status);
@@ -429,6 +440,7 @@ public class PanelAttente extends JPanel implements ActionListener
             Color disableColor = this.theme.get("disableColor").get(0);
             Color enableColor  = this.theme.get("enableColor" ).get(0);
 
+            /* Boutons de changement de la mappe */
             if (e.getSource() == this.btnChangeMappe)
             {
                 JFileChooser chooser = new JFileChooser(".");
@@ -462,6 +474,24 @@ public class PanelAttente extends JPanel implements ActionListener
 					else
 						JOptionPane.showMessageDialog(this, "Le fichier choisi doit-être au format XML", "Erreur", JOptionPane.ERROR_MESSAGE);
 				}
+            }
+
+            /* Bouton de choix de la couleur */
+            if (e.getSource() == this.btnChoisirCouleur)
+            {
+
+            }
+
+            /* Boutons de lancement de la partie */
+            if (e.getSource() == this.btnLancer)
+            {
+                    if (this.ctrl.getJoueurs().size() >= this.ctrl.getNbJoueursMin())
+                    {
+                        // Lancer la partie
+                        this.ctrl.lancerPartieMulti();
+                    }
+                    else
+                        JOptionPane.showMessageDialog(this, "Il manque " + (this.ctrl.getNbJoueursMin() - this.ctrl.getJoueurs().size()) + " joueurs pour lancer la partie", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
