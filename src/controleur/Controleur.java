@@ -272,6 +272,9 @@ public class Controleur
 				if (this.couleurSelectionnee == 1) this.areteSelectionnee.setProprietaire1(joueur);
 				else                               this.areteSelectionnee.setProprietaire2(joueur);
 
+				this.joueur.ajouterScore(this.areteSelectionnee.getDistance());
+				this.ihm.setScore();
+
 				Iterator<Color> it = this.joueur.getAlCouleurs().iterator();
 				while (it.hasNext()) 
 				{

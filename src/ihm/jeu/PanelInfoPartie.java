@@ -24,7 +24,7 @@ public class PanelInfoPartie extends JPanel implements ActionListener
 		this.ctrl = ctrl;
 
 		//Parametrage du panel
-        this.setBorder( BorderFactory.createLineBorder(Color.black, 2) );
+        this.setBorder( BorderFactory.createLineBorder(this.ctrl.getTheme().get("titles").get(1), 2) );
 		this.setLayout( new GridLayout(5,1) );
 
         this.btnArreterPartie = new JButton("Arrêter la partie");

@@ -37,7 +37,7 @@ public class PanelImage extends JPanel
 	{
 		this.ctrl = ctrl;
 		this.taillePlateau = taillePlateau;
-		this.setBorder( BorderFactory.createLineBorder(Color.black, 2) );
+		this.setBorder( BorderFactory.createLineBorder(this.ctrl.getTheme().get("titles").get(1), 2) );
 
 		this.setSize(taillePlateau[0], taillePlateau[1]);
 	}

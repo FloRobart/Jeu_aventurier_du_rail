@@ -59,6 +59,7 @@ public class Ihm
         this.appliquerTheme();
     }
 
+    public void setScore      ( ) { this.frameJeu.setScore(); }
     public void setImageButton(int indice)  { if ( this.frameJeu != null ) this.frameJeu.setImageButton(indice); }
     public void setNbTours    (int nbTours) { this.frameJeu.setNbTours(nbTours); }
 
