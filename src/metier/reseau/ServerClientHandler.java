@@ -47,6 +47,17 @@ public class ServerClientHandler implements Runnable
     private String nomJoueur;
     private Boolean authentifie;
 
+    public void majMetier(Metier m)
+    {
+        writeonce("METIER");
+        try {
+            out.writeObject(this.metier);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void majPartie(Partie partie)
     {
         try
@@ -125,13 +136,8 @@ public class ServerClientHandler implements Runnable
         
 
         this.authentifie = true;
-        writeonce("METIER");
-        try {
-            out.writeObject(this.metier);
-            out.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        majMetier(this.metier);
+
     }
 
     public void Disconnect()
