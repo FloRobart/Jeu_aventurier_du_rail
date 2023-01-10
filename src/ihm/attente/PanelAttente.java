@@ -318,11 +318,11 @@ public class PanelAttente extends JPanel implements ActionListener
 
         /* Boutons des joueurs */
         Color titleBackColor = this.theme.get("titles").get(1);
-        List<Joueur> lstJoueurs    = this.ctrl.getJoueurs();
+        List<Joueur> lstJoueurs = this.ctrl.getJoueurs();
         for (int i = 0; i < this.ctrl.getNbJoueursMax(); i++)
         {
             String txt=" ";
-            if (i<lstJoueurs.size()) txt = lstJoueurs.get(i).getNom();
+            if (i < lstJoueurs.size()) { txt = lstJoueurs.get(i).getNom(); }
             this.lstParticipants.add(new JLabel(txt));
             this.lstParticipants.get(i).setFont(new Font("Liberation Sans", 0, 24));
             this.lstParticipants.get(i).setPreferredSize(new Dimension(200, 40));
@@ -341,13 +341,8 @@ public class PanelAttente extends JPanel implements ActionListener
                 for (int i = 0; i < ctrl.getNbJoueursMax(); i++)
                 {
                     String txt=" ";
-                    if (i<lstJoueurs.size()) txt = lstJoueurs.get(i).getNom();
-                    lstParticipants.get(i).setText(txt);;
-                    lstParticipants.get(i).setFont(new Font("Liberation Sans", 0, 24));
-                    lstParticipants.get(i).setPreferredSize(new Dimension(200, 40));
-                    lstParticipants.get(i).setOpaque(true);
-                    lstParticipants.get(i).setHorizontalAlignment(JLabel.CENTER);
-                    lstParticipants.get(i).setBorder(BorderFactory.createBevelBorder(1, titleBackColor, titleBackColor));
+                    if (i < lstJoueurs.size()) { txt = lstJoueurs.get(i).getNom(); }
+                    lstParticipants.get(i).setText(txt);
                 }
                 panelJoueurs.repaint();
             }
@@ -543,7 +538,7 @@ public class PanelAttente extends JPanel implements ActionListener
         this.lstParticipants = new ArrayList<JLabel>();
         for (int i = 0; i < this.ctrl.getNbJoueursMax(); i++)
         {
-            this.lstParticipants.add(new JLabel("Joueur " + (i+1)));
+            this.lstParticipants.add(new JLabel(" "));
             this.lstParticipants.get(i).setFont(new Font("Liberation Sans", 0, 24));
             this.lstParticipants.get(i).setPreferredSize(new Dimension(200, 40));
             this.lstParticipants.get(i).setOpaque(true);
