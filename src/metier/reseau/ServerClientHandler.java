@@ -219,6 +219,9 @@ public class ServerClientHandler implements Runnable
                 try {
                     Partie partie = (Partie) in.readObject();
                     this.ctrl.setPartie(partie);
+
+                    this.ctrl.getMetier().getServer().majPartie(partie);
+
                     this.ctrl.majIHM();
                 } catch (ClassNotFoundException | IOException e) {
                     e.printStackTrace();

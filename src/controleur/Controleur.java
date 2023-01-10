@@ -114,6 +114,11 @@ public class Controleur
 		this.ihm.basculerEnJeu(b);
 	}
 
+	public void Deconnecter()
+	{
+		this.ihm.RetourALaceuille();
+	}
+
 
 
 	/* --------------------------- */
@@ -426,6 +431,8 @@ public class Controleur
 	{
 
 		this.metier.creeClient(ip, nom, true, password);
+
+		this.joueur = new Joueur(this, nom);
 
 		this.ihm.demarrerAttente(false);
 		return 1;

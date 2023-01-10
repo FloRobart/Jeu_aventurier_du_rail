@@ -28,7 +28,8 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 {
     private static final int TAILLE = 3;
 
-    private Controleur 	ctrl;
+    private Controleur    ctrl;
+	private PanelObjectif panelObjectif;
 	private HashMap<String, List<Color>> theme;
 
 	private JPanel		panelBtnPiocher;
@@ -40,9 +41,10 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 
 	private JLabel     	lblChoisirCartes;
 
-	public PanelPiocherObjectif(Controleur ctrl)
+	public PanelPiocherObjectif(Controleur ctrl, PanelObjectif panelObjectif)
 	{
 		this.ctrl = ctrl;
+		this.panelObjectif = panelObjectif;
 		this.theme = this.ctrl.getTheme();
 		
 		//Parametrage du panel
@@ -118,6 +120,7 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 				}
 				this.btnPiocher.setEnabled(false);
 				this.initCarteObjectifs();
+				this.panelObjectif.disposePioche();
 			}
 		}
 
@@ -252,7 +255,6 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 
         return img;
     }
-
 
 	/**
      * Applique les couleurs du thème sélectionné à tout les éléments du panel et au panel lui même

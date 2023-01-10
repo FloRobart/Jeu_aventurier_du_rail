@@ -55,7 +55,7 @@ public class PanelObjectif extends JPanel implements ActionListener
         if(e.getSource() == this.btnCarteObjectif)
         {
             /* Création du panel */
-            if (this.panelPiocherObjectif == null) { this.panelPiocherObjectif = new PanelPiocherObjectif(this.ctrl); }
+            if (this.panelPiocherObjectif == null) { this.panelPiocherObjectif = new PanelPiocherObjectif(this.ctrl, this); }
 
             /* Création du JDialog */
             if (this.dialogInfosJoueur == null)
@@ -83,16 +83,20 @@ public class PanelObjectif extends JPanel implements ActionListener
                 public void windowIconified  (WindowEvent e) {}
                 public void windowDeiconified(WindowEvent e) {}
                 public void windowActivated  (WindowEvent e) {}
-                public void windowDeactivated(WindowEvent e) { dialogInfosJoueur.dispose(); }
+                public void windowDeactivated(WindowEvent e) {  }
             });
         }
     }
+
+	public void disposePioche()
+	{
+		dialogInfosJoueur.dispose();
+	}
 
 	public void majIHM()
 	{
 		this.btnCarteObjectif.setEnabled(!this.ctrl.getEnTrainDePiocher());
 	}
-
 
     /**
      * Applique les couleurs du thème sélectionné à tout les éléments du panel et au panel lui même
