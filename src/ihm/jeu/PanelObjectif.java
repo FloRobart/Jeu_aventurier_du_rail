@@ -52,7 +52,7 @@ public class PanelObjectif extends JPanel implements ActionListener
 
 	public void actionPerformed(ActionEvent e) 
     {
-        if(e.getSource() == this.btnCarteObjectif)
+        if(e.getSource() == this.btnCarteObjectif && this.ctrl.peuxJouer())
         {
             /* Création du panel */
             if (this.panelPiocherObjectif == null) { this.panelPiocherObjectif = new PanelPiocherObjectif(this.ctrl, this); }

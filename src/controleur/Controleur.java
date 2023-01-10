@@ -241,7 +241,8 @@ public class Controleur
 
 	public void prendreArete(int indMain)
 	{
-		if (this.areteSelectionnee != null && this.areteSelectionnee.getDistance() <= joueur.getNbJetonsRestant())
+		if (this.peuxJouer() && this.areteSelectionnee != null && 
+		    this.areteSelectionnee.getDistance() <= joueur.getNbJetonsRestant())
 		{
 			if ((this.couleurSelectionnee == 1 && this.areteSelectionnee.getProprietaire1() != null) ||
 				(this.couleurSelectionnee == 2 && this.areteSelectionnee.getProprietaire2() != null)   )
