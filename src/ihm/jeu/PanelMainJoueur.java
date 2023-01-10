@@ -36,7 +36,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 
     private JPanel         panelImgJoueur;
     private JPanel         panelInfoJoueur;
-    private PanelObjectifs panelObjectifs;
+    private PanelObjectifsJoueur panelObjectifs;
 
     private JLabel     lblNom;
     private JLabel     lblNbJeton;
@@ -123,7 +123,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         if(e.getSource() == this.btnIconObjectif)
         {
             /* Création d'un Panel */
-            this.panelObjectifs = new PanelObjectifs(this.ctrl);
+            this.panelObjectifs = new PanelObjectifsJoueur(this.ctrl);
 
             /* Création d'un JDialog */
             this.dialogObjectifs = new JDialog();

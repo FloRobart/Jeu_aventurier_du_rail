@@ -27,7 +27,7 @@ import metier.Joueur;
 import metier.Noeud;
 
 
-public class PanelObjectifs extends JPanel implements ActionListener
+public class PanelObjectifsJoueur extends JPanel implements ActionListener
 {
     private Controleur ctrl;
     private Joueur     joueur;
@@ -43,7 +43,7 @@ public class PanelObjectifs extends JPanel implements ActionListener
     private List<CarteObjectif>  listObjectifs;
 
  
-    public PanelObjectifs(Controleur ctrl)
+    public PanelObjectifsJoueur(Controleur ctrl)
     {
         this.ctrl = ctrl;
         this.theme = this.ctrl.getTheme();
