@@ -18,7 +18,6 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import controleur.Controleur;
@@ -106,20 +105,20 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
     {
 		if(e.getSource() == this.btnPiocher)
 		{
-			if(this.getnbSelection() == 0)
-					JOptionPane.showMessageDialog(this, "Il faut selectionner au moins 1 carte", "Erreur", JOptionPane.ERROR_MESSAGE);
-					
-			for(int i=0; i<PanelPiocherObjectif.TAILLE; i++)
-			{	
-				if(this.tabChoixCarte[i] == true)
-				{
-					this.ctrl.ajouterObjectifsJoueurs(this.cartesObjectifs[i]);
+			if(this.getnbSelection() > 0)
+			{		
+				for(int i=0; i<PanelPiocherObjectif.TAILLE; i++)
+				{	
+					if(this.tabChoixCarte[i] == true)
+					{
+						this.ctrl.ajouterObjectifsJoueurs(this.cartesObjectifs[i]);
+					}
+					else if(this.cartesObjectifs[i] != null)
+						this.ctrl.remettreCarteObjectif(this.cartesObjectifs[i]);
 				}
-				else if(this.cartesObjectifs[i] != null)
-					this.ctrl.remettreCarteObjectif(this.cartesObjectifs[i]);
+				this.btnPiocher.setEnabled(false);
+				this.initCarteObjectifs();
 			}
-			this.btnPiocher.setEnabled(false);
-			this.initCarteObjectifs();
 		}
 
 		for (int i = 0; i < PanelPiocherObjectif.TAILLE; i++)
@@ -137,7 +136,6 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 					else
 					{
 						this.tabCarteobjectif[i].setBackground(this.theme.get("buttons").get(1));
-
 					}
 					this.tabChoixCarte[i] = !this.tabChoixCarte[i];
 				}
