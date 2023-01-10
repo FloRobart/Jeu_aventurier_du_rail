@@ -29,6 +29,7 @@ import metier.partie.CarteWagon;
 public class PanelMainJoueur extends JPanel implements ActionListener
 {
     private Controleur             ctrl;
+    private Joueur                 joueur;
 
     private JDialog                      dialogObjectifs;
     private HashMap<String, List<Color>> theme;
@@ -40,6 +41,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
     private JLabel     lblNom;
     private JLabel     lblNbJeton;
     private JLabel     lblIcon;
+    private JLabel     lblScore;
 
     private PanelMain  panelMainWagon;
     
@@ -59,10 +61,12 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         this.setBorder( BorderFactory.createLineBorder(Color.black, 3) );
 
         //initialisation des composants
+        this.joueur = this.ctrl.getJoueur();
         this.panelImgJoueur  = new JPanel();
 
-        this.lblNom     = new JLabel("  nom   "); //this.joueur.getNom()
-        this.lblNbJeton = new JLabel("  jetons restants   "); //this.joueur.getNbJetons()
+        this.lblNom     = new JLabel(this.joueur.getNom());
+        this.lblNbJeton = new JLabel(this.joueur.getNbJetonsRestant() +"  jetons restants   "); 
+        this.lblScore   = new JLabel("Score : " + this.joueur.getScore());
 
         String pathImage = "";
         if (this.ctrl.getThemeUsed().equals("dark"))
@@ -78,14 +82,15 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 
         //panelImgJoueur Joueur
         this.panelInfoJoueur = new JPanel();
-        this.panelInfoJoueur.setLayout(new GridLayout(2,1)); // à modifier en fonction du nombre d'infos à afficher
+        this.panelInfoJoueur.setLayout(new GridLayout(3,1)); // à modifier en fonction du nombre d'infos à afficher
         this.panelImgJoueur.setLayout(new BorderLayout());
 
         this.panelInfoJoueur.add(this.lblNom);
         this.panelInfoJoueur.add(this.lblNbJeton);
+        this.panelInfoJoueur.add(this.lblScore);
 
         this.panelImgJoueur.add(this.lblIcon, BorderLayout.NORTH);
-        this.panelImgJoueur.add(panelInfoJoueur, BorderLayout.CENTER);
+        this.panelImgJoueur.add(this.panelInfoJoueur, BorderLayout.CENTER);
 
         //panelMainObjectif
         this.btnIconObjectif.setIcon(new ImageIcon(this.ctrl.getCarteObjectif().get(0).getImageRecto()));
@@ -230,6 +235,10 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         /* lblNbJeton */
         this.lblNbJeton.setOpaque(false);
         this.lblNbJeton.setForeground(labelForeColor);
+
+        /*lblScore */
+        this.lblScore.setOpaque(false);
+        this.lblScore.setForeground(labelForeColor);
 
         /* lblIcon */
         this.lblIcon.setOpaque(false);
