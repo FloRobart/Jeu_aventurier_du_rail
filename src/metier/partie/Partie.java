@@ -15,6 +15,7 @@ public class Partie implements Serializable
 	private transient Controleur ctrl;
 	private static final long serialVersionUID = 2L;
 
+	private String nomPartie;
 	private transient GestionPioche  gestionPioche;
 	private List<Arete>   alArete;
 	private Joueur[]      joueurs;
@@ -28,11 +29,12 @@ public class Partie implements Serializable
 		this.joueurCourant = j;
 	}
 
-	public Partie(Controleur ctrl, Metier metier, boolean estMulti)
+	public Partie(Controleur ctrl, Metier metier, boolean estMulti, String nomPartie)
 	{
 		this.ctrl          = ctrl;
 		this.gestionPioche = new GestionPioche(metier);
 		this.alArete       = metier.getAretes();
+		this.nomPartie     = nomPartie;
 
 		this.joueurs = new Joueur[metier.getJoueurs().size()];
 		for (int i = 0; i < this.joueurs.length; i++)

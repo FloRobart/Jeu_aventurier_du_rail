@@ -39,6 +39,8 @@ public class ServerClientHandler implements Runnable
 
     private ObjectInputStream in;
     private ObjectOutputStream out;
+    private Socket socket;
+    private Boolean shouldStop;
     private Controleur ctrl;
     private Metier metier;
     private String nomJoueur;
@@ -56,6 +58,7 @@ public class ServerClientHandler implements Runnable
         catch(Exception e)
         {
             System.out.println("Erreur lors de l'envoi de la partie");
+            this.metier.getServer().RemoveClient(this);
         }
     }
 
@@ -69,6 +72,7 @@ public class ServerClientHandler implements Runnable
         catch(Exception e)
         {
             System.out.println("Erreur lors de l'envoi de la commande réseau");
+            this.metier.getServer().RemoveClient(this);
         }
     }
 
@@ -88,12 +92,14 @@ public class ServerClientHandler implements Runnable
         catch(Exception e)
         {
             System.out.println("Erreur lors de la lecture du flux réseau");
+            this.metier.getServer().RemoveClient(this);
         }
         return ret;
     }
 
     public ServerClientHandler(Controleur ctrl, Socket socket)
     {
+        this.socket = socket;
         this.ctrl = ctrl;
         this.metier = ctrl.getMetier();
         this.authentifie = false;
@@ -126,10 +132,22 @@ public class ServerClientHandler implements Runnable
             e.printStackTrace();
         }
     }
+
+    public void Disconnect()
+    {
+        try {
+            this.socket.close();
+            this.shouldStop = true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+    }
     
     public void run()
     {
-        while (true)
+        this.shouldStop = false;
+        while (!this.shouldStop)
         {
             String command = readonce();      
             if (command == null)
@@ -149,7 +167,8 @@ public class ServerClientHandler implements Runnable
                 {
                     writeonce("WRONG");
                 }
-                return;
+                this.metier.getServer().RemoveClient(this);
+
             }
 
             if (!this.authentifie)
@@ -159,10 +178,7 @@ public class ServerClientHandler implements Runnable
                     this.nomJoueur = readonce();
                     System.out.println("nom joueur : " + this.nomJoueur + "");
 
-                    writeonce("PARTIE");
-                    writeonce("nom");
-                    writeonce(this.metier.getNomPartie());
-
+                    this.majPartie(this.ctrl.getPartie());
                 }
 
                 if (command.equals("MOT_DE_PASSE"))

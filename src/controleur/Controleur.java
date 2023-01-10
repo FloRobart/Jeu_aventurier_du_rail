@@ -66,7 +66,7 @@ public class Controleur
 		this.joueur.setCouleur(Color.PINK);
 		this.metier.ajouterJoueur(this.joueur);
 
-		this.partie = new Partie(this, this.metier, false);
+		this.partie = new Partie(this, this.metier, false, "Partie local");
 
 		this.ihm.demarrerJeu(); 
 	}
@@ -78,7 +78,7 @@ public class Controleur
 	 */
 	public void lancerPartieMulti()
 	{
-		this.partie = new Partie(this, this.metier, true);
+		this.partie = new Partie(this, this.metier, true, "Partie multi-joueurs");
 
 		this.ihm.demarrerJeu();
 	}
@@ -273,7 +273,7 @@ public class Controleur
 	{
 		this.joueur = new Joueur("Joueur 1");
 		this.metier.ajouterJoueur(this.joueur);
-		this.partie = new Partie(this, this.metier,true);
+		this.partie = new Partie(this, this.metier, true, "Partie multi-joueur");
 		this.serverCtrl = new ServerControleur(this.metier,this.partie);
 	}
 
