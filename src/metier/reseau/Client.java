@@ -31,6 +31,11 @@ public class Client
         this.connecte = false;
     }
 
+    public void writeonce(String cmd)
+    {
+        this.csh.writeonce(cmd);
+    }
+
     public void majPartie()
     {
         this.csh.majPartie();
