@@ -108,10 +108,10 @@ public class PanelPioche extends JPanel implements ActionListener
 			ImageIcon imgIcon = new ImageIcon(bfImg.getScaledInstance(((int)(200*facteurZoom)), ((int)(100*facteurZoom)), Image.SCALE_SMOOTH));
 			this.tabCarteWagon[ind].setIcon(imgIcon);
 			this.tabCarteWagon[ind].setEnabled(true);
-		}
 
-		if (this.tabCartesVisible[ind].isJoker() && this.ctrl.getEnTrainDePiocher())
-			this.tabCarteWagon[ind].setEnabled(false);
+			if (this.tabCartesVisible[ind].isJoker() && this.ctrl.getEnTrainDePiocher())
+				this.tabCarteWagon[ind].setEnabled(false);
+		}
     }
 
     public void actionPerformed(ActionEvent e) 
@@ -122,6 +122,9 @@ public class PanelPioche extends JPanel implements ActionListener
 			{
 				this.ctrl.piocherPioche();
 				this.ctrl.switchEnTrainDePiocher();
+
+				if (this.ctrl.getSizeWagon() == 0 && this.ctrl.getEnTrainDePiocher())
+					this.ctrl.switchEnTrainDePiocher();
 			}
 
 			for (int i = 0 ; i < PanelPioche.TAILLE ; i++)
@@ -140,6 +143,9 @@ public class PanelPioche extends JPanel implements ActionListener
 						{
 							this.ctrl.piocherVisible(i);
 							this.ctrl.switchEnTrainDePiocher();
+
+							if (this.ctrl.getSizeWagon() == 0 && this.ctrl.getEnTrainDePiocher())
+								this.ctrl.switchEnTrainDePiocher();
 						}
 					}
 				}
