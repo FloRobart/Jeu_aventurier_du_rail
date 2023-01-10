@@ -158,6 +158,7 @@ public class Controleur
 	public int     getCouleurSelectionne() { return this.couleurSelectionnee;   }
 	public boolean getEnTrainDePiocher  () { return this.enTrainDePiocher;      }
     public void    disposeFrameJeu		() { this.ihm.disposeFrameJeu(); 		}
+	public void    disposeFrameFinPartie() { this.ihm.disposeFrameFinPartie(); }
 
 	// Méthodes
 	public void setImageButton(int indice)  { if ( this.ihm != null ) this.ihm.setImageButton(indice); }

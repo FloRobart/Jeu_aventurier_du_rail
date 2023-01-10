@@ -9,14 +9,15 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-import ihm.jeu.FrameFinDePartie;
 import controleur.Controleur;
+import ihm.finPartie.FrameFinPartie;
+
 
 public class PanelInfoPartie extends JPanel implements ActionListener
 {
     private Controleur 	ctrl;
 
-    private FrameFinDePartie frmFinDePartie;
+    private FrameFinPartie frmFinDePartie;
     private JButton     btnArreterPartie;
 
     private JLabel      lblNbTours;
@@ -47,9 +48,11 @@ public class PanelInfoPartie extends JPanel implements ActionListener
     {
         if ( e.getSource() == this.btnArreterPartie )
         {
-            this.frmFinDePartie = new FrameFinDePartie(this.ctrl);
+            this.frmFinDePartie = new FrameFinPartie(this.ctrl);
         }
     }
+
+    public void disposeFrameFinPartie() { if ( this.frmFinDePartie != null ) { this.frmFinDePartie.dispose(); } }
 
     public void setNbTours(int nbTours)
     { 
@@ -63,7 +66,7 @@ public class PanelInfoPartie extends JPanel implements ActionListener
     {
         Color background       = this.ctrl.getTheme().get("background"  ).get(0);
         Color labelForeColor   = this.ctrl.getTheme().get("labels"      ).get(0);
-        Color labelBackColor   = this.ctrl.getTheme().get("labels"     ).get(1);
+        Color labelBackColor   = this.ctrl.getTheme().get("labels"      ).get(1);
         Color btnForeColor     = this.ctrl.getTheme().get("buttons"     ).get(0);
         Color btnBackColor     = this.ctrl.getTheme().get("buttons"     ).get(1);
 
