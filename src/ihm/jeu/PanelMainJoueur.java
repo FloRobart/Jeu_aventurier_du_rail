@@ -155,7 +155,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 		this.remove(this.panelMainWagon);
 		this.panelMainWagon = new PanelMain(this.ctrl, this.ctrl.getJoueur());
 		this.add(this.panelMainWagon, BorderLayout.CENTER);
-        this.lblObjectif.setText("  " + this.joueur.getNbCartesObjectif() + " objectifs restants");
+        this.lblObjectif.setText("  " + this.joueur.getNbObjectifRestant() + " objectifs restants");
 		this.lblNbJeton .setText(this.joueur.getNbJetonsRestant() +"  jetons restants   "); 
 
 		this.revalidate();
@@ -269,9 +269,10 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         this.dialogObjectifs.dispose();
     }
 
-    public void validerObjectif(CarteObjectif co) 
+    public void validerObjectif() 
     {
-        this.panelObjectifs.validerObjectif(co);
+		if (this.panelObjectifs != null) { this.panelObjectifs.validerObjectif(); }
+        
         this.majIHM();
     }
 }

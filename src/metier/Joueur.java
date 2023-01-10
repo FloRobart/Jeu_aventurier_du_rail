@@ -55,6 +55,7 @@ public class Joueur implements Serializable
     public Color getCouleur() { return this.couleur; }
 	public Controleur getControleur() { return this.ctrl; }
     public List<CarteObjectif> getAlObjectifsFinis() { return this.alObjectifsFinis; }
+	public int getNbObjectifRestant() { return this.alCartesObjectif.size() - this.alObjectifsFinis.size(); }
 
     public void setNom(String nom) { this.nom = nom; }
     public void setScore(int score) { this.score = score; }
@@ -125,12 +126,12 @@ public class Joueur implements Serializable
 		{
 			CarteObjectif co = it.next();
 			
-			if (co.estValide(this)) 
+			if (co.estValide(this) && !this.alObjectifsFinis.contains(co)) 
 			{
 				this.alObjectifsFinis.add(co);
 				this.ajouterScore(co.getPoints());
 				//it.remove();
-                this.ctrl.validerObjectif(co);
+                this.ctrl.validerObjectif();
                 this.nbCartesObjectif--;
 			}
 		}

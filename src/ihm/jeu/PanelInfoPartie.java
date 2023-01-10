@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
+import ihm.jeu.FrameFinDePartie;
 import controleur.Controleur;
 
 public class PanelInfoPartie extends JPanel implements ActionListener

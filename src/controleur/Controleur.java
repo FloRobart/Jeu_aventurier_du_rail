@@ -518,9 +518,9 @@ public class Controleur
 		}
 	}
 
-	public void validerObjectif(CarteObjectif co) 
+	public void validerObjectif() 
 	{
-		this.ihm.validerObjectif(co);
+		this.ihm.validerObjectif();
     }
 
 	public static void main(String[] args)

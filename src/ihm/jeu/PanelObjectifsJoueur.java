@@ -123,7 +123,6 @@ public class PanelObjectifsJoueur extends JPanel implements ActionListener
             g2.setColor(Color.GREEN);
             g2.fillRect(0, 0, 200, 150);
         }
-            
 
 
         //zoom de l'image du plateau
@@ -233,9 +232,8 @@ public class PanelObjectifsJoueur extends JPanel implements ActionListener
     }
 
 
-    public void validerObjectif(CarteObjectif co) 
+    public void validerObjectif() 
     {
-        this.tabBtnObjectifs[this.joueur.getNbCartesObjectif()].setIcon(new ImageIcon(creerCarte(co)));
         this.ctrl.afficherCarteObjectif(new ImageIcon(this.ctrl.getImageVersoObjectif()));
     }
 }
