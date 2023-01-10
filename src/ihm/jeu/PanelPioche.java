@@ -88,11 +88,17 @@ public class PanelPioche extends JPanel implements ActionListener
 		this.deckCarteWagon.addActionListener(this);
 		for (int cpt=0; cpt<PanelPioche.TAILLE; cpt++)
 			this.tabCarteWagon[cpt].addActionListener(this);
+
+		this.ctrl.verifierVisible();
     }
 
     public void setImageButton(int ind)
     {
-		if ( this.tabCartesVisible[ind] != null )
+		if ( this.tabCartesVisible[ind] == null )
+		{
+			this.tabCarteWagon[ind].setEnabled(false);
+		}
+		else
 		{
 			BufferedImage bfImg = this.tabCartesVisible[ind].getImageRecto();
 			double zoomLargeur = 200  / bfImg.getWidth();
@@ -101,11 +107,11 @@ public class PanelPioche extends JPanel implements ActionListener
 
 			ImageIcon imgIcon = new ImageIcon(bfImg.getScaledInstance(((int)(200*facteurZoom)), ((int)(100*facteurZoom)), Image.SCALE_SMOOTH));
 			this.tabCarteWagon[ind].setIcon(imgIcon);
+			this.tabCarteWagon[ind].setEnabled(true);
 		}
-		else
-		{
+
+		if (this.tabCartesVisible[ind].isJoker() && this.ctrl.getEnTrainDePiocher())
 			this.tabCarteWagon[ind].setEnabled(false);
-		}
     }
 
     public void actionPerformed(ActionEvent e) 
@@ -115,7 +121,7 @@ public class PanelPioche extends JPanel implements ActionListener
 			if ( e.getSource() == this.deckCarteWagon )
 			{
 				this.ctrl.piocherPioche();
-				this.ctrl.piocherPioche();
+				this.ctrl.switchEnTrainDePiocher();
 			}
 
 			for (int i = 0 ; i < PanelPioche.TAILLE ; i++)
@@ -133,7 +139,7 @@ public class PanelPioche extends JPanel implements ActionListener
 						else
 						{
 							this.ctrl.piocherVisible(i);
-							this.ctrl.piocherPioche();
+							this.ctrl.switchEnTrainDePiocher();
 						}
 					}
 				}

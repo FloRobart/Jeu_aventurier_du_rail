@@ -34,8 +34,9 @@ public class Controleur
 	private ServerControleur serverCtrl;
 	private ClientControleur clientCtrl;
 
-	private Arete areteSelectionnee;
-	private int   couleurSelectionnee;
+	private Arete   areteSelectionnee;
+	private int     couleurSelectionnee;
+	private boolean enTrainDePiocher;
 
     public Controleur()
     {
@@ -44,6 +45,7 @@ public class Controleur
 		this.joueur = null;
         this.ihm    = new Ihm(this);
 
+		this.enTrainDePiocher = false;
     }
 	public void superMethodeDeDebug() { 
 		this.joueur.ajouterCarteWagon(new CarteWagon(null, getImageVersoCouleur(), getImageRectoLocomotive()));
@@ -140,14 +142,19 @@ public class Controleur
 	public BufferedImage       getImageVersoObjectif() { return this.metier.getImageVersoObjectif(); }
 	public BufferedImage       getImage             () { return this.ihm   .getImage             (); }
 
-	public int   getSizeWagon         () { return this.partie.getSizeWagon(); }
-	public Arete getAreteSelectionne  () { return this.areteSelectionnee;     }
-	public int   getCouleurSelectionne() { return this.couleurSelectionnee;   }
+	public int     getSizeWagon         () { return this.partie.getSizeWagon(); }
+	public Arete   getAreteSelectionne  () { return this.areteSelectionnee;     }
+	public int     getCouleurSelectionne() { return this.couleurSelectionnee;   }
+	public boolean getEnTrainDePiocher  () { return this.enTrainDePiocher;      }
 
 	// Méthodes
 	public void setImageButton(int indice)  { if ( this.ihm != null ) this.ihm.setImageButton(indice); }
 	public void	setNbTours	  (int nbTours) { this.ihm.setNbTours(nbTours);}
 
+	public void switchEnTrainDePiocher()
+	{
+		this.enTrainDePiocher = !this.enTrainDePiocher;
+	}
 
 	public boolean ajouterJoueur(Joueur joueur)
 	{
@@ -204,6 +211,11 @@ public class Controleur
 	public void majIHM()
 	{
 		this.ihm.majIHM();
+	}
+
+	public void verifierVisible()
+	{
+		this.partie.verifierVisible();
 	}
 
 	public void prendreArete(int indMain)
