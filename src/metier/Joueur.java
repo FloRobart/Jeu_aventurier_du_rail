@@ -40,7 +40,7 @@ public class Joueur implements Serializable
     public HashMap<Color,Integer> gethashMapCarteWagons() { return this.hashMapCarteWagons; }
     public List<CarteWagon> getAlCartesWagons() { return this.alCartesWagons; }
 	public List<Color> getAlCouleurs() { return this.alCouleurs; }
-    public int getNbCartesWagon() { return this.hashMapCarteWagons.size(); }
+    public int getNbCartesWagon() { return this.alCartesWagons.size(); }
     public int getNbJetonsRestant() { return this.nbJetonsRestant; }
     public Color getCouleur() { return this.couleur; }
 
