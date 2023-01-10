@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import javax.swing.Timer;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -29,6 +30,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controleur.Controleur;
+import metier.Joueur;
 
 
 public class PanelAttente extends JPanel implements ActionListener
@@ -71,7 +73,6 @@ public class PanelAttente extends JPanel implements ActionListener
     /* Listes */
     private JScrollPane  jspLstParticipants;
     private List<JLabel> lstParticipants;
-    
 
     public PanelAttente(Controleur ctrl, boolean hote)
     {
@@ -317,9 +318,12 @@ public class PanelAttente extends JPanel implements ActionListener
 
         /* Boutons des joueurs */
         Color titleBackColor = this.theme.get("titles").get(1);
+        List<Joueur> lstJoueurs = this.ctrl.getJoueurs();
         for (int i = 0; i < this.ctrl.getNbJoueursMax(); i++)
         {
-            this.lstParticipants.add(new JLabel("Joueur " + (i+1)));
+            String txt=" ";
+            if (i < lstJoueurs.size()) { txt = lstJoueurs.get(i).getNom(); }
+            this.lstParticipants.add(new JLabel(txt));
             this.lstParticipants.get(i).setFont(new Font("Liberation Sans", 0, 24));
             this.lstParticipants.get(i).setPreferredSize(new Dimension(200, 40));
             this.lstParticipants.get(i).setOpaque(true);
@@ -330,6 +334,20 @@ public class PanelAttente extends JPanel implements ActionListener
         this.panelJoueurs.setLayout(new GridLayout(this.lstParticipants.size(), 1));
         for (int i = 0; i < this.lstParticipants.size(); i++)
             this.panelJoueurs.add(this.lstParticipants.get(i));
+
+        Timer timer = new Timer(1000, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                List<Joueur> lstJoueurs    = ctrl.getJoueurs();
+                for (int i = 0; i < ctrl.getNbJoueursMax(); i++)
+                {
+                    String txt=" ";
+                    if (i < lstJoueurs.size()) { txt = lstJoueurs.get(i).getNom(); }
+                    lstParticipants.get(i).setText(txt);
+                }
+                panelJoueurs.repaint();
+            }
+        });
+        timer.start();
 
         this.jspLstParticipants = new JScrollPane(this.panelJoueurs, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         this.jspLstParticipants.setMaximumSize  (new Dimension(200, 250));
@@ -520,7 +538,7 @@ public class PanelAttente extends JPanel implements ActionListener
         this.lstParticipants = new ArrayList<JLabel>();
         for (int i = 0; i < this.ctrl.getNbJoueursMax(); i++)
         {
-            this.lstParticipants.add(new JLabel("Joueur " + (i+1)));
+            this.lstParticipants.add(new JLabel(" "));
             this.lstParticipants.get(i).setFont(new Font("Liberation Sans", 0, 24));
             this.lstParticipants.get(i).setPreferredSize(new Dimension(200, 40));
             this.lstParticipants.get(i).setOpaque(true);

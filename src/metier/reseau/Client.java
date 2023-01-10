@@ -19,7 +19,9 @@ public class Client
     private Socket socket;
     private boolean connecte;
 
+    private ClientServerHandler csh;
     private Controleur ctrl;
+    private Thread t;
     
     public Client(String ip, Controleur ctrl)
     {
@@ -27,6 +29,11 @@ public class Client
         this.ip = ip;
         this.port = 5000;
         this.connecte = false;
+    }
+
+    public void majPartie()
+    {
+        this.csh.majPartie();
     }
 
     public boolean passTest(String password) throws IOException
@@ -46,6 +53,20 @@ public class Client
         return b;
     }
 
+    public void Disconnect()
+    {
+        this.csh.Disconnect();
+        // stop thread
+        t.interrupt();
+        // close socket
+        try {
+            this.socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.ctrl.majIHM();
+    }
+
 
     /*
      * Connexion au serveur
@@ -57,8 +78,9 @@ public class Client
         {
             this.socket = new Socket(this.ip, this.port);
             this.connecte = true;
-
-            new Thread(new ClientServerHandler(this.ctrl, this.socket, password)).start();
+            this.csh = new ClientServerHandler(this.ctrl, this.socket, password);
+            this.t = new Thread(csh);
+            t.start();
             
         }
         catch(Exception e)

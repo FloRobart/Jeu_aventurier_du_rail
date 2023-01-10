@@ -30,6 +30,7 @@ import ihm.customComponent.TextFieldAdresseIP;
 import ihm.customComponent.TextFieldMdp;
 import ihm.customComponent.TextFieldPseudo;
 import ihm.customComponent.TextFieldWithHint;
+import metier.Joueur;
 import metier.reseau.Client;
 
 
@@ -604,6 +605,7 @@ public class PanelAccueil extends JPanel implements ActionListener
                     {
                         if (e.getSource() == this.btnCreerSolo)
                         {
+                            this.ctrl.ajouterJoueur(new Joueur(this.txtPseudo.getText()));
                             this.ctrl.creerPartieSolo();
                         }
                         else
@@ -612,7 +614,7 @@ public class PanelAccueil extends JPanel implements ActionListener
                             if (mdpCorrect)
                             {
                                 /* Emmène le joueur qui créée la partie dans la salle d'attente */
-                                this.ctrl.creerPartieMulti();
+                                this.ctrl.creerPartieMulti(this.txtMdpCreer.getText());
                             }
                         }
                     }
@@ -622,8 +624,8 @@ public class PanelAccueil extends JPanel implements ActionListener
 
             /* Test */
             if (e.getSource() == this.btnTestSolo     ) { this.mappeImportee = this.ctrl.ouvrir(new File("./France.xml")); this.ctrl.creerPartieSolo(); }
-            if (e.getSource() == this.btnTestMulti    ) { this.mappeImportee = this.ctrl.ouvrir(new File("./France.xml")); this.ctrl.creerPartieMulti(); }
-            if (e.getSource() == this.btnTestRejoindre) { this.ctrl.joinGame("127.0.0.1", "0000");}
+            if (e.getSource() == this.btnTestMulti    ) { this.mappeImportee = this.ctrl.ouvrir(new File("./France.xml")); this.ctrl.creerPartieMulti("0000"); }
+            if (e.getSource() == this.btnTestRejoindre) { if(this.txtPseudo.getText().isBlank()) this.txtPseudo.setText("Joe"); this.ctrl.joinGame("127.0.0.1", this.txtPseudo.getText(), "0000");}
 
 
 
@@ -651,7 +653,7 @@ public class PanelAccueil extends JPanel implements ActionListener
                         {
                             // Vérifier que le mot de passe colle avec l'adresse IP
 
-                            this.ctrl.joinGame(this.txtIpRejoindre.getText(), this.txtMdpRejoindre.getText());
+                            this.ctrl.joinGame(this.txtIpRejoindre.getText(), this.txtPseudo.getText(), this.txtMdpRejoindre.getText());
                         }
                     }
                 }
@@ -677,11 +679,25 @@ public class PanelAccueil extends JPanel implements ActionListener
         }
         else
         {
-            pseudoCorrect = true;
-            this.txtPseudo.setBorder(null);
+            boolean onlySpace = true;
+            for (int i = 0; i < this.txtPseudo.getText().length(); i++)
+                if (this.txtPseudo.getText().charAt(i) != ' ')
+                    onlySpace = false;
 
-            if (this.txtPseudo.getPlaceholderColor() == disableColor)
-                this.txtPseudo.setPlaceholderColor(this.theme.get("saisies").get(2));
+            if (!onlySpace)
+            {
+                pseudoCorrect = true;
+                this.txtPseudo.setBorder(null);
+
+                if (this.txtPseudo.getPlaceholderColor() == disableColor)
+                    this.txtPseudo.setPlaceholderColor(this.theme.get("saisies").get(2));
+            }
+            else
+            {
+                this.txtPseudo.setText("");
+                this.txtPseudo.setPlaceholderColor(disableColor);
+                this.txtPseudo.setBorder(BorderFactory.createLineBorder(disableColor, 3));
+            }
         }
 
         return pseudoCorrect;

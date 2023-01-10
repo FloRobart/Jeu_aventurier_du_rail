@@ -75,7 +75,6 @@ public class Metier implements Serializable
 
 	private HashMap<String, List<Color>> hmColorThemes;
 
-	private String nomPartie;
 	private transient String motDePassePartie;
 	private transient Server server;
 	
@@ -112,8 +111,8 @@ public class Metier implements Serializable
 	public List<CarteObjectif> getCarteObjectif       () { return this.lstCartesObjectif;    }
 	public List<Noeud>         getNoeuds              () { return this.lstNoeuds;            }
 	public List<Arete>         getAretes              () { return this.lstAretes;            }
-	public CarteWagon[]		   getTabCarteWagon			() { return this.tabCarteWagon;         }
-	public CarteObjectif[]	   getTabCarteObjectif		() { return this.tabCarteObjectif;      }
+	public CarteWagon[]		   getTabCarteWagon		  () { return this.tabCarteWagon;        }
+	public CarteObjectif[]	   getTabCarteObjectif	  () { return this.tabCarteObjectif;     }
 
 	public int[]               getTaillePlateau       () { return this.taillePlateau;        }
 	public BufferedImage       getImagePlateau        () { return this.imagePlateau;         }
@@ -135,23 +134,22 @@ public class Metier implements Serializable
 
 	public BufferedImage       getImageVersoObjectif  () { return this.imageVersoObjectif;   }
 	
-	public String 			   getNomPartie           () { return this.nomPartie;            }
 	public String              getMotDePasse		  () { return this.motDePassePartie;     }
 	public Server 			   getServer              () { return this.server;               }
 	public Client 			   getClient              () { return this.client;               }
 	public String 			   getNomClient           () { return this.nomClient;            }
 
-	public void creeServer(Boolean demarer)
+	public void creeServer(Boolean demarer, String password)
 	{
-		this.motDePassePartie = "0000";
+		this.motDePassePartie = password;
 		this.server = new Server(this.ctrl);
 		if (demarer)
 			this.server.Start();
 	}
 
-	public void creeClient(String ip, Boolean demarer, String password)
+	public void creeClient(String ip, String nom, Boolean demarer, String password)
 	{
-		this.nomClient = "Joueur " + Math.round(Math.random()*100);
+		this.nomClient = nom;
 		this.client = new Client(ip, this.ctrl);
 		if (demarer)
 			this.client.Connect(password);

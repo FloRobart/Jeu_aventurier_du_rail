@@ -24,6 +24,7 @@ public class ClientServerHandler implements Runnable
     private ObjectInputStream in;
     private ObjectOutputStream out;
     private Controleur ctrl;
+    private Boolean shouldStop;
     private Metier metier;
     private String password;
 
@@ -37,6 +38,7 @@ public class ClientServerHandler implements Runnable
         catch(Exception e)
         {
             System.out.println("Erreur lors de l'envoi de la commande réseau");
+            this.metier.getClient().Disconnect();
         }
     }
 
@@ -56,8 +58,26 @@ public class ClientServerHandler implements Runnable
         catch(Exception e)
         {
             System.out.println("Erreur lors de la lecture du flux réseau");
+            this.metier.getClient().Disconnect();
         }
         return ret;
+    }
+
+    public void Disconnect()
+    {
+        this.shouldStop = true;
+    }
+
+    public void majPartie()
+    {
+        try {
+            this.out.writeUTF("MISE_A_JOUR_PARTIE");
+            this.out.flush();
+            this.out.writeObject(this.ctrl.getPartie());
+            this.out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public ClientServerHandler(Controleur ctrl, Socket socket, String password)
@@ -81,7 +101,8 @@ public class ClientServerHandler implements Runnable
     
     public void run()
     {
-        while (true)
+        this.shouldStop = false;
+        while (!this.shouldStop)
         {
             String command = readonce();
             if (command == null)
@@ -113,6 +134,9 @@ public class ClientServerHandler implements Runnable
             {
                 try {
                     Partie nouvelle_partie = (Partie) this.in.readObject();
+
+                    this.ctrl.setPartie(nouvelle_partie);
+                    this.ctrl.majIHM();
 
                     System.out.println("Nouvelle partie");
                 } catch (ClassNotFoundException e) {

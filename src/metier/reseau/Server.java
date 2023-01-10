@@ -58,6 +58,13 @@ public class Server
         }
     }
 
+    public void RemoveClient(ServerClientHandler sch)
+    {
+        sch.Disconnect();
+        this.clients.remove(sch);
+        this.ctrl.majIHM();
+    }
+
     public void Start()
     {
         

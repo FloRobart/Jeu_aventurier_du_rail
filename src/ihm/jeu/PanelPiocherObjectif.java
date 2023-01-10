@@ -57,7 +57,11 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 
 		this.lblChoisirCartes = new JLabel(" Choisissez les cartes objectif que vous voulez : ");
 
-		this.cartesObjectifs = this.ctrl.getPiocheObjectif();
+		this.cartesObjectifs = new CarteObjectif[PanelPiocherObjectif.TAILLE];
+
+		for(int cpt = 0; cpt < PanelPiocherObjectif.TAILLE; cpt++)
+			this.cartesObjectifs[cpt] = this.ctrl.getPiocheObjectif();
+
 		this.tabChoixCarte = new boolean[PanelPiocherObjectif.TAILLE];
 
 		//Creation des boutons
@@ -116,15 +120,18 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 		{
 			if (e.getSource() == this.tabCarteobjectif[i])
 			{
-				if(this.tabChoixCarte[i] == false)
-				{
-					this.tabChoixCarte[i] = true;
-					this.tabCarteobjectif[i].setBackground(Color.GREEN);
-				}
-				else
-				{
-					this.tabChoixCarte[i] = false;
-					this.tabCarteobjectif[i].setBackground(this.theme.get("buttons").get(1));
+				if(this.cartesObjectifs[i] != null)
+				{	
+					if(this.tabChoixCarte[i] == false)
+					{
+						this.tabChoixCarte[i] = true;
+						this.tabCarteobjectif[i].setBackground(Color.GREEN);
+					}
+					else
+					{
+						this.tabChoixCarte[i] = false;
+						this.tabCarteobjectif[i].setBackground(this.theme.get("buttons").get(1));
+					}
 				}
 			}
 		}
@@ -136,7 +143,9 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 	 */
 	private void initCarteObjectifs() 
 	{
-		this.cartesObjectifs = this.ctrl.getPiocheObjectif();
+		for(int cpt = 0; cpt < PanelPiocherObjectif.TAILLE; cpt++)
+			this.cartesObjectifs[cpt] = this.ctrl.getPiocheObjectif();
+
 		for (int cpt = 0; cpt < PanelPiocherObjectif.TAILLE; cpt++)
 		{
 			if(this.cartesObjectifs[cpt] != null)

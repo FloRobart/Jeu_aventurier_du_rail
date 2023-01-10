@@ -69,6 +69,7 @@ public class FrameJeu extends JFrame
     }
 
     public void setImageButton(int indice) { this.panelPioche.setImageButton(indice); }	
+    public void setNbTours    (int nbTours){ this.panelInfoPartie.setNbTours(nbTours); }
 
 	public BufferedImage getImage() { return this.panelPlateau.getImage(); }
 

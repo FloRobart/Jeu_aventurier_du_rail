@@ -29,23 +29,26 @@ import metier.partie.CarteWagon;
 public class PanelMainJoueur extends JPanel implements ActionListener
 {
     private Controleur             ctrl;
+    private Joueur                 joueur;
 
     private JDialog                      dialogObjectifs;
     private HashMap<String, List<Color>> theme;
 
     private JPanel         panelImgJoueur;
     private JPanel         panelInfoJoueur;
-    private PanelObjectifs panelObjectifs;
+    private PanelObjectifsJoueur panelObjectifs;
 
     private JLabel     lblNom;
     private JLabel     lblNbJeton;
     private JLabel     lblIcon;
+    private JLabel     lblScore;
 
     private PanelMain  panelMainWagon;
     
 
     private JPanel     panelMainObjectif;
     private JButton    btnIconObjectif;
+    private JLabel     lblObjectif;
        
 
     public PanelMainJoueur(Controleur ctrl)
@@ -59,10 +62,12 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         this.setBorder( BorderFactory.createLineBorder(Color.black, 3) );
 
         //initialisation des composants
+        this.joueur = this.ctrl.getJoueur();
         this.panelImgJoueur  = new JPanel();
 
-        this.lblNom     = new JLabel("  nom   "); //this.joueur.getNom()
-        this.lblNbJeton = new JLabel("  jetons restants   "); //this.joueur.getNbJetons()
+        this.lblNom     = new JLabel(this.joueur.getNom());
+        this.lblNbJeton = new JLabel(this.joueur.getNbJetonsRestant() +"  jetons restants   "); 
+        this.lblScore   = new JLabel("Score : " + this.joueur.getScore());
 
         String pathImage = "";
         if (this.ctrl.getThemeUsed().equals("dark"))
@@ -73,26 +78,33 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         this.lblIcon    = new JLabel(new ImageIcon(pathImage), JLabel.LEFT);
         
         this.panelMainWagon    = new PanelMain(this.ctrl, this.ctrl.getJoueur());
-        this.panelMainObjectif = new JPanel();
-        this.btnIconObjectif   = new JButton();
 
         //panelImgJoueur Joueur
         this.panelInfoJoueur = new JPanel();
-        this.panelInfoJoueur.setLayout(new GridLayout(2,1)); // à modifier en fonction du nombre d'infos à afficher
+        this.panelInfoJoueur.setLayout(new GridLayout(3,1)); // à modifier en fonction du nombre d'infos à afficher
         this.panelImgJoueur.setLayout(new BorderLayout());
 
         this.panelInfoJoueur.add(this.lblNom);
         this.panelInfoJoueur.add(this.lblNbJeton);
+        this.panelInfoJoueur.add(this.lblScore);
 
         this.panelImgJoueur.add(this.lblIcon, BorderLayout.NORTH);
-        this.panelImgJoueur.add(panelInfoJoueur, BorderLayout.CENTER);
+        this.panelImgJoueur.add(this.panelInfoJoueur, BorderLayout.CENTER);
 
         //panelMainObjectif
+        this.panelMainObjectif = new JPanel();
+        this.panelMainObjectif.setLayout(new BorderLayout());
+
+        this.btnIconObjectif   = new JButton();
         this.btnIconObjectif.setIcon(new ImageIcon(this.ctrl.getCarteObjectif().get(0).getImageRecto()));
         this.btnIconObjectif.setBorderPainted(false);
         this.btnIconObjectif.setContentAreaFilled(false);
         this.btnIconObjectif.setFocusPainted(false);
-        this.panelMainObjectif.add(this.btnIconObjectif);
+
+        this.lblObjectif = new JLabel(this.joueur.getNbCartesObjectif() + " objectifs restants");
+
+        this.panelMainObjectif.add(this.btnIconObjectif, BorderLayout.CENTER);
+        this.panelMainObjectif.add(this.lblObjectif, BorderLayout.SOUTH);
 
         //ajout des composants
         this.add(this.panelImgJoueur, BorderLayout.EAST);
@@ -111,7 +123,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         if(e.getSource() == this.btnIconObjectif)
         {
             /* Création d'un Panel */
-            this.panelObjectifs = new PanelObjectifs(this.ctrl);
+            this.panelObjectifs = new PanelObjectifsJoueur(this.ctrl);
 
             /* Création d'un JDialog */
             this.dialogObjectifs = new JDialog();
@@ -142,6 +154,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 		this.remove(this.panelMainWagon);
 		this.panelMainWagon = new PanelMain(this.ctrl, this.ctrl.getJoueur());
 		this.add(this.panelMainWagon, BorderLayout.CENTER);
+        this.lblObjectif.setText(this.joueur.getNbCartesObjectif() + " objectifs restants");
 
 		this.revalidate();
 		this.repaint();
@@ -231,11 +244,23 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         this.lblNbJeton.setOpaque(false);
         this.lblNbJeton.setForeground(labelForeColor);
 
+        /*lblScore */
+        this.lblScore.setOpaque(false);
+        this.lblScore.setForeground(labelForeColor);
+
         /* lblIcon */
         this.lblIcon.setOpaque(false);
         this.lblIcon.setForeground(labelForeColor);
+
+        /* lblObjectif */
+        this.lblObjectif.setOpaque(false);
+        this.lblObjectif.setForeground(labelForeColor);
     }
 
+    /**
+     * Affiche la carte sélectionné dans la main du joueur
+     * @param icon : image de la carte
+     */
     public void afficherCarteObjectif(Icon icon) 
     {
         this.btnIconObjectif.setIcon(icon);

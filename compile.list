@@ -23,7 +23,7 @@
 ./src/ihm/jeu/PanelImage.java
 ./src/ihm/jeu/PanelInfosJoueur.java
 ./src/ihm/jeu/PanelJoueurs.java
-./src/ihm/jeu/PanelObjectifs.java
+./src/ihm/jeu/PanelObjectifsJoueur.java
 ./src/ihm/jeu/PanelMainJoueur.java
 ./src/ihm/jeu/PanelPioche.java
 ./src/ihm/jeu/PanelPlateau.java

@@ -59,7 +59,8 @@ public class Ihm
         this.appliquerTheme();
     }
 
-    public void setImageButton(int indice) { if ( this.frameJeu != null ) this.frameJeu.setImageButton(indice); }
+    public void setImageButton(int indice)  { if ( this.frameJeu != null ) this.frameJeu.setImageButton(indice); }
+    public void setNbTours    (int nbTours) { this.frameJeu.setNbTours(nbTours); }
 
     public int getWidthFrameAccueil() { return this.frameAccueil.getWidth(); }
 

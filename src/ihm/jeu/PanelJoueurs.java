@@ -68,7 +68,7 @@ public class PanelJoueurs extends JPanel implements ActionListener
             this.tabPanels[cpt].setBorder(BorderFactory.createBevelBorder(1, titleBackColor, titleBackColor));
             this.tabPanels[cpt].setLayout(new BorderLayout());
 
-            this.tabLblNom  [cpt] = new JLabel(this.lstJoueurs.get(cpt).getNom());
+            this.tabLblNom  [cpt] = new JLabel(" " + this.lstJoueurs.get(cpt).getNom());
             //this.tabLblNom[cpt].setForeground(this.joueur.getCouleur());
             this.tabLblScore[cpt] = new JLabel("Score : " + this.lstJoueurs.get(cpt).getScore());
 

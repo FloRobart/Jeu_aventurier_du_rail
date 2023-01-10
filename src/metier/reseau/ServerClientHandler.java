@@ -30,6 +30,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import controleur.Controleur;
+import metier.Joueur;
 import metier.Metier;
 import metier.partie.Partie;
 
@@ -39,6 +40,8 @@ public class ServerClientHandler implements Runnable
 
     private ObjectInputStream in;
     private ObjectOutputStream out;
+    private Socket socket;
+    private Boolean shouldStop;
     private Controleur ctrl;
     private Metier metier;
     private String nomJoueur;
@@ -56,6 +59,7 @@ public class ServerClientHandler implements Runnable
         catch(Exception e)
         {
             System.out.println("Erreur lors de l'envoi de la partie");
+            this.metier.getServer().RemoveClient(this);
         }
     }
 
@@ -69,6 +73,7 @@ public class ServerClientHandler implements Runnable
         catch(Exception e)
         {
             System.out.println("Erreur lors de l'envoi de la commande réseau");
+            this.metier.getServer().RemoveClient(this);
         }
     }
 
@@ -88,12 +93,14 @@ public class ServerClientHandler implements Runnable
         catch(Exception e)
         {
             System.out.println("Erreur lors de la lecture du flux réseau");
+            this.metier.getServer().RemoveClient(this);
         }
         return ret;
     }
 
     public ServerClientHandler(Controleur ctrl, Socket socket)
     {
+        this.socket = socket;
         this.ctrl = ctrl;
         this.metier = ctrl.getMetier();
         this.authentifie = false;
@@ -111,7 +118,7 @@ public class ServerClientHandler implements Runnable
         Server s = this.metier.getServer();
         s.writeonce("NOUVEAU_JOUEUR");
         s.writeonce(this.nomJoueur);
-
+        this.metier.ajouterJoueur(new Joueur(this.nomJoueur));
         s.writeonce("PARTIE");
         s.writeonce("nb_joueurs");
         s.writeonce("" + s.getNbJoeurs());
@@ -126,10 +133,22 @@ public class ServerClientHandler implements Runnable
             e.printStackTrace();
         }
     }
+
+    public void Disconnect()
+    {
+        try {
+            this.socket.close();
+            this.shouldStop = true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+    }
     
     public void run()
     {
-        while (true)
+        this.shouldStop = false;
+        while (!this.shouldStop)
         {
             String command = readonce();      
             if (command == null)
@@ -149,7 +168,8 @@ public class ServerClientHandler implements Runnable
                 {
                     writeonce("WRONG");
                 }
-                return;
+                this.metier.getServer().RemoveClient(this);
+
             }
 
             if (!this.authentifie)
@@ -157,12 +177,21 @@ public class ServerClientHandler implements Runnable
                 if (command.equals("BONJOUR"))
                 {
                     this.nomJoueur = readonce();
+
+                    for (Joueur j : this.ctrl.getPartie().getJoueurs())
+                    {
+                        if (j.getNom().equals(this.nomJoueur))
+                        {
+                            writeonce("ERREUR");
+                            writeonce("Ce nom est déjà utilisé");
+                            this.metier.getServer().RemoveClient(this);
+                            return;
+                        }
+                    }
+
                     System.out.println("nom joueur : " + this.nomJoueur + "");
 
-                    writeonce("PARTIE");
-                    writeonce("nom");
-                    writeonce(this.metier.getNomPartie());
-
+                    this.majPartie(this.ctrl.getPartie());
                 }
 
                 if (command.equals("MOT_DE_PASSE"))
@@ -185,6 +214,17 @@ public class ServerClientHandler implements Runnable
             }
 
             // Joueur authentifié
+
+            if (command.equals("MISE_A_JOUR_PARTIE"))
+            {
+                try {
+                    Partie partie = (Partie) in.readObject();
+                    this.ctrl.setPartie(partie);
+                    this.ctrl.majIHM();
+                } catch (ClassNotFoundException | IOException e) {
+                    e.printStackTrace();
+                }
+            }
 
             
                     

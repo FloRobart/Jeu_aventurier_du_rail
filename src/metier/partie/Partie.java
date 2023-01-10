@@ -15,19 +15,31 @@ public class Partie implements Serializable
 	private transient Controleur ctrl;
 	private static final long serialVersionUID = 2L;
 
+	private String nomPartie;
 	private transient GestionPioche  gestionPioche;
 	private List<Arete>   alArete;
 	private Joueur[]      joueurs;
-	private Joueur        joueurCourant;
+	private transient Joueur        joueurCourant;
 	private int           nbJetonFin;
 	private int           tour;
 	private boolean       estMulti; // mettre le serveur au lieu d'un boolean
 
-	public Partie(Controleur ctrl, Metier metier, boolean estMulti)
+	public void setJoueurCourrant(Joueur j)
+	{
+		this.joueurCourant = j;
+	}
+
+	public Joueur[] getJoueurs()
+	{
+		return this.joueurs;
+	}
+
+	public Partie(Controleur ctrl, Metier metier, boolean estMulti, String nomPartie)
 	{
 		this.ctrl          = ctrl;
 		this.gestionPioche = new GestionPioche(metier);
 		this.alArete       = metier.getAretes();
+		this.nomPartie     = nomPartie;
 
 		this.joueurs = new Joueur[metier.getJoueurs().size()];
 		for (int i = 0; i < this.joueurs.length; i++)
@@ -47,8 +59,8 @@ public class Partie implements Serializable
 
 		}
 
-		this.nbJetonFin = metier.getNbJetonFin();
-		this.tour       = 1;
+		this.nbJetonFin    = metier.getNbJetonFin();
+		this.tour          = 1;
 
 		if (this.joueurs[0] != null) this.joueurCourant = this.joueurs[0];
 		else 					     this.joueurCourant = null;
@@ -74,12 +86,17 @@ public class Partie implements Serializable
 				indJoueur = (cpt++) % this.joueurs.length;
 		
 		this.joueurCourant = this.joueurs[indJoueur];
-		if (indJoueur == 0) this.tour++;
+		if (indJoueur == 0)
+		{
+			this.tour++;
+			this.ctrl.setNbTours(this.tour);
+		} 
 	}
 
-	public Joueur getJoueurCourant() { return this.joueurCourant; }
+	public Joueur 		getJoueurCourant()	  { return this.joueurCourant; }
 	public CarteWagon[] getTabCartesVisible() { return this.gestionPioche.getTabCartesVisible(); }
 	public int          getSizeWagon       () { return this.gestionPioche.getSizeWagon(); }
+	public int			getTours()			  { return this.tour;}
 
 	public void piocherPioche()
 	{
@@ -101,7 +118,7 @@ public class Partie implements Serializable
 		this.verifierVisible();
 	}
 
-	public CarteObjectif[] getPiocheObjectif() 
+	public CarteObjectif getPiocheObjectif() 
 	{
 		return this.gestionPioche.piocherCartesObjectif();
 	}
