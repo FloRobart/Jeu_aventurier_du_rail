@@ -92,6 +92,8 @@ public class Controleur
 	public void creerPartieMulti(String password)
 	{
 		this.joueur = this.metier.getJoueurs().get(0);
+		this.partie = new Partie(this, this.metier, true, "Partie local");
+
 		this.metier.creeServer(true, password);
 		this.ihm.demarrerAttente(true);
 	}
