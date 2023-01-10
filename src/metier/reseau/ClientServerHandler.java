@@ -60,6 +60,18 @@ public class ClientServerHandler implements Runnable
         return ret;
     }
 
+    public void majPartie()
+    {
+        try {
+            this.out.writeUTF("MISE_A_JOUR_PARTIE");
+            this.out.flush();
+            this.out.writeObject(this.ctrl.getPartie());
+            this.out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public ClientServerHandler(Controleur ctrl, Socket socket, String password)
     {
         this.ctrl = ctrl;
