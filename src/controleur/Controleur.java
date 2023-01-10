@@ -1,6 +1,7 @@
 package controleur;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.Icon;
@@ -149,13 +150,22 @@ public class Controleur
 			if ( coul.equals(this.metier.getCouleurs().get(0)))
 			{
 				for (Color c : this.joueur.getAlCouleurs())
-					if ( this.joueur.gethashMapCarteWagons().get(c) >= arete.getDistance() ) return true;
+				{
+					// carte couleur
+					if ( c != null && (this.joueur.gethashMapCarteWagons().get(c) +
+					                   this.joueur.gethashMapCarteWagons().get(null) >= arete.getDistance())) 
+						return true;
+
+					// carte jocker
+					if ( this.joueur.gethashMapCarteWagons().get(null) >= arete.getDistance() ) return true;
+				}
 			}
 			else
 			{
 				// carte couleur
 				if ( this.joueur.getAlCouleurs().contains(coul) && 
-					 this.joueur.gethashMapCarteWagons().get(coul) >= arete.getDistance() ) return true;
+					 this.joueur.gethashMapCarteWagons().get(coul) +
+					 this.joueur.gethashMapCarteWagons().get(null) >= arete.getDistance() ) return true;
 
 				// carte jocker
 				if ( this.joueur.gethashMapCarteWagons().get(null) >= arete.getDistance() ) return true;
@@ -183,36 +193,72 @@ public class Controleur
 	{
 		if (this.areteSelectionnee != null)
 		{
+			if ((this.couleurSelectionnee == 1 && this.areteSelectionnee.getProprietaire1() != null) ||
+				(this.couleurSelectionnee == 2 && this.areteSelectionnee.getProprietaire2() != null)   )
+			{
+				this.ihm.afficherErreur("Cette voie est déjà prise !");
+				return;
+			}
+
+			boolean estValide = false;
 			Color c = this.joueur.getAlCouleurs().get(indMain);
 			int nbCarte = this.joueur.gethashMapCarteWagons().get(c);
+			int nbJoker = this.joueur.gethashMapCarteWagons().get(null);
 
 			Color cVoie;
 			if (this.couleurSelectionnee == 1) cVoie = this.areteSelectionnee.getCouleur1();
 			else                               cVoie = this.areteSelectionnee.getCouleur2();
 
-			if ( ( c == null || c.equals(cVoie) || cVoie.equals(this.getCouleurs().get(0))) && 
-			       nbCarte >= this.areteSelectionnee.getDistance()                             )
+			// Utilisation de carte joker uniquement
+			if (c == null && nbCarte >= this.areteSelectionnee.getDistance())
 			{
-
-				if      ( this.couleurSelectionnee == 1 && this.areteSelectionnee.getProprietaire1() == null)
-					this.areteSelectionnee.setProprietaire1(joueur);
-				else if ( this.couleurSelectionnee == 2 && this.areteSelectionnee.getProprietaire2() == null)	
-					this.areteSelectionnee.setProprietaire2(joueur);
-				else
-					return;
-
 				this.joueur.gethashMapCarteWagons().put(c, nbCarte - this.areteSelectionnee.getDistance());
+				estValide = true;
+			}
+			// Utilisation de carte couleur sur une voie de la même couleur ou neutre
+			else if (c != null && (c.equals(cVoie) || cVoie.equals(this.getCouleurs().get(0))) &&
+				     nbCarte >= this.areteSelectionnee.getDistance()                             )
+			{
+				this.joueur.gethashMapCarteWagons().put(c, nbCarte - this.areteSelectionnee.getDistance());
+				estValide = true;
+			}
+			// Utilisation de carte couleur et joker sur une voie de la même couleur ou neutre
+			else if (c != null && (c.equals(cVoie) || cVoie.equals(this.getCouleurs().get(0))) &&
+				     nbCarte + nbJoker >= this.areteSelectionnee.getDistance()                   )
+			{
+				int nbJokerNeccessaire = this.areteSelectionnee.getDistance() - nbCarte;
+				boolean confirmation = this.ihm.poserQuestion(
+					"Voulez-vous utiliser " + nbJokerNeccessaire + " carte joker ?");
 
-				if (this.joueur.gethashMapCarteWagons().get(c) == 0)
+				if (confirmation)
 				{
-					this.joueur.getAlCouleurs().remove(c);
-					this.joueur.gethashMapCarteWagons().remove(c);
+					this.joueur.gethashMapCarteWagons().put(c, 0);
+					this.joueur.gethashMapCarteWagons().put(null, nbJoker - nbJokerNeccessaire);
+					estValide = true;
 				}
+			}
+
+			if (estValide)
+			{
+				if (this.couleurSelectionnee == 1) this.areteSelectionnee.setProprietaire1(joueur);
+				else                               this.areteSelectionnee.setProprietaire2(joueur);
+
+				Iterator<Color> it = this.joueur.getAlCouleurs().iterator();
+				while (it.hasNext()) 
+				{
+					Color coul = it.next();
+					if (this.joueur.gethashMapCarteWagons().get(coul) == 0) 
+					{
+						it.remove();
+						this.joueur.gethashMapCarteWagons().remove(coul);
+					}
+				}
+
+				this.areteSelectionnee = null;
+				this.couleurSelectionnee = 0;
 
 				this.ihm.majIHM();
 			}
-			
-			
 		}
 	}
 

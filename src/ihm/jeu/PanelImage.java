@@ -157,8 +157,8 @@ public class PanelImage extends JPanel
 			AffineTransform t = new AffineTransform();
 			t.rotate(angle, fig1.getX()+25, fig1.getY()+10);
 			Shape fig2 = t.createTransformedShape(fig1);
-			System.out.println("coul : " + couleur + " | proprio1 : " + arete.getProprietaire1() + " | proprio2 : " + arete.getProprietaire2());
-			// on dessine notre troncon*
+			
+			// on dessine notre troncon
 			if ((couleur == 1 && arete.getProprietaire1() == null) ||
 			    (couleur == 2 && arete.getProprietaire2() == null)   )
 			{
@@ -176,7 +176,7 @@ public class PanelImage extends JPanel
 			}
 			else
 			{
-				System.out.println("ca marche batard");
+				g2.setStroke(new BasicStroke(1));
 				Shape fig3 = t.createTransformedShape(new Rectangle2D.Double(x - 25, y - 10, 50, 20));
 				
 				if (couleur == 1) g2.setColor(arete.getProprietaire1().getCouleur());
@@ -186,7 +186,6 @@ public class PanelImage extends JPanel
 				g2.setColor(Color.BLACK);
 				g2.draw(fig3);
 			}
-			
 
 			this.hmArete.get(arete).add(fig2);
 		}

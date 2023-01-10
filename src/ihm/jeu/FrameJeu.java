@@ -8,6 +8,7 @@ import java.awt.Toolkit;
 import java.awt.Color;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
@@ -103,5 +104,17 @@ public class FrameJeu extends JFrame
 		this.panelMainJoueur.majIHM();
 		this.panelPioche.majIHM();
 		this.panelPlateau.majIHM();
+	}
+
+	public void afficherErreur(String message)
+	{
+		JOptionPane.showMessageDialog(this, message, "Erreur", JOptionPane.ERROR_MESSAGE);
+	}
+
+	public boolean poserQuestion(String message)
+	{
+		int choix = JOptionPane.showConfirmDialog(this, message, "Confirmation", JOptionPane.YES_NO_OPTION);
+
+		return choix == JOptionPane.YES_OPTION;
 	}
 }
