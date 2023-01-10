@@ -15,6 +15,7 @@ public class PanelInfoPartie extends JPanel implements ActionListener
 {
     private Controleur 	ctrl;
 
+    private FrameFinDePartie frmFinDePartie;
     private JButton     btnArreterPartie;
 
     private JLabel      lblNbTours;
@@ -28,6 +29,7 @@ public class PanelInfoPartie extends JPanel implements ActionListener
 		this.setLayout( new GridLayout(5,1) );
 
         this.btnArreterPartie = new JButton("Arrêter la partie");
+        this.frmFinDePartie = null;
 
         this.lblNbTours = new JLabel("  Tours : ");
 
@@ -38,14 +40,13 @@ public class PanelInfoPartie extends JPanel implements ActionListener
         this.add(new JLabel(""));
 
         this.btnArreterPartie.addActionListener(this);
-        
     }
 
     public void actionPerformed(ActionEvent e) 
     {
         if ( e.getSource() == this.btnArreterPartie )
         {
-
+            this.frmFinDePartie = new FrameFinDePartie(this.ctrl);
         }
     }
 
