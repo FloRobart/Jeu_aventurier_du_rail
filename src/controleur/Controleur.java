@@ -38,12 +38,15 @@ public class Controleur
 	private int     couleurSelectionnee;
 	private boolean enTrainDePiocher;
 
+	private BufferedImage imageVersoCouleur;
+
     public Controleur()
     {
         this.metier = new Metier(this);
 		this.partie = null;
 		this.joueur = null;
         this.ihm    = new Ihm(this);
+		this.setImageVersoCouleur();
 
 		this.enTrainDePiocher = false;
     }
@@ -160,6 +163,7 @@ public class Controleur
     public void    disposeFrameJeu		() { this.ihm.disposeFrameJeu(); 		}
 
 	// Méthodes
+	public void setImageVersoCouleur    () { this.imageVersoCouleur = this.metier.getImageVersoCouleur(); }
 	public void setImageButton(int indice)  { if ( this.ihm != null ) this.ihm.setImageButton(indice); }
 	public void	setNbTours	  (int nbTours) { this.ihm.setNbTours(nbTours);}
 
