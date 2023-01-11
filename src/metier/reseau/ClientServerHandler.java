@@ -76,6 +76,7 @@ public class ClientServerHandler implements Runnable
         try {
             this.out.writeObject("MISE_A_JOUR_PARTIE");
             this.out.flush();
+            this.out.reset();
             this.out.writeObject(this.ctrl.getPartie());
             this.out.flush();
         } catch (IOException e) {

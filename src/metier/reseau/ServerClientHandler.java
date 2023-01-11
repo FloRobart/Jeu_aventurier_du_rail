@@ -67,6 +67,7 @@ public class ServerClientHandler implements Runnable
         try
         {
             this.out.writeObject("MISE_A_JOUR_PARTIE");
+            this.out.reset();
             this.out.flush();
             this.out.writeObject(partie);
             this.out.flush();
