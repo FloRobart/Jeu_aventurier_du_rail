@@ -35,8 +35,7 @@ public class Controleur
 	private Joueur joueur;
     private Ihm    ihm;
 
-	private ServerControleur serverCtrl;
-	private ClientControleur clientCtrl;
+
 
 	private Arete   areteSelectionnee;
 	private int     couleurSelectionnee;
@@ -590,21 +589,6 @@ public class Controleur
 		this.partie.remettreCarteObjectif(carteObjectif);
 	}
 
-	/**
-	 * @Author Duc
-	 * methode qui actualise le IHM de jeu (update Partie) quand y a un changement
-	 */
-	public void updateMapOnline()
-	{
-		if (this.serverCtrl!= null)
-		{
-			this.serverCtrl.updateMap();
-		}
-		if (this.clientCtrl!= null)
-		{
-			this.clientCtrl.updateMap();
-		}
-	}
 
 	public void validerObjectif() 
 	{
