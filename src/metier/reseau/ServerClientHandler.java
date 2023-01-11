@@ -73,7 +73,6 @@ public class ServerClientHandler implements Runnable
     {
         try
         {
-            System.out.println("Tour du joueur : " + partie.getJoueurCourant().getNom());
             this.out.writeObject("MISE_A_JOUR_PARTIE");
             this.out.flush();
             this.out.reset();
@@ -171,13 +170,11 @@ public class ServerClientHandler implements Runnable
             String command = readonce();      
             if (command == null)
                 break;
-
-            System.out.println("[Server] : " + command.substring(0, Math.min(command.length(), 10)));
             
             if (command.equals("PASS_TEST"))
             {
                 String motDePasse = readonce();
-                System.out.println("mot de passe : " + motDePasse + "");
+                
                 if (motDePasse.equals(this.metier.getMotDePasse()))
                 {
                     writeonce("OK");
@@ -223,14 +220,12 @@ public class ServerClientHandler implements Runnable
                         return;
                     }
 
-                    System.out.println("nom joueur : " + this.nomJoueur + "");
-
                 }
 
                 if (command.equals("MOT_DE_PASSE"))
                 {
                     String motDePasse = readonce();
-                    System.out.println("mot de passe : " + motDePasse + "");
+                    
                     if (motDePasse.equals(this.metier.getMotDePasse()))
                     {
                         initialLoading();

@@ -85,7 +85,6 @@ public class ClientServerHandler implements Runnable
     public void majPartie()
     {
         try {
-            System.out.println("Tour du joueur : " + this.ctrl.getPartie().getJoueurCourant().getNom());
             this.out.writeObject("MISE_A_JOUR_PARTIE");
             this.out.flush();
             this.out.reset();
@@ -125,8 +124,6 @@ public class ClientServerHandler implements Runnable
             if (command == null)
                 break;
             
-            System.out.println("[Client] " + command.substring(0, Math.min(command.length(), 10)));
-
             if (command.equals("ERREUR"))
             {
                 String message = readonce();
@@ -150,9 +147,6 @@ public class ClientServerHandler implements Runnable
                     this.ctrl.setPartie(nouvelle_partie);
                 
                     this.ctrl.majIHM();
-
-
-                    System.out.println("Nouvelle partie");
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -168,9 +162,7 @@ public class ClientServerHandler implements Runnable
 
                         Metier nouveau_metier = (Metier) in.readObject();
                         this.ctrl.setMetier(nouveau_metier);
-                        
-                        System.out.println("--------ClientServerHandler"+nouveau_metier.getNoeuds());
-                        System.out.println("Class metier charger");
+        
                         this.ctrl.majIHM();
                     } catch (ClassNotFoundException | IOException e) {
                         e.printStackTrace();
@@ -205,12 +197,6 @@ public class ClientServerHandler implements Runnable
             
             if (command.equals("FINIR_TOUR"))
             {
-                //this.ctrl.getPartie().joueurSuivant();
-                if (this.ctrl.getPartie().getJoueurCourant().getNom().equals(this.metier.getNomClient()))
-                {
-                    System.out.println("Ceci est mon tour");
-                }
-                System.out.println("Tour de " + this.ctrl.getPartie().getJoueurCourant().getNom());
                 this.ctrl.majIHM();
             }
 

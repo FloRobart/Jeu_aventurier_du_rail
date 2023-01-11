@@ -566,7 +566,6 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
             /* Boutons de lancement de la partie */
             if (e.getSource() == this.btnLancer)
             {
-                System.out.println(this.ctrl.getJoueurs().size());
                 if (this.ctrl.getJoueurs().size() == 1 || this.ctrl.getJoueurs().size() >= this.ctrl.getNbJoueursMin())
                 {
                     this.ctrl.lancerPartieLocal();
