@@ -76,15 +76,6 @@ public class Metier implements Serializable
 
 	private String pathMappe;
 
-
-	public void copyTransients(Metier metier)
-	{
-		this.client           = metier.client;
-		this.nomClient        = metier.nomClient;
-		this.server           = metier.server;
-		this.motDePassePartie = metier.motDePassePartie;
-	}
-
 	/* ==================== */
 	/*     CONSTRUCTEUR     */
 	/* ==================== */
@@ -430,8 +421,8 @@ public class Metier implements Serializable
 		   ImageIO.write(image, "png", baos);
 		   out.writeObject(baos.toByteArray());
 		}
-
 	}
+
 	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException 
 	{
 		in.defaultReadObject();
@@ -444,6 +435,14 @@ public class Metier implements Serializable
 		for (int i = 0; i < size; i++) {
 			lstImagesRectoCouleur.add(ImageIO.read(new ByteArrayInputStream((byte[]) in.readObject())));
 		}
+	}
+
+	public void copyTransients(Metier metier)
+	{
+		this.client           = metier.client;
+		this.nomClient        = metier.nomClient;
+		this.server           = metier.server;
+		this.motDePassePartie = metier.motDePassePartie;
 	}
 
 	/* ==================== */
