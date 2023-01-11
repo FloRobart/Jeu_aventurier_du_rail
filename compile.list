@@ -19,6 +19,10 @@
 ./src/ihm/customComponent/TextFieldPseudo.java
 ./src/ihm/customComponent/TextFieldWithHint.java
 
+./src/ihm/finPartie/FrameFinPartie.java
+./src/ihm/finPartie/PanelFinPartie.java
+./src/ihm/finPartie/PanelResultat.java
+
 ./src/ihm/jeu/FrameJeu.java
 ./src/ihm/jeu/PanelImage.java
 ./src/ihm/jeu/PanelInfosJoueur.java
@@ -31,7 +35,6 @@
 ./src/ihm/jeu/PanelPiocherObjectif.java
 ./src/ihm/jeu/PanelMain.java
 ./src/ihm/jeu/PanelInfoPartie.java
-./src/ihm/jeu/FrameFinDePartie.java
 
 ./src/ihm/aide/PanelAideMenu.java
 ./src/ihm/aide/PanelAideJeu.java

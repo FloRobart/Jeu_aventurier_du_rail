@@ -172,6 +172,7 @@ public class Controleur
 	public int     getCouleurSelectionne() { return this.couleurSelectionnee;   }
 	public boolean getEnTrainDePiocher  () { return this.enTrainDePiocher;      }
     public void    disposeFrameJeu		() { this.ihm.disposeFrameJeu(); 		}
+	public void    disposeFrameFinPartie() { this.ihm.disposeFrameFinPartie(); }
 
 	// Méthodes
 	public void setImageVersoCouleur    () { this.imageVersoCouleur = this.metier.getImageVersoCouleur(); }

@@ -66,6 +66,7 @@ public class Ihm
     public int getWidthFrameAccueil() { return this.frameAccueil.getWidth(); }
 
     public void disposeFrameJeu	() { this.frameJeu.dispose(); }
+    public void disposeFrameFinPartie() { this.frameJeu.disposeFrameFinPartie(); }
 
 	public BufferedImage getImage() { return this.frameJeu.getImage(); }
 
