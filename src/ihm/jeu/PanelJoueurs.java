@@ -26,14 +26,14 @@ import metier.Joueur;
 
 public class PanelJoueurs extends JPanel implements ActionListener 
 {
-    private Controleur       ctrl;
-    private ArrayList<Joueur>     lstJoueurs;
-    private JPanel           panelJoueurs;
-    private JScrollPane      scrollJoueurs;
-    private JPanel[]         tabPanels;
-    private JButton[]        tabBoutons;
-    private JLabel[]         tabLblNom;
-    private JLabel[]         tabLblScore;
+    private Controleur        ctrl;
+    private ArrayList<Joueur> lstJoueurs;
+    private JPanel            panelJoueurs;
+    private JScrollPane       scrollJoueurs;
+    private JPanel[]          tabPanels;
+    private JButton[]         tabBoutons;
+    private JLabel[]          tabLblNom;
+    private JLabel[]          tabLblScore;
 
     private PanelInfosJoueur panelInfosJoueur;
     private JDialog          dialogInfosJoueur;
