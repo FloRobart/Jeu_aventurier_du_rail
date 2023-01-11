@@ -3,10 +3,14 @@ package ihm.jeu;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.image.BufferedImage;
+import java.awt.Image;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -93,7 +97,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         this.panelMainObjectif.setLayout(new BorderLayout());
 
         this.btnIconObjectif   = new JButton();
-        this.btnIconObjectif.setIcon(new ImageIcon(this.ctrl.getCarteObjectif().get(0).getImageRecto()));
+        this.btnIconObjectif.setIcon(this.resized(this.ctrl.getCarteObjectif().get(0).getImageRecto()));
         this.btnIconObjectif.setBorderPainted(false);
         this.btnIconObjectif.setContentAreaFilled(false);
         this.btnIconObjectif.setFocusPainted(false);
@@ -111,6 +115,18 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 		this.setVisible(true);
 
         this.btnIconObjectif.addActionListener(this);
+    }
+
+    public ImageIcon resized(BufferedImage img)
+    {
+        BufferedImage imgResized = img;
+		double zoomLargeur = 200  / imgResized.getWidth();
+		double zoomHauteur = 100 / imgResized.getHeight();
+		double facteurZoom = Math.min(zoomLargeur, zoomHauteur)-0.1;
+
+	    ImageIcon imgIcon = new ImageIcon(imgResized.getScaledInstance(((int)(200*facteurZoom)), ((int)(100*facteurZoom)), Image.SCALE_SMOOTH));
+
+        return imgIcon;
     }
 
     @Override
