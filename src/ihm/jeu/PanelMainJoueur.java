@@ -115,6 +115,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 		this.setVisible(true);
 
         this.btnIconObjectif.addActionListener(this);
+		this.appliquerTheme();
     }
 
     public ImageIcon resized(BufferedImage img)
@@ -165,19 +166,8 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 
 	public void majIHM()
 	{
-		Joueur j = this.ctrl.getJoueur();
-		this.remove(this.panelMainWagon);
-		this.panelMainWagon = new PanelMain(this.ctrl, this.ctrl.getJoueur());
-		this.add(this.panelMainWagon, BorderLayout.CENTER);
-
-		this.revalidate();
-		this.repaint();
-
-		this.lblObjectif.setText("  " + j.getNbObjectifRestant() + " objectifs restants");
-		this.lblNbJeton .setText(j.getNbJetonsRestant() +"  jetons restants   "); 
-
-		this.lblNom     = new JLabel(j.getNom());
-        this.lblNom.setForeground(j.getCouleur());
+		this.lblObjectif.setText("  " + this.ctrl.getJoueur().getNbObjectifRestant() + " objectifs restants");
+		this.lblNbJeton .setText(this.ctrl.getJoueur().getNbJetonsRestant() +"  jetons restants   "); 
 
 		this.appliquerTheme();
 	}
