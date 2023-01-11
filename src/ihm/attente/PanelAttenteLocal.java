@@ -161,7 +161,7 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
         this.lblJoueurMin.setMinimumSize  (new Dimension(150, 18));
         this.lblJoueurMin.setPreferredSize(new Dimension(150, 18));
 
-        this.lblJoueurMax.setText("● Joueurs Maximum");
+        this.lblJoueurMax.setText("● Joueurs maximum");
         this.lblJoueurMax.setMaximumSize  (new Dimension(150, 18));
         this.lblJoueurMax.setMinimumSize  (new Dimension(150, 18));
         this.lblJoueurMax.setPreferredSize(new Dimension(150, 18));
@@ -537,7 +537,7 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
             {
                 if (this.ctrl.getNbJoueursMax() > this.ctrl.getJoueurs().size())
                 {
-                    String nomJoueur = JOptionPane.showInputDialog(this, "Entrez Votre pseudo", "Ajouter un joueur", JOptionPane.QUESTION_MESSAGE);
+                    String nomJoueur = JOptionPane.showInputDialog(this, "Entrez votre pseudo", "Ajouter un joueur", JOptionPane.QUESTION_MESSAGE);
 
 
                     if (nomJoueur != null)
@@ -566,7 +566,6 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
             /* Boutons de lancement de la partie */
             if (e.getSource() == this.btnLancer)
             {
-                System.out.println(this.ctrl.getJoueurs().size());
                 if (this.ctrl.getJoueurs().size() == 1 || this.ctrl.getJoueurs().size() >= this.ctrl.getNbJoueursMin())
                 {
                     this.ctrl.lancerPartieLocal();

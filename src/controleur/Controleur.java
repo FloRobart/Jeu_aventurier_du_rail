@@ -254,6 +254,13 @@ public class Controleur
 	{
 		try
 		{
+			// vérification de l'activation des voix doubles
+			if (this.getJoueursPartie().length <= 3 && arete.getCouleur2() != null)
+			{
+				if (couleur == 1 && arete.getProprietaire2() != null) return false;
+				if (couleur == 2 && arete.getProprietaire1() != null) return false;
+			}
+
 			if ((couleur == 1 && arete.getProprietaire1() == null) ||
 		        (couleur == 2 && arete.getProprietaire2() == null)   )
 			{
@@ -590,27 +597,7 @@ public class Controleur
     {
         new Controleur();
 
-		//Les commandes pour voir l'IP de la machine
-		String txtIP = "";
-        try
-		{
-            Enumeration<NetworkInterface> net = NetworkInterface.getNetworkInterfaces();
-			while (net.hasMoreElements()) {
-				NetworkInterface element = net.nextElement();
-				Enumeration<InetAddress> addresses = element.getInetAddresses();
-				while (addresses.hasMoreElements()) {
-					InetAddress ip = addresses.nextElement();
-					if (ip instanceof Inet4Address) {
-						
-						txtIP += "IPV4 : " + ip.getHostAddress() + "\n";
-					}
-				}
-			}
-        } catch (SocketException e) {
-            e.printStackTrace();
-        }
 
-		JOptionPane.showMessageDialog(null, txtIP, "Information Adresse IP", JOptionPane.INFORMATION_MESSAGE);
     }
 
 }
