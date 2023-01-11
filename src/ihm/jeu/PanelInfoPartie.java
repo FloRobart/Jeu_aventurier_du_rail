@@ -10,7 +10,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 
 import controleur.Controleur;
-import ihm.finPartie.FrameTest;
 
 
 public class PanelInfoPartie extends JPanel implements ActionListener
