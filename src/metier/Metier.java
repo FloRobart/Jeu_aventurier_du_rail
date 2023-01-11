@@ -79,6 +79,13 @@ public class Metier implements Serializable
 	private String pathMappe;
 
 
+	public void copyTransients(Metier metier)
+	{
+		this.client = metier.client;
+		this.nomClient = metier.nomClient;
+		this.server = metier.server;
+		this.motDePassePartie = metier.motDePassePartie;
+	}
 
     public Metier(Controleur ctrl)
     {
@@ -99,12 +106,6 @@ public class Metier implements Serializable
 
 		return false;
     }
-
-	public void finirTour()
-	{
-		if (this.client != null) this.client.writeonce("FINIR_TOUR");
-	}
-
 
 	/* --------------------------- */
 	/*          Getters            */
@@ -186,12 +187,15 @@ public class Metier implements Serializable
 
 	public void joueurSuivant()
 	{
+		System.out.println(this.client + " : " + this.server);
 		if (this.client != null)
 		{
+			System.out.println("client.finirTour();");
 			this.client.finirTour();
 		}
 		if (this.server != null)
 		{
+			System.out.println("server.finirTour();");
 			this.server.finirTour();
 		}
 		System.out.println("Imagine finir son tour LOLXD !!");

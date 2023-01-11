@@ -38,18 +38,17 @@ public class Controleur
 	private int     couleurSelectionnee;
 	private boolean enTrainDePiocher;
 
-	private BufferedImage imageVersoCouleur;
-
     public Controleur()
     {
         this.metier = new Metier(this);
 		this.partie = null;
 		this.joueur = null;
         this.ihm    = new Ihm(this);
-		this.setImageVersoCouleur();
 
 		this.enTrainDePiocher = false;
+
     }
+
 	public void joueurSuivant()
 	{
 		if (!this.enTrainDePiocher)
@@ -138,6 +137,7 @@ public class Controleur
 	{
 		this.partie = partie;
 		partie.setCtrl(this);
+		updateJoueurs(partie.getJoueurs());
 	}
 
 	public void setPartieLancer(Boolean b)
@@ -153,6 +153,7 @@ public class Controleur
 	public void setMetier(Metier m)
 	{
 		m.setCtrl(this);
+		m.copyTransients(this.metier);
 		this.metier = m;
 	}
 
@@ -165,8 +166,9 @@ public class Controleur
 	/*          Getters            */
 	/* --------------------------- */
 	public List<Joueur>        getJoueurs             () { return this.metier.getJoueurs         (); }
+	public Joueur[]            getJoueursPartie       () { return this.partie.getJoueurs         ();}
 	public Joueur              getJoueur              () { return this.joueur; }
-	public Joueur              getJoueurCourant() { return this.partie.getJoueurCourant(); }
+	public Joueur              getJoueurCourant       () { return this.partie.getJoueurCourant(); }
 	public List<CarteObjectif> getCarteObjectif       () { return this.metier.getCarteObjectif   (); }
 	public List<Noeud>         getNoeuds              () { return this.metier.getNoeuds          (); }
 	public List<Arete>         getAretes              () { return this.metier.getAretes          (); }
@@ -198,11 +200,11 @@ public class Controleur
 	public Arete   getAreteSelectionne  () { return this.areteSelectionnee;     }
 	public int     getCouleurSelectionne() { return this.couleurSelectionnee;   }
 	public boolean getEnTrainDePiocher  () { return this.enTrainDePiocher;      }
+	public int	   getNbTours			() { return this.partie.getTours();			}
     public void    disposeFrameJeu		() { this.ihm.disposeFrameJeu(); 		}
-	public void    disposeFrameFinPartie() { this.ihm.disposeFrameFinPartie(); }
+	public void    disposeFrameFinPartie() { this.ihm.disposeFrameFinPartie();  }
 
 	// Méthodes
-	public void setImageVersoCouleur    () { this.imageVersoCouleur = this.metier.getImageVersoCouleur(); }
 	public void setImageButton(int indice)  { if ( this.ihm != null ) this.ihm.setImageButton(indice); }
 	public void setInfo    (int nbTours, String nomJoueurCourant){ this.ihm.setInfo(nbTours, nomJoueurCourant); }
 
@@ -389,13 +391,6 @@ public class Controleur
 						}
 					}
 				}
-				else
-				{
-					if (this.areteSelectionnee != null)
-						this.ihm.afficherErreur("Aucune arête selectionné");
-					else
-						this.ihm.afficherErreur("Nombre de jeton insuffisant");
-				}
 			}
 
 			if (estValide)
@@ -423,8 +418,15 @@ public class Controleur
 
 				this.ihm.majIHM();
 				this.joueur.verifierObjectifs();
-				this.partie.joueurSuivant();
+				this.joueurSuivant();
 			}
+		}
+		else
+		{
+			if (this.areteSelectionnee == null)
+				this.ihm.afficherErreur("Aucune arête selectionné");
+			else
+				this.ihm.afficherErreur("Nombre de jeton insuffisant");
 		}
 	}
 
@@ -478,13 +480,22 @@ public class Controleur
 		this.partie = new Partie(this, this.metier, true, "Partie multi-joueur");
 	}
 
+	/*
+	 * 
+	 */
+	public void updateJoueurs(Joueur[] joueurs)
+	{
+		for (Joueur j : joueurs)
+			if (j.equals(this.joueur))
+				this.joueur = j;
+	}
 
 	/**
 	 * 
 	 */
 	public int joinGame(String ip, String nom, String password)
 	{
-
+		
 		this.metier.creeClient(ip, nom, true, password);
 
 		this.joueur = new Joueur(this, nom);

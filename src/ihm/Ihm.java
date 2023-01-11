@@ -38,7 +38,6 @@ public class Ihm
         this.appliquerTheme();
     }
 
-
     /**
      * Permet de démarrer le jeu et de fermer la fenêtre d'accueil.
      */
@@ -50,6 +49,8 @@ public class Ihm
 		this.frameJeu = new FrameJeu(this.ctrl);
 
         this.appliquerTheme();
+
+        this.frameJeu.piocherCarteObjectifDebutPartie();
 	}
 
     /**
