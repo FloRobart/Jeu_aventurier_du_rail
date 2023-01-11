@@ -19,19 +19,19 @@ public class PanelInfosJoueur extends JPanel
     private Controleur ctrl;
     private Joueur     joueur;
 
-    private JPanel      panelInfos;
-    private JPanel      panelIcon;
+    private JPanel     panelInfos;
+    private JPanel     panelIcon;
 
-    private JLabel        lblNom;
-    private JLabel        lblNbJeton;
-    private JLabel        lblNbCartesWagon;
-    private JLabel        lblNbCartesObjectif;
-    private JLabel        lblIcon;
-    private JLabel        lblInfos;
+    private JLabel     lblNom;
+    private JLabel     lblNbJeton;
+    private JLabel     lblNbCartesWagon;
+    private JLabel     lblNbCartesObjectif;
+    private JLabel     lblIcon;
+    private JLabel     lblInfos;
 
-    private int nbWagons;
-    private int nbCartesObjectif;
-    private int nbCartesWagon;
+    private int        nbWagons;
+    private int        nbCartesObjectif;
+    private int        nbCartesWagon;
 
     public PanelInfosJoueur(Controleur ctrl, Joueur joueur)
     {

@@ -227,5 +227,6 @@ public class PanelPioche extends JPanel implements ActionListener
         this.deckCarteWagon.setBackground(background);
 
 		this.lblPioche.setForeground(labelForeColor);
+		this.lblPioche.setBackground(background);
     }
 }

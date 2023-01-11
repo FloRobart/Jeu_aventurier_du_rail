@@ -3,14 +3,10 @@ package ihm.jeu;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.image.BufferedImage;
-import java.awt.Image;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,27 +24,27 @@ import metier.Joueur;
 
 public class PanelMainJoueur extends JPanel implements ActionListener
 {
-    private Controleur             ctrl;
-    private Joueur                 joueur;
+    private Controleur                   ctrl;
+    private Joueur                       joueur;
 
     private JDialog                      dialogObjectifs;
     private HashMap<String, List<Color>> theme;
 
-    private JPanel         panelImgJoueur;
-    private JPanel         panelInfoJoueur;
-    private PanelObjectifsJoueur panelObjectifs;
+    private JPanel                       panelImgJoueur;
+    private JPanel                       panelInfoJoueur;
+    private PanelObjectifsJoueur         panelObjectifs;
 
-    private JLabel     lblNom;
-    private JLabel     lblNbJeton;
-    private JLabel     lblIcon;
-    private JLabel     lblScore;
+    private JLabel                       lblNom;
+    private JLabel                       lblNbJeton;
+    private JLabel                       lblIcon;
+    private JLabel                       lblScore;
 
-    private PanelMain  panelMainWagon;
+    private PanelMain                    panelMainWagon;
     
 
-    private JPanel     panelMainObjectif;
-    private JButton    btnIconObjectif;
-    private JLabel     lblObjectif;
+    private JPanel                       panelMainObjectif;
+    private JButton                      btnIconObjectif;
+    private JLabel                       lblObjectif;
        
 
     public PanelMainJoueur(Controleur ctrl)
@@ -97,7 +93,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         this.panelMainObjectif.setLayout(new BorderLayout());
 
         this.btnIconObjectif   = new JButton();
-        this.btnIconObjectif.setIcon(new ImageIcon(this.ctrl.getCarteObjectif().get(0).getImageRecto()));
+        this.btnIconObjectif.setIcon(new ImageIcon(this.ctrl.getImageVersoObjectif()));
         this.btnIconObjectif.setBorderPainted(false);
         this.btnIconObjectif.setContentAreaFilled(false);
         this.btnIconObjectif.setFocusPainted(false);

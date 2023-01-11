@@ -223,6 +223,7 @@ public class Controleur
 	public BufferedImage       getImage             () { return this.ihm   .getImage             (); }
 
 	public int     getSizeWagon         () { return this.partie.getSizeWagon(); }
+	public int     getSizeObjectif      () { return this.partie.getSizeObjectif(); }
 	public Arete   getAreteSelectionne  () { return this.areteSelectionnee;     }
 	public int     getCouleurSelectionne() { return this.couleurSelectionnee;   }
 	public boolean getEnTrainDePiocher  () { return this.enTrainDePiocher;      }
@@ -579,9 +580,9 @@ public class Controleur
 	 * Ajouter une carte objectif dans la main du joueur
 	 * @param cartesObjectifs : carte que l'on veut ajouter
 	 */
-	public void ajouterObjectifsJoueurs(CarteObjectif cartesObjectifs) 
+	public void ajouterObjectifsJoueurs(CarteObjectif carteObjectif) 
 	{
-		this.metier.ajouterObjectifsJoueurs(cartesObjectifs);
+		this.metier.ajouterObjectifsJoueurs(carteObjectif);
 		this.ihm.majIHM();
 	}
 
