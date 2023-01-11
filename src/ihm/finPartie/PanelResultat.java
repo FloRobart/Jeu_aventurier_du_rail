@@ -53,6 +53,7 @@ public class PanelResultat extends JPanel
             for (int j = 0; j < this.lstLabels.get(0).size(); j++) {
 
                 Joueur joueur = this.ctrl.getJoueursPartie()[i-1];
+				joueur.ajouterObjectifs();
                 String txt = "";
                 switch (j)
                 {
