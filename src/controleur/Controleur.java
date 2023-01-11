@@ -1,5 +1,6 @@
 package controleur;
 
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -13,8 +14,11 @@ import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
 import java.net.ConnectException;
+import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 
 import ihm.Ihm;
 import metier.*;
@@ -421,7 +425,9 @@ public class Controleur
 				if (this.couleurSelectionnee == 1) this.areteSelectionnee.setProprietaire1(joueur);
 				else                               this.areteSelectionnee.setProprietaire2(joueur);
 
-				this.joueur.ajouterScore(this.areteSelectionnee.getDistance());
+
+				this.joueur.ajouterScore(this.metier.getPoints().get(
+					this.areteSelectionnee.getDistance()-1));
 				this.ihm.setScore();
 
 				Iterator<Color> it = this.joueur.getAlCouleurs().iterator();
@@ -613,14 +619,22 @@ public class Controleur
     {
         new Controleur();
 		//Les commandes pour voir l'IP de la machine
-		InetAddress ip;
-        String hostname;
         try {
-            ip = InetAddress.getLocalHost();
-            hostname = ip.getHostName();
-            System.out.println("Your current IP address : " + ip);
-            System.out.println("Your current Hostname : " + hostname);
-        } catch (UnknownHostException e) {
+            Enumeration<NetworkInterface> net = NetworkInterface.getNetworkInterfaces();
+			while (net.hasMoreElements()) {
+				NetworkInterface element = net.nextElement();
+				Enumeration<InetAddress> addresses = element.getInetAddresses();
+				while (addresses.hasMoreElements()) {
+					InetAddress ip = addresses.nextElement();
+					if (ip instanceof Inet4Address) {
+						System.out.println("IPV4: " + ip.getHostAddress());
+					}
+				}
+			}
+
+
+
+        } catch (SocketException e) {
             e.printStackTrace();
         }
     }

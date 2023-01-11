@@ -152,12 +152,16 @@ public class Joueur implements Serializable
 			if (co.estValide(this) && !this.alObjectifsFinis.contains(co)) 
 			{
 				this.alObjectifsFinis.add(co);
-				this.ajouterScore(co.getPoints());
-				//it.remove();
                 this.ctrl.validerObjectif();
                 this.nbCartesObjectif--;
 			}
 		}
+	}
+
+	public void ajouterObjectifs()
+	{
+		for (CarteObjectif co : this.alObjectifsFinis)
+			this.score += co.getPoints();
 	}
 
     
