@@ -373,13 +373,6 @@ public class Controleur
 						}
 					}
 				}
-				else
-				{
-					if (this.areteSelectionnee != null)
-						this.ihm.afficherErreur("Aucune arête selectionné");
-					else
-						this.ihm.afficherErreur("Nombre de jeton insuffisant");
-				}
 			}
 
 			if (estValide)
@@ -409,6 +402,13 @@ public class Controleur
 				this.joueur.verifierObjectifs();
 				this.joueurSuivant();
 			}
+		}
+		else
+		{
+			if (this.areteSelectionnee == null)
+				this.ihm.afficherErreur("Aucune arête selectionné");
+			else
+				this.ihm.afficherErreur("Nombre de jeton insuffisant");
 		}
 	}
 
