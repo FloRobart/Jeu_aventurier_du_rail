@@ -225,7 +225,7 @@ public class PanelAccueil extends JPanel implements ActionListener
         this.btnImportMappe.setMinimumSize  (new Dimension(200, 30));
         this.btnImportMappe.setPreferredSize(new Dimension(200, 30));
 
-        this.btnCreerSolo.setText("Lancer en solo");
+        this.btnCreerSolo.setText("Lancer en Local");
         this.btnCreerSolo.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         this.btnCreerSolo.setMaximumSize  (new Dimension(150, 30));
         this.btnCreerSolo.setMinimumSize  (new Dimension(150, 30));
@@ -606,7 +606,7 @@ public class PanelAccueil extends JPanel implements ActionListener
                         if (e.getSource() == this.btnCreerSolo)
                         {
                             this.ctrl.ajouterJoueur(new Joueur(this.ctrl, this.txtPseudo.getText()));
-                            this.ctrl.creerPartieSolo();
+                            this.ctrl.creerPartieLocal();
                         }
                         else
                         {
@@ -624,7 +624,7 @@ public class PanelAccueil extends JPanel implements ActionListener
 
 
             /* Test */
-            if (e.getSource() == this.btnTestSolo     ) { this.mappeImportee = this.ctrl.ouvrir(new File("./France.xml")); this.ctrl.ajouterJoueur(new Joueur(this.ctrl, this.txtPseudo.getText())); this.ctrl.creerPartieSolo(); }
+            if (e.getSource() == this.btnTestSolo     ) { this.mappeImportee = this.ctrl.ouvrir(new File("./France.xml")); this.ctrl.ajouterJoueur(new Joueur(this.ctrl, this.txtPseudo.getText())); this.ctrl.creerPartieLocal(); }
             if (e.getSource() == this.btnTestMulti    ) { this.mappeImportee = this.ctrl.ouvrir(new File("./France.xml")); this.ctrl.ajouterJoueur(new Joueur(this.ctrl, "Test rapide")); this.ctrl.creerPartieMulti("0000"); }
             if (e.getSource() == this.btnTestRejoindre) { if(this.txtPseudo.getText().isBlank()) this.txtPseudo.setText("Joe"); this.ctrl.joinGame("127.0.0.1", this.txtPseudo.getText(), "0000");}
 

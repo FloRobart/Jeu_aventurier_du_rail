@@ -67,7 +67,7 @@ public class Controleur
 	public boolean ouvrir(File fichier) 
 	{ 
 		boolean readSuccess =  this.metier.lireFichier(fichier);
-		System.out.println("\n------------\nControleur.java\n"+this.metier.getNoeuds());
+		//System.out.println("\n------------\nControleur.java\n"+this.metier.getNoeuds());
 		if (this.metier.getServer()!= null)this.metier.getServer().majMetier();
 		return readSuccess ; 	
 	}
@@ -76,14 +76,22 @@ public class Controleur
 	 * Permet de créer une partie solo.
 	 * Cette méthode lance le jeu directement.
 	 */
-	public void creerPartieSolo()
+	public void creerPartieLocal()
 	{
 		this.joueur = this.metier.getJoueurs().get(0);
-		this.joueur.setCouleur(Color.PINK);
 
 		this.partie = new Partie(this, this.metier, false, "Partie local");
 
-		this.ihm.demarrerJeu(); 
+		this.ihm.demarrerAttenteLocal();
+	}
+
+	/**
+	 * Permet d'obtenir de chemin vers le fichier xml de la mappe charger en mémoire dans le metier
+	 * @return String : chemin absolut vers le fichier xml de la mappe charger en mémoire dans le metier
+	 */
+	public String getPathMappe()
+	{
+		return this.metier.getPathMappe();
 	}
 
 	/**
@@ -95,6 +103,16 @@ public class Controleur
 	{
 		this.partie = new Partie(this, this.metier, true, "Partie multi-joueurs");
 
+		this.ihm.demarrerJeu();
+	}
+
+	/**
+	 * Permet de lancer la partie multijoueur quand on est dans la salle d'attente.
+	 * Elle peux être appeler uniquement par l'hote de la partie.
+	 * C'est elle qui s'occupe de fermer la salle d'attente.
+	 */
+	public void lancerPartieLocal()
+	{
 		this.ihm.demarrerJeu();
 	}
 

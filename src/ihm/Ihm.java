@@ -7,6 +7,7 @@ import javax.swing.Icon;
 import controleur.Controleur;
 import ihm.accueil.FrameAccueil;
 import ihm.attente.FrameAttente;
+import ihm.attente.FrameAttenteLocal;
 import ihm.jeu.FrameJeu;
 import ihm.finPartie.FrameFinPartie;
 import metier.CarteObjectif;
@@ -21,6 +22,7 @@ public class Ihm
     private FrameJeu     frameJeu;
     private FrameAccueil frameAccueil;
     private FrameAttente frameAttente;
+    private FrameAttenteLocal frameAttenteLocal; 
 	private FrameFinPartie frameFinDePartie;
 
     public Ihm(Controleur ctrl)
@@ -30,6 +32,7 @@ public class Ihm
         this.frameJeu     = null;
 		this.frameAccueil = new FrameAccueil(this.ctrl);
         this.frameAttente = null;
+        this.frameAttenteLocal = null;
 		this.frameFinDePartie = null;
 
         this.appliquerTheme();
@@ -48,6 +51,22 @@ public class Ihm
 
         this.appliquerTheme();
 	}
+
+    /**
+     * Permet d'ouvrir la fenêtre d'attente local et de fermer la fenêtre d'accueil.
+     */
+    public void demarrerAttenteLocal()
+    {
+        if (frameAccueil != null)
+        {
+            this.frameAccueil.dispose();
+            this.frameAccueil = null;
+        }
+
+        this.frameAttenteLocal = new FrameAttenteLocal(this.ctrl);
+
+        this.appliquerTheme();
+    }
 
     /**
      * Permet d'ouvrir la fenêtre d'attente et de fermer la fenêtre d'accueil.
@@ -84,9 +103,10 @@ public class Ihm
      */
     public void appliquerTheme()
     {
-        if (this.frameJeu     != null) { this.frameJeu    .appliquerTheme(); }
-        if (this.frameAccueil != null) { this.frameAccueil.appliquerTheme(); }
-        if (this.frameAttente != null) { this.frameAttente.appliquerTheme(); }
+        if (this.frameJeu          != null) { this.frameJeu         .appliquerTheme(); }
+        if (this.frameAccueil      != null) { this.frameAccueil     .appliquerTheme(); }
+        if (this.frameAttente      != null) { this.frameAttente     .appliquerTheme(); }
+        if (this.frameAttenteLocal != null) { this.frameAttenteLocal.appliquerTheme(); }
     }
 
     /**

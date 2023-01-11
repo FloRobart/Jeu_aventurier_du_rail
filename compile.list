@@ -10,7 +10,9 @@
 ./src/ihm/accueil/PanelAccueil.java
 
 ./src/ihm/attente/FrameAttente.java
+./src/ihm/attente/FrameAttenteLocal.java
 ./src/ihm/attente/PanelAttente.java
+./src/ihm/attente/PanelAttenteLocal.java
 ./src/ihm/attente/PanelPreviewMappe.java
 
 ./src/ihm/customComponent/TextFieldAdresseIP.java
@@ -55,5 +57,3 @@
 ./src/metier/partie/CarteWagon.java
 ./src/metier/partie/GestionPioche.java
 ./src/metier/partie/Partie.java
-
-./src/ihm/finPartie/FrameTest.java
