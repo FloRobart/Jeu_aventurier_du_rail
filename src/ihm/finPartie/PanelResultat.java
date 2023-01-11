@@ -60,13 +60,13 @@ public class PanelResultat extends JPanel
                 String txt = "";
                 switch (j)
                 {
-                    case 0 : txt =                joueur.getNom(); // Nom
-                    case 1 : txt = String.valueOf(joueur.getNbArete()); // Nombre de voie prisent
-                    case 2 : txt = String.valueOf(joueur.getAlObjectifsFinis().size()); // Cartes objectifs validées
-                    case 3 : txt = String.valueOf(joueur.getNbCartesObjectif()); // Cartes objectifs ratées
-                    case 4 : txt = String.valueOf(joueur.getScore()); // Points gagnées
-                    case 5 : txt = String.valueOf(joueur.getMalus()); // Points malus
-                    case 6 : txt = String.valueOf(this.calculerScroreFinal(joueur)); // Score final
+                    case 0 : txt =                joueur.getNom();                      break; // Nom
+                    case 1 : txt = String.valueOf(joueur.getNbArete());                 break; // Nombre de voie prisent
+                    case 2 : txt = String.valueOf(joueur.getAlObjectifsFinis().size()); break; // Cartes objectifs validées
+                    case 3 : txt = String.valueOf(joueur.getNbCartesObjectif());        break; // Cartes objectifs ratées
+                    case 4 : txt = String.valueOf(joueur.getScore());                   break; // Points gagnées
+                    case 5 : txt = String.valueOf(joueur.getMalus());                   break; // Points malus
+                    case 6 : txt = String.valueOf(this.calculerScroreFinal(joueur));    break; // Score final
                     default : txt = "Erreur";
                 } 
 
