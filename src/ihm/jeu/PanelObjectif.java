@@ -22,7 +22,8 @@ public class PanelObjectif extends JPanel implements ActionListener
 {
     private Controleur ctrl;
 
-    private JDialog dialogInfosJoueur;
+    private JDialog dialogPiocherObjectifs;
+    private JDialog dialogPiocherDebut;
     private PanelPiocherObjectif panelPiocherObjectif;
 
 	private JButton btnCarteObjectif;
@@ -30,7 +31,8 @@ public class PanelObjectif extends JPanel implements ActionListener
     public PanelObjectif(Controleur ctrl)
     {
         this.ctrl = ctrl;
-        this.dialogInfosJoueur    = null;
+        this.dialogPiocherObjectifs  = null;
+        this.dialogPiocherDebut    = null;
         this.panelPiocherObjectif = null;
         this.setBorder( BorderFactory.createLineBorder(this.ctrl.getTheme().get("titles").get(1), 2) );
         this.setLayout(new BorderLayout());
@@ -50,33 +52,79 @@ public class PanelObjectif extends JPanel implements ActionListener
 		this.btnCarteObjectif.addActionListener(this);
 	}
 
+    public void piocherCarteObjectifDebutPartie()
+    {
+        if (this.panelPiocherObjectif == null) 
+        { 
+            this.panelPiocherObjectif = new PanelPiocherObjectif(this.ctrl, this, true); 
+
+            /* Création du JDialog */
+            if (this.dialogPiocherDebut == null)
+            {
+                this.dialogPiocherDebut = new JDialog();
+
+                this.dialogPiocherDebut.setSize(750,250);
+                this.dialogPiocherDebut.setLocation(200, 300);
+                this.dialogPiocherDebut.setResizable(false);
+				this.dialogPiocherDebut.setModalityType(JDialog.ModalityType.APPLICATION_MODAL);
+                this.dialogPiocherDebut.add(this.panelPiocherObjectif);
+                this.dialogPiocherDebut.pack();
+                this.dialogPiocherDebut.setVisible(true);
+            }
+            else
+            {
+                this.dialogPiocherDebut.setVisible(true);
+            }
+
+            /* Permet de detecter la fermeture de la fenêtre de dialogue */
+            this.dialogPiocherDebut.addWindowListener(new WindowListener()
+            {
+                private boolean fermetureForce = true;    
+                public void windowClosing    (WindowEvent e) {}
+                public void windowOpened     (WindowEvent e) {}
+                public void windowClosed     (WindowEvent e) { 
+                    fermetureForce = false; 
+                    dialogPiocherDebut.dispose();
+                }
+                public void windowIconified  (WindowEvent e) {}
+                public void windowDeiconified(WindowEvent e) {}
+                public void windowActivated  (WindowEvent e) {}
+                public void windowDeactivated(WindowEvent e) { 
+                    if (fermetureForce) dialogPiocherDebut.setVisible(true);
+                }
+            });
+        }
+        else
+            this.ctrl.afficherErreur("Ce n'est à pas votre tour de jouer");
+    }
+
 	public void actionPerformed(ActionEvent e) 
     {
         if(this.ctrl.peuxJouer())
         {
             /* Création du panel */
-            if (this.panelPiocherObjectif == null) { this.panelPiocherObjectif = new PanelPiocherObjectif(this.ctrl, this); }
+            if (this.panelPiocherObjectif == null) { this.panelPiocherObjectif = new PanelPiocherObjectif(this.ctrl, this, false); }
 
             /* Création du JDialog */
-            if (this.dialogInfosJoueur == null)
+            if (this.dialogPiocherObjectifs == null)
             {
-                this.dialogInfosJoueur = new JDialog();
+                this.dialogPiocherObjectifs = new JDialog();
 
-                this.dialogInfosJoueur.setSize(750,250);
-                this.dialogInfosJoueur.setLocation(200, 300);
-                this.dialogInfosJoueur.setResizable(false);
-				this.dialogInfosJoueur.setModalityType(JDialog.ModalityType.APPLICATION_MODAL);
-                this.dialogInfosJoueur.add(this.panelPiocherObjectif);
-                this.dialogInfosJoueur.pack();
-                this.dialogInfosJoueur.setVisible(true);
+                this.dialogPiocherObjectifs.setSize(750,250);
+                this.dialogPiocherObjectifs.setLocation(200, 300);
+                this.dialogPiocherObjectifs.setResizable(false);
+				this.dialogPiocherObjectifs.setModalityType(JDialog.ModalityType.APPLICATION_MODAL);
+                this.dialogPiocherObjectifs.add(this.panelPiocherObjectif);
+                this.dialogPiocherObjectifs.pack();
+                this.dialogPiocherObjectifs.setVisible(true);
             }
             else
             {
-                this.dialogInfosJoueur.setVisible(true);
+                this.dialogPiocherObjectifs.setVisible(true);
             }
 
             /* Permet de detecter la fermeture de la fenêtre de dialogue */
-            this.dialogInfosJoueur.addWindowListener(new WindowListener()
+            this.dialogPiocherObjectifs.addWindowListener(new WindowListener()
             {
 				private boolean fermetureForce = true;
 
@@ -84,13 +132,13 @@ public class PanelObjectif extends JPanel implements ActionListener
                 public void windowOpened     (WindowEvent e) {}
                 public void windowClosed     (WindowEvent e) { 
 					fermetureForce = false; 
-					dialogInfosJoueur.dispose();
+					dialogPiocherObjectifs.dispose();
 				}
                 public void windowIconified  (WindowEvent e) {}
                 public void windowDeiconified(WindowEvent e) {}
                 public void windowActivated  (WindowEvent e) {}
                 public void windowDeactivated(WindowEvent e) { 
-					if (fermetureForce) dialogInfosJoueur.setVisible(true);
+					if (fermetureForce) dialogPiocherObjectifs.setVisible(true);
 				}
             });
         }
@@ -100,7 +148,11 @@ public class PanelObjectif extends JPanel implements ActionListener
 
 	public void disposePioche()
 	{
-		dialogInfosJoueur.dispose();
+        if ( this.dialogPiocherDebut != null)
+            this.dialogPiocherDebut.dispose();
+
+        if ( this.dialogPiocherObjectifs != null)
+            this.dialogPiocherObjectifs.dispose();
 	}
 
 	public void majIHM()

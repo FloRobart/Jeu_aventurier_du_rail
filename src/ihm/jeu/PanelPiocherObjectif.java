@@ -32,6 +32,8 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 	private PanelObjectif panelObjectif;
 	private HashMap<String, List<Color>> theme;
 
+	private boolean 	debutPartie;
+
 	private JPanel		panelBtnPiocher;
 
     private JButton[]	tabCarteobjectif;
@@ -41,9 +43,10 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 
 	private JLabel     	lblChoisirCartes;
 
-	public PanelPiocherObjectif(Controleur ctrl, PanelObjectif panelObjectif)
+	public PanelPiocherObjectif(Controleur ctrl, PanelObjectif panelObjectif, boolean debutPartie)
 	{
 		this.ctrl = ctrl;
+		this.debutPartie = debutPartie;
 		this.panelObjectif = panelObjectif;
 		this.theme = this.ctrl.getTheme();
 		
@@ -107,21 +110,57 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
     {
 		if(e.getSource() == this.btnPiocher)
 		{
-			if(this.getnbSelection() > 0)
-			{		
-				for(int i=0; i<PanelPiocherObjectif.TAILLE; i++)
-				{	
-					if(this.tabChoixCarte[i] == true)
-					{
-						this.ctrl.ajouterObjectifsJoueurs(this.cartesObjectifs[i]);
+			System.out.println("nico1");
+			if ( this.debutPartie == true )
+			{
+				System.out.println("nico2");
+				if(this.getnbSelection() >= 2)
+				{		
+					System.out.println("nico3");
+					for(int i=0; i<PanelPiocherObjectif.TAILLE; i++)
+					{	
+						if(this.tabChoixCarte[i] == true)
+						{
+							this.ctrl.ajouterObjectifsJoueurs(this.cartesObjectifs[i]);
+						}
+						else if(this.cartesObjectifs[i] != null)
+							this.ctrl.remettreCarteObjectif(this.cartesObjectifs[i]);
 					}
-					else if(this.cartesObjectifs[i] != null)
-						this.ctrl.remettreCarteObjectif(this.cartesObjectifs[i]);
+					this.btnPiocher.setEnabled(false);
+					this.initCarteObjectifs();
+					this.panelObjectif.disposePioche();
+					System.out.println("alex");
+					this.ctrl.joueurSuivant();
+					this.debutPartie = false;
+					this.ctrl.setPiocherObjectifsDebut();
 				}
-				this.btnPiocher.setEnabled(false);
-				this.initCarteObjectifs();
-				this.panelObjectif.disposePioche();
-				this.ctrl.joueurSuivant();
+				else
+				{
+					System.out.println("nico4");
+					this.ctrl.afficherErreur("Vous devez piocher au moins 2 cartes !");
+				}
+				
+			}
+
+			if ( this.debutPartie == false )
+			{
+				System.out.println("nico6");
+				if(this.getnbSelection() > 0)
+				{		
+					for(int i=0; i<PanelPiocherObjectif.TAILLE; i++)
+					{	
+						if(this.tabChoixCarte[i] == true)
+						{
+							this.ctrl.ajouterObjectifsJoueurs(this.cartesObjectifs[i]);
+						}
+						else if(this.cartesObjectifs[i] != null)
+							this.ctrl.remettreCarteObjectif(this.cartesObjectifs[i]);
+					}
+					this.btnPiocher.setEnabled(false);
+					this.initCarteObjectifs();
+					this.panelObjectif.disposePioche();
+					this.ctrl.joueurSuivant();
+				}
 			}
 		}
 
@@ -135,7 +174,6 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 					if(this.tabChoixCarte[i] == false)
 					{
 						this.tabCarteobjectif[i].setBackground(Color.GREEN);
-						
 					}
 					else
 					{
@@ -146,7 +184,6 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 			}
 		}
 	}
-
 	
 	private int getnbSelection() 
 	{
