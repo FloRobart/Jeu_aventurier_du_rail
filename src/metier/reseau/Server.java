@@ -83,6 +83,8 @@ public class Server
     {
         sch.Disconnect();
         this.clients.remove(sch);
+        this.ctrl.getMetier().getJoueurs().remove(sch.getJoueur());
+        this.majMetier();
         this.ctrl.majIHM();
     }
 
