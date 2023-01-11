@@ -1,15 +1,15 @@
 package ihm.jeu;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.GroupLayout;
-
-import java.util.HashMap;
-import java.util.List;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import controleur.Controleur;
 import metier.Joueur;
