@@ -38,21 +38,17 @@ public class Controleur
 	private int     couleurSelectionnee;
 	private boolean enTrainDePiocher;
 
-	private BufferedImage imageVersoCouleur;
-	private boolean 	  piocherObjectifsDebut;
-
     public Controleur()
     {
         this.metier = new Metier(this);
 		this.partie = null;
 		this.joueur = null;
         this.ihm    = new Ihm(this);
-		this.setImageVersoCouleur();
 
 		this.enTrainDePiocher = false;
 
-		this.piocherObjectifsDebut = true;
     }
+
 	public void joueurSuivant()
 	{
 		if (!this.enTrainDePiocher)
@@ -191,7 +187,6 @@ public class Controleur
 	public void    disposeFrameFinPartie() { this.ihm.disposeFrameFinPartie();  }
 
 	// Méthodes
-	public void setImageVersoCouleur    () { this.imageVersoCouleur = this.metier.getImageVersoCouleur(); }
 	public void setImageButton(int indice)  { if ( this.ihm != null ) this.ihm.setImageButton(indice); }
 	public void setInfo    (int nbTours, String nomJoueurCourant){ this.ihm.setInfo(nbTours, nomJoueurCourant); }
 
@@ -416,10 +411,6 @@ public class Controleur
 			}
 		}
 	}
-
-	public void setPiocherObjectifsDebut()		  { this.piocherObjectifsDebut = false; }
-
-	public void piocherCarteObjectifDebutPartie() { if ( this.piocherObjectifsDebut == true ) this.ihm.piocherCarteObjectifDebutPartie(); }
 
 	public void piocherPioche ()        { this.partie.piocherPioche ();    }
 	public void piocherVisible(int ind) { this.partie.piocherVisible(ind); }

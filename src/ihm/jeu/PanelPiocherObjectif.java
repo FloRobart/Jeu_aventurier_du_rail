@@ -131,7 +131,6 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 					System.out.println("alex");
 					this.ctrl.joueurSuivant();
 					this.debutPartie = false;
-					this.ctrl.setPiocherObjectifsDebut();
 				}
 				else
 				{
