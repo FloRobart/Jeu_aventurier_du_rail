@@ -46,7 +46,7 @@ public class PanelInfosJoueur extends JPanel
         this.nbCartesWagon       = this.joueur.getNbCartesWagon();
 
         this.lblNom              = new JLabel(this.joueur.getNom());
-        //this.lblNom.setForeground(this.joueur.getCouleur());
+        this.lblNom.setForeground(this.joueur.getCouleur());
         this.lblNbJeton          = new JLabel(this.nbWagons  + " jetons restants ");
         this.lblNbCartesWagon    = new JLabel(this.nbCartesWagon    + " cartes wagon ");
         this.lblNbCartesObjectif = new JLabel(this.nbCartesObjectif + " cartes objectif ");
@@ -133,7 +133,7 @@ public class PanelInfosJoueur extends JPanel
 
 
         /* Labels */
-        this.lblNom             .setForeground(labelForeColor);
+        //this.lblNom             .setForeground(labelForeColor);
         this.lblInfos           .setForeground(labelForeColor);
         this.lblNbJeton         .setForeground(labelForeColor);
         this.lblNbCartesWagon   .setForeground(labelForeColor);

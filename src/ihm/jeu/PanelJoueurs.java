@@ -69,7 +69,7 @@ public class PanelJoueurs extends JPanel implements ActionListener
             this.tabPanels[cpt].setLayout(new BorderLayout());
 
             this.tabLblNom  [cpt] = new JLabel(" " + this.lstJoueurs.get(cpt).getNom());
-            //this.tabLblNom[cpt].setForeground(this.joueur.getCouleur());
+            this.tabLblNom[cpt].setForeground(this.lstJoueurs.get(cpt).getCouleur());
             this.tabLblScore[cpt] = new JLabel("Score : " + this.lstJoueurs.get(cpt).getScore());
 
             this.tabBoutons[cpt] = new JButton();
@@ -195,7 +195,7 @@ public class PanelJoueurs extends JPanel implements ActionListener
             /*--------*/
             /* Lables Nom */
             this.tabLblNom  [i].setOpaque(false);
-            this.tabLblNom  [i].setForeground(labelForeColor);
+            //this.tabLblNom  [i].setForeground(labelForeColor);
 
             /* Lables Score */
             this.tabLblScore[i].setOpaque(false);
