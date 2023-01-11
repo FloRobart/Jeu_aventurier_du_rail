@@ -38,22 +38,25 @@ public class Controleur
 	private int     couleurSelectionnee;
 	private boolean enTrainDePiocher;
 
-	private BufferedImage imageVersoCouleur;
-	private boolean 	  piocherObjectifsDebut;
-
     public Controleur()
     {
         this.metier = new Metier(this);
 		this.partie = null;
 		this.joueur = null;
         this.ihm    = new Ihm(this);
-		this.setImageVersoCouleur();
 
 		this.enTrainDePiocher = false;
 
-		this.piocherObjectifsDebut = true;
     }
-	
+
+	public void joueurSuivant()
+	{
+		if (!this.enTrainDePiocher)
+		{
+			this.partie.joueurSuivant();
+			this.metier.joueurSuivant();
+		}
+	}
 
 	/**
 	 * Permet de lire le fichier xml contenant toutes les informations du plateau.
@@ -63,7 +66,7 @@ public class Controleur
 	public boolean ouvrir(File fichier) 
 	{ 
 		boolean readSuccess =  this.metier.lireFichier(fichier);
-		System.out.println("\n------------\nControleur.java\n"+this.metier.getNoeuds());
+		//System.out.println("\n------------\nControleur.java\n"+this.metier.getNoeuds());
 		if (this.metier.getServer()!= null)this.metier.getServer().majMetier();
 		return readSuccess ; 	
 	}
@@ -72,10 +75,9 @@ public class Controleur
 	 * Permet de créer une partie solo.
 	 * Cette méthode lance le jeu directement.
 	 */
-	public void creerPartieSolo()
+	public void creerPartieLocal()
 	{
 		this.joueur = this.metier.getJoueurs().get(0);
-		this.joueur.setCouleur(Color.PINK);
 
 		Joueur j2 = new Joueur(this, "macPhilippe");
 		j2.setCouleur(Color.BLUE);
@@ -83,7 +85,16 @@ public class Controleur
 
 		this.partie = new Partie(this, this.metier, false, "Partie local");
 
-		this.ihm.demarrerJeu(); 
+		this.ihm.demarrerAttenteLocal();
+	}
+
+	/**
+	 * Permet d'obtenir de chemin vers le fichier xml de la mappe charger en mémoire dans le metier
+	 * @return String : chemin absolut vers le fichier xml de la mappe charger en mémoire dans le metier
+	 */
+	public String getPathMappe()
+	{
+		return this.metier.getPathMappe();
 	}
 
 	/**
@@ -95,6 +106,16 @@ public class Controleur
 	{
 		this.partie = new Partie(this, this.metier, true, "Partie multi-joueurs");
 
+		this.ihm.demarrerJeu();
+	}
+
+	/**
+	 * Permet de lancer la partie multijoueur quand on est dans la salle d'attente.
+	 * Elle peux être appeler uniquement par l'hote de la partie.
+	 * C'est elle qui s'occupe de fermer la salle d'attente.
+	 */
+	public void lancerPartieLocal()
+	{
 		this.ihm.demarrerJeu();
 	}
 
@@ -139,16 +160,7 @@ public class Controleur
 		m.copyTransients(this.metier);
 		this.metier = m;
 	}
-
-	public void joueurSuivant()
-	{
-		if (!this.enTrainDePiocher)
-		{
-			this.partie.joueurSuivant();
-			this.metier.joueurSuivant();
-		}
-	}
-
+	
 	public void changerJoueur(Joueur j)
 	{
 		this.joueur = j;
@@ -180,7 +192,7 @@ public class Controleur
 	public Joueur              getJoueurCourant       () { return this.partie.getJoueurCourant(); }
 	public List<CarteObjectif> getCarteObjectif       () { return this.metier.getCarteObjectif   (); }
 	public List<Noeud>         getNoeuds              () { return this.metier.getNoeuds          (); }
-	public List<Arete>         getAretes              () { return this.metier.getAretes          (); }
+	public List<Arete>         getAretes              () { if (this.partie != null) return this.partie.geAretes(); return this.metier.getAretes          (); }
 	public CarteWagon[]        getTabCarteWagon       () { return this.metier.getTabCarteWagon   (); }
 	public CarteObjectif[]	   getTabCarteObjectif    () { return this.metier.getTabCarteObjectif(); }
 
@@ -214,7 +226,6 @@ public class Controleur
 	public void    disposeFrameFinPartie() { this.ihm.disposeFrameFinPartie();  }
 
 	// Méthodes
-	public void setImageVersoCouleur    () { this.imageVersoCouleur = this.metier.getImageVersoCouleur(); }
 	public void setImageButton(int indice)  { if ( this.ihm != null ) this.ihm.setImageButton(indice); }
 	public void setInfo    (int nbTours, String nomJoueurCourant){ this.ihm.setInfo(nbTours, nomJoueurCourant); }
 
@@ -439,10 +450,6 @@ public class Controleur
 				this.ihm.afficherErreur("Nombre de jeton insuffisant");
 		}
 	}
-
-	public void setPiocherObjectifsDebut()		  { this.piocherObjectifsDebut = false; }
-
-	public void piocherCarteObjectifDebutPartie() { if ( this.piocherObjectifsDebut == true ) this.ihm.piocherCarteObjectifDebutPartie(); }
 
 	public void piocherPioche ()        { this.partie.piocherPioche ();    }
 	public void piocherVisible(int ind) { this.partie.piocherVisible(ind); }

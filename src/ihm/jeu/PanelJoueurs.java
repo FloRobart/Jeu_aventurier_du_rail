@@ -132,7 +132,7 @@ public class PanelJoueurs extends JPanel implements ActionListener
         }
     }
 
-    public void setScore( ) 
+    public void setScore() 
     { 
         for ( int cpt=0; cpt < this.lstJoueurs.size(); cpt++)
         {

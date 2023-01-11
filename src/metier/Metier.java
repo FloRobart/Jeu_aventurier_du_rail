@@ -76,6 +76,8 @@ public class Metier implements Serializable
 	private transient Client client;
 	private transient String nomClient;
 
+	private String pathMappe;
+
 
 	public void copyTransients(Metier metier)
 	{
@@ -140,6 +142,11 @@ public class Metier implements Serializable
 	public Client 			   getClient              () { return this.client;               }
 	public String 			   getNomClient           () { return this.nomClient;            }
 
+	public String getPathMappe()
+	{
+		return this.pathMappe;
+	}
+
 	public void creeServer(Boolean demarer, String password)
 	{
 		this.motDePassePartie = password;
@@ -163,6 +170,7 @@ public class Metier implements Serializable
 	 */
     public boolean lireFichier(File fichier)
 	{
+		this.pathMappe = fichier.getAbsolutePath();
 		// read file into a reader
 		try {
 			if (this.chargerXML(new FileReader(fichier)))
