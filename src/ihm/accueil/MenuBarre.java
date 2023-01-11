@@ -127,30 +127,16 @@ public class MenuBarre extends JMenuBar implements ActionListener
 				{
 					this.dialogAideMenu = new JDialog();
 
-					this.dialogAideMenu.setSize(750,250);
 					this.dialogAideMenu.setTitle("Aide menu");
-					this.dialogAideMenu.setLocation(200, 300);
-					this.dialogAideMenu.setResizable(false);
+					this.dialogAideMenu.setLocation(10, 10);
 					this.dialogAideMenu.add(this.panelAideMenu);
+					this.dialogAideMenu.pack();
 					this.dialogAideMenu.setVisible(true);
 				}
 				else
 				{
 					this.dialogAideMenu.setVisible(true);
 				}
-
-				/* Permet de detecter la fermeture de la fenêtre de dialogue */
-				this.dialogAideMenu.addWindowListener(new WindowListener()
-				{
-					private boolean frameClose = false;
-					public void windowClosing    (WindowEvent e) { this.frameClose = true; dialogAideMenu.dispose(); }
-					public void windowOpened     (WindowEvent e) { dialogAideMenu.dispose(); }
-					public void windowClosed     (WindowEvent e) {}
-					public void windowIconified  (WindowEvent e) {}
-					public void windowDeiconified(WindowEvent e) {}
-					public void windowActivated  (WindowEvent e) {}
-					public void windowDeactivated(WindowEvent e) { if(!this.frameClose) { dialogAideMenu.setVisible(true);} }
-				});
 			}
 
 			if (e.getSource() == this.menuiAideJeu)
@@ -163,30 +149,17 @@ public class MenuBarre extends JMenuBar implements ActionListener
 				{
 					this.dialogAideJeu = new JDialog();
 
-					this.dialogAideJeu.setSize(1500,800);
+					
 					this.dialogAideJeu.setTitle("Aide jeu");
 					this.dialogAideJeu.setLocation(10, 10);
-					this.dialogAideJeu.setResizable(true);
 					this.dialogAideJeu.add(this.panelAideJeu);
+					this.dialogAideJeu.pack();
 					this.dialogAideJeu.setVisible(true);
 				}
 				else
 				{
 					this.dialogAideJeu.setVisible(true);
 				}
-
-				/* Permet de detecter la fermeture de la fenêtre de dialogue */
-				this.dialogAideJeu.addWindowListener(new WindowListener()
-				{
-					private boolean frameClose = false;
-					public void windowClosing    (WindowEvent e) { this.frameClose = true; dialogAideJeu.dispose(); }
-					public void windowOpened     (WindowEvent e) { dialogAideJeu.dispose(); }
-					public void windowClosed     (WindowEvent e) {}
-					public void windowIconified  (WindowEvent e) {}
-					public void windowDeiconified(WindowEvent e) {}
-					public void windowActivated  (WindowEvent e) {}
-					public void windowDeactivated(WindowEvent e) { if(!this.frameClose) { dialogAideJeu.setVisible(true);} }
-				});
 			}
 		}
 	}
