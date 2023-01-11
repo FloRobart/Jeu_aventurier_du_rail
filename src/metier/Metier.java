@@ -527,35 +527,5 @@ public class Metier implements Serializable
 		this.ctrl.getPartie().getJoueurCourant().ajouterCarteObjectif(cartesObjectifs);
 		this.lstCartesObjectif.remove(cartesObjectifs);
 	}
-	public Metier (Metier metier)
-	{
 
-		this.lstJoueurs				= 	metier.lstJoueurs			;
-		this.lstCartesObjectif		=	metier.lstCartesObjectif	;
-		this.lstAretes				=	metier.lstAretes			;
-		this.lstNoeuds				=	metier.lstNoeuds			;
-		this.tabCarteWagon			=	metier.tabCarteWagon		;
-		this.tabCarteObjectif		=	metier.tabCarteObjectif		;
-		this.taillePlateau			=   metier.taillePlateau		;
-		this.imagePlateau			=   metier.imagePlateau			;
-		this.couleurPlateau			=   metier.couleurPlateau		;
-		this.policePlateau			=   metier.policePlateau		;
-		this.nbJoueursMin			=   metier.nbJoueursMin			;
-		this.nbJoueursMax			=   metier.nbJoueursMax			;
-		this.nbCarteCoul			=   metier.nbCarteCoul			;
-		this.nbCarteLocomotive		=   metier.nbCarteLocomotive	;
-		this.nbJetonJoueur			=   metier.nbJetonJoueur		;
-		this.nbJetonFin				=   metier.nbJetonFin			;
-		this.lstCouleurs			=   metier.lstCouleurs			;
-		this.imageVersoCouleur		=   metier.imageVersoCouleur	;
-		this.imageRectoLocomotive	=   metier.imageRectoLocomotive	;
-		this.lstImagesRectoCouleur	=   metier.lstImagesRectoCouleur;
-		this.lstPoints				=   metier.lstPoints			;
-		this.imageVersoObjectif		=   metier.imageVersoObjectif	;
-		this.hmColorThemes			=   metier.hmColorThemes		;
-		this.motDePassePartie		=   metier.motDePassePartie		;
-		this.server					=   metier.server				;
-		this.client					=   metier.client				;
-		this.nomClient				=   metier.nomClient			;	
-	}
 }	

@@ -53,14 +53,10 @@ public class ServerClientHandler implements Runnable
     {
         writeonce("METIER");
         try {
-            // Metier metierSend = new Metier(null);
-            // // Scanner scanner = new Scanner (System.in);
-            // // if (scanner.nextInt()==1) metierSend.lireFichier(new File("./France.xml"));
-            // // else metierSend.lireFichier(new File("./exemple.xml"));
-            Metier metierSend = new Metier(m);
-            System.out.println("------------\nServerClientHandler"+metierSend.getNoeuds());
-            out.writeObject(metierSend);
+            System.out.println("------------\nServerClientHandler"+m.getNoeuds());
+            out.writeObject(m);
             out.flush();
+            out.reset();
         } catch (IOException e) {
             e.printStackTrace();
         }
