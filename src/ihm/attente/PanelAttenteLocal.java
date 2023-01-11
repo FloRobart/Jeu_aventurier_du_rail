@@ -511,7 +511,7 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
             /* Choix de la couleur (Bouton Joueur) */
             for (int i = 0; i < this.lstParticipants.size(); i++)
             {
-                if (e.getSource() == this.lstParticipants.get(i) && this.lstParticipants.get(i).getText() != "")
+                if (e.getSource() == this.lstParticipants.get(i) && this.lstParticipants.get(i).getText() != " ")
                 {
                     Color background = this.theme.get("background").get(0);
                     Color c = JColorChooser.showDialog(this, "choix de la couleur", enableColor);
@@ -544,13 +544,16 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
             {
                 String nomJoueur = JOptionPane.showInputDialog(this, "Entrez Votre pseudo", "Ajouter un joueur", JOptionPane.QUESTION_MESSAGE);
 
-                if (this.verifPseudo(nomJoueur))
-                {
-                    this.ctrl.ajouterJoueur(new Joueur(this.ctrl, nomJoueur));
-                    this.lstParticipants.get(this.ctrl.getJoueurs().size()-1).setForeground(this.aleatoireColor());
-                }
-                else
-                    JOptionPane.showMessageDialog(this, "Le pseudo est incorrect", "Erreur", JOptionPane.ERROR_MESSAGE);
+				if (nomJoueur != null)
+				{
+					if (this.verifPseudo(nomJoueur))
+					{
+						this.ctrl.ajouterJoueur(new Joueur(this.ctrl, nomJoueur));
+						this.lstParticipants.get(this.ctrl.getJoueurs().size()-1).setForeground(this.aleatoireColor());
+					}
+					else
+						JOptionPane.showMessageDialog(this, "Le pseudo est incorrect", "Erreur", JOptionPane.ERROR_MESSAGE);
+				}
             }
 
 
@@ -616,7 +619,7 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
 
         if (!c.equals(this.theme.get("background").get(0)))
             for (int i = 0; i < this.ctrl.getJoueurs().size(); i++)
-                if (!c.equals(this.ctrl.getJoueurs().get(i).getCouleur()) || i > this.defaultColor.length)
+                if (!c.equals(this.ctrl.getJoueurs().get(i).getCouleur()) || i >= this.defaultColor.length)
                     return c;
         
         return this.aleatoireColor();
