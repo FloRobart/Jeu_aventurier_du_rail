@@ -199,7 +199,7 @@ public class PanelAccueil extends JPanel implements ActionListener
         this.btnImportMappe.setMinimumSize  (new Dimension(200, 30));
         this.btnImportMappe.setPreferredSize(new Dimension(200, 30));
 
-        this.btnCreerSolo.setText("Lancer en Local");
+        this.btnCreerSolo.setText("Lancer en local");
         this.btnCreerSolo.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
         this.btnCreerSolo.setMaximumSize  (new Dimension(150, 30));
         this.btnCreerSolo.setMinimumSize  (new Dimension(150, 30));

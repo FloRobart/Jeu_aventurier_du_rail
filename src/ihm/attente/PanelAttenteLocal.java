@@ -537,7 +537,7 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
             {
                 if (this.ctrl.getNbJoueursMax() > this.ctrl.getJoueurs().size())
                 {
-                    String nomJoueur = JOptionPane.showInputDialog(this, "Entrez Votre pseudo", "Ajouter un joueur", JOptionPane.QUESTION_MESSAGE);
+                    String nomJoueur = JOptionPane.showInputDialog(this, "Entrez votre pseudo", "Ajouter un joueur", JOptionPane.QUESTION_MESSAGE);
 
 
                     if (nomJoueur != null)
