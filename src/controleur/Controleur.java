@@ -171,7 +171,7 @@ public class Controleur
 	public Joueur              getJoueurCourant       () { return this.partie.getJoueurCourant(); }
 	public List<CarteObjectif> getCarteObjectif       () { return this.metier.getCarteObjectif   (); }
 	public List<Noeud>         getNoeuds              () { return this.metier.getNoeuds          (); }
-	public List<Arete>         getAretes              () { if (this.partie != null) return this.partie. return this.metier.getAretes          (); }
+	public List<Arete>         getAretes              () { if (this.partie != null) return this.partie.geAretes(); return this.metier.getAretes          (); }
 	public CarteWagon[]        getTabCarteWagon       () { return this.metier.getTabCarteWagon   (); }
 	public CarteObjectif[]	   getTabCarteObjectif    () { return this.metier.getTabCarteObjectif(); }
 
