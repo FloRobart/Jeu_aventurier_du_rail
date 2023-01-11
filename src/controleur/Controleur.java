@@ -253,6 +253,13 @@ public class Controleur
 	{
 		try
 		{
+			// vérification de l'activation des voix doubles
+			if (this.getJoueursPartie().length <= 3 && arete.getCouleur2() != null)
+			{
+				if (couleur == 1 && arete.getProprietaire2() != null) return false;
+				if (couleur == 2 && arete.getProprietaire1() != null) return false;
+			}
+
 			if ((couleur == 1 && arete.getProprietaire1() == null) ||
 		        (couleur == 2 && arete.getProprietaire2() == null)   )
 			{
