@@ -69,6 +69,8 @@ public class Ihm
         this.appliquerTheme();
     }
 
+	public void piocherCarteObjectifDebutPartie() { this.frameJeu.piocherCarteObjectifDebutPartie(); }
+
     /**
      * Permet d'ouvrir la fenêtre d'attente et de fermer la fenêtre d'accueil.
      */

@@ -538,8 +538,7 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
                 System.out.println(this.ctrl.getJoueurs().size());
                 if (this.ctrl.getJoueurs().size() == 1 || this.ctrl.getJoueurs().size() >= this.ctrl.getNbJoueursMin())
                 {
-                    System.out.println("Lancement de la partie");
-                    //this.ctrl.lancerPartieLocal();
+                    this.ctrl.lancerPartieLocal();
                 }
                 else
                     JOptionPane.showMessageDialog(this, "Il manque " + (this.ctrl.getNbJoueursMin() - this.ctrl.getJoueurs().size()) + " joueurs pour lancer la partie", "Erreur", JOptionPane.ERROR_MESSAGE);

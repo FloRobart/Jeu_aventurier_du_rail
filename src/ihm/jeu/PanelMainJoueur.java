@@ -97,7 +97,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         this.panelMainObjectif.setLayout(new BorderLayout());
 
         this.btnIconObjectif   = new JButton();
-        this.btnIconObjectif.setIcon(this.resized(this.ctrl.getCarteObjectif().get(0).getImageRecto()));
+        this.btnIconObjectif.setIcon(new ImageIcon(this.ctrl.getCarteObjectif().get(0).getImageRecto()));
         this.btnIconObjectif.setBorderPainted(false);
         this.btnIconObjectif.setContentAreaFilled(false);
         this.btnIconObjectif.setFocusPainted(false);
@@ -115,18 +115,6 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 		this.setVisible(true);
 
         this.btnIconObjectif.addActionListener(this);
-    }
-
-    public ImageIcon resized(BufferedImage img)
-    {
-        BufferedImage imgResized = img;
-		double zoomLargeur = 200  / imgResized.getWidth();
-		double zoomHauteur = 100 / imgResized.getHeight();
-		double facteurZoom = Math.min(zoomLargeur, zoomHauteur)-0.1;
-
-	    ImageIcon imgIcon = new ImageIcon(imgResized.getScaledInstance(((int)(200*facteurZoom)), ((int)(100*facteurZoom)), Image.SCALE_SMOOTH));
-
-        return imgIcon;
     }
 
     @Override
@@ -165,14 +153,20 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 
 	public void majIHM()
 	{
+		Joueur j = this.ctrl.getJoueur();
 		this.remove(this.panelMainWagon);
 		this.panelMainWagon = new PanelMain(this.ctrl, this.ctrl.getJoueur());
 		this.add(this.panelMainWagon, BorderLayout.CENTER);
-        this.lblObjectif.setText("  " + this.joueur.getNbObjectifRestant() + " objectifs restants");
-		this.lblNbJeton .setText(this.joueur.getNbJetonsRestant() +"  jetons restants   "); 
 
 		this.revalidate();
 		this.repaint();
+
+		this.lblObjectif.setText("  " + j.getNbObjectifRestant() + " objectifs restants");
+		this.lblNbJeton .setText(j.getNbJetonsRestant() +"  jetons restants   "); 
+
+		this.lblNom     = new JLabel(j.getNom());
+        this.lblNom.setForeground(j.getCouleur());
+
 		this.appliquerTheme();
 	}
 
