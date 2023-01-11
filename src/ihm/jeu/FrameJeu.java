@@ -49,8 +49,7 @@ public class FrameJeu extends JFrame
         this.panelPlateau    = new PanelPlateau   (this.ctrl);
         this.panelObjectif   = new PanelObjectif  (this.ctrl);
         this.panelInfoPartie = new PanelInfoPartie(this.ctrl);
-        this.panelGauche     = new JPanel();
-        this.panelGauche.setLayout(new GridLayout(3, 1));
+        this.panelGauche     = new JPanel(new GridLayout(3, 1));
         this.panelGauche.setBorder( BorderFactory.createLineBorder(Color.black, 2) );
 
         /* Ajout des composants */
@@ -107,14 +106,28 @@ public class FrameJeu extends JFrame
 		this.remove(this.panelMainJoueur);
 		this.panelMainJoueur = new PanelMainJoueur(this.ctrl);
 		this.add(this.panelMainJoueur, BorderLayout.SOUTH);
+        if(!this.ctrl.getEstMulti())
+        {
+            this.remove(this.panelGauche);
+            this.panelGauche = new JPanel(new GridLayout(3, 1));
+
+            this.panelJoueurs = new PanelJoueurs(this.ctrl);
+            this.panelJoueurs.appliquerTheme();
+            this.panelGauche.add(this.panelJoueurs);
+            this.panelGauche.add(this.panelObjectif);
+            this.panelGauche.add(this.panelInfoPartie);
+            
+
+            this.add(this.panelGauche, BorderLayout.WEST );
+        }
 			
 		this.revalidate();
 		this.repaint();
 
-		this.panelObjectif  .majIHM();
-		this.panelPioche    .majIHM();
-		this.panelPlateau   .majIHM();
-        this.panelJoueurs   .majIHM();
+		this.panelObjectif.majIHM();
+		this.panelPioche  .majIHM();
+		this.panelPlateau .majIHM();
+        this.panelJoueurs .majIHM();
 	}
 
 	public void afficherErreur(String message)

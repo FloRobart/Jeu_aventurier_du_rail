@@ -222,6 +222,8 @@ public class Controleur
 	public int     getCouleurSelectionne() { return this.couleurSelectionnee;   }
 	public boolean getEnTrainDePiocher  () { return this.enTrainDePiocher;      }
 	public int	   getNbTours			() { return this.partie.getTours();			}
+	public boolean getEstMulti() { return this.partie.getEstMulti(); }
+
     public void    disposeFrameJeu		() { this.ihm.disposeFrameJeu(); 		}
 	public void    disposeFrameFinPartie() { this.ihm.disposeFrameFinPartie();  }
 
