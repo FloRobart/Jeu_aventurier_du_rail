@@ -30,7 +30,7 @@ public class PanelAideJeu extends JPanel
             JPanel panel = new JPanel();
             panel.setBackground(this.ctrl.getTheme().get("background"  ).get(0));
             JLabel lblImage = new JLabel();
-            lblImage.setIcon(new ImageIcon("./bin/donnees/images/aideJoueur/" + cpt + ".png"));
+            lblImage.setIcon(new ImageIcon("./donnees/images/aideJoueur/" + cpt + ".png"));
             panel.add(lblImage);
             this.panelScroll.add(panel);
         }

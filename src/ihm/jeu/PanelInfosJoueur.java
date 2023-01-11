@@ -142,9 +142,9 @@ public class PanelInfosJoueur extends JPanel
 
         String pathImage = "";
         if (this.ctrl.getThemeUsed().equals("dark"))
-            pathImage = "./bin/donnees/images/IconJoueurWhite.png";
+            pathImage = "./donnees/images/IconJoueurWhite.png";
         else
-            pathImage = "./bin/donnees/images/IconJoueurBlack.png";
+            pathImage = "./donnees/images/IconJoueurBlack.png";
 
         this.lblIcon.setIcon(new ImageIcon(pathImage));
     }
