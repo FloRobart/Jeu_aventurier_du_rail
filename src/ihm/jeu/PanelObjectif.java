@@ -106,6 +106,8 @@ public class PanelObjectif extends JPanel implements ActionListener
 	public void majIHM()
 	{
 		this.btnCarteObjectif.setEnabled(!this.ctrl.getEnTrainDePiocher());
+        if(this.ctrl.getCarteObjectif().size()==0)
+            this.btnCarteObjectif.setEnabled(false);
 	}
 
     /**

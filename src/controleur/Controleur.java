@@ -138,7 +138,10 @@ public class Controleur
 		this.metier = m;
 	}
 
-
+	public void ouvrirFinPartie()
+	{
+		this.ihm.ouvrirFinPartie();
+	}
 
 	/* --------------------------- */
 	/*          Getters            */
