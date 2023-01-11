@@ -61,7 +61,7 @@ public class Ihm
 
     public void setScore      ( ) { this.frameJeu.setScore(); }
     public void setImageButton(int indice)  { if ( this.frameJeu != null ) this.frameJeu.setImageButton(indice); }
-    public void setNbTours    (int nbTours) { this.frameJeu.setNbTours(nbTours); }
+	public void setInfo    (int nbTours, String nomJoueurCourant){ this.frameJeu.setInfo(nbTours, nomJoueurCourant); }
 
     public int getWidthFrameAccueil() { return this.frameAccueil.getWidth(); }
 

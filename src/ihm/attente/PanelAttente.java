@@ -20,6 +20,7 @@ import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -499,7 +500,10 @@ public class PanelAttente extends JPanel implements ActionListener
             /* Bouton de choix de la couleur */
             if (e.getSource() == this.btnChoisirCouleur)
             {
+				Color c = JColorChooser.showDialog(this, "choix de la couleur", enableColor);
 
+				if (c != null)
+					this.ctrl.getJoueur().setCouleur(c);
             }
 
             /* Boutons de lancement de la partie */
