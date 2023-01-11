@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.Graphics2D;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -128,7 +129,7 @@ public class PanelMain extends JPanel implements ActionListener
     public void appliquerTheme()
     {
         Color labelForeColor = this.ctrl.getTheme().get("labels").get(0);
-
+		Color titleBackColor = this.ctrl.getTheme().get("titles").get(1);
         
         this.spBtn.getHorizontalScrollBar().setBackground(this.ctrl.getTheme().get("background").get(0));
 
@@ -144,6 +145,7 @@ public class PanelMain extends JPanel implements ActionListener
         }
 
 		this.spBtn.setBackground(this.ctrl.getTheme().get("background").get(0));
+		this.spBtn.setBorder(BorderFactory.createBevelBorder(1, titleBackColor, titleBackColor));
 		this.panelBtn.setBackground(this.ctrl.getTheme().get("background").get(0));
     }
 }

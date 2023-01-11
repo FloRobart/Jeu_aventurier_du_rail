@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,7 +27,7 @@ import metier.Joueur;
 public class PanelJoueurs extends JPanel implements ActionListener 
 {
     private Controleur       ctrl;
-    private List<Joueur>     lstJoueurs;
+    private ArrayList<Joueur>     lstJoueurs;
     private JPanel           panelJoueurs;
     private JScrollPane      scrollJoueurs;
     private JPanel[]         tabPanels;
@@ -50,7 +51,8 @@ public class PanelJoueurs extends JPanel implements ActionListener
 
         //initialisation des composants
         /*panel de chaque joueurs */
-        this.lstJoueurs = this.ctrl.getJoueurs();
+        this.lstJoueurs = new ArrayList<Joueur>(this.ctrl.getJoueurs());
+		this.lstJoueurs.remove(this.ctrl.getJoueur());
         this.tabPanels  = new JPanel [this.lstJoueurs.size()];
         this.tabBoutons = new JButton[this.tabPanels.length];
         this.tabLblNom  = new JLabel [this.tabPanels.length];
@@ -142,7 +144,8 @@ public class PanelJoueurs extends JPanel implements ActionListener
 
     public void majIHM()
     {
-        this.lstJoueurs = this.ctrl.getPartie().getJoueursList();
+        this.lstJoueurs = new ArrayList<Joueur>(this.ctrl.getJoueurs());
+		this.lstJoueurs.remove(this.ctrl.getJoueur());
         setScore();
     }
 
@@ -155,6 +158,7 @@ public class PanelJoueurs extends JPanel implements ActionListener
 
         Color background       = theme.get("background"  ).get(0);
         Color labelForeColor   = theme.get("labels"      ).get(0);
+		Color titleBackColor   = theme.get("titles"      ).get(1);
         Color btnForeColor     = theme.get("buttons"     ).get(0);
 		Color btnBackColor     = theme.get("buttons"     ).get(1);
 
@@ -206,5 +210,9 @@ public class PanelJoueurs extends JPanel implements ActionListener
             this.tabLblScore[i].setOpaque(false);
             this.tabLblScore[i].setForeground(labelForeColor);
         }
+
+		/* JScrollpan */
+		this.panelJoueurs.setBackground(background);
+		this.scrollJoueurs.setBorder(BorderFactory.createBevelBorder(1, titleBackColor, titleBackColor));
     }
 }

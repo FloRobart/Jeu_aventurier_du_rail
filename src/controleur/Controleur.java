@@ -86,7 +86,7 @@ public class Controleur
 
 		Joueur j2 = new Joueur(this, "macPhilippe");
 		j2.setCouleur(Color.BLUE);
-		this.metier.ajouterJoueur(j2);
+		//this.metier.ajouterJoueur(j2);
 
 		this.partie = new Partie(this, this.metier, false, "Partie local");
 
