@@ -32,6 +32,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controleur.Controleur;
 import metier.Joueur;
+import metier.Metier;
 
 
 public class PanelAttente extends JPanel implements ActionListener
@@ -347,10 +348,7 @@ public class PanelAttente extends JPanel implements ActionListener
                         lstParticipants.get(i).setText(txt);
 
                 }
-            }
-                PanelAttente.this.panelPreviewMappe.setMappe();
-                PanelAttente.this.panelPreviewMappe.repaint();
-                PanelAttente.this.panelPreviewMappe.centrer(PanelAttente.this.getWidth(), PanelAttente.this.getHeight());  
+            }  
                 panelJoueurs.repaint();
             }
         });
@@ -479,16 +477,21 @@ public class PanelAttente extends JPanel implements ActionListener
 
 					if (extention.equals("xml"))
                     {
-						this.mappeImportee = this.ctrl.ouvrir(fichier);
-
+                        Metier metier_Test = new Metier(null);
+                        int nbJoueur = this.ctrl.getJoueurs().size();
+                        metier_Test.lireFichier(fichier);
+                        if (nbJoueur <= metier_Test.getNbJoueursMax()) this.mappeImportee = this.ctrl.ouvrir(fichier);
+                        else 
+                        {
+                            this.mappeImportee =false; 
+                        JOptionPane.showMessageDialog(this,"Il y a trop de joueurs","Nombre de Joueurs Maximum Error",JOptionPane.ERROR_MESSAGE);
+                        }
 						if (this.mappeImportee)
 						{
                             this.btnChangeMappe.setText(fichier.getName());
                             this.btnChangeMappe.setBorder(BorderFactory.createLineBorder(enableColor, 3));
-                            this.panelPreviewMappe.setMappe();
-                            this.panelPreviewMappe.repaint();
-                            this.panelPreviewMappe.centrer(this.getWidth(), this.getHeight());
-                            this.majInfo();
+
+                            this.majIHM();
 						}
                         else
                         {
@@ -525,15 +528,12 @@ public class PanelAttente extends JPanel implements ActionListener
         }
     }
 
-    public void majIHM()
-    {
 
-    }
 
     /**
      * Met à jour les informations du panel attente
      */
-    public void majInfo()
+    public void majIHM()
     {
         /* Labels d'information */
         this.lblJoueurMinRes.setText  (": " + this.ctrl.getNbJoueursMin     ());
@@ -551,6 +551,8 @@ public class PanelAttente extends JPanel implements ActionListener
         Color background     = this.theme.get("background").get(0);
 
         this.lstParticipants = new ArrayList<JLabel>();
+        List<Joueur> lstJoueurs    = ctrl.getJoueurs();
+
         for (int i = 0; i < this.ctrl.getNbJoueursMax(); i++)
         {
             this.lstParticipants.add(new JLabel(" "));
@@ -568,8 +570,9 @@ public class PanelAttente extends JPanel implements ActionListener
         this.panelJoueurs.setLayout(new GridLayout(this.lstParticipants.size(), 1));
         for (int i = 0; i < this.lstParticipants.size(); i++)
             this.panelJoueurs.add(this.lstParticipants.get(i));
-        
-        this.ctrl.getMetier().getServer().majMetier();
+        this.panelPreviewMappe.setMappe();
+        this.panelPreviewMappe.repaint();
+        this.panelPreviewMappe.centrer(this.getWidth(), this.getHeight());
     }
 
 
