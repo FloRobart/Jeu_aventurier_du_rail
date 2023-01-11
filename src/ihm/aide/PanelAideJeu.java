@@ -33,7 +33,6 @@ public class PanelAideJeu extends JPanel
     public PanelAideJeu(Controleur ctrl)
     {
         this.ctrl = ctrl;
-        this.setBackground(new Color(100,100,100));
         //this.setLayout(new BorderLayout());
 
         this.panelScroll = new JPanel();
@@ -49,24 +48,24 @@ public class PanelAideJeu extends JPanel
         this.lblpanelGauche = new JLabel();
         this.lblpanelDroite = new JLabel();
 
-        this.lblPanelBas.setIcon(new ImageIcon("./bin/donnees/images/aideJoueur/panelBas.png"));
+        this.lblPanelBas    .setIcon(new ImageIcon("./bin/donnees/images/aideJoueur/panelBas.png"   ));
         this.lblpanelCentral.setIcon(new ImageIcon("./bin/donnees/images/aideJoueur/panelCentre.png"));
-        this.lblpanelGauche.setIcon(new ImageIcon("./bin/donnees/images/aideJoueur/panelGauche.png"));
-        this.lblpanelDroite.setIcon(new ImageIcon("./bin/donnees/images/aideJoueur/panelDroite.png"));
+        this.lblpanelGauche .setIcon(new ImageIcon("./bin/donnees/images/aideJoueur/panelGauche.png"));
+        this.lblpanelDroite .setIcon(new ImageIcon("./bin/donnees/images/aideJoueur/panelDroite.png"));
 
-        this.panelBas.add(this.lblPanelBas);
+        this.panelBas    .add(this.lblPanelBas    );
         this.panelCentral.add(this.lblpanelCentral);
-        this.panelDroite.add(this.lblpanelGauche);
-        this.panelGauche.add(this.lblpanelDroite);
+        this.panelDroite .add(this.lblpanelGauche );
+        this.panelGauche .add(this.lblpanelDroite );
 
-        this.panelScroll.add(this.panelBas);
+        this.panelScroll.add(this.panelBas    );
         this.panelScroll.add(this.panelCentral);
-        this.panelScroll.add(this.panelDroite);
-        this.panelScroll.add(this.panelGauche);
+        this.panelScroll.add(this.panelDroite );
+        this.panelScroll.add(this.panelGauche );
 
         /*JScrollPane */
         this.scrollPanel = new JScrollPane(this.panelScroll, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        this.scrollPanel.setPreferredSize(new Dimension(650,500)); // 400 c'est trop, ça déborder du panel
+        this.scrollPanel.setPreferredSize(new Dimension(650,500));
         this.scrollPanel.getVerticalScrollBar().setUnitIncrement(5);
 
 
@@ -84,10 +83,10 @@ public class PanelAideJeu extends JPanel
 		this.setBackground(background);
 		this.setForeground(labelForeColor);
 
-        this.panelBas.setBackground(labelForeColor);
+        this.panelBas    .setBackground(labelForeColor);
         this.panelCentral.setBackground(labelForeColor);
-        this.panelGauche.setBackground(labelForeColor);
-        this.panelDroite.setBackground(labelForeColor);
+        this.panelGauche .setBackground(labelForeColor);
+        this.panelDroite .setBackground(labelForeColor);
 
 		/* Label */
         this.lblPanelBas.setOpaque(false);
