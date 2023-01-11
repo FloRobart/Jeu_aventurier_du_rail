@@ -87,5 +87,7 @@ public class PanelInfoPartie extends JPanel implements ActionListener
         /*---------*/
 	    this.lblNbTours.setForeground(labelForeColor);
         this.lblNbTours.setBackground(labelBackColor);
+		this.lblJoueurCourant.setForeground(labelForeColor);
+        this.lblJoueurCourant.setBackground(labelBackColor);
     }
 }
