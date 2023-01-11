@@ -84,12 +84,6 @@ public class Controleur
 	{
 		this.joueur = this.metier.getJoueurs().get(0);
 
-		Joueur j2 = new Joueur(this, "macPhilippe");
-		j2.setCouleur(Color.BLUE);
-		//this.metier.ajouterJoueur(j2);
-
-		this.partie = new Partie(this, this.metier, false, "Partie local");
-
 		this.ihm.demarrerAttenteLocal();
 	}
 
@@ -121,6 +115,7 @@ public class Controleur
 	 */
 	public void lancerPartieLocal()
 	{
+		this.partie = new Partie(this, this.metier, false, "Partie local");
 		this.ihm.demarrerJeu();
 	}
 

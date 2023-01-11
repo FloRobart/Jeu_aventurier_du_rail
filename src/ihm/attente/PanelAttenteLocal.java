@@ -616,7 +616,7 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
 
         if (!c.equals(this.theme.get("background").get(0)))
             for (int i = 0; i < this.ctrl.getJoueurs().size(); i++)
-                if (!c.equals(this.ctrl.getJoueurs().get(i).getCouleur()))
+                if (!c.equals(this.ctrl.getJoueurs().get(i).getCouleur()) || i > this.defaultColor.length)
                     return c;
         
         return this.aleatoireColor();

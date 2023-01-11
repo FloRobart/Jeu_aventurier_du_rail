@@ -85,7 +85,7 @@ public class Partie implements Serializable
 	public void joueurSuivant()
 	{
 		int indJoueur = 0;
-		System.out.println("Fin du tour de : " + this.getJoueurCourant().getNom());
+		
 		// si un joueur n'a plus assez de jeton, alors la partie se terminera à son prochain tour
 		if (this.joueurFin == -1 & this.getJoueurCourant().getNbJetonsRestant() <= this.nbJetonFin)
 			this.joueurFin = this.joueurCourrantId;
@@ -94,7 +94,7 @@ public class Partie implements Serializable
 		
 		this.joueurCourrantId = indJoueur;
 		this.ctrl.setInfo(this.tour, this.joueurs[this.joueurCourrantId].getNom());
-
+		
 		if (this.joueurCourrantId == this.joueurFin)
 		{
 			this.ctrl.ouvrirFinPartie(true);
@@ -103,9 +103,8 @@ public class Partie implements Serializable
 		if (indJoueur == 0)
 		{
 			this.tour++;
-			System.out.println("Tour : " + this.tour);
 		}
-		System.out.println("Debut du tour de : " + this.getJoueurCourant().getNom());
+		
 		if (!estMulti) this.ctrl.changerJoueur(this.getJoueurCourant());
 	}
 
