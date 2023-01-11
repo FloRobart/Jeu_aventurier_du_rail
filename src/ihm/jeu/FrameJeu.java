@@ -74,6 +74,7 @@ public class FrameJeu extends JFrame
 
 	public BufferedImage getImage() { return this.panelPlateau.getImage(); }
 
+    public void piocherCarteObjectifDebutPartie(){ this.panelObjectif.piocherCarteObjectifDebutPartie(); }
 
     /**
      * Permet d'appliquer le thème à l'ensemble de l'IHM (tout les panels existant)
@@ -107,6 +108,7 @@ public class FrameJeu extends JFrame
 		this.panelObjectif  .majIHM();
 		this.panelPioche    .majIHM();
 		this.panelPlateau   .majIHM();
+        this.panelJoueurs   .majIHM();
 	}
 
 	public void afficherErreur(String message)

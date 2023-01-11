@@ -64,12 +64,13 @@ public class Partie implements Serializable
 		this.scoreFinal	   = new Integer[this.joueurs.length];
 
 		this.nbJetonFin    = metier.getNbJetonFin();
-		this.tour          = 0;
+		this.tour          = 1;
 
 		this.joueurCourrantId = 0;
 
 		this.estMulti = estMulti;
 		this.joueurFin = -1;
+
 	}
 
 	public void setCtrl(Controleur ctrl)
@@ -99,7 +100,6 @@ public class Partie implements Serializable
 		{
 			this.tour++;
 		}
-
 		System.out.println("Joueur suivant : " + this.getJoueurCourant().getNom());
 	}
 

@@ -39,6 +39,7 @@ public class Controleur
 	private boolean enTrainDePiocher;
 
 	private BufferedImage imageVersoCouleur;
+	private boolean 	  piocherObjectifsDebut;
 
     public Controleur()
     {
@@ -49,6 +50,8 @@ public class Controleur
 		this.setImageVersoCouleur();
 
 		this.enTrainDePiocher = false;
+
+		this.piocherObjectifsDebut = true;
     }
 	public void joueurSuivant()
 	{
@@ -120,6 +123,7 @@ public class Controleur
 	{
 		this.partie = partie;
 		partie.setCtrl(this);
+		updateJoueurs(partie.getJoueurs());
 	}
 
 	public void setPartieLancer(Boolean b)
@@ -135,6 +139,7 @@ public class Controleur
 	public void setMetier(Metier m)
 	{
 		m.setCtrl(this);
+		m.copyTransients(this.metier);
 		this.metier = m;
 	}
 
@@ -181,8 +186,9 @@ public class Controleur
 	public Arete   getAreteSelectionne  () { return this.areteSelectionnee;     }
 	public int     getCouleurSelectionne() { return this.couleurSelectionnee;   }
 	public boolean getEnTrainDePiocher  () { return this.enTrainDePiocher;      }
+	public int	   getNbTours			() { return this.partie.getTours();			}
     public void    disposeFrameJeu		() { this.ihm.disposeFrameJeu(); 		}
-	public void    disposeFrameFinPartie() { this.ihm.disposeFrameFinPartie(); }
+	public void    disposeFrameFinPartie() { this.ihm.disposeFrameFinPartie();  }
 
 	// Méthodes
 	public void setImageVersoCouleur    () { this.imageVersoCouleur = this.metier.getImageVersoCouleur(); }
@@ -406,10 +412,14 @@ public class Controleur
 
 				this.ihm.majIHM();
 				this.joueur.verifierObjectifs();
-				this.partie.joueurSuivant();
+				this.joueurSuivant();
 			}
 		}
 	}
+
+	public void setPiocherObjectifsDebut()		  { this.piocherObjectifsDebut = false; }
+
+	public void piocherCarteObjectifDebutPartie() { if ( this.piocherObjectifsDebut == true ) this.ihm.piocherCarteObjectifDebutPartie(); }
 
 	public void piocherPioche ()        { this.partie.piocherPioche ();    }
 	public void piocherVisible(int ind) { this.partie.piocherVisible(ind); }
@@ -461,13 +471,22 @@ public class Controleur
 		this.partie = new Partie(this, this.metier, true, "Partie multi-joueur");
 	}
 
+	/*
+	 * 
+	 */
+	public void updateJoueurs(Joueur[] joueurs)
+	{
+		for (Joueur j : joueurs)
+			if (j.equals(this.joueur))
+				this.joueur = j;
+	}
 
 	/**
 	 * 
 	 */
 	public int joinGame(String ip, String nom, String password)
 	{
-
+		
 		this.metier.creeClient(ip, nom, true, password);
 
 		this.joueur = new Joueur(this, nom);

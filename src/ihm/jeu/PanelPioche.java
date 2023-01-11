@@ -166,6 +166,7 @@ public class PanelPioche extends JPanel implements ActionListener
 
 	public void majIHM()
 	{
+		this.tabCartesVisible = this.ctrl.getTabCartesVisible();
 		for (int cpt=0; cpt<PanelPioche.TAILLE; cpt++)
         {
             this.setImageButton(cpt);
