@@ -74,6 +74,7 @@ public class ClientServerHandler implements Runnable
     public void majPartie()
     {
         try {
+            System.out.println("Tour du joueur : " + this.ctrl.getPartie().getJoueurCourant().getNom());
             this.out.writeObject("MISE_A_JOUR_PARTIE");
             this.out.flush();
             this.out.reset();
@@ -139,6 +140,12 @@ public class ClientServerHandler implements Runnable
                 
                     this.ctrl.majIHM();
 
+                    for (Joueur j : nouvelle_partie.getJoueurs())
+                    {
+                        System.out.println("Joueur : " + j.getNom() + " / Score : " + j.getScore());
+                    }
+
+
                     System.out.println("Nouvelle partie");
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
@@ -152,11 +159,9 @@ public class ClientServerHandler implements Runnable
             if (command.equals("METIER"))
             {
                     try {
-                        // in = new ObjectInputStream(this.socket.getInputStream());
 
                         Metier nouveau_metier = (Metier) in.readObject();
                         this.ctrl.setMetier(nouveau_metier);
-
                         
                         System.out.println("--------ClientServerHandler"+nouveau_metier.getNoeuds());
                         System.out.println("Class metier charger");

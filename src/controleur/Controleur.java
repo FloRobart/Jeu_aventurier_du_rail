@@ -135,6 +135,7 @@ public class Controleur
 	public void setMetier(Metier m)
 	{
 		m.setCtrl(this);
+		m.copyTransients(this.metier);
 		this.metier = m;
 	}
 

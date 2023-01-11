@@ -51,12 +51,12 @@ public class ServerClientHandler implements Runnable
 
     public void majMetier(Metier m)
     {
-        writeonce("METIER");
         try {
-            System.out.println("------------\nServerClientHandler"+m.getNoeuds());
-            out.writeObject(m);
-            out.flush();
-            out.reset();
+            this.out.writeObject("METIER");
+            this.out.flush();
+            this.out.reset();
+            this.out.writeObject(m);
+            this.out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -66,9 +66,10 @@ public class ServerClientHandler implements Runnable
     {
         try
         {
+            System.out.println("Tour du joueur : " + partie.getJoueurCourant().getNom());
             this.out.writeObject("MISE_A_JOUR_PARTIE");
-            this.out.reset();
             this.out.flush();
+            this.out.reset();
             this.out.writeObject(partie);
             this.out.flush();
         }

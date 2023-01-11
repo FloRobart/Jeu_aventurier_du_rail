@@ -143,7 +143,8 @@ public class PanelJoueurs extends JPanel implements ActionListener
 
     public void majIHM()
     {
-        
+        this.lstJoueurs = this.ctrl.getPartie().getJoueursList();
+        setScore();
     }
 
     /**
