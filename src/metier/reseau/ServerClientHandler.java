@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Random;
 import java.util.Scanner;
 
 import controleur.Controleur;
@@ -48,6 +49,7 @@ public class ServerClientHandler implements Runnable
     private Metier metier;
     private String nomJoueur;
     private Boolean authentifie;
+    private Joueur joueur;
 
     public void majMetier(Metier m)
     {
@@ -132,7 +134,9 @@ public class ServerClientHandler implements Runnable
 
     private void initialLoading()
     {
-        this.metier.ajouterJoueur(new Joueur(this.ctrl, this.nomJoueur));     
+        joueur = new Joueur(this.ctrl, this.nomJoueur);
+        joueur.setCouleur(Color.getHSBColor((new Random()).nextInt(0, 360), 80, 50));
+        this.metier.ajouterJoueur(joueur);     
 
         this.authentifie = true;
         this.metier.getServer().majMetier();
@@ -242,6 +246,18 @@ public class ServerClientHandler implements Runnable
                 //this.ctrl.getPartie().joueurSuivant();
                 this.ctrl.getMetier().getServer().writeonce("FINIR_TOUR");
                 this.ctrl.majIHM();
+            }
+
+            if (command.equals("COULEUR_JOUEUR"))
+            {
+                try {
+                    Color couleur = (Color) in.readObject();
+                    this.joueur.setCouleur(couleur);
+                    this.ctrl.majIHM();
+                    this.ctrl.getMetier().getServer().majMetier();
+                } catch (ClassNotFoundException | IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             

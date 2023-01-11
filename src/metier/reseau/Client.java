@@ -41,6 +41,11 @@ public class Client
         this.csh.majPartie();
     }
 
+    public void changerCouleur(java.awt.Color c)
+    {
+        this.csh.changerCouleur(c);
+    }
+
     public boolean passTest(String password) throws IOException
     {
         this.socket = new Socket(this.ip, this.port);
