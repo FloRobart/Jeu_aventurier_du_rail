@@ -13,14 +13,14 @@ import javax.swing.JDialog;
 
 import controleur.Controleur;
 
-import ihm.aide.PanelAideMenu;
+import ihm.aide.PanelAideAccueil;
 import ihm.aide.PanelAideJeu;
 
 public class MenuBarre extends JMenuBar implements ActionListener 
 {
 	private Controleur ctrl;
 
-	private PanelAideMenu panelAideMenu;
+	private PanelAideAccueil panelAideMenu;
 	private PanelAideJeu panelAideJeu;
 
 	private JMenu menuPreferences;
@@ -120,7 +120,7 @@ public class MenuBarre extends JMenuBar implements ActionListener
 			if (e.getSource() == this.menuiAideMenu)
 			{
 				/* Création du panel */
-				if (this.panelAideMenu == null) { this.panelAideMenu = new PanelAideMenu(this.ctrl); }
+				if (this.panelAideMenu == null) { this.panelAideMenu = new PanelAideAccueil(this.ctrl); }
 
 				/* Création du JDialog */
 				if (this.dialogAideMenu == null || this.dialogAideMenu.getTitle().toLowerCase().contains("jeu"))
