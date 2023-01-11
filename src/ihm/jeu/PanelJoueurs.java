@@ -200,9 +200,9 @@ public class PanelJoueurs extends JPanel implements ActionListener
             /* Images */
             String pathImage = "";
             if (this.ctrl.getThemeUsed().equals("dark"))
-                pathImage = "./bin/donnees/images/IconJoueurWhite.png";
+                pathImage = "./donnees/images/IconJoueurWhite.png";
             else
-                pathImage = "./bin/donnees/images/IconJoueurBlack.png";
+                pathImage = "./donnees/images/IconJoueurBlack.png";
             
             this.tabBoutons[i].setIcon(new ImageIcon(pathImage));
 

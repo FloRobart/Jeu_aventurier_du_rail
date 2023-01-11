@@ -487,7 +487,7 @@ public class Metier implements Serializable
 
 		try
 		{
-			themeUsed = sxb.build("./bin/donnees/themes/theme_sauvegarde.xml").getRootElement().getText();
+			themeUsed = sxb.build("./donnees/themes/theme_sauvegarde.xml").getRootElement().getText();
 		}
 		catch (Exception e) { e.printStackTrace(); System.out.println("Erreur lors de la lecture du fichier XML du themes utilisé"); }
 
@@ -502,7 +502,7 @@ public class Metier implements Serializable
 	{
 		try
 		{
-			PrintWriter pw = new PrintWriter("./bin/donnees/themes/theme_sauvegarde.xml");
+			PrintWriter pw = new PrintWriter("./donnees/themes/theme_sauvegarde.xml");
 			pw.println("<theme>" + theme + "</theme>");
 			pw.close();
 
@@ -529,7 +529,7 @@ public class Metier implements Serializable
 
 		try
 		{
-			Element racine = sxb.build("./bin/donnees/themes/theme_" + theme + ".xml").getRootElement();
+			Element racine = sxb.build("./donnees/themes/theme_" + theme + ".xml").getRootElement();
 
 			/*----------------------------*/
 			/* BacKground Générale (=bkg) */

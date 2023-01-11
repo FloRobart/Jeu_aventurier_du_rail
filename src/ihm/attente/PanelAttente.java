@@ -125,7 +125,7 @@ public class PanelAttente extends JPanel implements ActionListener
         this.lblTitre.setPreferredSize(new Dimension(1000, 100));
 
         ImageIcon imgIconTitre = null;
-        try { imgIconTitre = new ImageIcon(ImageIO.read(new File("./bin/donnees/images/Titre_ADR.png")).getScaledInstance((this.lblTitre.getWidth()-100), this.lblTitre.getHeight(), Image.SCALE_SMOOTH)); } catch (IOException e) {}
+        try { imgIconTitre = new ImageIcon(ImageIO.read(new File("./donnees/images/Titre_ADR.png")).getScaledInstance((this.lblTitre.getWidth()-100), this.lblTitre.getHeight(), Image.SCALE_SMOOTH)); } catch (IOException e) {}
         this.lblTitre.setIcon(imgIconTitre);
 
 
