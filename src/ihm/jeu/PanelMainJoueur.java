@@ -3,10 +3,14 @@ package ihm.jeu;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.image.BufferedImage;
+import java.awt.Image;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -111,6 +115,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 		this.setVisible(true);
 
         this.btnIconObjectif.addActionListener(this);
+		this.appliquerTheme();
     }
 
     @Override
@@ -149,14 +154,9 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 
 	public void majIHM()
 	{
-		this.remove(this.panelMainWagon);
-		this.panelMainWagon = new PanelMain(this.ctrl, this.ctrl.getJoueur());
-		this.add(this.panelMainWagon, BorderLayout.CENTER);
-        this.lblObjectif.setText("  " + this.joueur.getNbObjectifRestant() + " objectifs restants");
-		this.lblNbJeton .setText(this.joueur.getNbJetonsRestant() +"  jetons restants   "); 
+		this.lblObjectif.setText("  " + this.ctrl.getJoueur().getNbObjectifRestant() + " objectifs restants");
+		this.lblNbJeton .setText(this.ctrl.getJoueur().getNbJetonsRestant() +"  jetons restants   "); 
 
-		this.revalidate();
-		this.repaint();
 		this.appliquerTheme();
 	}
 

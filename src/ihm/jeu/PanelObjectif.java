@@ -54,9 +54,10 @@ public class PanelObjectif extends JPanel implements ActionListener
 
     public void piocherCarteObjectifDebutPartie()
     {
-        if (this.panelPiocherObjectif == null) 
+        if (this.ctrl.peuxJouer()) 
         { 
-            this.panelPiocherObjectif = new PanelPiocherObjectif(this.ctrl, this, true); 
+            if (this.panelPiocherObjectif == null)
+				this.panelPiocherObjectif = new PanelPiocherObjectif(this.ctrl, this, true); 
 
             /* Création du JDialog */
             if (this.dialogPiocherDebut == null)
@@ -149,10 +150,14 @@ public class PanelObjectif extends JPanel implements ActionListener
 	public void disposePioche()
 	{
         if ( this.dialogPiocherDebut != null)
+		{
             this.dialogPiocherDebut.dispose();
+		}
 
         if ( this.dialogPiocherObjectifs != null)
+		{
             this.dialogPiocherObjectifs.dispose();
+		}
 	}
 
 	public void majIHM()

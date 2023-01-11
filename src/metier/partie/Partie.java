@@ -1,8 +1,10 @@
 package metier.partie;
 
+import java.awt.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import controleur.Controleur;
 import metier.Arete;
@@ -22,7 +24,7 @@ public class Partie implements Serializable
 	private int           joueurCourrantId;
 	private int           nbJetonFin;
 	private int           tour;
-	private boolean       estMulti; // mettre le serveur au lieu d'un boolean
+	private boolean       estMulti;
 	private int           joueurFin;
 	private Integer[]     scoreFinal;
 
@@ -76,12 +78,16 @@ public class Partie implements Serializable
 	public void setCtrl(Controleur ctrl)
 	{
 		this.ctrl = ctrl;
+		for (Joueur j : this.joueurs)
+		{
+			j.setCtrl(ctrl);
+		}
 	}
 
 	public void joueurSuivant()
 	{
 		int indJoueur = 0;
-
+		System.out.println("Fin du tour de : " + this.getJoueurCourant().getNom());
 		// si un joueur n'a plus assez de jeton, alors la partie se terminera à son prochain tour
 		if (this.joueurFin == -1 & this.getJoueurCourant().getNbJetonsRestant() <= this.nbJetonFin)
 			this.joueurFin = this.joueurCourrantId;
@@ -99,14 +105,17 @@ public class Partie implements Serializable
 		if (indJoueur == 0)
 		{
 			this.tour++;
+			System.out.println("Tour : " + this.tour);
 		}
-		System.out.println("Joueur suivant : " + this.getJoueurCourant().getNom());
+		System.out.println("Debut du tour de : " + this.getJoueurCourant().getNom());
+		if (!estMulti) this.ctrl.changerJoueur(this.getJoueurCourant());
 	}
 
 	public Joueur 		getJoueurCourant()	  { return this.joueurs[this.joueurCourrantId]; }
 	public CarteWagon[] getTabCartesVisible() { return this.gestionPioche.getTabCartesVisible(); }
 	public int          getSizeWagon       () { return this.gestionPioche.getSizeWagon(); }
 	public int			getTours()			  { return this.tour;}
+	public List<Arete>  geAretes()            { return this.alArete; }
 
 	public void piocherPioche()
 	{

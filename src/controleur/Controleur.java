@@ -37,6 +37,7 @@ public class Controleur
 	private Arete   areteSelectionnee;
 	private int     couleurSelectionnee;
 	private boolean enTrainDePiocher;
+	private boolean piocherObjectifsDebut;
 
     public Controleur()
     {
@@ -78,6 +79,10 @@ public class Controleur
 	public void creerPartieLocal()
 	{
 		this.joueur = this.metier.getJoueurs().get(0);
+
+		Joueur j2 = new Joueur(this, "macPhilippe");
+		j2.setCouleur(Color.BLUE);
+		this.metier.ajouterJoueur(j2);
 
 		this.partie = new Partie(this, this.metier, false, "Partie local");
 
@@ -156,6 +161,23 @@ public class Controleur
 		m.copyTransients(this.metier);
 		this.metier = m;
 	}
+	
+	public void changerJoueur(Joueur j)
+	{
+		this.joueur = j;
+		System.out.println("changement de joueur => " + this.joueur.getNom());
+
+		this.areteSelectionnee = null;
+		this.couleurSelectionnee = 0;
+
+		this.ihm.majIHM();
+		if (this.partie.getTours() == 1) 
+		{
+			System.out.println("pioche du debut");
+			this.piocherObjectifsDebut = true;
+			this.piocherCarteObjectifDebutPartie();
+		}
+	}
 
 	public void ouvrirFinPartie()
 	{
@@ -171,7 +193,7 @@ public class Controleur
 	public Joueur              getJoueurCourant       () { return this.partie.getJoueurCourant(); }
 	public List<CarteObjectif> getCarteObjectif       () { return this.metier.getCarteObjectif   (); }
 	public List<Noeud>         getNoeuds              () { return this.metier.getNoeuds          (); }
-	public List<Arete>         getAretes              () { return this.metier.getAretes          (); }
+	public List<Arete>         getAretes              () { if (this.partie != null) return this.partie.geAretes(); return this.metier.getAretes          (); }
 	public CarteWagon[]        getTabCarteWagon       () { return this.metier.getTabCarteWagon   (); }
 	public CarteObjectif[]	   getTabCarteObjectif    () { return this.metier.getTabCarteObjectif(); }
 
@@ -208,6 +230,7 @@ public class Controleur
 	public void setImageButton(int indice)  { if ( this.ihm != null ) this.ihm.setImageButton(indice); }
 	public void setInfo    (int nbTours, String nomJoueurCourant){ this.ihm.setInfo(nbTours, nomJoueurCourant); }
 
+	public void piocherCarteObjectifDebutPartie() { if ( this.piocherObjectifsDebut == true ) this.ihm.piocherCarteObjectifDebutPartie(); }
 
 	public void switchEnTrainDePiocher()
 	{

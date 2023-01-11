@@ -187,7 +187,7 @@ public class Metier implements Serializable
 
 	public void joueurSuivant()
 	{
-		System.out.println(this.client + " : " + this.server);
+		//System.out.println(this.client + " : " + this.server);
 		if (this.client != null)
 		{
 			System.out.println("client.finirTour();");
@@ -198,7 +198,7 @@ public class Metier implements Serializable
 			System.out.println("server.finirTour();");
 			this.server.finirTour();
 		}
-		System.out.println("Imagine finir son tour LOLXD !!");
+		//System.out.println("Imagine finir son tour LOLXD !!");
 	}
 
     public boolean chargerXML(Reader cs)

@@ -69,6 +69,11 @@ public class Joueur implements Serializable
 		return res;
 	}
 
+	public void setCtrl(Controleur ctrl)
+	{
+		this.ctrl = ctrl;
+	}
+
 	public int getMalus()
 	{
 		int res = 0;
