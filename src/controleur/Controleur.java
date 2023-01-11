@@ -64,7 +64,12 @@ public class Controleur
 	 * @param fichier :  fichier xml à lire
 	 * @return boolean : true si le fichier a été lu correctement, sinon false
 	 */
-	public boolean ouvrir(File fichier) { return this.metier.lireFichier(fichier); }
+	public boolean ouvrir(File fichier) 
+	{ 
+		boolean readSuccess =  this.metier.lireFichier(fichier);
+		System.out.println("\n------------\nControleur.java"+this.metier.getNoeuds());
+		if (this.metier.getServer()!= null)this.metier.getServer().majMetier();
+		return readSuccess ; 	}
 
 	/**
 	 * Permet de créer une partie solo.

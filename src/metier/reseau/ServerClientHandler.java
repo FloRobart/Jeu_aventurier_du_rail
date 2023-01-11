@@ -24,10 +24,12 @@ import java.awt.Color;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Scanner;
 
 import controleur.Controleur;
 import metier.Joueur;
@@ -51,7 +53,13 @@ public class ServerClientHandler implements Runnable
     {
         writeonce("METIER");
         try {
-            out.writeObject(this.metier);
+            // Metier metierSend = new Metier(null);
+            // // Scanner scanner = new Scanner (System.in);
+            // // if (scanner.nextInt()==1) metierSend.lireFichier(new File("./France.xml"));
+            // // else metierSend.lireFichier(new File("./exemple.xml"));
+            Metier metierSend = new Metier(m);
+            System.out.println("------------\nServerClientHandler"+metierSend.getNoeuds());
+            out.writeObject(metierSend);
             out.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -62,7 +70,7 @@ public class ServerClientHandler implements Runnable
     {
         try
         {
-            this.out.writeUTF("MISE_A_JOUR_PARTIE");
+            this.out.writeObject("MISE_A_JOUR_PARTIE");
             this.out.flush();
             this.out.writeObject(partie);
             this.out.flush();
@@ -78,7 +86,7 @@ public class ServerClientHandler implements Runnable
     {
         try
         {
-            this.out.writeUTF(cmd);
+            this.out.writeObject(cmd);
             this.out.flush();
         }
         catch(Exception e)
@@ -99,7 +107,7 @@ public class ServerClientHandler implements Runnable
         String ret = "";
         try
         {
-            ret = this.in.readUTF();
+            ret = (String)this.in.readObject();
         }
         catch(Exception e)
         {

@@ -125,25 +125,25 @@ public class ServerControleur
    public static void main(String[] args) {
     
 
-    Metier metierE = new Metier(null);
-    Metier metierF = new Metier(null);
-    metierF.lireFichier(new File ("./France.xml"));
-    metierF.lireFichier(new File ("./exemple.xml"));
+    // Metier metierE = new Metier(null);
+    // Metier metierF = new Metier(null);
+    // metierF.lireFichier(new File ("./France.xml"));
+    // metierF.lireFichier(new File ("./exemple.xml"));
 
-    System.out.println(metierF.getNoeuds());
-    System.out.println(metierE.getNoeuds());
+    // System.out.println(metierF.getNoeuds());
+    // System.out.println(metierE.getNoeuds());
 
-    ServerControleur serverCtrl = new ServerControleur(metierE, null);
-    int cpt =1;
-    while (true)
-    {
-        if (cpt ==1) serverCtrl.setMetier(metierF);
-        else serverCtrl.setMetier(metierE);
-        serverCtrl.updateMap();
-        Scanner scaner = new Scanner(System.in);
-        scaner.next();
-        cpt = 3-cpt;
-    }
+    // ServerControleur serverCtrl = new ServerControleur(metierE, null);
+    // int cpt =1;
+    // while (true)
+    // {
+    //     if (cpt ==1) serverCtrl.setMetier(metierF);
+    //     else serverCtrl.setMetier(metierE);
+    //     serverCtrl.updateMap();
+    //     Scanner scaner = new Scanner(System.in);
+    //     scaner.next();
+    //     cpt = 3-cpt;
+    // }
 
    }
 }

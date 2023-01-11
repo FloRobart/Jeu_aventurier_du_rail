@@ -27,6 +27,7 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.Serializable;
+import java.lang.reflect.Field;
 
 import controleur.Controleur;
 import metier.partie.CarteWagon;
@@ -81,7 +82,7 @@ public class Metier implements Serializable
     {
         this.ctrl = ctrl;
 		this.lstJoueurs = new ArrayList<Joueur>();
-		this.lireFichier(new File("./bin/donnees/France.xml"));
+		// this.lireFichier(new File("./bin/donnees/France.xml"));
 		this.hmColorThemes = new HashMap<String, List<Color>>();
 		this.chargerThemes(getThemeUsed());
     }
@@ -516,10 +517,45 @@ public class Metier implements Serializable
 			lstImagesRectoCouleur.add(ImageIO.read(new ByteArrayInputStream((byte[]) in.readObject())));
 		}
 	}
-
+	private Object readResolve()
+	{
+		System.out.println("This one has been called");
+		return this;
+	}
 	public void ajouterObjectifsJoueurs(CarteObjectif cartesObjectifs) 
 	{
 		this.ctrl.getPartie().getJoueurCourant().ajouterCarteObjectif(cartesObjectifs);
 		this.lstCartesObjectif.remove(cartesObjectifs);
+	}
+	public Metier (Metier metier)
+	{
+
+		this.lstJoueurs				= 	metier.lstJoueurs			;
+		this.lstCartesObjectif		=	metier.lstCartesObjectif	;
+		this.lstAretes				=	metier.lstAretes			;
+		this.lstNoeuds				=	metier.lstNoeuds			;
+		this.tabCarteWagon			=	metier.tabCarteWagon		;
+		this.tabCarteObjectif		=	metier.tabCarteObjectif		;
+		this.taillePlateau			=   metier.taillePlateau		;
+		this.imagePlateau			=   metier.imagePlateau			;
+		this.couleurPlateau			=   metier.couleurPlateau		;
+		this.policePlateau			=   metier.policePlateau		;
+		this.nbJoueursMin			=   metier.nbJoueursMin			;
+		this.nbJoueursMax			=   metier.nbJoueursMax			;
+		this.nbCarteCoul			=   metier.nbCarteCoul			;
+		this.nbCarteLocomotive		=   metier.nbCarteLocomotive	;
+		this.nbJetonJoueur			=   metier.nbJetonJoueur		;
+		this.nbJetonFin				=   metier.nbJetonFin			;
+		this.lstCouleurs			=   metier.lstCouleurs			;
+		this.imageVersoCouleur		=   metier.imageVersoCouleur	;
+		this.imageRectoLocomotive	=   metier.imageRectoLocomotive	;
+		this.lstImagesRectoCouleur	=   metier.lstImagesRectoCouleur;
+		this.lstPoints				=   metier.lstPoints			;
+		this.imageVersoObjectif		=   metier.imageVersoObjectif	;
+		this.hmColorThemes			=   metier.hmColorThemes		;
+		this.motDePassePartie		=   metier.motDePassePartie		;
+		this.server					=   metier.server				;
+		this.client					=   metier.client				;
+		this.nomClient				=   metier.nomClient			;	
 	}
 }	

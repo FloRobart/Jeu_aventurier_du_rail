@@ -8,6 +8,7 @@ package metier.reseau;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.StringReader;
@@ -28,12 +29,12 @@ public class ClientServerHandler implements Runnable
     private Boolean shouldStop;
     private Metier metier;
     private String password;
-
+    private Socket socket;
     public void writeonce(String cmd)
     {
         try
         {
-            this.out.writeUTF(cmd);
+            this.out.writeObject(cmd);
             this.out.flush();
         }
         catch(Exception e)
@@ -54,7 +55,7 @@ public class ClientServerHandler implements Runnable
         String ret = "";
         try
         {
-            ret = this.in.readUTF();
+            ret =(String) this.in.readObject();
         }
         catch(Exception e)
         {
@@ -73,7 +74,7 @@ public class ClientServerHandler implements Runnable
     public void majPartie()
     {
         try {
-            this.out.writeUTF("MISE_A_JOUR_PARTIE");
+            this.out.writeObject("MISE_A_JOUR_PARTIE");
             this.out.flush();
             this.out.writeObject(this.ctrl.getPartie());
             this.out.flush();
@@ -87,6 +88,7 @@ public class ClientServerHandler implements Runnable
         this.ctrl = ctrl;
         this.metier = ctrl.getMetier();
         this.password = password;
+        this.socket = socket;
         try {
             this.out = new ObjectOutputStream(socket.getOutputStream());
             this.in = new ObjectInputStream(socket.getInputStream());
@@ -149,8 +151,13 @@ public class ClientServerHandler implements Runnable
             if (command.equals("METIER"))
             {
                     try {
-                        Metier nouveau_metier = (Metier) this.in.readObject();
+                        // in = new ObjectInputStream(this.socket.getInputStream());
+
+                        Metier nouveau_metier = (Metier) in.readObject();
                         this.ctrl.setMetier(nouveau_metier);
+
+                        
+                        System.out.println("--------ClientServerHandler"+nouveau_metier.getNoeuds());
                         System.out.println("Class metier charger");
                         this.ctrl.majIHM();
                     } catch (ClassNotFoundException | IOException e) {

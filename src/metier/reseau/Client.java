@@ -47,15 +47,21 @@ public class Client
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
 
-        out.writeUTF("PASS_TEST");
-        out.writeUTF(password);
+        out.writeObject("PASS_TEST");
+        out.writeObject(password);
         out.flush();
-
-        Boolean b = in.readUTF().equals("OK");
+        String receive;
+        try {
+            receive = (String)in.readObject();
+            Boolean b = receive.equals("OK");
+            return b;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
         socket.close();
 
-        return b;
+        return false;
     }
 
     public void Disconnect()
