@@ -1,10 +1,8 @@
 package metier.partie;
 
-import java.awt.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import controleur.Controleur;
 import metier.Arete;
@@ -17,16 +15,16 @@ public class Partie implements Serializable
 	private transient Controleur ctrl;
 	private static final long serialVersionUID = 2L;
 
-	private String nomPartie;
+	private String         nomPartie;
 	private GestionPioche  gestionPioche;
-	private List<Arete>   alArete;
-	private Joueur[]      joueurs;
-	private int           joueurCourrantId;
-	private int           nbJetonFin;
-	private int           tour;
-	private boolean       estMulti;
-	private int           joueurFin;
-	private Integer[]     scoreFinal;
+	private List<Arete>    alArete;
+	private Joueur[]       joueurs;
+	private int            joueurCourrantId;
+	private int            nbJetonFin;
+	private int            tour;
+	private boolean        estMulti;
+	private int            joueurFin;
+	private Integer[]      scoreFinal;
 
 	public Joueur[] getJoueurs()
 	{
@@ -99,7 +97,7 @@ public class Partie implements Serializable
 
 		if (this.joueurCourrantId == this.joueurFin)
 		{
-			this.ctrl.ouvrirFinPartie();
+			this.ctrl.ouvrirFinPartie(true);
 		}
 		
 		if (indJoueur == 0)
@@ -114,6 +112,7 @@ public class Partie implements Serializable
 	public Joueur 		getJoueurCourant()	  { return this.joueurs[this.joueurCourrantId]; }
 	public CarteWagon[] getTabCartesVisible() { return this.gestionPioche.getTabCartesVisible(); }
 	public int          getSizeWagon       () { return this.gestionPioche.getSizeWagon(); }
+	public int          getSizeObjectif    () { return this.gestionPioche.getSizeObjectif(); }
 	public int			getTours()			  { return this.tour;}
 	public List<Arete>  geAretes()            { return this.alArete; }
 

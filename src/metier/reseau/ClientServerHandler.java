@@ -68,7 +68,6 @@ public class ClientServerHandler implements Runnable
     public void Disconnect()
     {
         this.shouldStop = true;
-        //this.ctrl.getJoueurs().remove();
     }
 
     public void changerCouleur(java.awt.Color c)
@@ -152,11 +151,6 @@ public class ClientServerHandler implements Runnable
                 
                     this.ctrl.majIHM();
 
-                    for (Joueur j : nouvelle_partie.getJoueurs())
-                    {
-                        System.out.println("Joueur : " + j.getNom() + " / Score : " + j.getScore());
-                    }
-
 
                     System.out.println("Nouvelle partie");
                 } catch (ClassNotFoundException e) {
@@ -218,6 +212,11 @@ public class ClientServerHandler implements Runnable
                 }
                 System.out.println("Tour de " + this.ctrl.getPartie().getJoueurCourant().getNom());
                 this.ctrl.majIHM();
+            }
+
+            if (command.equals("FIN_JEU"))
+            {
+                this.ctrl.ouvrirFinPartie(false);
             }
                     
             

@@ -1,17 +1,5 @@
 package metier;
 
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.imageio.ImageIO;
-
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.input.SAXBuilder;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -27,7 +15,17 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.Serializable;
-import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.imageio.ImageIO;
+
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.input.SAXBuilder;
 
 import controleur.Controleur;
 import metier.partie.CarteWagon;
@@ -36,22 +34,22 @@ import metier.reseau.Server;
 
 public class Metier implements Serializable
 {
-	private static final long serialVersionUID = 1L;
+	private static final long       serialVersionUID = 1L;
 
-    private transient Controleur          ctrl;
-
-    private List<Joueur>        lstJoueurs;
-    private List<CarteObjectif> lstCartesObjectif;
-    private List<Arete>         lstAretes;
-    private List<Noeud>         lstNoeuds;
-
-	private CarteWagon[]		tabCarteWagon;
-	private CarteObjectif[]		tabCarteObjectif;
+    private transient Controleur    ctrl;
     
-    private int[]         taillePlateau;
+    private List<Joueur>            lstJoueurs;
+    private List<CarteObjectif>     lstCartesObjectif;
+    private List<Arete>             lstAretes;
+    private List<Noeud>             lstNoeuds;
+
+	private CarteWagon[]		    tabCarteWagon;
+	private CarteObjectif[]		    tabCarteObjectif;
+    
+    private int[]                   taillePlateau;
 	private transient BufferedImage imagePlateau;
-	private Color         couleurPlateau;
-	private Font          policePlateau;
+	private Color                   couleurPlateau;
+	private Font                    policePlateau;
 
     private int nbJoueursMin;
 	private int nbJoueursMax;
@@ -60,15 +58,15 @@ public class Metier implements Serializable
 	private int nbJetonJoueur;
 	private int nbJetonFin;
 
-    private List<Color>         lstCouleurs;
+    private List<Color>                   lstCouleurs;
 	private transient BufferedImage       imageVersoCouleur;
 	private transient BufferedImage       imageRectoLocomotive;
 	private transient List<BufferedImage> lstImagesRectoCouleur;
-	private List<Integer>       lstPoints;
+	private List<Integer>                 lstPoints;
 
 	private transient BufferedImage       imageVersoObjectif;
 
-	private HashMap<String, List<Color>> hmColorThemes;
+	private HashMap<String, List<Color>>  hmColorThemes;
 
 	private transient String motDePassePartie;
 	private transient Server server;
@@ -81,9 +79,9 @@ public class Metier implements Serializable
 
 	public void copyTransients(Metier metier)
 	{
-		this.client = metier.client;
-		this.nomClient = metier.nomClient;
-		this.server = metier.server;
+		this.client           = metier.client;
+		this.nomClient        = metier.nomClient;
+		this.server           = metier.server;
 		this.motDePassePartie = metier.motDePassePartie;
 	}
 

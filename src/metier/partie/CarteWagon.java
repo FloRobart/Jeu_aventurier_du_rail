@@ -13,10 +13,10 @@ import javax.imageio.ImageIO;
 
 public class CarteWagon implements Serializable
 {
-    private Color         couleur;
+    private Color                   couleur;
     private transient BufferedImage imageVerso;
     private transient BufferedImage imageRecto;
-    private boolean       joker;
+    private boolean                 joker;
 
     public CarteWagon(Color couleur, BufferedImage imageVerso, BufferedImage imageRecto)
     {
@@ -32,15 +32,15 @@ public class CarteWagon implements Serializable
         this.imageRecto = imageRecto;
     }
 
-    public Color getCouleur() { return this.couleur; }
+    public Color getCouleur           () { return this.couleur;    }
     public BufferedImage getImageVerso() { return this.imageVerso; }
     public BufferedImage getImageRecto() { return this.imageRecto; }
-    public boolean isJoker() { return this.joker; }
+    public boolean isJoker            () { return this.joker;      }
 
-    public void setCouleur(Color couleur) { this.couleur = couleur; }
+    public void setCouleur   (Color couleur)            { this.couleur = couleur;       }
     public void setImageVerso(BufferedImage imageVerso) { this.imageVerso = imageVerso; }
     public void setImageRecto(BufferedImage imageVerso) { this.imageVerso = imageVerso; }
-    public void setJoker(boolean joker) { this.joker = joker; }
+    public void setJoker     (boolean joker)            { this.joker = joker;           }
 
 	private void writeObject(ObjectOutputStream out) throws IOException 
 	{

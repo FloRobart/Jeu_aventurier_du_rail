@@ -47,7 +47,7 @@ public class PanelInfoPartie extends JPanel implements ActionListener
     {
         if ( e.getSource() == this.btnArreterPartie )
         {
-            this.ctrl.ouvrirFinPartie();
+            this.ctrl.ouvrirFinPartie(true);
         }
     }
 

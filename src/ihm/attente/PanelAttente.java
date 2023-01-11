@@ -69,7 +69,6 @@ public class PanelAttente extends JPanel implements ActionListener
     private JLabel lblJoueurMinRes;
     private JLabel lblLstParticipants;
     private JLabel lblNombreDe;
-    private JLabel lblStatut;
     private JLabel lblTitre;
 
     /* Listes */
@@ -108,7 +107,6 @@ public class PanelAttente extends JPanel implements ActionListener
         this.lblJoueurMinRes    = new JLabel();
         this.lblLstParticipants = new JLabel();
         this.lblNombreDe        = new JLabel();
-        this.lblStatut          = new JLabel();
         this.lblTitre           = new JLabel();
 
         /* Listes */
@@ -361,9 +359,6 @@ public class PanelAttente extends JPanel implements ActionListener
         this.jspLstParticipants.setBorder(null);
 
 
-        this.lblStatut.setText("Statut : en attente de joueur");
-        this.lblStatut.setFont(new Font("Liberation Sans", 0, 36));
-
 
         this.btnLancer.setText("Lancer la partie");
         this.btnLancer.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
@@ -398,10 +393,7 @@ public class PanelAttente extends JPanel implements ActionListener
                             .addComponent(this.jspLstParticipants, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(300, 300, 300)
-                        .addComponent(this.btnLancer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(200, 200, 200)
-                        .addComponent(this.lblStatut)))
+                        .addComponent(this.btnLancer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
                 .addGap(40, 40, 40))
         );
 
@@ -422,9 +414,7 @@ public class PanelAttente extends JPanel implements ActionListener
                     .addComponent(this.panelInfo, GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
                     .addComponent(this.panelPreviewMappe, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(this.jspLstParticipants, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(35, 35, 35)
-                .addComponent(this.lblStatut)
-                .addGap(18, 18, 18)
+                .addGap(50, 50, 50)
                 .addComponent(this.btnLancer, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40))
         );
@@ -445,14 +435,6 @@ public class PanelAttente extends JPanel implements ActionListener
     }
 
 
-    /**
-     * Met à jour le statut. Cette méthode est appelé par le réseaux quand le nombre de joueur maximum est atteint.
-     * @param status Nouveau statut
-     */
-    public void updateStatus(String status)
-    {
-        this.lblStatut.setText(status);
-    }
 
 
     @Override
@@ -659,7 +641,6 @@ public class PanelAttente extends JPanel implements ActionListener
         this.lblJoueurMinRes   .setForeground(labelForeColor);
         this.lblLstParticipants.setForeground(labelForeColor);
         this.lblNombreDe       .setForeground(labelForeColor);
-        this.lblStatut         .setForeground(labelForeColor);
         this.lblTitre          .setForeground(labelForeColor);
     }
 }

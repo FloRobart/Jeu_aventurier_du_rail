@@ -6,11 +6,11 @@ import java.io.Serializable;
 
 public class Arete implements Serializable
 {
-	private Noeud noeud1;
-	private Noeud noeud2;
-	private int   distance;
-	private Color couleur1;
-	private Color couleur2;
+	private Noeud  noeud1;
+	private Noeud  noeud2;
+	private int    distance;
+	private Color  couleur1;
+	private Color  couleur2;
 	private Joueur proprietaire1;
 	private Joueur proprietaire2;
 
@@ -26,12 +26,13 @@ public class Arete implements Serializable
 		this.proprietaire2 = null;
 	}
 
-	public Noeud getNoeud1  () { return this.noeud1;   }
-	public Noeud getNoeud2  () { return this.noeud2;   }
-	public int   getDistance() { return this.distance; }
-	public Color getCouleur1() { return this.couleur1; }
-	public Color getCouleur2() { return this.couleur2; }
+	public Noeud getNoeud1  ()       { return this.noeud1;   }
+	public Noeud getNoeud2  ()       { return this.noeud2;   }
+	public int   getDistance()       { return this.distance; }
+	public Color getCouleur1()       { return this.couleur1; }
+	public Color getCouleur2()       { return this.couleur2; }
 	public Joueur getProprietaire1() { return this.proprietaire1; }
+	
 	public Joueur getProprietaire2() 
 	{ 
 		if (this.is2Sens())

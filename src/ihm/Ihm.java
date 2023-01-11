@@ -43,13 +43,14 @@ public class Ihm
      */
 	public void demarrerJeu()
 	{
-		if (this.frameAccueil != null ) { this.frameAccueil.dispose(); this.frameAccueil = null; }
-        if (this.frameAttente != null ) { this.frameAttente.dispose(); this.frameAttente = null; }
+		if (this.frameAccueil      != null ) { this.frameAccueil     .dispose(); this.frameAccueil      = null; }
+        if (this.frameAttente      != null ) { this.frameAttente     .dispose(); this.frameAttente      = null; }
+		if (this.frameAttenteLocal != null ) { this.frameAttenteLocal.dispose(); this.frameAttenteLocal = null; }
 
 		this.frameJeu = new FrameJeu(this.ctrl);
 
         this.appliquerTheme();
-
+		
         this.frameJeu.piocherCarteObjectifDebutPartie();
 	}
 
@@ -83,8 +84,13 @@ public class Ihm
         this.appliquerTheme();
     }
 
-	public void ouvrirFinPartie()
+	public void ouvrirFinPartie(Boolean finLocal)
 	{
+        if (finLocal)
+        {
+            if (this.ctrl.getMetier().getClient() != null) this.ctrl.getMetier().getClient().writeonce("FIN_JEU");
+            if (this.ctrl.getMetier().getServer() != null) this.ctrl.getMetier().getServer().writeonce("FIN_JEU");
+        }
 		this.frameFinDePartie = new FrameFinPartie(this.ctrl);
         this.frameFinDePartie.appliquerTheme();
 	}

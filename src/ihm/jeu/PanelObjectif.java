@@ -16,35 +16,41 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controleur.Controleur;
+import metier.CarteObjectif;
 
 
 public class PanelObjectif extends JPanel implements ActionListener 
 {
-    private Controleur ctrl;
+    private Controleur           ctrl;
 
-    private JDialog dialogPiocherObjectifs;
-    private JDialog dialogPiocherDebut;
+    private JDialog              dialogPiocherObjectifs;
+    private JDialog              dialogPiocherDebut;
     private PanelPiocherObjectif panelPiocherObjectif;
 
-	private JButton btnCarteObjectif;
+	private JLabel               lblPiocheObjectif;
+	private JButton              btnCarteObjectif;
 
     public PanelObjectif(Controleur ctrl)
     {
         this.ctrl = ctrl;
-        this.dialogPiocherObjectifs  = null;
-        this.dialogPiocherDebut    = null;
-        this.panelPiocherObjectif = null;
+
+        this.dialogPiocherObjectifs = null;
+        this.dialogPiocherDebut     = null;
+        this.panelPiocherObjectif   = null;
+
         this.setBorder( BorderFactory.createLineBorder(this.ctrl.getTheme().get("titles").get(1), 2) );
         this.setLayout(new BorderLayout());
 
 		//Creation des composants
+		this.lblPiocheObjectif = new JLabel("" + this.ctrl.getSizeObjectif() + "/" + this.ctrl.getSizeObjectif(), JLabel.CENTER);
+
 		this.btnCarteObjectif = new JButton(new ImageIcon(this.ctrl.getImageVersoObjectif()));
         this.btnCarteObjectif.setSize(new Dimension(200, 150));
 
         //Ajout des composants
+		this.add(this.lblPiocheObjectif, BorderLayout.NORTH);
 		this.add(this.btnCarteObjectif, BorderLayout.CENTER);
         this.add(new JLabel("    "), BorderLayout.SOUTH);
-        this.add(new JLabel("    "), BorderLayout.NORTH);
         this.add(new JLabel("    "), BorderLayout.WEST);
         this.add(new JLabel("    "), BorderLayout.EAST);
 
@@ -165,6 +171,16 @@ public class PanelObjectif extends JPanel implements ActionListener
 		this.btnCarteObjectif.setEnabled(!this.ctrl.getEnTrainDePiocher());
         if(this.ctrl.getCarteObjectif().size()==0)
             this.btnCarteObjectif.setEnabled(false);
+
+		int nbCartes = this.ctrl.getSizeObjectif();
+		CarteObjectif[] cartes = this.panelPiocherObjectif.getCartesObjectifs();
+		if (cartes != null)
+			for (int i = 0; i < cartes.length; i++)
+				if (cartes[i] != null)
+					nbCartes++;
+
+		String text = this.lblPiocheObjectif.getText();
+		this.lblPiocheObjectif.setText("" + nbCartes + text.substring(text.indexOf("/")));
 	}
 
     /**
@@ -192,7 +208,9 @@ public class PanelObjectif extends JPanel implements ActionListener
         /*---------*/
         /* Boutons */
         /*---------*/
-	    this.btnCarteObjectif.setForeground(btnForeColor);
-        this.btnCarteObjectif.setBackground(background  );
+	    this.btnCarteObjectif .setForeground(btnForeColor);
+        this.btnCarteObjectif .setBackground(background  );
+		this.lblPiocheObjectif.setForeground(labelForeColor);
+		this.lblPiocheObjectif.setBackground(background);
     }
 }

@@ -27,17 +27,17 @@ import metier.Noeud;
 
 public class PanelObjectifsJoueur extends JPanel implements ActionListener
 {
-    private Controleur ctrl;
-    private Joueur     joueur;
+    private Controleur                   ctrl;
+    private Joueur                       joueur;
     private HashMap<String, List<Color>> theme;
 
     /* Panels */
-    private JPanel panelPrincipale;
-    private JPanel container;
+    private JPanel                       panelPrincipale;
+    private JPanel                       container;
 
-    private JScrollPane scrollPane;
+    private JScrollPane                  scrollPane;
 
-    private JButton[] tabBtnObjectifs;
+    private JButton[]                    tabBtnObjectifs;
 
  
     public PanelObjectifsJoueur(Controleur ctrl)
@@ -47,7 +47,6 @@ public class PanelObjectifsJoueur extends JPanel implements ActionListener
 
 
         //initialisation des composants
-        List<Joueur> lstJ = this.ctrl.getJoueurs();
         this.joueur = this.ctrl.getJoueur();
     
         int taille = this.joueur.getAlCartesObjectif().size();
