@@ -125,4 +125,9 @@ public class FrameJeu extends JFrame
     {
         this.panelMainJoueur.validerObjectif();
     }
+
+    public void disposeFrameFinPartie()
+    {
+        this.panelInfoPartie.disposeFrameFinPartie();
+    }
 }
