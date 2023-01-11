@@ -417,7 +417,6 @@ public class Metier implements Serializable
 	
 	private Object readResolve()
 	{
-		System.out.println("This one has been called");
 		return this;
 	}
 
