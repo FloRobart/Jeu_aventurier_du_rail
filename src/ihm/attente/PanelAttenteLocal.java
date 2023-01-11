@@ -549,6 +549,8 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
                     this.ctrl.ajouterJoueur(new Joueur(this.ctrl, nomJoueur));
                     this.lstParticipants.get(this.ctrl.getJoueurs().size()-1).setForeground(this.aleatoireColor());
                 }
+                else
+                    JOptionPane.showMessageDialog(this, "Le pseudo est incorrect", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
 
             /* Boutons de lancement de la partie */
