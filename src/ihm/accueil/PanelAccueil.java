@@ -605,7 +605,10 @@ public class PanelAccueil extends JPanel implements ActionListener
                     {
                         if (e.getSource() == this.btnCreerSolo)
                         {
-                            this.ctrl.ajouterJoueur(new Joueur(this.ctrl, this.txtPseudo.getText()));
+							Joueur j = new Joueur(this.ctrl, this.txtPseudo.getText());
+							j.setCouleur(Color.RED);
+
+                            this.ctrl.ajouterJoueur(j);
                             this.ctrl.creerPartieLocal();
                         }
                         else

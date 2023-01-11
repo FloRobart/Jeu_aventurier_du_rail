@@ -548,8 +548,12 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
 				{
 					if (this.verifPseudo(nomJoueur))
 					{
-						this.ctrl.ajouterJoueur(new Joueur(this.ctrl, nomJoueur));
-						this.lstParticipants.get(this.ctrl.getJoueurs().size()-1).setForeground(this.aleatoireColor());
+						Color c = this.aleatoireColor();
+						Joueur j = new Joueur(this.ctrl, nomJoueur);
+						j.setCouleur(c);
+
+						this.ctrl.ajouterJoueur(j);
+						this.lstParticipants.get(this.ctrl.getJoueurs().size()-1).setForeground(c);
 					}
 					else
 						JOptionPane.showMessageDialog(this, "Le pseudo est incorrect", "Erreur", JOptionPane.ERROR_MESSAGE);
