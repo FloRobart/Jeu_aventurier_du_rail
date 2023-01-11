@@ -60,6 +60,12 @@ public class PanelInfoPartie extends JPanel implements ActionListener
 		this.lblJoueurCourant.setText("  Joueur courant : " + nomJoueurCourant); 
     }
 
+	public void disposeFrameFinPartie()
+	{
+		if ( this.frmFinDePartie != null )
+			this.frmFinDePartie.dispose();
+	}
+
     /*
      * Applique les couleurs du thème sélectionné à tout les éléments du panel et au panel lui même
      */
