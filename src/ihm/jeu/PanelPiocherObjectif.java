@@ -89,8 +89,7 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 			this.tabCarteobjectif[cpt].addActionListener(this);
 			this.tabChoixCarte[cpt] = false;
         }
-		this.btnPiocher.addActionListener(this);
-
+		
 		this.panelBtnPiocher.add(new JLabel(""));
 		this.panelBtnPiocher.add(new JLabel(""));
 		this.panelBtnPiocher.add(this.btnPiocher);
@@ -100,7 +99,7 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 		this.add(this.lblChoisirCartes	, BorderLayout.NORTH);
 		this.add(panelPrincipal			, BorderLayout.CENTER);
 		this.add(this.panelBtnPiocher	, BorderLayout.SOUTH);
-		
+
 		this.btnPiocher.addActionListener(this);
 
 		this.appliquerTheme();
