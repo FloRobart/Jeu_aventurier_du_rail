@@ -62,7 +62,6 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         this.panelImgJoueur  = new JPanel();
 
         this.lblNom     = new JLabel(this.joueur.getNom());
-        this.lblNom.setForeground(this.joueur.getCouleur());
         this.lblNbJeton = new JLabel(this.joueur.getNbJetonsRestant() +"  jetons restants   "); 
         this.lblScore   = new JLabel("Score : " + this.joueur.getScore());
 
@@ -233,7 +232,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         
         /* lblNom */
         this.lblNom.setOpaque(false);
-        //this.lblNom.setForeground(labelForeColor);
+        this.lblNom.setForeground(this.joueur.getCouleur());
 
         /* lblNbJeton */
         this.lblNbJeton.setOpaque(false);

@@ -114,6 +114,7 @@ public class Partie implements Serializable
 	public int          getSizeObjectif    () { return this.gestionPioche.getSizeObjectif(); }
 	public int			getTours()			  { return this.tour;}
 	public List<Arete>  geAretes()            { return this.alArete; }
+	public boolean      getEstMulti() { return this.estMulti; }
 
 	public void piocherPioche()
 	{
