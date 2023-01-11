@@ -207,6 +207,22 @@ public class ServerClientHandler implements Runnable
                         }
                     }
 
+                    if (this.nomJoueur.length() > 20)
+                    {
+                        writeonce("ERREUR");
+                        writeonce("Ce nom est trop long");
+                        this.metier.getServer().RemoveClient(this);
+                        return;
+                    }
+
+                    if (this.nomJoueur.isBlank())
+                    {
+                        writeonce("ERREUR");
+                        writeonce("Ce nom est vide");
+                        this.metier.getServer().RemoveClient(this);
+                        return;
+                    }
+
                     System.out.println("nom joueur : " + this.nomJoueur + "");
 
                 }
