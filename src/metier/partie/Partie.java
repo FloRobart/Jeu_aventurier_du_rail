@@ -114,6 +114,7 @@ public class Partie implements Serializable
 	public Joueur 		getJoueurCourant()	  { return this.joueurs[this.joueurCourrantId]; }
 	public CarteWagon[] getTabCartesVisible() { return this.gestionPioche.getTabCartesVisible(); }
 	public int          getSizeWagon       () { return this.gestionPioche.getSizeWagon(); }
+	public int          getSizeObjectif    () { return this.gestionPioche.getSizeObjectif(); }
 	public int			getTours()			  { return this.tour;}
 	public List<Arete>  geAretes()            { return this.alArete; }
 
