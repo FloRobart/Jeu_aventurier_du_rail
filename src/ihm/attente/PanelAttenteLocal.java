@@ -49,7 +49,6 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
 
     /* Boutons */
     private JButton btnChangeMappe;
-    private JButton btnChoisirCouleur;
     private JButton btnNewJoueur;
     private JButton btnLancer;
     
@@ -77,6 +76,10 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
     private JScrollPane  jspLstParticipants;
     private List<JButton> lstParticipants;
 
+    /* Default Color */
+    Color[] defaultColor = new Color[]{Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW, Color.ORANGE, Color.PINK, Color.CYAN, Color.MAGENTA, Color.GRAY, Color.LIGHT_GRAY, Color.DARK_GRAY, Color.BLACK, Color.WHITE};
+
+
     public PanelAttenteLocal(Controleur ctrl)
     {
         this.ctrl  = ctrl;
@@ -89,7 +92,6 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
 
         /* Boutons */
         this.btnChangeMappe     = new JButton();
-        this.btnChoisirCouleur  = new JButton();
         this.btnNewJoueur       = new JButton();
         this.btnLancer          = new JButton();
         
@@ -138,12 +140,6 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
         this.btnChangeMappe.setMaximumSize  (new Dimension(150, 30));
         this.btnChangeMappe.setMinimumSize  (new Dimension(150, 30));
         this.btnChangeMappe.setPreferredSize(new Dimension(150, 30));
-
-        this.btnChoisirCouleur.setText("Choisir une couleur");
-        this.btnChoisirCouleur.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
-        this.btnChoisirCouleur.setMaximumSize  (new Dimension(150, 30));
-        this.btnChoisirCouleur.setMinimumSize  (new Dimension(150, 30));
-        this.btnChoisirCouleur.setPreferredSize(new Dimension(150, 30));
 
 
         this.btnNewJoueur.setText("Ajouter un joueur");
@@ -332,6 +328,7 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
             this.lstParticipants.get(i).setFont(new Font("Liberation Sans", 0, 24));
             this.lstParticipants.get(i).setPreferredSize(new Dimension(200, 40));
             this.lstParticipants.get(i).setOpaque(true);
+            this.lstParticipants.get(i).setForeground(defaultColor[i]);
             this.lstParticipants.get(i).setHorizontalAlignment(JButton.CENTER);
             this.lstParticipants.get(i).setBorder(BorderFactory.createBevelBorder(1, titleBackColor, titleBackColor));
         }
@@ -389,9 +386,7 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
                         .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(this.btnChangeMappe, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(this.btnChoisirCouleur, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(this.btnChangeMappe, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(this.panelPreviewMappe, GroupLayout.PREFERRED_SIZE, 400, GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
@@ -415,8 +410,7 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
                 .addGap(60, 60, 60)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(this.btnChangeMappe, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(this.btnChoisirCouleur, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(this.btnChangeMappe, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                     .addComponent(this.btnNewJoueur))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
@@ -435,9 +429,6 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
         /*------------------------*/
         /* Bouton changer mappe */
         this.btnChangeMappe.addActionListener(this);
-
-        /* Bouton choisir couleur */
-        this.btnChoisirCouleur.addActionListener(this);
 
         /* Bouton ajouter joueur */
         this.btnNewJoueur.addActionListener(this);
@@ -496,6 +487,8 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
                             else
                             {
                                 this.btnChangeMappe.setText("Changer de mappe");
+                                this.btnChangeMappe.setForeground(enableColor);
+                                this.btnChangeMappe.setBorder(BorderFactory.createLineBorder(enableColor, 3));
 
                                 JOptionPane.showMessageDialog(this, "Vous êtes " + this.ctrl.getJoueurs().size() + " Joueurs dans la partie mais cette mappe peux contenir seulement " + this.ctrl.getNbJoueursMax() + " Joueurs maximum", "Erreur", JOptionPane.ERROR_MESSAGE);
 
@@ -507,8 +500,6 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
                             this.btnChangeMappe.setText("Changer de mappe");
                             this.btnChangeMappe.setForeground(disableColor);
                             this.btnChangeMappe.setBorder(BorderFactory.createLineBorder(disableColor, 3));
-
-                            this.btnLancer.setEnabled(false);
                         }
                     }
 					else
@@ -516,19 +507,43 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
 				}
             }
 
-            /* Bouton de choix de la couleur */
-            if (e.getSource() == this.btnChoisirCouleur)
-            {
-				Color c = JColorChooser.showDialog(this, "choix de la couleur", enableColor);
 
-				if (c != null)
-					this.ctrl.getJoueur().setCouleur(c);
+            /* Choix de la couleur (Bouton Joueur) */
+            for (int i = 0; i < this.lstParticipants.size(); i++)
+            {
+                if (e.getSource() == this.lstParticipants.get(i) && this.lstParticipants.get(i).getText() != "")
+                {
+                    Color background = this.theme.get("background").get(0);
+                    Color c = JColorChooser.showDialog(this, "choix de la couleur", enableColor);
+
+                    if (c != null)
+                    {
+                        if (!c.equals(background))
+                        {
+                            for (int j = i; j < this.ctrl.getJoueurs().size(); j++)
+                            {
+                                if (!c.equals(this.ctrl.getJoueurs().get(j).getCouleur()))
+                                {
+                                    this.ctrl.getJoueurs().get(i).setCouleur(c);
+                                    this.lstParticipants.get(i).setForeground(c);
+                                }
+                                else
+                                    JOptionPane.showMessageDialog(this, "Un joueur possède déjà cette couleur", "Erreur", JOptionPane.ERROR_MESSAGE);
+                            }
+                        }
+                        else
+                            JOptionPane.showMessageDialog(this, "Veuillez choisir une couleur visible", "Erreur", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
             }
+
+
 
             /* Bouton ajouter joueur */
             if (e.getSource() == this.btnNewJoueur)
             {
                 this.ctrl.ajouterJoueur(new Joueur(this.ctrl, this.ctrl.getJoueur().getNom()));
+                this.lstParticipants.get(this.ctrl.getJoueurs().size()-1).setForeground(this.aleatoireColor());
                 System.out.println("NbJoueurs : " + this.ctrl.getJoueurs().size());
             }
 
@@ -549,6 +564,24 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
 
 
     /**
+     * Génère une couleur aléatoire parmie le tableau de couleur par défaut
+     * @return Color : couleur aléatoire
+     */
+    private Color aleatoireColor()
+    {
+        Color c = this. defaultColor[(int) (Math.random() * this.defaultColor.length)];
+
+        if (!c.equals(this.theme.get("background").get(0)))
+            for (int i = 0; i < this.ctrl.getJoueurs().size(); i++)
+                if (!c.equals(this.ctrl.getJoueurs().get(i).getCouleur()))
+                    return c;
+        
+        return this.aleatoireColor();
+    }
+
+
+
+    /**
      * Met à jour les informations du panel attente
      */
     public void majIHM()
@@ -564,7 +597,7 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
 
 
         /* Liste des joueurs */
-        Color titleBackColor = this.theme.get("titles").get(1);
+        Color titleBackColor = this.theme.get("titles"    ).get(1);
         Color btnForeColor   = this.theme.get("buttons"   ).get(0);
         Color background     = this.theme.get("background").get(0);
 
@@ -628,10 +661,6 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
         this.btnChangeMappe    .setForeground(btnForeColor);
         this.btnChangeMappe    .setBackground(btnBackColor);
 
-        /* Bouton choisir couleur */
-        this.btnChoisirCouleur .setForeground(btnForeColor);
-        this.btnChoisirCouleur .setBackground(btnBackColor);
-
         /* Bouton nouveau joueur */
         this.btnNewJoueur  .setForeground(btnForeColor);
         this.btnNewJoueur  .setBackground(btnBackColor);
@@ -643,7 +672,6 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
         /* Liste des Boutons pour chaque joueur */
         for (JButton btn : this.lstParticipants)
         {
-            btn.setForeground(btnForeColor);
             btn.setBackground(background);
             btn.setBorder(BorderFactory.createBevelBorder(1, titleBackColor, titleBackColor));
         }
