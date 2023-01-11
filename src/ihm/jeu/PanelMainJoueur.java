@@ -5,21 +5,20 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.HashMap;
 import java.util.List;
-import java.awt.event.WindowListener;
-import java.awt.event.WindowEvent;
 
+import javax.swing.BorderFactory;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.BorderFactory;
-import javax.swing.Icon;
 
 import controleur.Controleur;
-import metier.CarteObjectif;
 import metier.Joueur;
 
 
@@ -63,6 +62,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         this.panelImgJoueur  = new JPanel();
 
         this.lblNom     = new JLabel(this.joueur.getNom());
+        this.lblNom.setForeground(this.joueur.getCouleur());
         this.lblNbJeton = new JLabel(this.joueur.getNbJetonsRestant() +"  jetons restants   "); 
         this.lblScore   = new JLabel("Score : " + this.joueur.getScore());
 
@@ -237,7 +237,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         
         /* lblNom */
         this.lblNom.setOpaque(false);
-        this.lblNom.setForeground(labelForeColor);
+        //this.lblNom.setForeground(labelForeColor);
 
         /* lblNbJeton */
         this.lblNbJeton.setOpaque(false);

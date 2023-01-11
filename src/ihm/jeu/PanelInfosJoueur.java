@@ -1,19 +1,15 @@
 package ihm.jeu;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.GroupLayout;
-
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.util.HashMap;
+import java.util.List;
+
+import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import controleur.Controleur;
 import metier.Joueur;
@@ -50,7 +46,7 @@ public class PanelInfosJoueur extends JPanel
         this.nbCartesWagon       = this.joueur.getNbCartesWagon();
 
         this.lblNom              = new JLabel(this.joueur.getNom());
-        //this.lblNom.setForeground(this.joueur.getCouleur());
+        this.lblNom.setForeground(this.joueur.getCouleur());
         this.lblNbJeton          = new JLabel(this.nbWagons  + " jetons restants ");
         this.lblNbCartesWagon    = new JLabel(this.nbCartesWagon    + " cartes wagon ");
         this.lblNbCartesObjectif = new JLabel(this.nbCartesObjectif + " cartes objectif ");
@@ -137,7 +133,7 @@ public class PanelInfosJoueur extends JPanel
 
 
         /* Labels */
-        this.lblNom             .setForeground(labelForeColor);
+        //this.lblNom             .setForeground(labelForeColor);
         this.lblInfos           .setForeground(labelForeColor);
         this.lblNbJeton         .setForeground(labelForeColor);
         this.lblNbCartesWagon   .setForeground(labelForeColor);

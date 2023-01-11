@@ -1,6 +1,15 @@
 package ihm.jeu;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -9,16 +18,6 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import java.awt.event.WindowListener;
-import java.awt.event.WindowEvent;
-
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.HashMap;
-import java.util.List;
-import java.awt.BorderLayout;
 
 import controleur.Controleur;
 import metier.Joueur;
@@ -69,7 +68,7 @@ public class PanelJoueurs extends JPanel implements ActionListener
             this.tabPanels[cpt].setLayout(new BorderLayout());
 
             this.tabLblNom  [cpt] = new JLabel(" " + this.lstJoueurs.get(cpt).getNom());
-            //this.tabLblNom[cpt].setForeground(this.joueur.getCouleur());
+            this.tabLblNom[cpt].setForeground(this.lstJoueurs.get(cpt).getCouleur());
             this.tabLblScore[cpt] = new JLabel("Score : " + this.lstJoueurs.get(cpt).getScore());
 
             this.tabBoutons[cpt] = new JButton();
@@ -141,6 +140,12 @@ public class PanelJoueurs extends JPanel implements ActionListener
         }
     }
 
+    public void majIHM()
+    {
+        this.lstJoueurs = this.ctrl.getPartie().getJoueursList();
+        setScore();
+    }
+
     /**
      * Applique les couleurs du thème sélectionné à tout les éléments du panel et au panel lui même
      */
@@ -195,7 +200,7 @@ public class PanelJoueurs extends JPanel implements ActionListener
             /*--------*/
             /* Lables Nom */
             this.tabLblNom  [i].setOpaque(false);
-            this.tabLblNom  [i].setForeground(labelForeColor);
+            //this.tabLblNom  [i].setForeground(labelForeColor);
 
             /* Lables Score */
             this.tabLblScore[i].setOpaque(false);

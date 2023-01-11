@@ -10,7 +10,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 
 import controleur.Controleur;
-import ihm.finPartie.FrameFinPartie;
 import ihm.finPartie.FrameTest;
 
 
@@ -18,7 +17,6 @@ public class PanelInfoPartie extends JPanel implements ActionListener
 {
     private Controleur 	ctrl;
 
-    private FrameFinPartie frmFinDePartie;
     private JButton     btnArreterPartie;
 
     private JLabel      lblNbTours;
@@ -33,7 +31,6 @@ public class PanelInfoPartie extends JPanel implements ActionListener
 		this.setLayout( new GridLayout(5,1) );
 
         this.btnArreterPartie = new JButton("Arrêter la partie");
-        this.frmFinDePartie = null;
 
         this.lblNbTours = new JLabel("  Tours : 1");
 		this.lblJoueurCourant = new JLabel("  Joueur courant : " + this.ctrl.getJoueurCourant().getNom());
@@ -51,8 +48,7 @@ public class PanelInfoPartie extends JPanel implements ActionListener
     {
         if ( e.getSource() == this.btnArreterPartie )
         {
-            this.frmFinDePartie = new FrameFinPartie(this.ctrl);
-            this.frmFinDePartie.appliquerTheme();
+            this.ctrl.ouvrirFinPartie();
         }
     }
 
@@ -61,12 +57,6 @@ public class PanelInfoPartie extends JPanel implements ActionListener
         this.lblNbTours.setText("  Tours : " + nbTours);
 		this.lblJoueurCourant.setText("  Joueur courant : " + nomJoueurCourant); 
     }
-
-	public void disposeFrameFinPartie()
-	{
-		if ( this.frmFinDePartie != null )
-			this.frmFinDePartie.dispose();
-	}
 
     /*
      * Applique les couleurs du thème sélectionné à tout les éléments du panel et au panel lui même

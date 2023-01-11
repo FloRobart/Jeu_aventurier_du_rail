@@ -123,6 +123,7 @@ public class Controleur
 	{
 		this.partie = partie;
 		partie.setCtrl(this);
+		updateJoueurs(partie.getJoueurs());
 	}
 
 	public void setPartieLancer(Boolean b)
@@ -138,10 +139,14 @@ public class Controleur
 	public void setMetier(Metier m)
 	{
 		m.setCtrl(this);
+		m.copyTransients(this.metier);
 		this.metier = m;
 	}
 
-
+	public void ouvrirFinPartie()
+	{
+		this.ihm.ouvrirFinPartie();
+	}
 
 	/* --------------------------- */
 	/*          Getters            */
@@ -406,7 +411,7 @@ public class Controleur
 
 				this.ihm.majIHM();
 				this.joueur.verifierObjectifs();
-				this.partie.joueurSuivant();
+				this.joueurSuivant();
 			}
 		}
 	}
@@ -465,13 +470,22 @@ public class Controleur
 		this.partie = new Partie(this, this.metier, true, "Partie multi-joueur");
 	}
 
+	/*
+	 * 
+	 */
+	public void updateJoueurs(Joueur[] joueurs)
+	{
+		for (Joueur j : joueurs)
+			if (j.equals(this.joueur))
+				this.joueur = j;
+	}
 
 	/**
 	 * 
 	 */
 	public int joinGame(String ip, String nom, String password)
 	{
-
+		
 		this.metier.creeClient(ip, nom, true, password);
 
 		this.joueur = new Joueur(this, nom);

@@ -92,7 +92,9 @@ public class Partie implements Serializable
 		this.ctrl.setInfo(this.tour, this.joueurs[this.joueurCourrantId].getNom());
 
 		if (this.joueurCourrantId == this.joueurFin)
-			System.out.println("fin de partie");//this.arreterPartie();
+		{
+			this.ctrl.ouvrirFinPartie();
+		}
 		
 		if (indJoueur == 0)
 		{

@@ -8,6 +8,7 @@ import controleur.Controleur;
 import ihm.accueil.FrameAccueil;
 import ihm.attente.FrameAttente;
 import ihm.jeu.FrameJeu;
+import ihm.finPartie.FrameFinPartie;
 import metier.CarteObjectif;
 
 /**
@@ -20,7 +21,7 @@ public class Ihm
     private FrameJeu     frameJeu;
     private FrameAccueil frameAccueil;
     private FrameAttente frameAttente;
-
+	private FrameFinPartie frameFinDePartie;
 
     public Ihm(Controleur ctrl)
     {
@@ -29,6 +30,7 @@ public class Ihm
         this.frameJeu     = null;
 		this.frameAccueil = new FrameAccueil(this.ctrl);
         this.frameAttente = null;
+		this.frameFinDePartie = null;
 
         this.appliquerTheme();
     }
@@ -62,6 +64,12 @@ public class Ihm
         this.appliquerTheme();
     }
 
+	public void ouvrirFinPartie()
+	{
+		this.frameFinDePartie = new FrameFinPartie(this.ctrl);
+        this.frameFinDePartie.appliquerTheme();
+	}
+
     public void setScore      ( ) { this.frameJeu.setScore(); }
     public void setImageButton(int indice)  { if ( this.frameJeu != null ) this.frameJeu.setImageButton(indice); }
 	public void setInfo    (int nbTours, String nomJoueurCourant){ this.frameJeu.setInfo(nbTours, nomJoueurCourant); }
@@ -69,7 +77,7 @@ public class Ihm
     public int getWidthFrameAccueil() { return this.frameAccueil.getWidth(); }
 
     public void disposeFrameJeu	() { this.frameJeu.dispose(); }
-    public void disposeFrameFinPartie() { this.frameJeu.disposeFrameFinPartie(); }
+    public void disposeFrameFinPartie() { this.frameFinDePartie.dispose(); }
 
 	public BufferedImage getImage() { return this.frameJeu.getImage(); }
 
