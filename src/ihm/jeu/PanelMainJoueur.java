@@ -97,7 +97,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         this.panelMainObjectif.setLayout(new BorderLayout());
 
         this.btnIconObjectif   = new JButton();
-        this.btnIconObjectif.setIcon(this.resized(this.ctrl.getCarteObjectif().get(0).getImageRecto()));
+        this.btnIconObjectif.setIcon(new ImageIcon(this.ctrl.getCarteObjectif().get(0).getImageRecto()));
         this.btnIconObjectif.setBorderPainted(false);
         this.btnIconObjectif.setContentAreaFilled(false);
         this.btnIconObjectif.setFocusPainted(false);
@@ -116,18 +116,6 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 
         this.btnIconObjectif.addActionListener(this);
 		this.appliquerTheme();
-    }
-
-    public ImageIcon resized(BufferedImage img)
-    {
-        BufferedImage imgResized = img;
-		double zoomLargeur = 200  / imgResized.getWidth();
-		double zoomHauteur = 100 / imgResized.getHeight();
-		double facteurZoom = Math.min(zoomLargeur, zoomHauteur)-0.1;
-
-	    ImageIcon imgIcon = new ImageIcon(imgResized.getScaledInstance(((int)(200*facteurZoom)), ((int)(100*facteurZoom)), Image.SCALE_SMOOTH));
-
-        return imgIcon;
     }
 
     @Override

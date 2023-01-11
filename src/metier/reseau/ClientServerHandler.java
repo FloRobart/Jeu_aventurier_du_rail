@@ -71,6 +71,18 @@ public class ClientServerHandler implements Runnable
         //this.ctrl.getJoueurs().remove();
     }
 
+    public void changerCouleur(java.awt.Color c)
+    {
+        writeonce("COULEUR_JOUEUR");
+        try {
+            this.out.flush();
+            this.out.writeObject(c);
+            this.out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void majPartie()
     {
         try {

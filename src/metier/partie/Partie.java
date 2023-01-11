@@ -1,8 +1,10 @@
 package metier.partie;
 
+import java.awt.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import controleur.Controleur;
 import metier.Arete;
@@ -77,7 +79,9 @@ public class Partie implements Serializable
 	{
 		this.ctrl = ctrl;
 		for (Joueur j : this.joueurs)
+		{
 			j.setCtrl(ctrl);
+		}
 	}
 
 	public void joueurSuivant()
