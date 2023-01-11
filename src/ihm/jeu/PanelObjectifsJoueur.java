@@ -48,7 +48,7 @@ public class PanelObjectifsJoueur extends JPanel implements ActionListener
 
         //initialisation des composants
         List<Joueur> lstJ = this.ctrl.getJoueurs();
-        this.joueur = lstJ.get(0); //this.ctrl.getJoueurCourant()
+        this.joueur = this.ctrl.getJoueur();
     
         int taille = this.joueur.getAlCartesObjectif().size();
         //int taille = 5;
