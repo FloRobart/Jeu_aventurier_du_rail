@@ -21,16 +21,10 @@ import java.awt.Color;
  */
 
 
-
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Random;
-import java.util.Scanner;
 
 import controleur.Controleur;
 import metier.Joueur;
