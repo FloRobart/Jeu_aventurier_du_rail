@@ -581,7 +581,7 @@ public class Controleur
 	 * @param cartesObjectifs : carte que l'on veut ajouter
 	 */
 	public void ajouterObjectifsJoueurs(CarteObjectif carteObjectif) 
-	{System.out.println("carte objectif ajouter " + carteObjectif);
+	{
 		this.metier.ajouterObjectifsJoueurs(carteObjectif);
 		this.ihm.majIHM();
 	}
@@ -591,7 +591,7 @@ public class Controleur
 	 * @param carteObjectif 
 	 */
 	public void remettreCarteObjectif(CarteObjectif carteObjectif) 
-	{System.out.println("carte objectif remise à la pioche " + carteObjectif);
+	{
 		this.partie.remettreCarteObjectif(carteObjectif);
 	}
 
