@@ -172,27 +172,4 @@ public class Partie implements Serializable
 	{
 		this.gestionPioche.remettreCarteObjectif(carteObjectif);
 	}
-
-	public void arreterPartie()
-	{
-		//Recuperer les points, les noms
-		List<CarteObjectif >alCarteObjectif;
-		String[] tabNom = new String[this.joueurs.length];
-		int scoreRetirer=0;
-		for ( int cptJoueur=0; cptJoueur< this.joueurs.length; cptJoueur++)
-		{
-			/*alCarteObjectif = this.joueurs[cptJoueur].getAlCartesObjectif();
-			for ( int cpt = 0; cpt < alCarteObjectif.size(); cpt++ )
-			{
-				scoreRetirer -= alCarteObjectif.get(cpt).getPoints();
-			}
-			this.joueurs[cptJoueur].ajouterScore(scoreRetirer);
-
-			this.scoreFinal[cptJoueur] = this.joueurs[cptJoueur].getScore();
-			tabNom[cptJoueur] = this.joueurs[cptJoueur].getNom();*/
-		}
-
-		//methode qui envoie les infos vers une frame de fin de partie
-		//machin.afficherFinDePartie(tabNom, this.scoreFinal);
-	}
 }

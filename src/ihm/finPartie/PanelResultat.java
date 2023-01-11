@@ -59,7 +59,7 @@ public class PanelResultat extends JPanel
                     case 0 -> txt =                joueur.getNom(); // Nom
                     case 1 -> txt = String.valueOf(joueur.getNbArete()); // Nombre de voie prisent
                     case 2 -> txt = String.valueOf(joueur.getAlObjectifsFinis().size()); // Cartes objectifs validées
-                    case 3 -> txt = String.valueOf(joueur.getNbCartesObjectif() - joueur.getAlObjectifsFinis().size()); // Cartes objectifs ratées
+                    case 3 -> txt = String.valueOf(joueur.getNbCartesObjectif()); // Cartes objectifs ratées
                     case 4 -> txt = String.valueOf(joueur.getScore()); // Points gagnées
                     case 5 -> txt = String.valueOf(joueur.getMalus()); // Points malus
                     case 6 -> txt = String.valueOf(this.calculerScroreFinal(joueur)); // Score final
@@ -86,10 +86,6 @@ public class PanelResultat extends JPanel
     public int calculerScroreFinal(Joueur j)
     {
         int score = 0;
-
-        for (int i = 0; i < j.getAlObjectifsFinis().size(); i++) {
-            score += j.getAlObjectifsFinis().get(i).getPoints();
-        }
         
         score += (j.getScore() - j.getMalus());
 
