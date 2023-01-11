@@ -10,7 +10,6 @@ import ihm.attente.FrameAttente;
 import ihm.attente.FrameAttenteLocal;
 import ihm.jeu.FrameJeu;
 import ihm.finPartie.FrameFinPartie;
-import metier.CarteObjectif;
 
 /**
  * Classe qui gère l'ensemble des fenêtres de l'application.

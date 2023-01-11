@@ -15,7 +15,6 @@ import javax.swing.Icon;
 
 import controleur.Controleur;
 import ihm.accueil.MenuBarre;
-import metier.CarteObjectif;
 
 public class FrameJeu extends JFrame
 {

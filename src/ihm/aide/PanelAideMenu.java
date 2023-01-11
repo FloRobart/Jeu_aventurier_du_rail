@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JPanel;
-import javax.swing.JLabel;
 
 import controleur.Controleur;
 
