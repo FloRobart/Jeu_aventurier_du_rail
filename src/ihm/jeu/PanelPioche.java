@@ -127,6 +127,8 @@ public class PanelPioche extends JPanel implements ActionListener
 				{
 					this.ctrl.switchEnTrainDePiocher();
 				}
+
+				this.ctrl.joueurSuivant();
 			}
 
 			for (int i = 0 ; i < PanelPioche.TAILLE ; i++)
