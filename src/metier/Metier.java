@@ -176,7 +176,6 @@ public class Metier implements Serializable
 
 	public void joueurSuivant()
 	{
-		this.ctrl.getPartie().joueurSuivant();
 		if (this.client != null)
 		{
 			this.client.finirTour();

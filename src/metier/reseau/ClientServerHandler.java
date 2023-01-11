@@ -133,10 +133,7 @@ public class ClientServerHandler implements Runnable
                     Partie nouvelle_partie = (Partie) this.in.readObject();
 
                     this.ctrl.setPartie(nouvelle_partie);
-
-                    for (Joueur j : this.ctrl.getPartie().getJoueurs())
-                        System.out.println("Joueur : " + j.getNom() + " : " + j.getScore() + " ! " + j.getAlCartesWagons().size());
-
+                
                     this.ctrl.majIHM();
 
                     System.out.println("Nouvelle partie");
@@ -189,8 +186,12 @@ public class ClientServerHandler implements Runnable
             
             if (command.equals("FINIR_TOUR"))
             {
-                System.out.println("YAY !!");
-                this.ctrl.getPartie().joueurSuivant();
+                //this.ctrl.getPartie().joueurSuivant();
+                if (this.ctrl.getPartie().getJoueurCourant().getNom().equals(this.metier.getNomClient()))
+                {
+                    System.out.println("Ceci est mon tour");
+                }
+                System.out.println("Tour de " + this.ctrl.getPartie().getJoueurCourant().getNom());
                 this.ctrl.majIHM();
             }
                     

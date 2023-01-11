@@ -23,20 +23,8 @@ public class Partie implements Serializable
 	private int           nbJetonFin;
 	private int           tour;
 	private boolean       estMulti; // mettre le serveur au lieu d'un boolean
-	private Joueur        joueurFin;
+	private int           joueurFin;
 	private Integer[]     scoreFinal;
-
-	public void setJoueurCourrant(Joueur j)
-	{
-		for (int i = 0; i < this.joueurs.length; i++)
-		{
-			if (this.joueurs[i].equals(j))
-			{
-				this.joueurCourrantId = i;
-				break;
-			}
-		}
-	}
 
 	public Joueur[] getJoueurs()
 	{
@@ -81,7 +69,7 @@ public class Partie implements Serializable
 		this.joueurCourrantId = 0;
 
 		this.estMulti = estMulti;
-		this.joueurFin = null;
+		this.joueurFin = -1;
 	}
 
 	public void setCtrl(Controleur ctrl)
@@ -94,16 +82,14 @@ public class Partie implements Serializable
 		int indJoueur = 0;
 
 		// si un joueur n'a plus assez de jeton, alors la partie se terminera à son prochain tour
-		if (this.joueurFin == null & this.getJoueurCourant().getNbJetonsRestant() <= this.nbJetonFin)
-			this.joueurFin = this.getJoueurCourant();
+		if (this.joueurFin == -1 & this.getJoueurCourant().getNbJetonsRestant() <= this.nbJetonFin)
+			this.joueurFin = this.joueurCourrantId;
 
-		for (int cpt = 0; cpt < this.joueurs.length; cpt++)
-			if (this.joueurs[cpt] == this.getJoueurCourant())
-				indJoueur = (cpt++) % this.joueurs.length;
+		indJoueur = (this.joueurCourrantId + 1) % this.joueurs.length;
 		
 		this.joueurCourrantId = indJoueur;
 
-		if (this.getJoueurCourant() == this.joueurFin)
+		if (this.joueurCourrantId == this.joueurFin)
 			System.out.println("fin de partie");//this.arreterPartie();
 		
 		if (indJoueur == 0)
@@ -111,6 +97,8 @@ public class Partie implements Serializable
 			this.tour++;
 			this.ctrl.setNbTours(this.tour);
 		}
+
+		System.out.println("Joueur suivant : " + this.getJoueurCourant().getNom());
 	}
 
 	public Joueur 		getJoueurCourant()	  { return this.joueurs[this.joueurCourrantId]; }
