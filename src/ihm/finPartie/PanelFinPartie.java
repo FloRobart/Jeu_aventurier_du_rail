@@ -65,7 +65,7 @@ public class PanelFinPartie extends JPanel implements ActionListener
 		PanelResultat = new PanelResultat(ctrl);
 
 		/* ScrollPane */
-		scrollPaneRes = new JScrollPane(this.PanelResultat, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPaneRes = new JScrollPane(this.PanelResultat, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
 
         /*------------*/

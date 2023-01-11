@@ -553,6 +553,7 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
                     JOptionPane.showMessageDialog(this, "Le pseudo est incorrect", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
 
+
             /* Boutons de lancement de la partie */
             if (e.getSource() == this.btnLancer)
             {
