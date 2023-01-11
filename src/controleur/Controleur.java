@@ -53,14 +53,7 @@ public class Controleur
 
 		this.piocherObjectifsDebut = true;
     }
-	public void joueurSuivant()
-	{
-		if (!this.enTrainDePiocher)
-		{
-			this.partie.joueurSuivant();
-			this.metier.joueurSuivant();
-		}
-	}
+	
 
 	/**
 	 * Permet de lire le fichier xml contenant toutes les informations du plateau.
@@ -83,6 +76,10 @@ public class Controleur
 	{
 		this.joueur = this.metier.getJoueurs().get(0);
 		this.joueur.setCouleur(Color.PINK);
+
+		Joueur j2 = new Joueur(this, "macPhilippe");
+		j2.setCouleur(Color.BLUE);
+		this.metier.ajouterJoueur(j2);
 
 		this.partie = new Partie(this, this.metier, false, "Partie local");
 
@@ -141,6 +138,32 @@ public class Controleur
 		m.setCtrl(this);
 		m.copyTransients(this.metier);
 		this.metier = m;
+	}
+
+	public void joueurSuivant()
+	{
+		if (!this.enTrainDePiocher)
+		{
+			this.partie.joueurSuivant();
+			this.metier.joueurSuivant();
+		}
+	}
+
+	public void changerJoueur(Joueur j)
+	{
+		this.joueur = j;
+		System.out.println("changement de joueur => " + this.joueur.getNom());
+
+		this.areteSelectionnee = null;
+		this.couleurSelectionnee = 0;
+
+		this.ihm.majIHM();
+		if (this.partie.getTours() == 1) 
+		{
+			System.out.println("pioche du debut");
+			this.piocherObjectifsDebut = true;
+			this.piocherCarteObjectifDebutPartie();
+		}
 	}
 
 	public void ouvrirFinPartie()

@@ -149,14 +149,20 @@ public class PanelMainJoueur extends JPanel implements ActionListener
 
 	public void majIHM()
 	{
+		Joueur j = this.ctrl.getJoueur();
 		this.remove(this.panelMainWagon);
 		this.panelMainWagon = new PanelMain(this.ctrl, this.ctrl.getJoueur());
 		this.add(this.panelMainWagon, BorderLayout.CENTER);
-        this.lblObjectif.setText("  " + this.joueur.getNbObjectifRestant() + " objectifs restants");
-		this.lblNbJeton .setText(this.joueur.getNbJetonsRestant() +"  jetons restants   "); 
 
 		this.revalidate();
 		this.repaint();
+
+		this.lblObjectif.setText("  " + j.getNbObjectifRestant() + " objectifs restants");
+		this.lblNbJeton .setText(j.getNbJetonsRestant() +"  jetons restants   "); 
+
+		this.lblNom     = new JLabel(j.getNom());
+        this.lblNom.setForeground(j.getCouleur());
+
 		this.appliquerTheme();
 	}
 

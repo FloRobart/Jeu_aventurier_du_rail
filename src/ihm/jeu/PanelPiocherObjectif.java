@@ -109,13 +109,10 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
     {
 		if(e.getSource() == this.btnPiocher)
 		{
-			System.out.println("nico1");
 			if ( this.debutPartie == true )
 			{
-				System.out.println("nico2");
 				if(this.getnbSelection() >= 2)
 				{		
-					System.out.println("nico3");
 					for(int i=0; i<PanelPiocherObjectif.TAILLE; i++)
 					{	
 						if(this.tabChoixCarte[i] == true)
@@ -128,14 +125,12 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 					this.btnPiocher.setEnabled(false);
 					this.initCarteObjectifs();
 					this.panelObjectif.disposePioche();
-					System.out.println("alex");
+					
 					this.ctrl.joueurSuivant();
 					this.debutPartie = false;
-					this.ctrl.setPiocherObjectifsDebut();
 				}
 				else
 				{
-					System.out.println("nico4");
 					this.ctrl.afficherErreur("Vous devez piocher au moins 2 cartes !");
 				}
 				
@@ -143,7 +138,6 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 
 			if ( this.debutPartie == false )
 			{
-				System.out.println("nico6");
 				if(this.getnbSelection() > 0)
 				{		
 					for(int i=0; i<PanelPiocherObjectif.TAILLE; i++)
