@@ -542,9 +542,15 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
             /* Bouton ajouter joueur */
             if (e.getSource() == this.btnNewJoueur)
             {
-                this.ctrl.ajouterJoueur(new Joueur(this.ctrl, this.ctrl.getJoueur().getNom()));
-                this.lstParticipants.get(this.ctrl.getJoueurs().size()-1).setForeground(this.aleatoireColor());
-                System.out.println("NbJoueurs : " + this.ctrl.getJoueurs().size());
+                String nomJoueur = JOptionPane.showInputDialog(this, "Entrez Votre pseudo", "Ajouter un joueur", JOptionPane.QUESTION_MESSAGE);
+
+                if (this.verifPseudo(nomJoueur))
+                {
+                    this.ctrl.ajouterJoueur(new Joueur(this.ctrl, nomJoueur));
+                    this.lstParticipants.get(this.ctrl.getJoueurs().size()-1).setForeground(this.aleatoireColor());
+                }
+                else
+                    JOptionPane.showMessageDialog(this, "Le pseudo est incorrect", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
 
             /* Boutons de lancement de la partie */
@@ -559,6 +565,42 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
                     JOptionPane.showMessageDialog(this, "Il manque " + (this.ctrl.getNbJoueursMin() - this.ctrl.getJoueurs().size()) + " joueurs pour lancer la partie", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
         }
+    }
+
+
+    /**
+     * Permet de vérifier qu'il y a bien un pseudo et de changer les couleurs en fonction
+     * @param txt, le pseudo à vérifier
+     * @return boolean, true si le pseudo est correct, sinon false
+     */
+    private boolean verifPseudo(String txt)
+    {
+        boolean pseudoValide = false;
+        if (!txt.isEmpty())
+        {
+            boolean onlySpace = true;
+            for (int i = 0; i < txt.length(); i++)
+                if (txt.charAt(i) != ' ')
+                    onlySpace = false;
+
+            if (!onlySpace)
+            {
+                // vérifier qu'il n'y a pas de joueur avec le même pseudo
+                for (int i = 0; i < this.lstParticipants.size(); i++)
+                {
+                    if (this.lstParticipants.get(i).getText().toLowerCase().equals(txt))
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        pseudoValide = true;
+                    }
+                }
+            }
+        }
+
+        return pseudoValide;
     }
 
 
