@@ -97,7 +97,7 @@ public class PanelMainJoueur extends JPanel implements ActionListener
         this.panelMainObjectif.setLayout(new BorderLayout());
 
         this.btnIconObjectif   = new JButton();
-        this.btnIconObjectif.setIcon(new ImageIcon(this.ctrl.getCarteObjectif().get(0).getImageRecto()));
+        this.btnIconObjectif.setIcon(new ImageIcon(this.ctrl.getImageVersoObjectif()));
         this.btnIconObjectif.setBorderPainted(false);
         this.btnIconObjectif.setContentAreaFilled(false);
         this.btnIconObjectif.setFocusPainted(false);

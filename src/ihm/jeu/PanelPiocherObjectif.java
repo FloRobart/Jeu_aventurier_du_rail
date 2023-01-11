@@ -177,6 +177,11 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 			}
 		}
 	}
+
+	public CarteObjectif[] getCartesObjectifs() 
+	{
+		return this.cartesObjectifs;
+	}
 	
 	private int getnbSelection() 
 	{
