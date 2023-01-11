@@ -161,7 +161,7 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
         this.lblJoueurMin.setMinimumSize  (new Dimension(150, 18));
         this.lblJoueurMin.setPreferredSize(new Dimension(150, 18));
 
-        this.lblJoueurMax.setText("● Joueurs Maximum");
+        this.lblJoueurMax.setText("● Joueurs maximum");
         this.lblJoueurMax.setMaximumSize  (new Dimension(150, 18));
         this.lblJoueurMax.setMinimumSize  (new Dimension(150, 18));
         this.lblJoueurMax.setPreferredSize(new Dimension(150, 18));
