@@ -67,9 +67,10 @@ public class Controleur
 	public boolean ouvrir(File fichier) 
 	{ 
 		boolean readSuccess =  this.metier.lireFichier(fichier);
-		System.out.println("\n------------\nControleur.java"+this.metier.getNoeuds());
+		System.out.println("\n------------\nControleur.java\n"+this.metier.getNoeuds());
 		if (this.metier.getServer()!= null)this.metier.getServer().majMetier();
-		return readSuccess ; 	}
+		return readSuccess ; 	
+	}
 
 	/**
 	 * Permet de créer une partie solo.

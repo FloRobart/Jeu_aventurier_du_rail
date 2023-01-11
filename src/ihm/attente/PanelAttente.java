@@ -345,8 +345,12 @@ public class PanelAttente extends JPanel implements ActionListener
                     if (i < lstJoueurs.size()) {
                         txt = lstJoueurs.get(i).getNom();
                         lstParticipants.get(i).setText(txt);
-                    }
+
                 }
+            }
+                PanelAttente.this.panelPreviewMappe.setMappe();
+                PanelAttente.this.panelPreviewMappe.repaint();
+                PanelAttente.this.panelPreviewMappe.centrer(PanelAttente.this.getWidth(), PanelAttente.this.getHeight());  
                 panelJoueurs.repaint();
             }
         });
