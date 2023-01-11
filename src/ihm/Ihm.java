@@ -116,6 +116,7 @@ public class Ihm
         if (this.frameAccueil      != null) { this.frameAccueil     .appliquerTheme(); }
         if (this.frameAttente      != null) { this.frameAttente     .appliquerTheme(); }
         if (this.frameAttenteLocal != null) { this.frameAttenteLocal.appliquerTheme(); }
+        if (this.frameFinDePartie  != null) { this.frameFinDePartie .appliquerTheme(); }
     }
 
     /**

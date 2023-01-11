@@ -131,7 +131,7 @@ public class PanelResultat extends JPanel
             {
                 this.lstLabels.get(i).get(j).setOpaque(false);
                 this.lstLabels.get(i).get(j).setForeground(labelForeColor);
-                this.lstLabels.get(i).get(i).setBorder(BorderFactory.createBevelBorder(1, titleBackColor, titleBackColor));
+                this.lstLabels.get(i).get(j).setBorder(BorderFactory.createBevelBorder(1, titleBackColor, titleBackColor));
             }
     }
 }
