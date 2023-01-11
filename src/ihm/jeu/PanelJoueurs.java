@@ -141,6 +141,11 @@ public class PanelJoueurs extends JPanel implements ActionListener
         }
     }
 
+    public void majIHM()
+    {
+        
+    }
+
     /**
      * Applique les couleurs du thème sélectionné à tout les éléments du panel et au panel lui même
      */
