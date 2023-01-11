@@ -14,6 +14,9 @@ public class Arete implements Serializable
 	private Joueur proprietaire1;
 	private Joueur proprietaire2;
 
+	/* ==================== */
+	/*     CONSTRUCTEUR     */
+	/* ==================== */
 	public Arete(Noeud noeud1, Noeud noeud2, int distance, Color c1, Color c2)
 	{
 		this.noeud1   = noeud1;
@@ -26,47 +29,32 @@ public class Arete implements Serializable
 		this.proprietaire2 = null;
 	}
 
-	public Noeud getNoeud1  ()       { return this.noeud1;   }
-	public Noeud getNoeud2  ()       { return this.noeud2;   }
-	public int   getDistance()       { return this.distance; }
-	public Color getCouleur1()       { return this.couleur1; }
-	public Color getCouleur2()       { return this.couleur2; }
-	public Joueur getProprietaire1() { return this.proprietaire1; }
-	
-	public Joueur getProprietaire2() 
+	/* ==================== */
+	/*       GETTERS        */
+	/* ==================== */ 
+	public Noeud   getNoeud1       () { return this.noeud1;           }
+	public Noeud   getNoeud2       () { return this.noeud2;           }
+	public int     getDistance     () { return this.distance;         }
+	public Color   getCouleur1     () { return this.couleur1;         }
+	public Color   getCouleur2     () { return this.couleur2;         }
+	public boolean is2Sens         () { return this.couleur2 != null; }
+	public Joueur  getProprietaire1() { return this.proprietaire1;    }
+	public Joueur  getProprietaire2() 
 	{ 
 		if (this.is2Sens())
-		{
 			return this.proprietaire2; 
-		}
 		else
-		{
 			return null;
-		}
 	}
 
-	public void setNoeud1(Noeud n) 
-	{ 
-		this.noeud1 = n; 
-	}
-
-	public void setNoeud2(Noeud n) 
-	{ 
-		this.noeud2 = n; 
-	}
-
-	public void setdistance(int distance) 
-	{ 
-		this.distance = distance; 
-	}
-	public void setCouleur1(Color c) 
-	{ 
-		this.couleur1 = c; 
-	}
-	public void setCouleur2(Color c) 
-	{ 
-		this.couleur2 = c; 
-	}
+	/* ==================== */
+	/*       SETTERS        */
+	/* ==================== */
+	public void setNoeud1  (Noeud n)      { this.noeud1   = n;        }
+	public void setNoeud2  (Noeud n)      { this.noeud2   = n;        }
+	public void setdistance(int distance) { this.distance = distance; }
+	public void setCouleur1(Color c)      { this.couleur1 = c;        }
+	public void setCouleur2(Color c)      { this.couleur2 = c;        }
 
 	public void setProprietaire1(Joueur j) 
 	{ 
@@ -79,13 +67,13 @@ public class Arete implements Serializable
 			this.proprietaire2 = j; 
 	}
 
+	/* ================= */
+	/*  AUTRES METHODES  */
+	/* ================= */
 	public String toString()
 	{
 		return this.noeud1.getNom() + " - " + this.noeud2.getNom();
 	}
 
-    public boolean is2Sens() 
-	{
-        return this.couleur2 != null;
-    }
+    
 }

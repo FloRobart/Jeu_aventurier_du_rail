@@ -21,21 +21,15 @@ public class Partie implements Serializable
 	private Joueur[]       joueurs;
 	private int            joueurCourrantId;
 	private int            nbJetonFin;
+
 	private int            tour;
 	private boolean        estMulti;
 	private int            joueurFin;
 	private Integer[]      scoreFinal;
 
-	public Joueur[] getJoueurs()
-	{
-		return this.joueurs;
-	}
-
-	public List<Joueur> getJoueursList()
-	{
-		return new ArrayList<Joueur>(java.util.Arrays.asList(this.joueurs));
-	}
-
+	/* ==================== */
+	/*     CONSTRUCTEUR     */
+	/* ==================== */
 	public Partie(Controleur ctrl, Metier metier, boolean estMulti, String nomPartie)
 	{
 		this.ctrl          = ctrl;
@@ -73,6 +67,9 @@ public class Partie implements Serializable
 
 	}
 
+	/* ==================== */
+	/*        SETTERS       */
+	/* ==================== */
 	public void setCtrl(Controleur ctrl)
 	{
 		this.ctrl = ctrl;
@@ -82,6 +79,22 @@ public class Partie implements Serializable
 		}
 	}
 
+	/* ==================== */
+	/*       GETTERS        */
+	/* ==================== */
+	public Joueur 		getJoueurCourant   () { return this.joueurs[this.joueurCourrantId];      }
+	public Joueur[]     getJoueurs         () {	return this.joueurs;                             }
+	public List<Joueur> getJoueursList     () { return new ArrayList<Joueur>(java.util.Arrays.asList(this.joueurs)); }
+	public CarteWagon[] getTabCartesVisible() { return this.gestionPioche.getTabCartesVisible(); }
+	public int          getSizeWagon       () { return this.gestionPioche.getSizeWagon();        }
+	public int          getSizeObjectif    () { return this.gestionPioche.getSizeObjectif();     }
+	public List<Arete>  geAretes           () { return this.alArete;                             }
+	public int			getTours           () { return this.tour;                                }
+	public boolean      getEstMulti        () { return this.estMulti;                            }
+
+	/* ========================= */
+	/*  GESTION TOUR ET JOUEURS  */
+	/* ========================= */
 	public void joueurSuivant()
 	{
 		int indJoueur = 0;
@@ -108,14 +121,11 @@ public class Partie implements Serializable
 		if (!estMulti) this.ctrl.changerJoueur(this.getJoueurCourant());
 	}
 
-	public Joueur 		getJoueurCourant()	  { return this.joueurs[this.joueurCourrantId]; }
-	public CarteWagon[] getTabCartesVisible() { return this.gestionPioche.getTabCartesVisible(); }
-	public int          getSizeWagon       () { return this.gestionPioche.getSizeWagon(); }
-	public int          getSizeObjectif    () { return this.gestionPioche.getSizeObjectif(); }
-	public int			getTours()			  { return this.tour;}
-	public List<Arete>  geAretes()            { return this.alArete; }
-	public boolean      getEstMulti() { return this.estMulti; }
+	/* ======================= */
+	/*  GESTION PIOCHE WAGONS  */
+	/* ======================= */
 
+	// pioche une carte wagon et la donne au joueur courant
 	public void piocherPioche()
 	{
 		CarteWagon carte = this.gestionPioche.piocherCarteWagon();
@@ -130,6 +140,7 @@ public class Partie implements Serializable
 		}
 	}
 
+	// prend une carte wagon visible et la donne au joueur courant
 	public void piocherVisible(int ind)
 	{
 		CarteWagon carte = this.gestionPioche.getCarteVisible(ind);
@@ -147,16 +158,7 @@ public class Partie implements Serializable
 		}
 	}
 
-	public void ajouterCarteDefausse(CarteWagon carte)
-	{
-		this.gestionPioche.ajouterCarteDefausse(carte);
-	}
-
-	public CarteObjectif getPiocheObjectif() 
-	{
-		return this.gestionPioche.piocherCartesObjectif();
-	}
-
+	// verifie que les cartes wagon visible ne contiennent pas 3 jockers
 	public void verifierVisible()
 	{
 		int nbJoker = 0;
@@ -178,6 +180,23 @@ public class Partie implements Serializable
 		}
 	}
 
+	// met une carte wagon utilisée dans la defausse
+	public void ajouterCarteDefausse(CarteWagon carte)
+	{
+		this.gestionPioche.ajouterCarteDefausse(carte);
+	}
+
+	/* ========================= */
+	/*  GESTION PIOCHE OBJETIFS  */
+	/* ========================= */
+
+	// pioche une carte objectif
+	public CarteObjectif getPiocheObjectif() 
+	{
+		return this.gestionPioche.piocherCartesObjectif();
+	}
+
+	// remet une carte objectif dans le fond de lapioche
 	public void remettreCarteObjectif(CarteObjectif carteObjectif) 
 	{
 		this.gestionPioche.remettreCarteObjectif(carteObjectif);

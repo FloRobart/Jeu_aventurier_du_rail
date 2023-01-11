@@ -15,6 +15,9 @@ public class Noeud implements Serializable
 	private int    yNom;
 	private Color  couleur;
 
+	/* ==================== */
+	/*     CONSTRUCTEUR     */
+	/* ==================== */
 	public Noeud(String nom, int x, int y, int xNom, int yNom, Color c)
 	{
 		this.id      = ++Noeud.nbNoeud;
@@ -29,6 +32,9 @@ public class Noeud implements Serializable
 		this.couleur = c;
 	}
 
+	/* ==================== */
+	/*       GETTERS        */
+	/* ==================== */
 	public int    getId     () { return this.id;      }
 	public String getNom    () { return this.nom;     }
 	public int    getX      () { return this.x;       }
@@ -37,30 +43,22 @@ public class Noeud implements Serializable
 	public int    getYNom   () { return this.yNom;    }
 	public Color  getCouleur() { return this.couleur; }
 
-	public void setNom(String nom) 
-	{ 
-		this.nom = nom; 
-	}
-	public void setXY(int x, int y) 
-	{ 
-		this.x = x; 
-		this.y = y; 
-	}
-	public void setXYNom(int xNom, int yNom) 
-	{ 
-		this.xNom = xNom; 
-		this.yNom = yNom; 
-	}
-	public void setCouleur(Color c) 
-	{ 
-		this.couleur = c; 
-	}
+	/* ==================== */
+	/*       SETTERS        */
+	/* ==================== */
+	public void setNom    (String nom        ) { this.nom  = nom;                    }
+	public void setXY     (int x, int y      ) { this.x    = x;    this.y    = y;    }
+	public void setXYNom  (int xNom, int yNom) { this.xNom = xNom; this.yNom = yNom; }
+	public void setCouleur(Color c           ) { this.couleur = c;                   }
 	
 	public static void reinitialiserId()
 	{
 		Noeud.nbNoeud = 0;
 	}
 
+	/* ================= */
+	/*  AUTRES METHODES  */
+	/* ================= */
 	public String toString()
 	{
 		return this.nom + " (" + this.x + ", " + this.y + ")";

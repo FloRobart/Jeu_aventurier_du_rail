@@ -85,11 +85,13 @@ public class Metier implements Serializable
 		this.motDePassePartie = metier.motDePassePartie;
 	}
 
+	/* ==================== */
+	/*     CONSTRUCTEUR     */
+	/* ==================== */
     public Metier(Controleur ctrl)
     {
         this.ctrl = ctrl;
 		this.lstJoueurs = new ArrayList<Joueur>();
-		// this.lireFichier(new File("./bin/donnees/France.xml"));
 		this.hmColorThemes = new HashMap<String, List<Color>>();
 		this.chargerThemes(getThemeUsed());
     }
@@ -105,9 +107,9 @@ public class Metier implements Serializable
 		return false;
     }
 
-	/* --------------------------- */
-	/*          Getters            */
-	/* --------------------------- */
+	/* ==================== */
+	/*        GETTERS       */
+	/* ==================== */
 	public List<Joueur>        getJoueurs             () { return this.lstJoueurs;           }
 	public List<CarteObjectif> getCarteObjectif       () { return this.lstCartesObjectif;    }
 	public List<Noeud>         getNoeuds              () { return this.lstNoeuds;            }
@@ -140,26 +142,41 @@ public class Metier implements Serializable
 	public Client 			   getClient              () { return this.client;               }
 	public String 			   getNomClient           () { return this.nomClient;            }
 
-	public String getPathMappe()
+	public String              getPathMappe           () { return this.pathMappe;            }
+
+	public HashMap<String, List<Color>> getTheme() { return this.hmColorThemes;}
+
+	/* ====================== */
+	/*  GESTION DE LA PARTIE  */
+	/* ====================== */
+	public void joueurSuivant()
 	{
-		return this.pathMappe;
+		if (this.client != null)
+		{
+			System.out.println("client.finirTour();");
+			this.client.finirTour();
+		}
+		if (this.server != null)
+		{
+			System.out.println("server.finirTour();");
+			this.server.finirTour();
+		}
 	}
 
-	public void creeServer(Boolean demarer, String password)
+    public void ajouterObjectifsJoueurs(CarteObjectif cartesObjectifs) 
 	{
-		this.motDePassePartie = password;
-		this.server = new Server(this.ctrl);
-		if (demarer)
-			this.server.Start();
+		this.ctrl.getPartie().getJoueurCourant().ajouterCarteObjectif(cartesObjectifs);
+		this.lstCartesObjectif.remove(cartesObjectifs);
 	}
 
-	public void creeClient(String ip, String nom, Boolean demarer, String password)
-	{
-		this.nomClient = nom;
-		this.client = new Client(ip, this.ctrl);
-		if (demarer)
-			this.client.Connect(password);
-	}
+	/* ==================== */
+	/*        SETTERS       */
+	/* ==================== */
+	public void setCtrl(Controleur ctrl) { this.ctrl = ctrl; }
+
+	/* ==================== */
+	/*    GESTION DE XML    */
+	/* ==================== */
 
 	/**
 	 * Lecture du fichier XML afin de récupérer les infos du plateau
@@ -178,28 +195,7 @@ public class Metier implements Serializable
 		} catch (FileNotFoundException e) { return false; }
 	}
 
-	public void setCtrl(Controleur ctrl)
-	{
-		this.ctrl = ctrl;
-	}
-
-	public void joueurSuivant()
-	{
-		//System.out.println(this.client + " : " + this.server);
-		if (this.client != null)
-		{
-			System.out.println("client.finirTour();");
-			this.client.finirTour();
-		}
-		if (this.server != null)
-		{
-			System.out.println("server.finirTour();");
-			this.server.finirTour();
-		}
-		//System.out.println("Imagine finir son tour LOLXD !!");
-	}
-
-    public boolean chargerXML(Reader cs)
+	public boolean chargerXML(Reader cs)
 	{
 		SAXBuilder sxb = new SAXBuilder();
 
@@ -380,8 +376,79 @@ public class Metier implements Serializable
 		                  Integer.parseInt(hexa.substring(5, 7), 16) );
 	}
 
-	public HashMap<String, List<Color>> getTheme() { return this.hmColorThemes;}
+	/* ==================== */
+	/*  GESTION DU RESEAU   */
+	/* ==================== */
+	public void creeServer(Boolean demarer, String password)
+	{
+		this.motDePassePartie = password;
+		this.server = new Server(this.ctrl);
+		if (demarer)
+			this.server.Start();
+	}
 
+	public void creeClient(String ip, String nom, Boolean demarer, String password)
+	{
+		this.nomClient = nom;
+		this.client = new Client(ip, this.ctrl);
+		if (demarer)
+			this.client.Connect(password);
+	}
+
+	
+	private Object readResolve()
+	{
+		System.out.println("This one has been called");
+		return this;
+	}
+
+	private void writeObject(ObjectOutputStream out) throws IOException 
+	{
+		ByteArrayOutputStream baos;
+		out.defaultWriteObject();
+
+		baos = new ByteArrayOutputStream();
+		ImageIO.write(imagePlateau, "png", baos);
+		out.writeObject(baos.toByteArray());
+
+		baos = new ByteArrayOutputStream();
+		ImageIO.write(imageRectoLocomotive, "png", baos);
+		out.writeObject(baos.toByteArray());
+
+		baos = new ByteArrayOutputStream();
+		ImageIO.write(imageVersoCouleur, "png", baos);
+		out.writeObject(baos.toByteArray());
+
+		baos = new ByteArrayOutputStream();
+		ImageIO.write(imageVersoObjectif, "png", baos);
+		out.writeObject(baos.toByteArray());
+
+		out.writeInt(lstImagesRectoCouleur.size());
+		for (BufferedImage image : lstImagesRectoCouleur) 
+		{
+		   baos = new ByteArrayOutputStream();
+		   ImageIO.write(image, "png", baos);
+		   out.writeObject(baos.toByteArray());
+		}
+
+	}
+	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException 
+	{
+		in.defaultReadObject();
+		imagePlateau = ImageIO.read(new ByteArrayInputStream((byte[]) in.readObject()));
+		imageRectoLocomotive = ImageIO.read(new ByteArrayInputStream((byte[]) in.readObject()));
+		imageVersoCouleur    = ImageIO.read(new ByteArrayInputStream((byte[]) in.readObject()));
+		imageVersoObjectif   = ImageIO.read(new ByteArrayInputStream((byte[]) in.readObject()));
+		int size = in.readInt();
+		lstImagesRectoCouleur = new ArrayList<>(size);
+		for (int i = 0; i < size; i++) {
+			lstImagesRectoCouleur.add(ImageIO.read(new ByteArrayInputStream((byte[]) in.readObject())));
+		}
+	}
+
+	/* ==================== */
+	/*  GESTION DES THEMES  */
+	/* ==================== */
 
 	/**
 	 * Récupère le thème utilisé dans le fichier xml de sauvegarde
@@ -431,7 +498,6 @@ public class Metier implements Serializable
 	 * @return HashMap contenant les couleurs du thème
 	 */
 	public void chargerThemes(String theme)
-
 	{
 		SAXBuilder sxb = new SAXBuilder();
 
@@ -485,58 +551,4 @@ public class Metier implements Serializable
 			System.out.println("Erreur lors de la lecture du fichier XML des informations du theme");
 		}
 	}
-	private void writeObject(ObjectOutputStream out) throws IOException 
-	{
-		ByteArrayOutputStream baos;
-		out.defaultWriteObject();
-
-		baos = new ByteArrayOutputStream();
-		ImageIO.write(imagePlateau, "png", baos);
-		out.writeObject(baos.toByteArray());
-
-		baos = new ByteArrayOutputStream();
-		ImageIO.write(imageRectoLocomotive, "png", baos);
-		out.writeObject(baos.toByteArray());
-
-		baos = new ByteArrayOutputStream();
-		ImageIO.write(imageVersoCouleur, "png", baos);
-		out.writeObject(baos.toByteArray());
-
-		baos = new ByteArrayOutputStream();
-		ImageIO.write(imageVersoObjectif, "png", baos);
-		out.writeObject(baos.toByteArray());
-
-		out.writeInt(lstImagesRectoCouleur.size());
-		for (BufferedImage image : lstImagesRectoCouleur) 
-		{
-		   baos = new ByteArrayOutputStream();
-		   ImageIO.write(image, "png", baos);
-		   out.writeObject(baos.toByteArray());
-		}
-
-	}
-	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException 
-	{
-		in.defaultReadObject();
-		imagePlateau = ImageIO.read(new ByteArrayInputStream((byte[]) in.readObject()));
-		imageRectoLocomotive = ImageIO.read(new ByteArrayInputStream((byte[]) in.readObject()));
-		imageVersoCouleur    = ImageIO.read(new ByteArrayInputStream((byte[]) in.readObject()));
-		imageVersoObjectif   = ImageIO.read(new ByteArrayInputStream((byte[]) in.readObject()));
-		int size = in.readInt();
-		lstImagesRectoCouleur = new ArrayList<>(size);
-		for (int i = 0; i < size; i++) {
-			lstImagesRectoCouleur.add(ImageIO.read(new ByteArrayInputStream((byte[]) in.readObject())));
-		}
-	}
-	private Object readResolve()
-	{
-		System.out.println("This one has been called");
-		return this;
-	}
-	public void ajouterObjectifsJoueurs(CarteObjectif cartesObjectifs) 
-	{
-		this.ctrl.getPartie().getJoueurCourant().ajouterCarteObjectif(cartesObjectifs);
-		this.lstCartesObjectif.remove(cartesObjectifs);
-	}
-
 }	

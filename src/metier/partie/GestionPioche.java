@@ -16,6 +16,9 @@ public class GestionPioche implements Serializable
 	private CarteWagon[]              tabCartesVisible;
     private LinkedList<CarteObjectif> lstCartesObjectif;
 
+	/* ==================== */
+	/*     CONSTRUCTEUR     */
+	/* ==================== */
 	public GestionPioche(Metier metier)
 	{
 		// Creation de la pile de cartes wagon
@@ -49,12 +52,19 @@ public class GestionPioche implements Serializable
 		Collections.shuffle(this.lstCartesObjectif);
 	}
 
+	/* ==================== */
+	/*        GETTERS       */
+	/* ==================== */
 	public CarteWagon[] getTabCartesVisible()          { return this.tabCartesVisible;         }
 	public CarteWagon   getCarteVisible    (int index) { return this.tabCartesVisible[index];  }
 	public int          getSizeWagon       ()          { return this.lstCartesWagon   .size(); }
 	public int          getSizeObjectif    ()          { return this.lstCartesObjectif.size(); }
 
-	// gestion des cartes wagon
+	/* ======================= */
+	/*  GESTION PIOCHE WAGONS  */
+	/* ======================= */
+
+	// pioche une carte wagon de la pioche et la retourne
 	public CarteWagon piocherCarteWagon()
 	{
 		if ( this.lstCartesWagon.size() == 0) return null;
@@ -64,16 +74,22 @@ public class GestionPioche implements Serializable
 		return carteWagon;
 	}
 
+	// ajoute une carte wagon utilisée dans la defausse
 	public void ajouterCarteDefausse(CarteWagon carteWagon)
 	{
 		this.lstCartesDefausse.add(carteWagon);
 	}
 
+	// remet la defausse dans la pioche
 	public void transfertPioche()
 	{
 		this.lstCartesWagon.addAll(this.lstCartesDefausse);
 		this.lstCartesDefausse.clear();
 	}
+
+	/* ========================== */
+	/*  GESTION PIOCHE OBJECTIFS  */
+	/* ========================== */
 
 	/**
 	 * Pioche 3 cartes objectif et les retourne
@@ -101,6 +117,4 @@ public class GestionPioche implements Serializable
 	{
 		this.lstCartesObjectif.add(carteObjectif);
 	}
-
-	
 }
