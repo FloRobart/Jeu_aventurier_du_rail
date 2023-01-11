@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -601,8 +602,11 @@ public class Controleur
 	public static void main(String[] args)
     {
         new Controleur();
+
 		//Les commandes pour voir l'IP de la machine
-        try {
+		String txtIP = "";
+        try
+		{
             Enumeration<NetworkInterface> net = NetworkInterface.getNetworkInterfaces();
 			while (net.hasMoreElements()) {
 				NetworkInterface element = net.nextElement();
@@ -610,16 +614,16 @@ public class Controleur
 				while (addresses.hasMoreElements()) {
 					InetAddress ip = addresses.nextElement();
 					if (ip instanceof Inet4Address) {
-						System.out.println("IPV4: " + ip.getHostAddress());
+						
+						txtIP += "IPV4 : " + ip.getHostAddress() + "\n";
 					}
 				}
 			}
-
-
-
         } catch (SocketException e) {
             e.printStackTrace();
         }
+
+		JOptionPane.showMessageDialog(null, txtIP, "Information Adresse IP", JOptionPane.INFORMATION_MESSAGE);
     }
 
 }
