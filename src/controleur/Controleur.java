@@ -281,9 +281,11 @@ public class Controleur
 			}
 
 			boolean estValide = false;
+			int nbJoker = 0;
 			Color c = this.joueur.getAlCouleurs().get(indMain);
 			int nbCarte = this.joueur.gethashMapCarteWagons().get(c);
-			int nbJoker = this.joueur.gethashMapCarteWagons().get(null);
+			if ( this.joueur.gethashMapCarteWagons().get(null) != null)
+				nbJoker = this.joueur.gethashMapCarteWagons().get(null);
 
 			Color cVoie;
 			if (this.couleurSelectionnee == 1) cVoie = this.areteSelectionnee.getCouleur1();
