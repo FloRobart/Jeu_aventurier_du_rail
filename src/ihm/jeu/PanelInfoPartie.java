@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 
 import controleur.Controleur;
 import ihm.finPartie.FrameFinPartie;
+import ihm.finPartie.FrameTest;
 
 
 public class PanelInfoPartie extends JPanel implements ActionListener
@@ -21,6 +22,7 @@ public class PanelInfoPartie extends JPanel implements ActionListener
     private JButton     btnArreterPartie;
 
     private JLabel      lblNbTours;
+	private JLabel      lblJoueurCourant;
 
     public PanelInfoPartie( Controleur ctrl )
     {
@@ -33,13 +35,14 @@ public class PanelInfoPartie extends JPanel implements ActionListener
         this.btnArreterPartie = new JButton("Arrêter la partie");
         this.frmFinDePartie = null;
 
-        this.lblNbTours = new JLabel("  Tours : ");
+        this.lblNbTours = new JLabel("  Tours : 1");
+		this.lblJoueurCourant = new JLabel("  Joueur courant : " + this.ctrl.getJoueurCourant().getNom());
 
         this.add(new JLabel(""));
         this.add(this.btnArreterPartie);
         this.add(new JLabel(""));
         this.add(this.lblNbTours);
-        this.add(new JLabel(""));
+        this.add(this.lblJoueurCourant);
 
         this.btnArreterPartie.addActionListener(this);
     }
@@ -49,15 +52,21 @@ public class PanelInfoPartie extends JPanel implements ActionListener
         if ( e.getSource() == this.btnArreterPartie )
         {
             this.frmFinDePartie = new FrameFinPartie(this.ctrl);
+            this.frmFinDePartie.appliquerTheme();
         }
     }
 
-    public void disposeFrameFinPartie() { if ( this.frmFinDePartie != null ) { this.frmFinDePartie.dispose(); } }
-
-    public void setNbTours(int nbTours)
-    { 
-        this.lblNbTours.setText("  Tours : " + nbTours); 
+    public void setInfo(int nbTours, String nomJoueurCourant)
+	{
+        this.lblNbTours.setText("  Tours : " + nbTours);
+		this.lblJoueurCourant.setText("  Joueur courant : " + nomJoueurCourant); 
     }
+
+	public void disposeFrameFinPartie()
+	{
+		if ( this.frmFinDePartie != null )
+			this.frmFinDePartie.dispose();
+	}
 
     /*
      * Applique les couleurs du thème sélectionné à tout les éléments du panel et au panel lui même

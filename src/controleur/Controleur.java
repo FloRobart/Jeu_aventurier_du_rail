@@ -143,7 +143,8 @@ public class Controleur
 	/*          Getters            */
 	/* --------------------------- */
 	public List<Joueur>        getJoueurs             () { return this.metier.getJoueurs         (); }
-	public Joueur              getJoueur              () { return this.partie.getJoueurCourant   (); }
+	public Joueur              getJoueur              () { return this.joueur; }
+	public Joueur              getJoueurCourant() { return this.partie.getJoueurCourant(); }
 	public List<CarteObjectif> getCarteObjectif       () { return this.metier.getCarteObjectif   (); }
 	public List<Noeud>         getNoeuds              () { return this.metier.getNoeuds          (); }
 	public List<Arete>         getAretes              () { return this.metier.getAretes          (); }
@@ -181,7 +182,8 @@ public class Controleur
 	// Méthodes
 	public void setImageVersoCouleur    () { this.imageVersoCouleur = this.metier.getImageVersoCouleur(); }
 	public void setImageButton(int indice)  { if ( this.ihm != null ) this.ihm.setImageButton(indice); }
-	public void	setNbTours	  (int nbTours) { this.ihm.setNbTours(nbTours);}
+	public void setInfo    (int nbTours, String nomJoueurCourant){ this.ihm.setInfo(nbTours, nomJoueurCourant); }
+
 
 	public void switchEnTrainDePiocher()
 	{
@@ -485,11 +487,7 @@ public class Controleur
 	
 
 	public Metier getMetier(){return this.metier;} // a tester supprimer apres
-
-    public Joueur getJoueurCourant() {
-        return null;
-    }
-
+	
 	public void connexionAccepter()
 	{
 		this.ihm.demarrerAttente(false);

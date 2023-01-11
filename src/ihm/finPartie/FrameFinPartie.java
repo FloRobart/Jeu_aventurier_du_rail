@@ -1,27 +1,12 @@
 package ihm.finPartie;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import java.util.List;
-import java.util.HashMap;
-
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import javax.swing.JPanel;
+import java.awt.event.WindowListener;
+import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-
-import metier.Joueur;
 import controleur.Controleur;
+
 
 public class FrameFinPartie extends JFrame
 {
@@ -37,6 +22,7 @@ public class FrameFinPartie extends JFrame
         //Parametrage de la frame
         Dimension dimEcran = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
         this.setLocation(dimEcran.width/4, dimEcran.height/4);
         this.setTitle("Fin De Partie");
 
@@ -45,6 +31,17 @@ public class FrameFinPartie extends JFrame
 
         this.pack();
         this.setVisible(true);
+
+        this.addWindowListener(new WindowListener()
+        {
+            public void windowClosing    (WindowEvent e) { ctrl.disposeFrameFinPartie(); ctrl.disposeFrameJeu(); }
+            public void windowOpened     (WindowEvent e) {}
+            public void windowClosed     (WindowEvent e) {}
+            public void windowIconified  (WindowEvent e) {}
+            public void windowDeiconified(WindowEvent e) {}
+            public void windowActivated  (WindowEvent e) {}
+            public void windowDeactivated(WindowEvent e) { if (panelFinPartie.getFermerFrame()) { ctrl.disposeFrameFinPartie(); ctrl.disposeFrameJeu(); } else { setVisible(true); } }
+        });
     }
 
 
