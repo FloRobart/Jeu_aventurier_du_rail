@@ -19,7 +19,6 @@ import javax.swing.BorderFactory;
 import javax.swing.Icon;
 
 import controleur.Controleur;
-import metier.CarteObjectif;
 import metier.Joueur;
 
 
