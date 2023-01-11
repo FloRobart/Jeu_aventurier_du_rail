@@ -406,7 +406,7 @@ public class Controleur
 
 				this.ihm.majIHM();
 				this.joueur.verifierObjectifs();
-				this.partie.joueurSuivant();
+				this.joueurSuivant();
 			}
 		}
 	}
