@@ -47,7 +47,6 @@ public class PanelPreviewMappe extends JPanel implements MouseWheelListener, Mou
 		// Création des composants
 		this.panelImage = new PanelImage(ctrl, this.taillePlateau);
 
-
 		// Ajout des composants
 		this.add(this.panelImage);
 
