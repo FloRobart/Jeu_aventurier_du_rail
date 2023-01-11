@@ -342,10 +342,10 @@ public class PanelAttente extends JPanel implements ActionListener
                 List<Joueur> lstJoueurs    = ctrl.getJoueurs();
                 for (int i = 0; i < ctrl.getNbJoueursMax(); i++)
                 {
-                    String txt=" ";
                     if (i < lstJoueurs.size()) {
-                        txt = lstJoueurs.get(i).getNom();
+                        String txt = lstJoueurs.get(i).getNom();
                         lstParticipants.get(i).setText(txt);
+                        lstParticipants.get(i).setForeground(lstJoueurs.get(i).getCouleur());
 
                 }
             }  
@@ -510,7 +510,12 @@ public class PanelAttente extends JPanel implements ActionListener
 				Color c = JColorChooser.showDialog(this, "choix de la couleur", enableColor);
 
 				if (c != null)
+                {
 					this.ctrl.getJoueur().setCouleur(c);
+                    if (this.ctrl.getMetier().getClient() != null) this.ctrl.getMetier().getClient().changerCouleur(c);
+                    if (this.ctrl.getMetier().getServer() != null) this.ctrl.getMetier().getServer().majMetier();
+
+                }
             }
 
             /* Boutons de lancement de la partie */

@@ -104,7 +104,13 @@ public class FrameJeu extends JFrame
 
 	public void majIHM()
 	{
-		this.panelMainJoueur.majIHM();
+		this.remove(this.panelMainJoueur);
+		this.panelMainJoueur = new PanelMainJoueur(this.ctrl);
+		this.add(this.panelMainJoueur, BorderLayout.SOUTH);
+			
+		this.revalidate();
+		this.repaint();
+
 		this.panelObjectif  .majIHM();
 		this.panelPioche    .majIHM();
 		this.panelPlateau   .majIHM();
