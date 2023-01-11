@@ -21,21 +21,23 @@ import metier.CarteObjectif;
 
 public class PanelObjectif extends JPanel implements ActionListener 
 {
-    private Controleur ctrl;
+    private Controleur           ctrl;
 
-    private JDialog dialogPiocherObjectifs;
-    private JDialog dialogPiocherDebut;
+    private JDialog              dialogPiocherObjectifs;
+    private JDialog              dialogPiocherDebut;
     private PanelPiocherObjectif panelPiocherObjectif;
 
-	private JLabel lblPiocheObjectif;
-	private JButton btnCarteObjectif;
+	private JLabel               lblPiocheObjectif;
+	private JButton              btnCarteObjectif;
 
     public PanelObjectif(Controleur ctrl)
     {
         this.ctrl = ctrl;
-        this.dialogPiocherObjectifs  = null;
-        this.dialogPiocherDebut    = null;
-        this.panelPiocherObjectif = null;
+
+        this.dialogPiocherObjectifs = null;
+        this.dialogPiocherDebut     = null;
+        this.panelPiocherObjectif   = null;
+
         this.setBorder( BorderFactory.createLineBorder(this.ctrl.getTheme().get("titles").get(1), 2) );
         this.setLayout(new BorderLayout());
 
@@ -206,8 +208,8 @@ public class PanelObjectif extends JPanel implements ActionListener
         /*---------*/
         /* Boutons */
         /*---------*/
-	    this.btnCarteObjectif.setForeground(btnForeColor);
-        this.btnCarteObjectif.setBackground(background  );
+	    this.btnCarteObjectif .setForeground(btnForeColor);
+        this.btnCarteObjectif .setBackground(background  );
 		this.lblPiocheObjectif.setForeground(labelForeColor);
 		this.lblPiocheObjectif.setBackground(background);
     }

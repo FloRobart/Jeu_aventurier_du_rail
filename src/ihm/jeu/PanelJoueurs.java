@@ -25,14 +25,14 @@ import metier.Joueur;
 
 public class PanelJoueurs extends JPanel implements ActionListener 
 {
-    private Controleur  ctrl;
-    private List<Joueur> lstJoueurs;
-    private JPanel      panelJoueurs;
-    private JScrollPane scrollJoueurs;
-    private JPanel[]    tabPanels;
-    private JButton[]   tabBoutons;
-    private JLabel[]    tabLblNom;
-    private JLabel[]    tabLblScore;
+    private Controleur       ctrl;
+    private List<Joueur>     lstJoueurs;
+    private JPanel           panelJoueurs;
+    private JScrollPane      scrollJoueurs;
+    private JPanel[]         tabPanels;
+    private JButton[]        tabBoutons;
+    private JLabel[]         tabLblNom;
+    private JLabel[]         tabLblScore;
 
     private PanelInfosJoueur panelInfosJoueur;
     private JDialog          dialogInfosJoueur;
@@ -85,7 +85,7 @@ public class PanelJoueurs extends JPanel implements ActionListener
 
         /*JScrollPane */
         this.scrollJoueurs = new JScrollPane(this.panelJoueurs, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        this.scrollJoueurs.setPreferredSize(new Dimension(200, 385)); // 400 c'est trop, ça déborder du panel
+        this.scrollJoueurs.setPreferredSize(new Dimension(200, 385));
         this.scrollJoueurs.getVerticalScrollBar().setUnitIncrement(5);
 
         //ajout des composants

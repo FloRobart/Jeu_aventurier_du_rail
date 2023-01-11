@@ -84,8 +84,13 @@ public class Ihm
         this.appliquerTheme();
     }
 
-	public void ouvrirFinPartie()
+	public void ouvrirFinPartie(Boolean finLocal)
 	{
+        if (finLocal)
+        {
+            if (this.ctrl.getMetier().getClient() != null) this.ctrl.getMetier().getClient().writeonce("FIN_JEU");
+            if (this.ctrl.getMetier().getServer() != null) this.ctrl.getMetier().getServer().writeonce("FIN_JEU");
+        }
 		this.frameFinDePartie = new FrameFinPartie(this.ctrl);
         this.frameFinDePartie.appliquerTheme();
 	}

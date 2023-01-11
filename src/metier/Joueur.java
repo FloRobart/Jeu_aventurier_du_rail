@@ -15,11 +15,11 @@ public class Joueur implements Serializable
 {
 	private transient Controleur ctrl;
 
-    private String nom;
-    private int    score;
-	private int    nbJetonsRestant;
-    private Color  couleur;
-    private int    nbCartesObjectif;
+    private String                 nom;
+    private int                    score;
+	private int                    nbJetonsRestant;
+    private Color                  couleur;
+    private int                    nbCartesObjectif;
 
     private List<CarteObjectif>    alCartesObjectif;
 	private List<CarteObjectif>    alObjectifsFinis;
@@ -43,20 +43,21 @@ public class Joueur implements Serializable
         this.nbCartesObjectif = 0;
     }
 
-    public String getNom() { return this.nom; }
-    public int getScore() { return this.score; }
-    public List<CarteObjectif> getAlCartesObjectif() { return this.alCartesObjectif; }
-    public int getNbCartesObjectif() { return this.nbCartesObjectif; }
-    public HashMap<Color,Integer> gethashMapCarteWagons() { return this.hashMapCarteWagons; }
-    public List<CarteWagon> getAlCartesWagons() { return this.alCartesWagons; }
-	public List<Color> getAlCouleurs() { return this.alCouleurs; }
-    public int getNbCartesWagon() { return this.alCartesWagons.size(); }
-    public int getNbJetonsRestant() { return this.nbJetonsRestant; }
-    public Color getCouleur() { return this.couleur; }
-	public Controleur getControleur() { return this.ctrl; }
-    public List<CarteObjectif> getAlObjectifsFinis() { return this.alObjectifsFinis; }
-	public int getNbObjectifRestant() { return this.alCartesObjectif.size() - this.alObjectifsFinis.size(); }
-	public int getNbArete() 
+    public String                 getNom               () { return this.nom;                                                    }
+    public int                    getScore             () { return this.score;                                                  }
+    public List<CarteObjectif>    getAlCartesObjectif  () { return this.alCartesObjectif;                                       }
+    public int                    getNbCartesObjectif  () { return this.nbCartesObjectif;                                       }
+    public HashMap<Color,Integer> gethashMapCarteWagons() { return this.hashMapCarteWagons;                                     }
+    public List<CarteWagon>       getAlCartesWagons    () { return this.alCartesWagons;                                         }
+	public List<Color>            getAlCouleurs        () { return this.alCouleurs;                                             }
+    public int                    getNbCartesWagon     () { return this.alCartesWagons.size();                                  }
+    public int                    getNbJetonsRestant   () { return this.nbJetonsRestant;                                        }
+    public Color                  getCouleur           () { return this.couleur;                                                }
+	public Controleur             getControleur        () { return this.ctrl;                                                   }
+    public List<CarteObjectif>    getAlObjectifsFinis  () { return this.alObjectifsFinis;                                       }
+	public int                    getNbObjectifRestant () { return this.alCartesObjectif.size() - this.alObjectifsFinis.size(); }
+
+	public int getNbArete () 
 	{
 		int res = 0;
 
@@ -85,12 +86,12 @@ public class Joueur implements Serializable
 		return res;
 	}
 
-    public void setNom(String nom) { this.nom = nom; }
-    public void setScore(int score) { this.score = score; }
-    public void setAlCartesObjectif(List<CarteObjectif> alCartesObjectif) { this.alCartesObjectif = alCartesObjectif; }
+    public void setNom               (String nom)                                { this.nom = nom;                               }
+    public void setScore             (int score)                                 { this.score = score;                           }
+    public void setAlCartesObjectif  (List<CarteObjectif> alCartesObjectif)      { this.alCartesObjectif = alCartesObjectif;     }
     public void sethashMapCarteWagons(HashMap<Color,Integer> hashMapCarteWagons) { this.hashMapCarteWagons = hashMapCarteWagons; }
-    public void setNbJetonsRestant(int nbJetonsRestant) { this.nbJetonsRestant = nbJetonsRestant; }
-    public void setCouleur(Color couleur) { this.couleur = couleur; }
+    public void setNbJetonsRestant   (int nbJetonsRestant)                       { this.nbJetonsRestant = nbJetonsRestant;       }
+    public void setCouleur           (Color couleur)                             { this.couleur = couleur;                       }
 
     public void ajouterCarteObjectif(CarteObjectif carteObjectif)
     {

@@ -64,6 +64,11 @@ public class ServerClientHandler implements Runnable
         }
     }
 
+    public Joueur getJoueur()
+    {
+        return this.joueur;
+    }
+
     public void majPartie(Partie partie)
     {
         try
@@ -135,7 +140,7 @@ public class ServerClientHandler implements Runnable
     private void initialLoading()
     {
         joueur = new Joueur(this.ctrl, this.nomJoueur);
-        joueur.setCouleur(Color.getHSBColor((new Random()).nextInt(0, 360), 80, 50));
+        joueur.setCouleur(Color.getHSBColor(this.ctrl.getJoueurs().size() * 20, 80, 50));
         this.metier.ajouterJoueur(joueur);     
 
         this.authentifie = true;
@@ -152,10 +157,10 @@ public class ServerClientHandler implements Runnable
         try {
             this.socket.close();
             this.shouldStop = true;
+            this.metier.getServer().majMetier();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
     }
     
     public void run()
@@ -243,7 +248,6 @@ public class ServerClientHandler implements Runnable
 
             if (command.equals("FINIR_TOUR"))
             {
-                //this.ctrl.getPartie().joueurSuivant();
                 this.ctrl.getMetier().getServer().writeonce("FINIR_TOUR");
                 this.ctrl.majIHM();
             }
@@ -258,6 +262,12 @@ public class ServerClientHandler implements Runnable
                 } catch (ClassNotFoundException | IOException e) {
                     e.printStackTrace();
                 }
+            }
+
+            if (command.equals("FIN_JEU"))
+            {
+                this.ctrl.getMetier().getServer().writeonce("FIN_JEU");
+                this.ctrl.ouvrirFinPartie(false);
             }
 
             

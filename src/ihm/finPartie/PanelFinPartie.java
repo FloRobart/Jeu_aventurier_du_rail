@@ -149,6 +149,7 @@ public class PanelFinPartie extends JPanel implements ActionListener
     {
         if ( e.getSource() == this.btnQuitter )
         {
+
             this.fermerFrame = true;
             this.ctrl.disposeFrameFinPartie();
             this.ctrl.disposeFrameJeu();

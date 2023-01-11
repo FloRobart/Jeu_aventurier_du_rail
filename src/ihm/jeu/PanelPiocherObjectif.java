@@ -28,20 +28,20 @@ public class PanelPiocherObjectif extends JPanel implements ActionListener
 {
     private static final int TAILLE = 3;
 
-    private Controleur    ctrl;
-	private PanelObjectif panelObjectif;
+    private Controleur                   ctrl;
+	private PanelObjectif                panelObjectif;
 	private HashMap<String, List<Color>> theme;
 
-	private boolean 	debutPartie;
-
-	private JPanel		panelBtnPiocher;
-
-    private JButton[]	tabCarteobjectif;
-	private boolean[]   tabChoixCarte;
-	private JButton		btnPiocher;
-	private CarteObjectif[] cartesObjectifs;
-
-	private JLabel     	lblChoisirCartes;
+	private boolean 	                 debutPartie;
+             
+	private JPanel		                 panelBtnPiocher;
+             
+    private JButton[]	                 tabCarteobjectif;
+	private boolean[]                    tabChoixCarte;
+	private JButton		                 btnPiocher;
+	private CarteObjectif[]              cartesObjectifs;
+             
+	private JLabel     	                 lblChoisirCartes;
 
 	public PanelPiocherObjectif(Controleur ctrl, PanelObjectif panelObjectif, boolean debutPartie)
 	{
