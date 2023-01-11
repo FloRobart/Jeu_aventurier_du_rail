@@ -10,6 +10,7 @@ import javax.swing.LayoutStyle;
 import javax.swing.border.BevelBorder;
 
 import controleur.Controleur;
+import metier.Joueur;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,7 +20,12 @@ import java.awt.event.*;
 
 public class PanelFinPartie extends JPanel implements ActionListener
 {
-    Controleur ctrl;
+    private static final int WIDTH = 1200;
+
+
+    private Controleur ctrl;
+
+    private boolean fermerFrame;
 
     /* Panel */
     private PanelResultat PanelResultat;
@@ -43,7 +49,7 @@ public class PanelFinPartie extends JPanel implements ActionListener
         PanelResultat = new PanelResultat(ctrl);
 
         /* ScrollPane */
-        scrollPaneRes = new JScrollPane();
+        scrollPaneRes = new JScrollPane(this.PanelResultat, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         /* Bouton */
         btnQuitter = new JButton();
@@ -57,31 +63,17 @@ public class PanelFinPartie extends JPanel implements ActionListener
         /*------------*/
         /* ScrollPane */
         /*------------*/
-        scrollPaneRes.setMaximumSize  (new Dimension(500, 200));
-        scrollPaneRes.setMinimumSize  (new Dimension(500, 200));
-        scrollPaneRes.setPreferredSize(new Dimension(500, 200));
+        scrollPaneRes.setMaximumSize  (new Dimension(PanelFinPartie.WIDTH, 200));
+        scrollPaneRes.setMinimumSize  (new Dimension(PanelFinPartie.WIDTH, 200));
+        scrollPaneRes.setPreferredSize(new Dimension(PanelFinPartie.WIDTH, 200));
 
-        scrollPaneRes.add(this.PanelResultat);
-/*
-        GroupLayout PanelResultatLayout = new GroupLayout(PanelResultat);
-        PanelResultat.setLayout(PanelResultatLayout);
-        PanelResultatLayout.setHorizontalGroup(
-            PanelResultatLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 498, Short.MAX_VALUE)
-        );
-        PanelResultatLayout.setVerticalGroup(
-            PanelResultatLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addGap(0, 198, Short.MAX_VALUE)
-        );
-
-        scrollPaneRes.setViewportView(PanelResultat);
-*/
 
         /*--------*/
         /* Bouton */
         /*--------*/
         btnQuitter.setText("Quitter");
         btnQuitter.addActionListener(this);
+        btnQuitter.setSize(200, 50);
         btnQuitter.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 
 
@@ -91,39 +83,39 @@ public class PanelFinPartie extends JPanel implements ActionListener
         /* Label Titre */
         lblTitre.setFont(new Font("Liberation Sans", 0, 36));
         lblTitre.setHorizontalAlignment(JLabel.CENTER);
-        lblTitre.setText("VICTOIRE DE ...");
-        lblTitre.setMaximumSize  (new Dimension(400, 50));
-        lblTitre.setMinimumSize  (new Dimension(400, 50));
-        lblTitre.setPreferredSize(new Dimension(400, 50));
+        lblTitre.setText("VICTOIRE DE " + this.getVainqueur().getNom() + " !");
+        lblTitre.setMaximumSize  (new Dimension(PanelFinPartie.WIDTH, 50));
+        lblTitre.setMinimumSize  (new Dimension(PanelFinPartie.WIDTH, 50));
+        lblTitre.setPreferredSize(new Dimension(PanelFinPartie.WIDTH, 50));
 
         /* Label Route */
         lblRoute.setHorizontalAlignment(JLabel.CENTER);
         lblRoute.setText("Route la plus longue : " + "" + " (+10 points)");
         lblRoute.setFocusable(false);
-        lblRoute.setMaximumSize  (new Dimension(400, 18));
-        lblRoute.setMinimumSize  (new Dimension(400, 18));
-        lblRoute.setPreferredSize(new Dimension(400, 18));
+        lblRoute.setMaximumSize  (new Dimension(PanelFinPartie.WIDTH, 18));
+        lblRoute.setMinimumSize  (new Dimension(PanelFinPartie.WIDTH, 18));
+        lblRoute.setPreferredSize(new Dimension(PanelFinPartie.WIDTH, 18));
 
 
 
         /*--------*/
         /* Layout */
         /*--------*/
-
+        int gapButton = ((PanelFinPartie.WIDTH+100) /2) - (this.btnQuitter.getWidth() / 2);
         /* Horizontale */
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-            .addComponent(lblTitre, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(lblRoute, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblTitre, GroupLayout.DEFAULT_SIZE, PanelFinPartie.WIDTH, Short.MAX_VALUE)
+            .addComponent(lblRoute, GroupLayout.DEFAULT_SIZE, PanelFinPartie.WIDTH, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(200, 200, 200)
-                .addComponent(btnQuitter, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
+                .addGap(gapButton, gapButton, gapButton)
+                .addComponent(btnQuitter, GroupLayout.PREFERRED_SIZE, btnQuitter.getWidth(), GroupLayout.PREFERRED_SIZE)
                 .addGap(200, 200, 200))
             .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(50, 50, 50)
-                .addComponent(scrollPaneRes, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrollPaneRes, GroupLayout.PREFERRED_SIZE, PanelFinPartie.WIDTH, GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50))
         );
 
@@ -137,7 +129,7 @@ public class PanelFinPartie extends JPanel implements ActionListener
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(scrollPaneRes, GroupLayout.PREFERRED_SIZE, 200, GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50)
-                .addComponent(btnQuitter, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnQuitter, GroupLayout.PREFERRED_SIZE, btnQuitter.getHeight(), GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50))
         );
     }
@@ -148,9 +140,22 @@ public class PanelFinPartie extends JPanel implements ActionListener
     {
         if ( e.getSource() == this.btnQuitter )
         {
+            this.fermerFrame = true;
             this.ctrl.disposeFrameFinPartie();
             this.ctrl.disposeFrameJeu();
         }
+    }
+
+
+    public boolean getFermerFrame()
+    {
+        return this.fermerFrame;
+    }
+
+
+    public Joueur getVainqueur()
+    {
+        return this.PanelResultat.getVainqueur();
     }
 
     /**
@@ -164,12 +169,13 @@ public class PanelFinPartie extends JPanel implements ActionListener
         Color btnBackColor     = this.ctrl.getTheme().get("buttons"     ).get(1);
 
 
+        this.setForeground(labelForeColor);
+        this.setBackground(background);
 
         /* Panel */
         this.PanelResultat.appliquerTheme();
 
         /* ScrollPane */
-        this.scrollPaneRes.getHorizontalScrollBar().setBackground(background);
         this.scrollPaneRes.getVerticalScrollBar  ().setBackground(background);
 
         /* Bouton */
@@ -177,11 +183,11 @@ public class PanelFinPartie extends JPanel implements ActionListener
         this.btnQuitter.setBackground(btnBackColor);
 
         /* Labels */
-        lblTitre.setForeground(labelForeColor);
         lblTitre.setOpaque(false);
+        lblTitre.setForeground(labelForeColor);
 
-        lblRoute.setForeground(labelForeColor);
         lblRoute.setOpaque(false);
+        lblRoute.setForeground(labelForeColor);
     }
 }
 

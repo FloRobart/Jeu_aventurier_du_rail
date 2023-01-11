@@ -61,11 +61,14 @@ public class Joueur implements Serializable
 		int res = 0;
 
 		for (Arete a : this.ctrl.getAretes())
+		{
 			if (this.equals(a.getProprietaire1()) || this.equals(a.getProprietaire2()))
 				res++;
+		}
 
 		return res;
 	}
+
 	public int getMalus()
 	{
 		int res = 0;
@@ -155,7 +158,10 @@ public class Joueur implements Serializable
     
     public Boolean equals(Joueur j)
     {
-        return j.nom.equals(this.nom);
+		if (j != null)
+        	return j.nom.equals(this.nom);
+		else
+			return false;
     }
 
     public String toString()

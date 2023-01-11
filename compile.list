@@ -55,3 +55,5 @@
 ./src/metier/partie/CarteWagon.java
 ./src/metier/partie/GestionPioche.java
 ./src/metier/partie/Partie.java
+
+./src/ihm/finPartie/FrameTest.java

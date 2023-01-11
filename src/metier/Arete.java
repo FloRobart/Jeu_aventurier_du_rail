@@ -34,10 +34,14 @@ public class Arete implements Serializable
 	public Joueur getProprietaire1() { return this.proprietaire1; }
 	public Joueur getProprietaire2() 
 	{ 
-		if (!is2Sens())
-		{ }
-
-		return this.proprietaire2; 
+		if (this.is2Sens())
+		{
+			return this.proprietaire2; 
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 	public void setNoeud1(Noeud n) 
@@ -70,7 +74,7 @@ public class Arete implements Serializable
 	}
 	public void setProprietaire2(Joueur j) 
 	{ 
-		if(is2Sens() && this.proprietaire2 == null)
+		if(this.is2Sens() && this.proprietaire2 == null)
 			this.proprietaire2 = j; 
 	}
 

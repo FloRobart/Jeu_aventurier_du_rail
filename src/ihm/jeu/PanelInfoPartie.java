@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 
 import controleur.Controleur;
 import ihm.finPartie.FrameFinPartie;
+import ihm.finPartie.FrameTest;
 
 
 public class PanelInfoPartie extends JPanel implements ActionListener
@@ -49,6 +50,7 @@ public class PanelInfoPartie extends JPanel implements ActionListener
         if ( e.getSource() == this.btnArreterPartie )
         {
             this.frmFinDePartie = new FrameFinPartie(this.ctrl);
+            this.frmFinDePartie.appliquerTheme();
         }
     }
 
