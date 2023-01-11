@@ -37,6 +37,7 @@ public class Controleur
 	private Arete   areteSelectionnee;
 	private int     couleurSelectionnee;
 	private boolean enTrainDePiocher;
+	private boolean piocherObjectifsDebut;
 
     public Controleur()
     {
@@ -229,6 +230,7 @@ public class Controleur
 	public void setImageButton(int indice)  { if ( this.ihm != null ) this.ihm.setImageButton(indice); }
 	public void setInfo    (int nbTours, String nomJoueurCourant){ this.ihm.setInfo(nbTours, nomJoueurCourant); }
 
+	public void piocherCarteObjectifDebutPartie() { if ( this.piocherObjectifsDebut == true ) this.ihm.piocherCarteObjectifDebutPartie(); }
 
 	public void switchEnTrainDePiocher()
 	{
