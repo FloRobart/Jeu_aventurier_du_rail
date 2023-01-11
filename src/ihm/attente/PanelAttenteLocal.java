@@ -536,26 +536,31 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
             /* Bouton ajouter joueur */
             if (e.getSource() == this.btnNewJoueur)
             {
-                String nomJoueur = JOptionPane.showInputDialog(this, "Entrez Votre pseudo", "Ajouter un joueur", JOptionPane.QUESTION_MESSAGE);
+                if (this.ctrl.getNbJoueursMax() > this.ctrl.getJoueurs().size())
+                {
+                    String nomJoueur = JOptionPane.showInputDialog(this, "Entrez Votre pseudo", "Ajouter un joueur", JOptionPane.QUESTION_MESSAGE);
 
 
-				if (nomJoueur != null)
-				{
-                    if (nomJoueur.length() > 16)
-                        nomJoueur = nomJoueur.substring(0, 16);
+                    if (nomJoueur != null)
+                    {
+                        if (nomJoueur.length() > 16)
+                            nomJoueur = nomJoueur.substring(0, 16);
 
-					if (this.verifPseudo(nomJoueur))
-					{
-						Color c = this.aleatoireColor();
-						Joueur j = new Joueur(this.ctrl, nomJoueur);
-						j.setCouleur(c);
+                        if (this.verifPseudo(nomJoueur))
+                        {
+                            Color c = this.aleatoireColor();
+                            Joueur j = new Joueur(this.ctrl, nomJoueur);
+                            j.setCouleur(c);
 
-						this.ctrl.ajouterJoueur(j);
-						this.lstParticipants.get(this.ctrl.getJoueurs().size()-1).setForeground(c);
-					}
-					else
-						JOptionPane.showMessageDialog(this, "Le pseudo est incorrect", "Erreur", JOptionPane.ERROR_MESSAGE);
-				}
+                            this.ctrl.ajouterJoueur(j);
+                            this.lstParticipants.get(this.ctrl.getJoueurs().size()-1).setForeground(c);
+                        }
+                        else
+                            JOptionPane.showMessageDialog(this, "Le pseudo est incorrect", "Erreur", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+                else
+                    JOptionPane.showMessageDialog(this, "Le nombre de joueur maximum à été ateint", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
 
 
