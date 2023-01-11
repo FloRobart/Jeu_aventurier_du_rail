@@ -597,27 +597,7 @@ public class Controleur
     {
         new Controleur();
 
-		//Les commandes pour voir l'IP de la machine
-		String txtIP = "";
-        try
-		{
-            Enumeration<NetworkInterface> net = NetworkInterface.getNetworkInterfaces();
-			while (net.hasMoreElements()) {
-				NetworkInterface element = net.nextElement();
-				Enumeration<InetAddress> addresses = element.getInetAddresses();
-				while (addresses.hasMoreElements()) {
-					InetAddress ip = addresses.nextElement();
-					if (ip instanceof Inet4Address) {
-						
-						txtIP += "IPV4 : " + ip.getHostAddress() + "\n";
-					}
-				}
-			}
-        } catch (SocketException e) {
-            e.printStackTrace();
-        }
 
-		JOptionPane.showMessageDialog(null, txtIP, "Information Adresse IP", JOptionPane.INFORMATION_MESSAGE);
     }
 
 }

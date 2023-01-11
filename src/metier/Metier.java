@@ -17,12 +17,18 @@ import java.io.Reader;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
@@ -376,6 +382,28 @@ public class Metier implements Serializable
 		this.server = new Server(this.ctrl);
 		if (demarer)
 			this.server.Start();
+			//Les commandes pour voir l'IP de la machine
+			String txtIP = "";
+			try
+			{
+				Enumeration<NetworkInterface> net = NetworkInterface.getNetworkInterfaces();
+				while (net.hasMoreElements()) {
+					NetworkInterface element = net.nextElement();
+					Enumeration<InetAddress> addresses = element.getInetAddresses();
+					while (addresses.hasMoreElements()) {
+						InetAddress ip = addresses.nextElement();
+						if (ip instanceof Inet4Address) {
+							
+							if (!ip.getHostAddress().equals("127.0.0.1"))
+								txtIP += "IPV4 : " + ip.getHostAddress() + "\n";
+						}
+					}
+				}
+			} catch (SocketException e) {
+				e.printStackTrace();
+			}
+	
+			JOptionPane.showMessageDialog(null, txtIP, "Information Adresse IP", JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	public void creeClient(String ip, String nom, Boolean demarer, String password)
