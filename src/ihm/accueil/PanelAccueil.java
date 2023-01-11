@@ -849,7 +849,7 @@ public class PanelAccueil extends JPanel implements ActionListener
 
         /* TextFields */
         this.txtPseudo.setBorder(null);
-        this.txtPseudo.setForeground(placeholderColor);
+        this.txtPseudo.setForeground(saisiForeColor); //placeholderColor;
         this.txtPseudo.setBackground(saisiBackColor);
         this.txtPseudo.setForegroundColor (saisiForeColor);
         this.txtPseudo.setPlaceholderColor(placeholderColor);

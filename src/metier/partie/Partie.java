@@ -1,10 +1,8 @@
 package metier.partie;
 
-import java.awt.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import controleur.Controleur;
 import metier.Arete;
@@ -17,16 +15,16 @@ public class Partie implements Serializable
 	private transient Controleur ctrl;
 	private static final long serialVersionUID = 2L;
 
-	private String nomPartie;
+	private String         nomPartie;
 	private GestionPioche  gestionPioche;
-	private List<Arete>   alArete;
-	private Joueur[]      joueurs;
-	private int           joueurCourrantId;
-	private int           nbJetonFin;
-	private int           tour;
-	private boolean       estMulti;
-	private int           joueurFin;
-	private Integer[]     scoreFinal;
+	private List<Arete>    alArete;
+	private Joueur[]       joueurs;
+	private int            joueurCourrantId;
+	private int            nbJetonFin;
+	private int            tour;
+	private boolean        estMulti;
+	private int            joueurFin;
+	private Integer[]      scoreFinal;
 
 	public Joueur[] getJoueurs()
 	{
