@@ -127,10 +127,10 @@ public class MenuBarre extends JMenuBar implements ActionListener
 				{
 					this.dialogAideMenu = new JDialog();
 
-					this.dialogAideMenu.setSize(750,250);
-					this.dialogAideMenu.setTitle("Aide menu");
-					this.dialogAideMenu.setLocation(200, 300);
-					this.dialogAideMenu.setResizable(false);
+					this.dialogAideMenu.setSize(1500,800);
+					this.dialogAideMenu.setTitle("Aide Accueil");
+					this.dialogAideMenu.setLocation(10, 10);
+					this.dialogAideMenu.setResizable(true);
 					this.dialogAideMenu.add(this.panelAideMenu);
 					this.dialogAideMenu.setVisible(true);
 				}

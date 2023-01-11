@@ -23,14 +23,14 @@ public class PanelAidePreJeu extends JPanel
         this.setBackground(new Color(100,100,100));
 
         this.panelScroll = new JPanel();
-        this.panelScroll.setLayout(new GridLayout(5, 1));
+        this.panelScroll.setLayout(new GridLayout(2, 1));
 
-        for ( int cpt=1; cpt<= 5; cpt++ )
+        for ( int cpt=1; cpt<= 2; cpt++ )
         {
             JPanel panel = new JPanel();
             panel.setBackground(this.ctrl.getTheme().get("background"  ).get(0));
             JLabel lblImage = new JLabel();
-            lblImage.setIcon(new ImageIcon("./bin/donnees/images/aideJoueur/" + cpt + ".png"));
+            lblImage.setIcon(new ImageIcon("./bin/donnees/images/aideAccueil/" + cpt + ".png"));
             panel.add(lblImage);
             this.panelScroll.add(panel);
         }
