@@ -25,7 +25,7 @@ public class PanelAidePreJeu extends JPanel
         this.panelScroll = new JPanel();
         this.panelScroll.setLayout(new GridLayout(5, 1));
 
-        for ( int cpt=1; cpt<= 5; cpt++ )
+        for ( int cpt=6; cpt<= 7; cpt++ )
         {
             JPanel panel = new JPanel();
             panel.setBackground(this.ctrl.getTheme().get("background"  ).get(0));

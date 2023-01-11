@@ -47,12 +47,16 @@ public class PanelResultat extends JPanel
             
         }
 
+		/* Ajout des points des cartes objectifs validé */
+		for (Joueur joueur : this.ctrl.getJoueursPartie())
+				joueur.ajouterObjectifs();
+
         /* Ajoutes les labels des autres lignes  */
         for (int i = 1; i < this.lstLabels.size(); i++) {
             for (int j = 0; j < this.lstLabels.get(0).size(); j++) {
 
                 Joueur joueur = this.ctrl.getJoueursPartie()[i-1];
-				joueur.ajouterObjectifs();
+				
                 String txt = "";
                 switch (j)
                 {
