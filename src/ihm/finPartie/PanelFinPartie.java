@@ -10,12 +10,18 @@ import javax.swing.LayoutStyle;
 import javax.swing.border.BevelBorder;
 
 import controleur.Controleur;
+import metier.Arete;
 import metier.Joueur;
+import metier.Noeud;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.PriorityQueue;
 
 
 public class PanelFinPartie extends JPanel implements ActionListener
@@ -26,6 +32,8 @@ public class PanelFinPartie extends JPanel implements ActionListener
     private Controleur ctrl;
 
     private boolean fermerFrame;
+	private int     routePlusLongue;
+	private Joueur  routePlusLongueJoueur;
 
     /* Panel */
     private PanelResultat PanelResultat;
@@ -45,20 +53,20 @@ public class PanelFinPartie extends JPanel implements ActionListener
     {
         this.ctrl = ctrl;
 
-        /* Panel */
-        PanelResultat = new PanelResultat(ctrl);
-
-        /* ScrollPane */
-        scrollPaneRes = new JScrollPane(this.PanelResultat, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-
         /* Bouton */
         btnQuitter = new JButton();
 
         /* Labels */
         lblTitre = new JLabel();
         lblRoute = new JLabel();
+		this.definirRoutePlusLongue();
+		
+		/* Panel */
+		PanelResultat = new PanelResultat(ctrl);
 
-
+		/* ScrollPane */
+		scrollPaneRes = new JScrollPane(this.PanelResultat, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		
 
         /*------------*/
         /* ScrollPane */
@@ -90,7 +98,6 @@ public class PanelFinPartie extends JPanel implements ActionListener
 
         /* Label Route */
         lblRoute.setHorizontalAlignment(JLabel.CENTER);
-        lblRoute.setText("Route la plus longue : " + "" + " (+10 points)");
         lblRoute.setFocusable(false);
         lblRoute.setMaximumSize  (new Dimension(PanelFinPartie.WIDTH, 18));
         lblRoute.setMinimumSize  (new Dimension(PanelFinPartie.WIDTH, 18));
@@ -132,6 +139,8 @@ public class PanelFinPartie extends JPanel implements ActionListener
                 .addComponent(btnQuitter, GroupLayout.PREFERRED_SIZE, btnQuitter.getHeight(), GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50))
         );
+
+		
     }
 
 
@@ -189,5 +198,78 @@ public class PanelFinPartie extends JPanel implements ActionListener
         lblRoute.setOpaque(false);
         lblRoute.setForeground(labelForeColor);
     }
+
+	public void definirRoutePlusLongue()
+	{
+		int routePlusLongue = 0;
+
+		for (Joueur j : this.ctrl.getJoueursPartie())
+			for ( Noeud n1 : this.ctrl.getNoeuds() )
+				for ( Noeud n2 : this.ctrl.getNoeuds() )
+					if ( n1 != n2 )
+					{
+						int route = this.getRouteLaPlusLongue(j, n1, n2);
+						
+						if ( route > this.routePlusLongue )
+						{
+							this.routePlusLongue = route;
+							this.routePlusLongueJoueur = j;
+						}
+					}
+
+		if (this.routePlusLongueJoueur != null)
+		{
+			this.lblRoute.setText("Route la plus longue : " + this.routePlusLongueJoueur.getNom() + " (+10 points)" + " (" + this.routePlusLongue + " cases)");
+			this.routePlusLongueJoueur.ajouterScore(10);
+		}
+	}
+
+	public int getRouteLaPlusLongue(Joueur j, Noeud n1, Noeud n2)
+	{
+		HashMap<Noeud, Integer> distances = new HashMap<>();
+		PriorityQueue<Noeud> queue = new PriorityQueue<>(new NoeudComparator(distances));
+		for (Noeud node : this.ctrl.getNoeuds()) {
+			distances.put(node, Integer.MAX_VALUE);
+		}
+		distances.put(n1, 0);
+		queue.add(n1);
+
+		while (!queue.isEmpty()) 
+		{
+			Noeud actuel = queue.poll();
+			
+			for (Arete a : this.ctrl.getAretes()) 
+			{
+				if ( a.getProprietaire1() == j || a.getProprietaire2() == j )
+				{
+					if (a.getNoeud1() == actuel) 
+					{
+						Noeud voisin = a.getNoeud2();
+						int distance = distances.get(actuel) + a.getDistance();
+						if (distance < distances.get(voisin)) 
+						{
+							distances.put(voisin, distance);
+							queue.add(voisin);
+						}
+					}
+					else if (a.getNoeud2() == actuel) 
+					{
+						Noeud voisin = a.getNoeud1();
+						int distance = distances.get(actuel) + a.getDistance();
+						if (distance < distances.get(voisin)) 
+						{
+							distances.put(voisin, distance);
+							queue.add(voisin);
+						}
+					}
+				}
+			}
+		}
+
+		if (distances.get(n2) == Integer.MAX_VALUE)
+			return 0;
+		else
+			return distances.get(n2);
+	}
 }
 

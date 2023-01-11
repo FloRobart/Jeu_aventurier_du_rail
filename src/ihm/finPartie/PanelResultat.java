@@ -24,7 +24,7 @@ public class PanelResultat extends JPanel
     {
         this.ctrl = ctrl;
 
-        int nbJoueurs = this.ctrl.getJoueurs().size();
+        int nbJoueurs = this.ctrl.getJoueursPartie().length;
         String[] enteteColonne = {"Nom", "Voie prisent", "Objectifs validées", "Objectifs ratées", "Points gagnées", "Points malus", "Score final"};
         this.setLayout(new GridLayout(nbJoueurs+1, 7));
 
@@ -52,7 +52,7 @@ public class PanelResultat extends JPanel
         for (int i = 1; i < this.lstLabels.size(); i++) {
             for (int j = 0; j < this.lstLabels.get(0).size(); j++) {
 
-                Joueur joueur = this.ctrl.getJoueurs().get(i-1);
+                Joueur joueur = this.ctrl.getJoueursPartie()[i-1];
                 String txt = "";
                 switch (j)
                 {
@@ -64,7 +64,7 @@ public class PanelResultat extends JPanel
                     case 5 -> txt = String.valueOf(joueur.getMalus()); // Points malus
                     case 6 -> txt = String.valueOf(this.calculerScroreFinal(joueur)); // Score final
                     default -> txt = "Erreur";
-                }
+                } 
 
                 this.lstLabels.get(i).add(new JLabel(txt));
                 this.lstLabels.get(i).get(j).setOpaque(false);
@@ -95,13 +95,13 @@ public class PanelResultat extends JPanel
 
     public Joueur getVainqueur()
     {
-        Joueur vainqueur = this.ctrl.getJoueurs().get(0);
+        Joueur vainqueur = this.ctrl.getJoueursPartie()[0];
         int max = Integer.valueOf(this.lstLabels.get(1).get(6).getText());
 
         for (int i = 2; i < this.lstLabels.size(); i++) {
             if (max < Integer.valueOf(this.lstLabels.get(i).get(6).getText()))
             {
-                vainqueur = this.ctrl.getJoueurs().get(i-1);
+                vainqueur = this.ctrl.getJoueursPartie()[i-1];
                 max = Integer.valueOf(this.lstLabels.get(i).get(6).getText());
             }
         }

@@ -22,6 +22,7 @@
 ./src/ihm/finPartie/FrameFinPartie.java
 ./src/ihm/finPartie/PanelFinPartie.java
 ./src/ihm/finPartie/PanelResultat.java
+./src/ihm/finPartie/NoeudComparator.java
 
 ./src/ihm/jeu/FrameJeu.java
 ./src/ihm/jeu/PanelImage.java
