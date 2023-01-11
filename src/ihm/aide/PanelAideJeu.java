@@ -1,7 +1,6 @@
 package ihm.aide;
 
 import java.awt.Color;
-import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Dimension;
 
@@ -9,7 +8,6 @@ import javax.swing.JPanel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
-import javax.swing.ImageIcon;
 
 import controleur.Controleur;
 

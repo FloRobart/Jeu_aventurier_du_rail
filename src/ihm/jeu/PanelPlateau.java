@@ -19,7 +19,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.border.BevelBorder;
 
 import controleur.Controleur;
-import metier.CarteObjectif;
 
 public class PanelPlateau extends JPanel implements ActionListener, MouseWheelListener, MouseListener, MouseMotionListener
 {

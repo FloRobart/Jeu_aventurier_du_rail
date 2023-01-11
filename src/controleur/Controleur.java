@@ -6,17 +6,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.Icon;
-import javax.swing.JButton;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.awt.Font;
 import java.io.File;
-import java.io.IOException;
-import java.net.ConnectException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 
@@ -24,8 +20,6 @@ import ihm.Ihm;
 import metier.*;
 import metier.partie.Partie;
 import metier.partie.CarteWagon;
-import metier.partie.Partie;
-import metier.reseau.Server;
 
 
 public class Controleur
@@ -34,8 +28,6 @@ public class Controleur
 	private Partie partie;
 	private Joueur joueur;
     private Ihm    ihm;
-
-
 
 	private Arete   areteSelectionnee;
 	private int     couleurSelectionnee;
