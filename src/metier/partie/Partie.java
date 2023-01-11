@@ -76,6 +76,8 @@ public class Partie implements Serializable
 	public void setCtrl(Controleur ctrl)
 	{
 		this.ctrl = ctrl;
+		for (Joueur j : this.joueurs)
+			j.setCtrl(ctrl);
 	}
 
 	public void joueurSuivant()
@@ -107,6 +109,7 @@ public class Partie implements Serializable
 	public CarteWagon[] getTabCartesVisible() { return this.gestionPioche.getTabCartesVisible(); }
 	public int          getSizeWagon       () { return this.gestionPioche.getSizeWagon(); }
 	public int			getTours()			  { return this.tour;}
+	public List<Arete>  geAretes()            { return this.alArete; }
 
 	public void piocherPioche()
 	{

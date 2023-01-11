@@ -232,6 +232,10 @@ public class PanelImage extends JPanel
 	public void majIHM()
 	{
 		this.repaint();
+		for (Arete arete : this.ctrl.getAretes())
+		{
+			System.out.println(arete.getProprietaire1() + " § " + arete.getProprietaire2());
+		}
 	}
 
 }
