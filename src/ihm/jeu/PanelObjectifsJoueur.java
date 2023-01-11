@@ -38,7 +38,6 @@ public class PanelObjectifsJoueur extends JPanel implements ActionListener
     private JScrollPane scrollPane;
 
     private JButton[] tabBtnObjectifs;
-    private List<CarteObjectif>  listObjectifs;
 
  
     public PanelObjectifsJoueur(Controleur ctrl)
@@ -50,7 +49,6 @@ public class PanelObjectifsJoueur extends JPanel implements ActionListener
         //initialisation des composants
         List<Joueur> lstJ = this.ctrl.getJoueurs();
         this.joueur = lstJ.get(0); //this.ctrl.getJoueurCourant()
-        this.listObjectifs = this.joueur.getAlCartesObjectif();
     
         int taille = this.joueur.getAlCartesObjectif().size();
         //int taille = 5;
@@ -64,7 +62,6 @@ public class PanelObjectifsJoueur extends JPanel implements ActionListener
         this.panelPrincipale.setLayout(new GridLayout(grid/2, 2, 0, 1));
 
         this.tabBtnObjectifs = new JButton[taille];
-        this.listObjectifs = this.ctrl.getCarteObjectif();
 
         for (int i = 0; i < taille; i++)
         {
