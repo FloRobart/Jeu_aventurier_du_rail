@@ -27,7 +27,9 @@ public class Joueur implements Serializable
 	private List<Color>            alCouleurs;
     private List<CarteWagon>       alCartesWagons;
     
-
+	/* ==================== */
+	/*     CONSTRUCTEUR     */
+	/* ==================== */
     public Joueur(Controleur ctrl, String nom)
     {
 		this.ctrl = ctrl;
@@ -43,6 +45,9 @@ public class Joueur implements Serializable
         this.nbCartesObjectif = 0;
     }
 
+	/* ==================== */
+	/*       GETTERS        */
+	/* ==================== */
     public String                 getNom               () { return this.nom;                                                    }
     public int                    getScore             () { return this.score;                                                  }
     public List<CarteObjectif>    getAlCartesObjectif  () { return this.alCartesObjectif;                                       }
@@ -70,11 +75,6 @@ public class Joueur implements Serializable
 		return res;
 	}
 
-	public void setCtrl(Controleur ctrl)
-	{
-		this.ctrl = ctrl;
-	}
-
 	public int getMalus()
 	{
 		int res = 0;
@@ -86,19 +86,22 @@ public class Joueur implements Serializable
 		return res;
 	}
 
-    public void setNom               (String nom)                                { this.nom = nom;                               }
-    public void setScore             (int score)                                 { this.score = score;                           }
-    public void setAlCartesObjectif  (List<CarteObjectif> alCartesObjectif)      { this.alCartesObjectif = alCartesObjectif;     }
+	/* ==================== */
+	/*       SETTERS        */
+	/* ==================== */
+	public void setCtrl              (Controleur             ctrl              ) { this.ctrl = ctrl;                             }
+    public void setNom               (String                 nom               ) { this.nom = nom;                               }
+    public void setScore             (int                    score             ) { this.score = score;                           }
+    public void setAlCartesObjectif  (List<CarteObjectif>    alCartesObjectif  ) { this.alCartesObjectif = alCartesObjectif;     }
     public void sethashMapCarteWagons(HashMap<Color,Integer> hashMapCarteWagons) { this.hashMapCarteWagons = hashMapCarteWagons; }
-    public void setNbJetonsRestant   (int nbJetonsRestant)                       { this.nbJetonsRestant = nbJetonsRestant;       }
-    public void setCouleur           (Color couleur)                             { this.couleur = couleur;                       }
+    public void setNbJetonsRestant   (int                    nbJetonsRestant   ) { this.nbJetonsRestant = nbJetonsRestant;       }
+    public void setCouleur           (Color                  couleur           ) { this.couleur = couleur;                       }
 
-    public void ajouterCarteObjectif(CarteObjectif carteObjectif)
-    {
-        this.alCartesObjectif.add(carteObjectif);
-        this.nbCartesObjectif++;
-    }
-
+	/* ===================================================== */
+	/*  METHODES DE GESTION DES RESSOURCES DE L'UTILISATEUR  */
+	/* ===================================================== */
+    
+	// gestion des cartes wagons
     public void ajouterCarteWagon(CarteWagon carteWagon)
     {
 		Color coul = null;
@@ -118,11 +121,6 @@ public class Joueur implements Serializable
         this.hashMapCarteWagons.replace(coul,nbCarte);
     }
 
-    public void ajouterScore(int score)
-    {
-        this.score += score;
-    }
-
     public void retirerCarteWagon(CarteWagon carteWagon)
     {
         Color coul = carteWagon.getCouleur();
@@ -138,10 +136,12 @@ public class Joueur implements Serializable
         this.alCartesWagons.remove(carteWagon);
     }
 
-	public void retirerJeton(int nb)
-	{
-		this.nbJetonsRestant -= nb;
-	}
+	// gestion des objectifs
+	public void ajouterCarteObjectif(CarteObjectif carteObjectif)
+    {
+        this.alCartesObjectif.add(carteObjectif);
+        this.nbCartesObjectif++;
+    }
 
 	public void verifierObjectifs()
 	{
@@ -159,13 +159,27 @@ public class Joueur implements Serializable
 		}
 	}
 
+	// gestion des points
+	public void ajouterScore(int score)
+    {
+        this.score += score;
+    }
+
 	public void ajouterObjectifs()
 	{
 		for (CarteObjectif co : this.alObjectifsFinis)
 			this.score += co.getPoints();
 	}
 
-    
+	// gestion des jetons
+	public void retirerJeton(int nb)
+	{
+		this.nbJetonsRestant -= nb;
+	}
+
+	/* ================= */
+	/*  AUTRES METHODES  */
+	/* ================= */
     public Boolean equals(Joueur j)
     {
 		if (j != null)
@@ -176,6 +190,8 @@ public class Joueur implements Serializable
 
     public String toString()
     {
-        return this.nom + " (" + this.score + " points)" + " : " + this.nbJetonsRestant + " jetons posés" + " -- " + this.alCartesObjectif.size() + " cartes objectif" + " : " + this.hashMapCarteWagons.size() + " cartes wagon";
+        return this.nom + " (" + this.score + " points)" + " : " + this.nbJetonsRestant + 
+			" jetons posés" + " -- " + this.alCartesObjectif.size() + " cartes objectif" + 
+			" : " + this.hashMapCarteWagons.size() + " cartes wagon";
     }
 }

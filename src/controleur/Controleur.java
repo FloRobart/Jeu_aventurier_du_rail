@@ -6,17 +6,14 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.Icon;
-import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.awt.Font;
 import java.io.File;
-import java.io.IOException;
-import java.net.ConnectException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 
@@ -24,9 +21,6 @@ import ihm.Ihm;
 import metier.*;
 import metier.partie.Partie;
 import metier.partie.CarteWagon;
-import metier.partie.Partie;
-import metier.reseau.Server;
-
 
 public class Controleur
 {
@@ -35,13 +29,14 @@ public class Controleur
 	private Joueur joueur;
     private Ihm    ihm;
 
-
-
 	private Arete   areteSelectionnee;
 	private int     couleurSelectionnee;
 	private boolean enTrainDePiocher;
 	private boolean piocherObjectifsDebut;
 
+	/* ==================== */
+	/*     CONSTRUCTEUR     */
+	/* ==================== */
     public Controleur()
     {
         this.metier = new Metier(this);
@@ -53,47 +48,70 @@ public class Controleur
 
     }
 
-	public void joueurSuivant()
+	/* ==================== */
+	/*      GETTERS         */
+	/* ==================== */
+	public List<Joueur>        getJoueurs             () { return this.metier.getJoueurs         (); }
+	public Joueur[]            getJoueursPartie       () { return this.partie.getJoueurs         (); }
+	public Joueur              getJoueur              () { return this.joueur; }
+	public Joueur              getJoueurCourant       () { return this.partie.getJoueurCourant(); }
+	public List<CarteObjectif> getCarteObjectif       () { return this.metier.getCarteObjectif   (); }
+	public List<Noeud>         getNoeuds              () { return this.metier.getNoeuds          (); }
+	public List<Arete>         getAretes              () { if (this.partie != null) return this.partie.geAretes(); return this.metier.getAretes          (); }
+	public CarteWagon[]        getTabCarteWagon       () { return this.metier.getTabCarteWagon   (); }
+	public CarteObjectif[]	   getTabCarteObjectif    () { return this.metier.getTabCarteObjectif(); }
+	public CarteObjectif       getPiocheObjectif      () { return this.partie.getPiocheObjectif  (); }
+
+	public int[]         getTaillePlateau () { return this.metier.getTaillePlateau (); }
+	public BufferedImage getImagePlateau  () { return this.metier.getImagePlateau  (); }
+	public Color         getCouleurPlateau() { return this.metier.getCouleurPlateau(); }
+	public Font          getPolicePlateau () { return this.metier.getPolicePlateau (); }
+
+	public int getNbJoueursMin     () { return this.metier.getNbJoueursMin     (); }
+	public int getNbJoueursMax     () { return this.metier.getNbJoueursMax     (); }
+	public int getNbCarteCoul      () { return this.metier.getNbCarteCoul      (); }
+	public int getNbCarteLocomotive() { return this.metier.getNbCarteLocomotive(); }
+	public int getNbJetonJoueur    () { return this.metier.getNbJetonJoueur    (); }
+	public int getNbJetonFin       () { return this.metier.getNbJetonFin       (); }
+
+	public List<Color>         getCouleurs            () { return this.metier.getCouleurs            (); }
+	public BufferedImage       getImageVersoCouleur   () { return this.metier.getImageVersoCouleur   (); }
+	public BufferedImage       getImageRectoLocomotive() { return this.metier.getImageRectoLocomotive(); }
+	public List<BufferedImage> getImagesRectoCouleur  () { return this.metier.getImagesRectoCouleur  (); }
+	public List<Integer>       getPoints              () { return this.metier.getPoints              (); }
+	public CarteWagon[]        getTabCartesVisible    () { return this.partie.getTabCartesVisible    (); }
+
+	public BufferedImage       getImageVersoObjectif() { return this.metier.getImageVersoObjectif(); }
+	public BufferedImage       getImage             () { return this.ihm   .getImage             (); }
+
+	public int     getSizeWagon         () { return this.partie.getSizeWagon();    }
+	public int     getSizeObjectif      () { return this.partie.getSizeObjectif(); }
+	public Arete   getAreteSelectionne  () { return this.areteSelectionnee;        }
+	public int     getCouleurSelectionne() { return this.couleurSelectionnee;      }
+	public boolean getEnTrainDePiocher  () { return this.enTrainDePiocher;         }
+	public int	   getNbTours			() { return this.partie.getTours();		   }
+	public boolean getEstMulti          () { return this.partie.getEstMulti();     }
+	public Metier  getMetier            () { return this.metier;                   }
+	
+
+	/* ==================== */
+	/*       SETTERS        */
+	/* ==================== */
+	public void setImageButton(int indice)  { if ( this.ihm != null ) this.ihm.setImageButton(indice); }
+
+	public void setInfo(int nbTours, String nomJoueurCourant){ this.ihm.setInfo(nbTours, nomJoueurCourant); }
+
+	public void setMetier(Metier m)
 	{
-		if (!this.enTrainDePiocher)
-		{
-			this.partie.joueurSuivant();
-			this.metier.joueurSuivant();
-		}
+		m.setCtrl(this);
+		m.copyTransients(this.metier);
+		this.metier = m;
 	}
 
-	/**
-	 * Permet de lire le fichier xml contenant toutes les informations du plateau.
-	 * @param fichier :  fichier xml à lire
-	 * @return boolean : true si le fichier a été lu correctement, sinon false
-	 */
-	public boolean ouvrir(File fichier) 
-	{ 
-		boolean readSuccess =  this.metier.lireFichier(fichier);
-		//System.out.println("\n------------\nControleur.java\n"+this.metier.getNoeuds());
-		if (this.metier.getServer()!= null)this.metier.getServer().majMetier();
-		return readSuccess ; 	
-	}
 
-	/**
-	 * Permet de créer une partie solo.
-	 * Cette méthode lance le jeu directement.
-	 */
-	public void creerPartieLocal()
-	{
-		this.joueur = this.metier.getJoueurs().get(0);
-
-		this.ihm.demarrerAttenteLocal();
-	}
-
-	/**
-	 * Permet d'obtenir de chemin vers le fichier xml de la mappe charger en mémoire dans le metier
-	 * @return String : chemin absolut vers le fichier xml de la mappe charger en mémoire dans le metier
-	 */
-	public String getPathMappe()
-	{
-		return this.metier.getPathMappe();
-	}
+	/* ================================= */
+	/*  METHODES DE DEMARRAGE DE PARTIE  */
+	/* ================================= */
 
 	/**
 	 * Permet de lancer la partie multijoueur quand on est dans la salle d'attente.
@@ -131,16 +149,51 @@ public class Controleur
 		this.ihm.demarrerAttente(true);
 	}
 
-	public Partie getPartie()
+	/**
+	 * Permet de créer une partie solo.
+	 * Cette méthode lance le jeu directement.
+	 */
+	public void creerPartieLocal()
 	{
-		return this.partie;
+		this.joueur = this.metier.getJoueurs().get(0);
+
+		this.ihm.demarrerAttenteLocal();
 	}
 
-	public void setPartie(Partie partie)
+
+	/* =========================== */
+	/*  METHODES DE GESTION D'IHM  */
+	/* =========================== */
+	public void    disposeFrameJeu		() { this.ihm.disposeFrameJeu(); 		}
+	public void    disposeFrameFinPartie() { this.ihm.disposeFrameFinPartie();  }
+
+	public void majIHM()
 	{
-		this.partie = partie;
-		partie.setCtrl(this);
-		updateJoueurs(partie.getJoueurs());
+		this.ihm.majIHM();
+	}
+
+	public void afficherErreur(String message)
+	{
+		this.ihm.afficherErreur(message);
+	}
+
+	/**
+	 * Affiche la carte objectif dans la main du joueur
+	 * @param icon carte objectif
+	 */
+    public void afficherCarteObjectif(Icon icon) 
+	{
+		this.ihm.afficherCarteObjectif(icon);
+    }
+
+	public void validerObjectif() 
+	{
+		this.ihm.validerObjectif();
+    }
+
+	public void ouvrirFinPartie(Boolean finLocal)
+	{
+		this.ihm.ouvrirFinPartie(finLocal);
 	}
 
 	public void setPartieLancer(Boolean b)
@@ -153,17 +206,28 @@ public class Controleur
 		this.ihm.RetourALaceuille();
 	}
 
-	public void setMetier(Metier m)
-	{
-		m.setCtrl(this);
-		m.copyTransients(this.metier);
-		this.metier = m;
+	public void piocherCarteObjectifDebutPartie() 
+	{ 
+		if ( this.piocherObjectifsDebut == true ) 
+			this.ihm.piocherCarteObjectifDebutPartie(); 
 	}
-	
+
+	/* ============================== */
+	/*  METHODES DE GESTION DE PARTE  */
+	/* ============================== */
+
+	public void joueurSuivant()
+	{
+		if (!this.enTrainDePiocher)
+		{
+			this.partie.joueurSuivant();
+			this.metier.joueurSuivant();
+		}
+	}
+
 	public void changerJoueur(Joueur j)
 	{
 		this.joueur = j;
-		System.out.println("changement de joueur => " + this.joueur.getNom());
 
 		this.areteSelectionnee = null;
 		this.couleurSelectionnee = 0;
@@ -171,67 +235,10 @@ public class Controleur
 		this.ihm.majIHM();
 		if (this.partie.getTours() == 1) 
 		{
-			System.out.println("pioche du debut");
 			this.piocherObjectifsDebut = true;
 			this.piocherCarteObjectifDebutPartie();
 		}
 	}
-
-	public void ouvrirFinPartie(Boolean finLocal)
-	{
-		this.ihm.ouvrirFinPartie(finLocal);
-	}
-
-	/* --------------------------- */
-	/*          Getters            */
-	/* --------------------------- */
-	public List<Joueur>        getJoueurs             () { return this.metier.getJoueurs         (); }
-	public Joueur[]            getJoueursPartie       () { return this.partie.getJoueurs         ();}
-	public Joueur              getJoueur              () { return this.joueur; }
-	public Joueur              getJoueurCourant       () { return this.partie.getJoueurCourant(); }
-	public List<CarteObjectif> getCarteObjectif       () { return this.metier.getCarteObjectif   (); }
-	public List<Noeud>         getNoeuds              () { return this.metier.getNoeuds          (); }
-	public List<Arete>         getAretes              () { if (this.partie != null) return this.partie.geAretes(); return this.metier.getAretes          (); }
-	public CarteWagon[]        getTabCarteWagon       () { return this.metier.getTabCarteWagon   (); }
-	public CarteObjectif[]	   getTabCarteObjectif    () { return this.metier.getTabCarteObjectif(); }
-
-	public int[]         getTaillePlateau () { return this.metier.getTaillePlateau (); }
-	public BufferedImage getImagePlateau  () { return this.metier.getImagePlateau  (); }
-	public Color         getCouleurPlateau() { return this.metier.getCouleurPlateau(); }
-	public Font          getPolicePlateau () { return this.metier.getPolicePlateau (); }
-
-	public int getNbJoueursMin     () { return this.metier.getNbJoueursMin     (); }
-	public int getNbJoueursMax     () { return this.metier.getNbJoueursMax     (); }
-	public int getNbCarteCoul      () { return this.metier.getNbCarteCoul      (); }
-	public int getNbCarteLocomotive() { return this.metier.getNbCarteLocomotive(); }
-	public int getNbJetonJoueur    () { return this.metier.getNbJetonJoueur    (); }
-	public int getNbJetonFin       () { return this.metier.getNbJetonFin       (); }
-
-	public List<Color>         getCouleurs            () { return this.metier.getCouleurs            (); }
-	public BufferedImage       getImageVersoCouleur   () { return this.metier.getImageVersoCouleur   (); }
-	public BufferedImage       getImageRectoLocomotive() { return this.metier.getImageRectoLocomotive(); }
-	public List<BufferedImage> getImagesRectoCouleur  () { return this.metier.getImagesRectoCouleur  (); }
-	public List<Integer>       getPoints              () { return this.metier.getPoints              (); }
-
-	public BufferedImage       getImageVersoObjectif() { return this.metier.getImageVersoObjectif(); }
-	public BufferedImage       getImage             () { return this.ihm   .getImage             (); }
-
-	public int     getSizeWagon         () { return this.partie.getSizeWagon(); }
-	public int     getSizeObjectif      () { return this.partie.getSizeObjectif(); }
-	public Arete   getAreteSelectionne  () { return this.areteSelectionnee;     }
-	public int     getCouleurSelectionne() { return this.couleurSelectionnee;   }
-	public boolean getEnTrainDePiocher  () { return this.enTrainDePiocher;      }
-	public int	   getNbTours			() { return this.partie.getTours();			}
-	public boolean getEstMulti() { return this.partie.getEstMulti(); }
-
-    public void    disposeFrameJeu		() { this.ihm.disposeFrameJeu(); 		}
-	public void    disposeFrameFinPartie() { this.ihm.disposeFrameFinPartie();  }
-
-	// Méthodes
-	public void setImageButton(int indice)  { if ( this.ihm != null ) this.ihm.setImageButton(indice); }
-	public void setInfo    (int nbTours, String nomJoueurCourant){ this.ihm.setInfo(nbTours, nomJoueurCourant); }
-
-	public void piocherCarteObjectifDebutPartie() { if ( this.piocherObjectifsDebut == true ) this.ihm.piocherCarteObjectifDebutPartie(); }
 
 	public void switchEnTrainDePiocher()
 	{
@@ -247,6 +254,13 @@ public class Controleur
 	{
 		try
 		{
+			// vérification de l'activation des voix doubles
+			if (this.getJoueursPartie().length <= 3 && arete.getCouleur2() != null)
+			{
+				if (couleur == 1 && arete.getProprietaire2() != null) return false;
+				if (couleur == 2 && arete.getProprietaire1() != null) return false;
+			}
+
 			if ((couleur == 1 && arete.getProprietaire1() == null) ||
 		        (couleur == 2 && arete.getProprietaire2() == null)   )
 			{
@@ -296,23 +310,6 @@ public class Controleur
 	{
 		this.areteSelectionnee   = arete;
 		this.couleurSelectionnee = couleur;
-	}
-    
-	public CarteWagon[] getTabCartesVisible() { return this.partie.getTabCartesVisible(); }
-
-	public void majIHM()
-	{
-		this.ihm.majIHM();
-	}
-
-	public void afficherErreur(String message)
-	{
-		this.ihm.afficherErreur(message);
-	}
-
-	public void verifierVisible()
-	{
-		this.partie.verifierVisible();
 	}
 
 	public void prendreArete(int indMain)
@@ -466,111 +463,11 @@ public class Controleur
 		else
 			return false;
 	}
-
 	
-	/**
-     * Permet d'appliquer le thème à l'ihm
-     */
-    public void appliquerTheme() { this.ihm.appliquerTheme(); }
-
-    /**
-     * Permet de à l'ihm de récupérer la hashmap contenant les couleurs du thème
-     * @return HashMap contenant les couleurs du thème
-     */
-    public HashMap<String, List<Color>> getTheme() { return this.metier.getTheme(); }
-
-	/**
-	 * Permet de récupérer le nom du thème utilisé
-	 * @return Nom du thème utilisé
-	 */
-	public String getThemeUsed() { return this.metier.getThemeUsed(); }
-
-
-    /**
-     * Change le thème à utilisé dans le fichier de sauvegarde.
-     * Charge en mémoire le nouveau thème.
-     * Met à jour l'ihm.
-     * @param theme : Nom du thème à utiliser
-     */
-    public void changerTheme(String theme) { this.metier.setThemeUsed(theme); }
-
-
-
-	/**
-	 * permet d'éberger une partie
-	 */
-	public void hostGame()
+	public void verifierVisible()
 	{
-		this.joueur = new Joueur(this, "Joueur 1");
-		this.metier.ajouterJoueur(this.joueur);
-		this.partie = new Partie(this, this.metier, true, "Partie multi-joueur");
+		this.partie.verifierVisible();
 	}
-
-	/*
-	 * 
-	 */
-	public void updateJoueurs(Joueur[] joueurs)
-	{
-		for (Joueur j : joueurs)
-			if (j.equals(this.joueur))
-				this.joueur = j;
-	}
-
-	/**
-	 * 
-	 */
-	public int joinGame(String ip, String nom, String password)
-	{
-		
-		this.metier.creeClient(ip, nom, true, password);
-
-		this.joueur = new Joueur(this, nom);
-
-		return 1;
-		// this.joueur = new Joueur("Joueur 1");
-		// this.metier.ajouterJoueur(this.joueur);
-		// try 
-		// {
-		// 	this.clientCtrl = new ClientControleur(ip);
-
-		// 	this.metier = clientCtrl.getMetier();
-		// 	this.partie = clientCtrl.getPartie();
-		// 	this.ihm.demarrerJeu();
-		// }
-		// catch (UnknownHostException e)	{ return 2;} 
-		// catch (ConnectException e) 		{e.printStackTrace();} 
-		// catch (IOException e) 			{e.printStackTrace();}
-
-		// if (!password.equals(this.metier.getMotDePasse())) return 3;
-		// return 1;
-
-	}
-	
-
-	public Metier getMetier(){return this.metier;} // a tester supprimer apres
-	
-	public void connexionAccepter()
-	{
-		this.ihm.demarrerAttente(false);
-	}
-
-	/**
-	 * Affiche la carte objectif dans la main du joueur
-	 * @param icon carte objectif
-	 */
-    public void afficherCarteObjectif(Icon icon) 
-	{
-		this.ihm.afficherCarteObjectif(icon);
-    }
-
-	/**
-	 * Permet de récupérer la pioche de cartes objectifs
-	 * @return un tableau de Carte Objectif
-	 */
-    public CarteObjectif getPiocheObjectif() 
-	{
-        return this.partie.getPiocheObjectif();
-    }
 
 	/**
 	 * Ajouter une carte objectif dans la main du joueur
@@ -591,35 +488,116 @@ public class Controleur
 		this.partie.remettreCarteObjectif(carteObjectif);
 	}
 
+	/* =========================== */
+	/*  METHODES DE GESTION D'XML  */
+	/* =========================== */
 
-	public void validerObjectif() 
+	/**
+	 * Permet de lire le fichier xml contenant toutes les informations du plateau.
+	 * @param fichier :  fichier xml à lire
+	 * @return boolean : true si le fichier a été lu correctement, sinon false
+	 */
+	public boolean ouvrir(File fichier) 
+	{ 
+		boolean readSuccess =  this.metier.lireFichier(fichier);
+		if (this.metier.getServer()!= null)this.metier.getServer().majMetier();
+		return readSuccess ; 	
+	}
+
+	/* ================================ */
+	/*  METHODES DE GESTION DES THEMES  */
+	/* ================================ */
+	
+	/**
+     * Permet d'appliquer le thème à l'ihm
+     */
+    public void appliquerTheme() { this.ihm.appliquerTheme(); }
+
+    /**
+     * Permet de à l'ihm de récupérer la hashmap contenant les couleurs du thème
+     * @return HashMap contenant les couleurs du thème
+     */
+    public HashMap<String, List<Color>> getTheme() { return this.metier.getTheme(); }
+
+	/**
+	 * Permet de récupérer le nom du thème utilisé
+	 * @return Nom du thème utilisé
+	 */
+	public String getThemeUsed() { return this.metier.getThemeUsed(); }
+
+    /**
+     * Change le thème à utilisé dans le fichier de sauvegarde.
+     * Charge en mémoire le nouveau thème.
+     * Met à jour l'ihm.
+     * @param theme : Nom du thème à utiliser
+     */
+    public void changerTheme(String theme) { this.metier.setThemeUsed(theme); }
+
+	/* ================================ */
+	/*  METHODES DE GESTION DU RESEAU   */
+	/* ================================ */
+
+	/**
+	 * permet d'éberger une partie
+	 */
+	public void hostGame()
 	{
-		this.ihm.validerObjectif();
-    }
+		this.joueur = new Joueur(this, "Joueur 1");
+		this.metier.ajouterJoueur(this.joueur);
+		this.partie = new Partie(this, this.metier, true, "Partie multi-joueur");
+	}
 
+	public void updateJoueurs(Joueur[] joueurs)
+	{
+		for (Joueur j : joueurs)
+			if (j.equals(this.joueur))
+				this.joueur = j;
+	}
 
+	public int joinGame(String ip, String nom, String password)
+	{
+		
+		this.metier.creeClient(ip, nom, true, password);
+
+		this.joueur = new Joueur(this, nom);
+
+		return 1;
+	}
+		
+	public void connexionAccepter()
+	{
+		this.ihm.demarrerAttente(false);
+	}
+
+	/**
+	 * Permet d'obtenir de chemin vers le fichier xml de la mappe charger en mémoire dans le metier
+	 * @return String : chemin absolut vers le fichier xml de la mappe charger en mémoire dans le metier
+	 */
+	public String getPathMappe()
+	{
+		return this.metier.getPathMappe();
+	}
+
+	public Partie getPartie()
+	{
+		return this.partie;
+	}
+
+	public void setPartie(Partie partie)
+	{
+		this.partie = partie;
+		partie.setCtrl(this);
+		updateJoueurs(partie.getJoueurs());
+	}
+
+	/* ================= */
+	/*        MAIN       */
+	/* ================= */
 	public static void main(String[] args)
     {
         new Controleur();
-		//Les commandes pour voir l'IP de la machine
-        try {
-            Enumeration<NetworkInterface> net = NetworkInterface.getNetworkInterfaces();
-			while (net.hasMoreElements()) {
-				NetworkInterface element = net.nextElement();
-				Enumeration<InetAddress> addresses = element.getInetAddresses();
-				while (addresses.hasMoreElements()) {
-					InetAddress ip = addresses.nextElement();
-					if (ip instanceof Inet4Address) {
-						System.out.println("IPV4: " + ip.getHostAddress());
-					}
-				}
-			}
 
 
-
-        } catch (SocketException e) {
-            e.printStackTrace();
-        }
     }
 
 }

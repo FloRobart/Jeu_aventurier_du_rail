@@ -18,6 +18,9 @@ public class CarteWagon implements Serializable
     private transient BufferedImage imageRecto;
     private boolean                 joker;
 
+	/* ==================== */
+	/*     CONSTRUCTEUR     */
+	/* ==================== */
     public CarteWagon(Color couleur, BufferedImage imageVerso, BufferedImage imageRecto)
     {
         if(couleur == null)
@@ -32,16 +35,25 @@ public class CarteWagon implements Serializable
         this.imageRecto = imageRecto;
     }
 
-    public Color getCouleur           () { return this.couleur;    }
+	/* ==================== */
+	/*       GETTERS        */
+	/* ==================== */
+    public Color         getCouleur   () { return this.couleur;    }
     public BufferedImage getImageVerso() { return this.imageVerso; }
     public BufferedImage getImageRecto() { return this.imageRecto; }
-    public boolean isJoker            () { return this.joker;      }
+    public boolean       isJoker      () { return this.joker;      }
 
+	/* ==================== */
+	/*       SETTERS        */
+	/* ==================== */
     public void setCouleur   (Color couleur)            { this.couleur = couleur;       }
     public void setImageVerso(BufferedImage imageVerso) { this.imageVerso = imageVerso; }
     public void setImageRecto(BufferedImage imageVerso) { this.imageVerso = imageVerso; }
     public void setJoker     (boolean joker)            { this.joker = joker;           }
 
+	/* ================================ */
+	/*  METHODES DE TRANSACTION RESEAU  */
+	/* ================================ */
 	private void writeObject(ObjectOutputStream out) throws IOException 
 	{
 		ByteArrayOutputStream baos;
@@ -54,14 +66,13 @@ public class CarteWagon implements Serializable
 		baos = new ByteArrayOutputStream();
 		ImageIO.write(imageRecto, "png", baos);
 		out.writeObject(baos.toByteArray());
-
-
 	}
+
 	private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException 
 	{
 		in.defaultReadObject();
-		imageVerso    = ImageIO.read(new ByteArrayInputStream((byte[]) in.readObject()));
-		imageRecto   = ImageIO.read(new ByteArrayInputStream((byte[]) in.readObject()));
+		imageVerso = ImageIO.read(new ByteArrayInputStream((byte[]) in.readObject()));
+		imageRecto = ImageIO.read(new ByteArrayInputStream((byte[]) in.readObject()));
 
 	}
 }

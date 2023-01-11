@@ -7,7 +7,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import controleur.Controleur;
-import metier.Metier;
 import metier.partie.Partie;
 
 

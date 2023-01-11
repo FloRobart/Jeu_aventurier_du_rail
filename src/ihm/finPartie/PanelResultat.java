@@ -3,7 +3,6 @@ package ihm.finPartie;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.BevelBorder;
 
 import controleur.Controleur;
 import metier.Joueur;

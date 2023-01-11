@@ -152,7 +152,8 @@ public class PanelJoueurs extends JPanel implements ActionListener
     public void majIHM()
     {
         this.lstJoueurs = new ArrayList<Joueur>(this.ctrl.getJoueurs());
-		this.lstJoueurs.remove(this.ctrl.getJoueur());
+        if (this.ctrl.getMetier().getClient() == null && this.ctrl.getMetier().getServer() == null)
+		    this.lstJoueurs.remove(this.ctrl.getJoueur());
         setScore();
     }
 
