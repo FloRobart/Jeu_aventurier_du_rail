@@ -183,9 +183,9 @@ public class Controleur
 		}
 	}
 
-	public void ouvrirFinPartie()
+	public void ouvrirFinPartie(Boolean finLocal)
 	{
-		this.ihm.ouvrirFinPartie();
+		this.ihm.ouvrirFinPartie(finLocal);
 	}
 
 	/* --------------------------- */
@@ -614,6 +614,7 @@ public class Controleur
 	{
 		this.ihm.validerObjectif();
     }
+
 
 	public static void main(String[] args)
     {

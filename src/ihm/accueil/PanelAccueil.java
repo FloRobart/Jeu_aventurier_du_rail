@@ -730,8 +730,6 @@ public class PanelAccueil extends JPanel implements ActionListener
                 {
                     // TODO : Vérifier que le mot de passe colle avec l'adresse IP
                     // un méthode du controleur permet normlement de le faire
-
-
                     try
                     {
                         Client c = new Client(this.txtIpRejoindre.getText(), this.ctrl);

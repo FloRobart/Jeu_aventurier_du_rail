@@ -99,7 +99,7 @@ public class Partie implements Serializable
 
 		if (this.joueurCourrantId == this.joueurFin)
 		{
-			this.ctrl.ouvrirFinPartie();
+			this.ctrl.ouvrirFinPartie(true);
 		}
 		
 		if (indJoueur == 0)
