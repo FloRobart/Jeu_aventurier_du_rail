@@ -70,7 +70,7 @@ public class FrameJeu extends JFrame
 
     public void setScore      ( ) { this.panelMainJoueur.setScore(); this.panelJoueurs.setScore(); }
     public void setImageButton(int indice) { this.panelPioche.setImageButton(indice); }	
-    public void setNbTours    (int nbTours){ this.panelInfoPartie.setNbTours(nbTours); }
+    public void setInfo    (int nbTours, String nomJoueurCourant){ this.panelInfoPartie.setInfo(nbTours, nomJoueurCourant); }
 
 	public BufferedImage getImage() { return this.panelPlateau.getImage(); }
 
