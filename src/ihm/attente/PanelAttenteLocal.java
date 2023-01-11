@@ -32,7 +32,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import controleur.Controleur;
 import metier.Joueur;
-import metier.Metier;
 
 
 public class PanelAttenteLocal extends JPanel implements ActionListener
@@ -40,7 +39,6 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
     private Controleur ctrl;
     private HashMap<String, List<Color>> theme;
     private boolean mappeImportee;
-    private BufferedImage imgIconPreviewMappe;
 
     /* Panel */
     private JPanel panelInfo;
@@ -118,10 +116,6 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
         /* Listes */
         this.jspLstParticipants = new JScrollPane      ();
         this.lstParticipants    = new ArrayList<JButton>();
-
-
-        /* Image de preview de la mappe */
-        this.imgIconPreviewMappe = this.ctrl.getImagePlateau();
 
 
         this.lblTitre.setHorizontalAlignment(JLabel.CENTER);
@@ -544,8 +538,12 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
             {
                 String nomJoueur = JOptionPane.showInputDialog(this, "Entrez Votre pseudo", "Ajouter un joueur", JOptionPane.QUESTION_MESSAGE);
 
+
 				if (nomJoueur != null)
 				{
+                    if (nomJoueur.length() > 16)
+                        nomJoueur = nomJoueur.substring(0, 16);
+
 					if (this.verifPseudo(nomJoueur))
 					{
 						Color c = this.aleatoireColor();
@@ -648,29 +646,34 @@ public class PanelAttenteLocal extends JPanel implements ActionListener
 
         /* Liste des joueurs */
         Color titleBackColor = this.theme.get("titles"    ).get(1);
-        Color btnForeColor   = this.theme.get("buttons"   ).get(0);
         Color background     = this.theme.get("background").get(0);
 
         this.lstParticipants = new ArrayList<JButton>();
-        List<Joueur> lstJoueurs    = ctrl.getJoueurs();
-
         for (int i = 0; i < this.ctrl.getNbJoueursMax(); i++)
         {
             this.lstParticipants.add(new JButton(" "));
             this.lstParticipants.get(i).setFont(new Font("Liberation Sans", 0, 24));
             this.lstParticipants.get(i).setPreferredSize(new Dimension(200, 40));
             this.lstParticipants.get(i).setOpaque(true);
-            this.lstParticipants.get(i).setForeground(btnForeColor);
             this.lstParticipants.get(i).setBackground(background);
             this.lstParticipants.get(i).setHorizontalAlignment(JLabel.CENTER);
             this.lstParticipants.get(i).setBorder(BorderFactory.createBevelBorder(1, titleBackColor, titleBackColor));
         }
+        
+        for (int i = 0; i < this.ctrl.getJoueurs().size(); i++)
+            this.lstParticipants.get(i).setForeground(this.ctrl.getJoueurs().get(i).getCouleur());
 
         this.panelJoueurs.removeAll();
         this.panelJoueurs.setLayout(null);
         this.panelJoueurs.setLayout(new GridLayout(this.lstParticipants.size(), 1));
+
         for (int i = 0; i < this.lstParticipants.size(); i++)
             this.panelJoueurs.add(this.lstParticipants.get(i));
+
+            for (int i = 0; i < this.lstParticipants.size(); i++)
+                this.lstParticipants.get(i).addActionListener(this);
+
+        // Mise à jour
         this.panelPreviewMappe.setMappe();
         this.panelPreviewMappe.repaint();
         this.panelPreviewMappe.centrer(this.getWidth(), this.getHeight());
