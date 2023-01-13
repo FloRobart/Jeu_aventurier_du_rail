@@ -145,7 +145,9 @@ public class PanelJoueurs extends JPanel implements ActionListener
     { 
         for ( int cpt=0; cpt < this.lstJoueurs.size(); cpt++)
         {
+            try{
             this.tabLblScore[cpt].setText("Score : " + this.lstJoueurs.get(cpt).getScore());
+            }catch(Exception e){}
         }
     }
 
