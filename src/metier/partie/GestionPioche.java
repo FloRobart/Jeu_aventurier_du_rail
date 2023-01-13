@@ -85,6 +85,10 @@ public class GestionPioche implements Serializable
 	{
 		this.lstCartesWagon.addAll(this.lstCartesDefausse);
 		this.lstCartesDefausse.clear();
+
+		for (int cpt = 0; cpt < this.tabCartesVisible.length; cpt++)
+			if (this.tabCartesVisible[cpt] == null && this.lstCartesWagon.size() > 0)
+				this.tabCartesVisible[cpt] = this.lstCartesWagon.remove(0);
 	}
 
 	/* ========================== */
