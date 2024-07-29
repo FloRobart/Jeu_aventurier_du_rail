@@ -4,6 +4,8 @@
 
 Ce projet scolaire réalisé en deuxième année de BUT informatique est une version numérique du jeu de plateau `Les aventuriers du rail`. Grâce à cette application il est possible de joué à plusieur sur une seul machine ou à plusieurs sur un réseau local.
 
+Ce jeux permets de jouer sur des cartes custominé et créée à l'aide du [concepteur de plateau](https://github.com/FloRobart/Generateur_plateau]
+
 ## Lancement du jeu
 
 ### Première solution
