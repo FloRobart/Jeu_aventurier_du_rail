@@ -16,6 +16,6 @@ lanceur.bat et lanceur.sh compile l'application seulement si elle n'est pas déj
 
 Si l'application est déjà compilée, lanceur.bat et lanceur.sh ne la recompile pas.
 
-## Troisième solution
+### Troisième solution
 
 commande java -jar Jeu_aventurier_du_rail.jar
